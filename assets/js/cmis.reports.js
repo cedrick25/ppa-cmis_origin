@@ -14,7 +14,7 @@ $.wms.reports = (function() {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field')
         }
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F21SUMMARY',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21SUMMARY',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 console.log(result);
                 payload = result.payload
@@ -269,7 +269,7 @@ $.wms.reports = (function() {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field')
         }
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5SUMMARY',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5SUMMARY',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 console.log(result);
                 payload = result.payload

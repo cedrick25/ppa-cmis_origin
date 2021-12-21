@@ -297,7 +297,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -375,7 +375,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -451,7 +451,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -516,7 +516,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -584,7 +584,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -649,7 +649,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
             $("#divLoading").addClass("hidden");
 
@@ -761,7 +761,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -829,7 +829,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
             $("#divLoading").addClass("hidden");
 
@@ -898,7 +898,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
             $("#divLoading").addClass("hidden");
 
@@ -981,7 +981,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
             $("#divLoading").addClass("hidden");
 
@@ -1053,7 +1053,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
             $("#divLoading").addClass("hidden");
 
@@ -1102,7 +1102,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
             $("#divLoading").addClass("hidden");
 
@@ -1191,7 +1191,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1244,7 +1244,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1323,7 +1323,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1417,7 +1417,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1480,7 +1480,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1583,7 +1583,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1638,7 +1638,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1725,7 +1725,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1808,7 +1808,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1890,7 +1890,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -1982,7 +1982,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2034,7 +2034,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2085,7 +2085,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2179,7 +2179,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2230,7 +2230,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2290,7 +2290,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2345,7 +2345,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2434,7 +2434,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2515,7 +2515,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2592,7 +2592,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2718,7 +2718,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2816,7 +2816,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -2923,7 +2923,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3038,7 +3038,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3122,7 +3122,7 @@ $.wms.report = (function() {
             Y_M : Y_M,
             END_Y_M: $.wms.urlParam('date'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3217,7 +3217,7 @@ $.wms.report = (function() {
             REGION : $.wms.urlParam('reg2'),
             END_Y_M : $.wms.urlParam('date')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
                 var carryOver = 0;
@@ -3270,7 +3270,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2'),
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3354,7 +3354,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3454,7 +3454,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3517,7 +3517,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3574,7 +3574,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3662,7 +3662,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3745,7 +3745,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3855,7 +3855,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -3937,7 +3937,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4028,7 +4028,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4078,7 +4078,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4128,7 +4128,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4220,7 +4220,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4269,7 +4269,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4323,7 +4323,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4414,7 +4414,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4494,7 +4494,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4553,7 +4553,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4654,7 +4654,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4727,7 +4727,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4853,7 +4853,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -4951,7 +4951,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -5057,7 +5057,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -5170,7 +5170,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
@@ -5252,7 +5252,7 @@ $.wms.report = (function() {
             END_Y_M: $.wms.urlParam('date'),
             REGION : $.wms.urlParam('reg2')
         };
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/reports',JSON.stringify(payload)).done(function (result) {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 

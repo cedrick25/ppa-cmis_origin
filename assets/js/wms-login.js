@@ -36,7 +36,7 @@ $.wms.login = (function() {
                    PASSWORD : password
             }
 
-            $.wms.executeExternalPost('/ppa-api/wsv1/api/authenticate',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/authenticate',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 $("#divLoading").addClass("hidden");
                 if(result.status == 'SUCCESS'){
@@ -53,7 +53,7 @@ $.wms.login = (function() {
                             }
                             var date = new Date();
                             date.setTime(date.getTime() + (180 * 1440 * 60 * 1000));
-                            $.wms.executeExternalPost('/ppa-api/wsv1/api/getUserTypeByModulesByID',JSON.stringify(payload2)).done(function (result2) {
+                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/getUserTypeByModulesByID',JSON.stringify(payload2)).done(function (result2) {
                             if(result2.status == 'SUCCESS'){
                                 $.cookie("PERMISSIONS", JSON.stringify(result2.payload), {expires: date});
 
@@ -153,7 +153,7 @@ $.wms.login = (function() {
                                         }
                                         var date = new Date();
                                         date.setTime(date.getTime() + (180 * 1440 * 60 * 1000));
-                                        $.wms.executeExternalPost('/ppa-api/wsv1/api/getUserTypeByModulesByID',JSON.stringify(payload2)).done(function (result2) {
+                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/getUserTypeByModulesByID',JSON.stringify(payload2)).done(function (result2) {
                                         if(result2.status == 'SUCCESS'){
                                             $.cookie("PERMISSIONS", JSON.stringify(result2.payload), {expires: date});
                                            
