@@ -124,7 +124,99 @@ $.wms.form21 = (function() {
         
 
     }
+    var ___validateSaveCarryOver = function(allowedDocket,docket,requiredField,check,checkTable){
+        $(".err_msg").remove()
+        docket.removeClass("error_field")
+        var dontSubmit = false;
+        var docketSeries = docket.val().split("-")
+        var error_msg = "";
+        console.log(allowedDocket)
+        console.log(docketSeries[0].toUpperCase())
+        console.log(allowedDocket.indexOf(docketSeries[0].toUpperCase()));
+        if(allowedDocket.indexOf(docketSeries[0].toUpperCase()) < 0 ){ 
+            dontSubmit = true;
+            docket.addClass("error_field")
+            $("<p class='err_msg color-red font_12 i'>*Invalid Docket No.</p>").insertAfter(docket)
+        }
 
+        
+
+        if(check != undefined){
+            var payload = {
+                "checkTable" : checkTable,
+                "Y_M" : $.wms.urlParam('date'),
+                "docket_no" : docket.val(),
+                "field_office" : $.wms.urlParam('field')
+            }
+            var required = 0;
+            requiredField.forEach(function(data, value){
+                if($("#"+data).val() == ""){
+                    required += 1;
+                    dontSubmit = true;
+                    $("#"+data).addClass("error_field");
+                    $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+                }else{
+                    $("#"+data).removeClass("error_field");
+                }
+            });
+            console.log(required);
+
+            var d = $.Deferred();
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                if(result2.status == 'SUCCESS'){
+                    dontSubmit = true;
+
+                    docket.addClass("error_field")
+                    $("<p class='err_msg color-red font_12 i'>*Docket existing in "+checkTable.join("/")+"</p>").insertAfter(docket)
+                }else{
+                    // dontSubmit = false;
+                    if (required === 0) {
+                        
+                        dontSubmit = false;
+                    }else{
+                        dontSubmit = true;
+
+                    }
+
+                }
+               
+                if(dontSubmit){
+                    d.resolve(false);
+                }else{
+                    d.resolve(true);
+                }
+
+                
+            });
+            return d.promise();
+            
+            
+           
+        }else{
+            requiredField.forEach(function(data){
+            if($("#"+data).val() == ""){
+                dontSubmit = true;
+                $("#"+data).addClass("error_field");
+                $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+            }else{
+                $("#"+data).removeClass("error_field");
+            }
+            });
+
+            if(dontSubmit){
+                return false;
+            }else{
+                return true;    
+            }
+
+            
+        }
+            
+       
+        
+        
+
+    }
 
     var __attachF21T1PageEvent = function() {
         var payload = {
@@ -276,13 +368,17 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PPI', 'PECI', 'TPPI', 'TPECI' ];
             var requiredField= [ 'add_petitioner', 'add_date_rcv', 'add_investigating_officer'];
+            var check = true
+            var checkTable = ['F21T1']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -510,15 +606,18 @@ $.wms.form21 = (function() {
 
             var allowedDocket= [ 'PPI', 'PECI', 'TPPI', 'TPECI' ];
             var requiredField= [ 'add_rcv_petitioner', 'add_rcv_date_rcv', 'add_rcv_investigating_officer'];
+            var check = true
+            var checkTable = ['F21T1', 'F21T2_RCV']
 
-            if(___validateSave(allowedDocket,$("#add_rcv_docket_no"),requiredField)){
-
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitRCVButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedRCVButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_rcv_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitRCVButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedRCVButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelRCVButton").unbind("click").on("click",function(){
@@ -963,13 +1062,17 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PPI', 'PECI', 'TPPI', 'TPECI' ];
             var requiredField= [ 'add_petitioner', 'add_psir', 'add_psir_rec', 'add_investigating_officer'];
+            var check = true
+            var checkTable = ['F21T2_ACTED','F21T3']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -1221,11 +1324,17 @@ $.wms.form21 = (function() {
 
             ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".modal-form select").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
+
+                    var checkTable2 = ['F21T4']
+                    ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable2).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".modal-form select").attr("disabled",true);
+                            $(".addSubmitButton").addClass("hidden");
+                            $(".confirmAdd").removeClass("hidden")
+                            $(".addProceedButton").removeClass("hidden")
+                        }
+                    })
                 }
             });
 
@@ -1456,14 +1565,18 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPPI', 'CPECI' ];
             var requiredField= [ 'add_petitioner', 'add_date_rcv', 'add_investigating_officer'];
+            var check = true
+            var checkTable = ['F5T5']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -1801,15 +1914,19 @@ $.wms.form21 = (function() {
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPPI', 'CPECI' ];
             var requiredField= [ 'add_rcv_petitioner', 'add_rcv_date_rcv', 'add_rcv_investigating_officer'];
+            var check = true
+            var checkTable = ['F21T5', 'F21T6_RCV']
 
-            if(___validateSave(allowedDocket,$("#add_rcv_docket_no"),requiredField)){
+            ___validateSaveCarryOver(allowedDocket,$("#add_rcv_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addRCVSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addRCVProceedButton").removeClass("hidden")
+                }
+            });
 
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addRCVSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addRCVProceedButton").removeClass("hidden")
-            }
         });
 
         $(".addRCVCancelButton").unbind("click").on("click",function(){
