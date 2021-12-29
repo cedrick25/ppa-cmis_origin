@@ -2460,14 +2460,18 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
             var requiredField= [ 'add_probationer', 'add_date_rcv', 'add_supervising','add_start','add_end'];
+            var check = true
+            var checkTable = ['F21T7_PARDON','F21T7_PAROL','F21T8_PARDON','F21T8_PAROL']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -2843,14 +2847,18 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
             var requiredField= [ 'add_probationer', 'add_date_rcv', 'add_supervising'];
+            var check = true
+            var checkTable = ['F21T7_PARDON','F21T7_PAROL','F21T8_PARDON','F21T8_PAROL']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -3594,14 +3602,18 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
             var requiredField= [ 'add_table', 'add_probationer', 'add_submitted', 'add_supervising', 'add_findings'];
+            var check = true
+            var checkTable = ['F21T9_PARDON','F21T9_PAROL','F21T10_PARDON','F21T10_PAROL']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -3973,11 +3985,19 @@ $.wms.form21 = (function() {
 
             ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".modal-form select").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
+
+
+                    var checkTable2 = ['F21T11_PARDON','F21T11_PAROL']
+
+                    ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable2).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".modal-form select").attr("disabled",true);
+                            $(".addSubmitButton").addClass("hidden");
+                            $(".confirmAdd").removeClass("hidden")
+                            $(".addProceedButton").removeClass("hidden")
+                        }
+                    });
                 }
             });
 
@@ -4326,15 +4346,19 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
             var requiredField= [ 'add_probationer', 'add_submitted', 'add_supervising'];
+            var check = true
+            var checkTable = ['F21T9_PARDON','F21T9_PAROL','F21T12_PARDON','F21T12_PAROL']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
 
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
         });
 
         $(".addCancelButton").unbind("click").on("click",function(){
@@ -4685,11 +4709,18 @@ $.wms.form21 = (function() {
 
             ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".modal-form select").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
+
+                    var checkTable2 = ['F21T13_PARDON','F21T13_PAROL']
+
+                    ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable2).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".modal-form select").attr("disabled",true);
+                            $(".addSubmitButton").addClass("hidden");
+                            $(".confirmAdd").removeClass("hidden")
+                            $(".addProceedButton").removeClass("hidden")
+                        }
+                    });
                 }
             });
 
@@ -5046,14 +5077,18 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPD', 'CPR'    ];
             var requiredField= [ 'add_probationer', 'add_date_rcv', 'add_supervising'];
+            var check = true
+            var checkTable = ['F21T14_PARDON','F21T14_PAROL','F21T15_RCV_PAROL','F21T15_RCV_PARDON']
 
-            if(___validateSave(allowedDocket,$("#add_docket_no"),requiredField)){
-                $(".modal-form input").attr("disabled",true);
-                $(".modal-form select").attr("disabled",true);
-                $(".addSubmitButton").addClass("hidden");
-                $(".confirmAdd").removeClass("hidden")
-                $(".addProceedButton").removeClass("hidden")
-            }
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
+                    $(".modal-form input").attr("disabled",true);
+                    $(".modal-form select").attr("disabled",true);
+                    $(".addSubmitButton").addClass("hidden");
+                    $(".confirmAdd").removeClass("hidden")
+                    $(".addProceedButton").removeClass("hidden")
+                }
+            });
 
         });
 
@@ -5543,14 +5578,19 @@ $.wms.form21 = (function() {
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPD', 'CPR'    ];
             var requiredField= [ 'add_rcv_probationer', 'add_rcv_date_rcv', 'add_rcv_supervising'];
-
-            if(___validateSave(allowedDocket,$("#add_rcv_docket_no"),requiredField)){
+            var check = true
+            var checkTable = ['F21T15_TERM_PARDON','F21T15_TERM_PAROL']
+            
+            ___validateSaveCarryOver(allowedDocket,$("#add_rcv_docket_no"),requiredField,check,checkTable).done(function(result){
+                if(result){
                 $(".modal-form input").attr("disabled",true);
                 $(".modal-form select").attr("disabled",true);
                 $(".addRCVSubmitButton").addClass("hidden");
                 $(".confirmAdd").removeClass("hidden")
                 $(".addRCVProceedButton").removeClass("hidden")
-            }
+                }
+            });
+
         });
 
         $(".addRCVCancelButton").unbind("click").on("click",function(){
