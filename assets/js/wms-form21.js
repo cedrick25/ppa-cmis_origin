@@ -1566,7 +1566,7 @@ $.wms.form21 = (function() {
             var allowedDocket= [ 'CPPI', 'CPECI' ];
             var requiredField= [ 'add_petitioner', 'add_date_rcv', 'add_investigating_officer'];
             var check = true
-            var checkTable = ['F5T5']
+            var checkTable = ['F21T5']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -3239,7 +3239,7 @@ $.wms.form21 = (function() {
             var check = true
             var checkTable = ['F21T7_PAROL','F21T7_PARDON','F21T8_PAROL','F21T8_PARDON']
 
-            ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
                     $(".modal-form input").attr("disabled",true);
                     $(".modal-form select").attr("disabled",true);
