@@ -1076,6 +1076,8 @@ $.wms.form5 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-acted-delete").modal();
+                $(".err_msg").remove()
+                
             });    
 
             //Delete

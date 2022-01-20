@@ -264,6 +264,22 @@ $.wms.form21 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-delete").modal();
+
+                var payload = {
+                    "checkTable" : ['F21T2_ACTED'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -758,6 +774,22 @@ $.wms.form21 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-rcv-delete").modal('toggle');
+
+                var payload = {
+                    "checkTable" : ['F21T2_ACTED'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
@@ -883,6 +915,22 @@ $.wms.form21 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-acted-delete").modal('toggle');
+
+                var payload = {
+                    "checkTable" : ['F21T4'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
@@ -1130,6 +1178,22 @@ $.wms.form21 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-delete").modal();
+
+                var payload = {
+                    "checkTable" : ['F21T4'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
@@ -1635,6 +1699,22 @@ $.wms.form21 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-delete").modal();
+
+                var payload = {
+                    "checkTable" : ['F21T6_CMPLTED'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
@@ -1986,6 +2066,22 @@ $.wms.form21 = (function() {
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
                 $("#modal-rcv-delete").modal();
+
+                var payload = {
+                    "checkTable" : ['F21T6_CMPLTED'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
@@ -2538,6 +2634,22 @@ $.wms.form21 = (function() {
                 $(".sel-id").html(data_id)
                 $(".sel-table").html(data_table)
                 $("#modal-delete").modal();
+
+                var payload = {
+                    "checkTable" : ['F21T11'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
@@ -2925,6 +3037,22 @@ $.wms.form21 = (function() {
                 $(".sel-id").html(data_id)
                 $(".sel-table").html(table)
                 $("#modal-delete").modal();
+
+                var payload = {
+                    "checkTable" : ['F21T11'],
+                    "Y_M" : $.wms.urlParam('date'),
+                    "docket_no" : docket_no,
+                    "field_office" : $.wms.urlParam('field')
+                }
+                $(".err_msg").remove()
+                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                    if(result2.status == 'SUCCESS'){
+                        $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
+                        $(".deleteProceedButton").prop('disabled', true);
+                    } else {
+                        $(".deleteProceedButton").prop('disabled', false);
+                    }
+                })
             });    
 
             //Delete
