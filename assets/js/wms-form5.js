@@ -1077,8 +1077,7 @@ $.wms.form5 = (function() {
                 $(".sel-id").html(data_id)
                 $("#modal-acted-delete").modal();
                 $(".err_msg").remove()
-                
-            });    
+            });
 
             //Delete
             $(".deleteACTEDProceedButton").unbind("click").on("click",function(){
