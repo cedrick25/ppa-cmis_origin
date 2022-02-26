@@ -129,7 +129,7 @@ $.wms.probationer = (function() {
                 "id" : data_id,
                 "method" : "fetchByID"
             }
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload)).done(function (result) {
                     $(".form_loader").addClass("hidden")
                     console.log(result);
                     $("#edit_region").val(result.payload.REGION)
@@ -181,7 +181,7 @@ $.wms.probationer = (function() {
 					"ENDDD" : $("#edit_end_dd").val(),
 					"ENDYY": $("#edit_end_yy").val()
             	}
-            	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload)).done(function (result) {
+            	$.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload)).done(function (result) {
             		$("#modalEdit").modal('toggle')
             		$("#modalEdit input").attr("disabled",false)
             		__attachProbationerEvent();
@@ -267,7 +267,7 @@ $.wms.probationer = (function() {
 				"ENDDD" : $("#add_end_dd").val(),
 				"ENDYY": $("#add_end_yy").val()
         	}
-        	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload)).done(function (result) {
+        	$.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload)).done(function (result) {
         		$("#modalAdd").modal('toggle')
         		$("#modalAdd input").val('')
         		$("#modalAdd input").attr("disabled",false)
