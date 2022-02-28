@@ -90,14 +90,14 @@
                        key : $.wms.urlParam('key'),
                     }
 
-                    $.wms.executeExternalPost('/ppa-api/wsv1/api/authenticateSSO',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/authenticateSSO',JSON.stringify(payload)).done(function (result) {
                         if(result.status == 'SUCCESS'){
                         	var payload2 = {
                                LEVEL_ID : result.payload.USER_LEVEL_ID
 	                        }
 	                        var date = new Date();
 	                        date.setTime(date.getTime() + (180 * 1440 * 60 * 1000));
-	                        $.wms.executeExternalPost('/ppa-api/wsv1/api/getUserTypeByModulesByID',JSON.stringify(payload2)).done(function (result2) {
+	                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/getUserTypeByModulesByID',JSON.stringify(payload2)).done(function (result2) {
 	                        if(result2.status == 'SUCCESS'){
 	                            $.cookie("PERMISSIONS", JSON.stringify(result2.payload), {expires: date});
 	                            /*for(i=0;i<result2.payload.length;i++){

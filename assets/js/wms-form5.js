@@ -44,7 +44,7 @@ $.wms.form5 = (function() {
                 }
             });
             var d = $.Deferred();
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                 if(result2.status == 'SUCCESS'){
 
                 }else{
@@ -129,7 +129,7 @@ $.wms.form5 = (function() {
             console.log(required);
 
             var d = $.Deferred();
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                 if(result2.status == 'SUCCESS'){
                     dontSubmit = true;
 
@@ -195,7 +195,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T1ByYM',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T1ByYM',JSON.stringify(payload)).done(function (result) {
             
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -236,7 +236,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -259,7 +259,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T1ByID',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T1ByID',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -318,7 +318,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID")
             }
             console.log(payload)
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T1',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T1',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".editProceedButton").attr('disabled',false)
                 $("#modal-edit").modal('toggle')
@@ -381,7 +381,7 @@ $.wms.form5 = (function() {
                 "source" : "2",
                 "created_by" : $.cookie("USER_ID")
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertF5T1',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T1',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -408,7 +408,7 @@ $.wms.form5 = (function() {
                 "id" : $(".sel-id").html(),
                 "status" : "0"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T1',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T1',JSON.stringify(payload)).done(function (result) {
                 $("#modal-delete").modal('toggle')
                 $(".modal-loader").addClass("hidden")
                 $(".deleteProceedButton").attr('disabled',false)
@@ -432,7 +432,7 @@ $.wms.form5 = (function() {
         $('.F5T2_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_RCV_ByYM',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_RCV_ByYM',JSON.stringify(payload)).done(function (result) {
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
             __counter += 1;
@@ -486,7 +486,7 @@ $.wms.form5 = (function() {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field')
         }
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_ACTED_ByYM',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_ACTED_ByYM',JSON.stringify(payload)).done(function (result) {
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
             __counter += 1;
@@ -535,7 +535,7 @@ $.wms.form5 = (function() {
             "field_office" : $.wms.urlParam('field'),
             "disposed_decision" : "Recall"
         }
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_NOTACTED_ByYM',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_NOTACTED_ByYM',JSON.stringify(payload)).done(function (result) {
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
             __counter += 1;
@@ -580,7 +580,7 @@ $.wms.form5 = (function() {
             "field_office" : $.wms.urlParam('field'),
             "disposed_decision" : "Warrant of Arrest"
         }
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_NOTACTED_ByYM',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_NOTACTED_ByYM',JSON.stringify(payload)).done(function (result) {
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
             __counter += 1;
@@ -744,7 +744,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID")
             }
             console.log(payload);
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertF5T2_RCV',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_RCV',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 ___modalReset();
                
@@ -808,7 +808,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID")
             }
             console.log(payload);
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 ___modalReset();
 
@@ -866,7 +866,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID")
             }
             console.log(payload);
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/upsertF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 ___modalReset();
                 $(".addSubmitNOTACTEDButton").removeClass("hidden")
@@ -937,7 +937,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteRCVProceedButton").prop('disabled', true);
@@ -957,7 +957,7 @@ $.wms.form5 = (function() {
                     "method" : "update",
                     "created_by" : $.cookie("USER_ID")
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T2_RCV',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_RCV',JSON.stringify(payload)).done(function (result) {
                     $("#modal-rcv-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteRCVProceedButton").attr('disabled',false)
@@ -980,7 +980,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_RCV_ByID',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_RCV_ByID',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-loader2").addClass("hidden")
                     $(".modal-form").removeClass("hidden")
@@ -1048,7 +1048,7 @@ $.wms.form5 = (function() {
                     "created_by" : $.cookie("USER_ID")
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T2_RCV',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_RCV',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedRCVButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -1089,7 +1089,7 @@ $.wms.form5 = (function() {
                     "method" : "update",
                     "created_by" : $.cookie("USER_ID")
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
                     $("#modal-acted-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteACTEDProceedButton").attr('disabled',false)
@@ -1112,7 +1112,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_ACTED_ByID',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_ACTED_ByID',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-loader2").addClass("hidden")
                     $(".modal-form").removeClass("hidden")
@@ -1169,7 +1169,7 @@ $.wms.form5 = (function() {
                     "field_office": $.wms.urlParam('field'),
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedACTEDButton").attr('disabled',false)
                      ___modalReset();
@@ -1207,7 +1207,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
                     $("#modal-notacted-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteNOTACTEDProceedButton").attr('disabled',false)
@@ -1230,7 +1230,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/fetchF5T2_NOTACTED_ByID',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/fetchF5T2_NOTACTED_ByID',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-loader2").addClass("hidden")
                     $(".modal-form").removeClass("hidden")
@@ -1281,7 +1281,7 @@ $.wms.form5 = (function() {
                     "field_office": $.wms.urlParam('field'),
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/updateF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedNOTACTEDButton").attr('disabled',false)
                      ___modalReset();
@@ -1313,7 +1313,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -1395,7 +1395,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -1438,7 +1438,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -1463,7 +1463,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1523,7 +1523,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T3',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -1553,7 +1553,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -1650,7 +1650,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -1693,7 +1693,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -1718,7 +1718,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1780,7 +1780,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -1811,7 +1811,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -1896,7 +1896,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -1936,7 +1936,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -1955,7 +1955,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -1980,7 +1980,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2040,7 +2040,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -2077,7 +2077,7 @@ $.wms.form5 = (function() {
         var __counter = 0;
 
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -2124,7 +2124,7 @@ $.wms.form5 = (function() {
         });
 
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -2261,7 +2261,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addRCVProceedButton").attr('disabled',false)
                 $("#modal-rcv-add").modal('toggle')
@@ -2302,7 +2302,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteRCVProceedButton").prop('disabled', true);
@@ -2321,7 +2321,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
                     $("#modal-rcv-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteRCVProceedButton").attr('disabled',false)
@@ -2346,7 +2346,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2406,7 +2406,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editRCVProceedButton").addClass("hidden").attr('disabled',false)
 
@@ -2464,7 +2464,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addCMPLTDProceedButton").attr('disabled',false)
                 $("#modal-cmpltd-add").modal('toggle')
@@ -2502,7 +2502,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
                     $("#modal-cmpltd-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteCMPLTDProceedButton").attr('disabled',false)
@@ -2527,7 +2527,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2581,7 +2581,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editCMPLTDProceedButton").addClass("hidden").attr('disabled',false)
 
@@ -2614,7 +2614,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -2702,7 +2702,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -2742,7 +2742,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -2761,7 +2761,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -2786,7 +2786,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2848,7 +2848,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -2878,7 +2878,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -2979,7 +2979,7 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             console.log(payload)
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -3019,7 +3019,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -3038,7 +3038,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -3063,7 +3063,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3143,7 +3143,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -3186,7 +3186,7 @@ $.wms.form5 = (function() {
         //Extension of Probation Period
         //
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -3297,7 +3297,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -3337,7 +3337,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -3356,7 +3356,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -3381,7 +3381,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3441,7 +3441,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -3483,7 +3483,7 @@ $.wms.form5 = (function() {
         //Extension of Probation Period
         //
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -3588,7 +3588,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -3628,7 +3628,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -3647,7 +3647,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -3672,7 +3672,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3730,7 +3730,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -3773,7 +3773,7 @@ $.wms.form5 = (function() {
         //Extension of Probation Period
         //
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -3900,7 +3900,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -3943,7 +3943,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -3968,7 +3968,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4031,7 +4031,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -4073,7 +4073,7 @@ $.wms.form5 = (function() {
         //Extension of Probation Period
         //
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -4172,7 +4172,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addProceedButton").attr('disabled',false)
                 $("#modal-add").modal('toggle')
@@ -4212,7 +4212,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
@@ -4231,7 +4231,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
                     $("#modal-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
@@ -4256,7 +4256,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4319,7 +4319,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editProceedButton").attr('disabled',false)
                     $("#modal-edit").modal('toggle')
@@ -4352,7 +4352,7 @@ $.wms.form5 = (function() {
         var __counter = 0;
 
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -4403,7 +4403,7 @@ $.wms.form5 = (function() {
         });
 
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
             $(".result_form").removeClass("hidden")
@@ -4549,7 +4549,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addRCVProceedButton").attr('disabled',false)
                 $("#modal-rcv-add").modal('toggle')
@@ -4590,7 +4590,7 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteRCVProceedButton").prop('disabled', true);
@@ -4609,7 +4609,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
                     $("#modal-rcv-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteRCVProceedButton").attr('disabled',false)
@@ -4634,7 +4634,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4700,7 +4700,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editRCVProceedButton").addClass("hidden").attr('disabled',false)
 
@@ -4758,7 +4758,7 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
                 $(".modal-loader").addClass("hidden")
                 $(".addCMPLTDProceedButton").attr('disabled',false)
                 $("#modal-cmpltd-add").modal('toggle')
@@ -4796,7 +4796,7 @@ $.wms.form5 = (function() {
                     "status" : "0",
                     "method" : "update"
                 }
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
                     $("#modal-cmpltd-delete").modal('toggle')
                     $(".modal-loader").addClass("hidden")
                     $(".deleteCMPLTDProceedButton").attr('disabled',false)
@@ -4821,7 +4821,7 @@ $.wms.form5 = (function() {
                 }
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4875,7 +4875,7 @@ $.wms.form5 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
                     $(".modal-loader").addClass("hidden")
                     $(".editCMPLTDProceedButton").addClass("hidden").attr('disabled',false)
 
