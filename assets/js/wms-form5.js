@@ -236,10 +236,12 @@ $.wms.form5 = (function() {
                     "field_office" : $.wms.urlParam('field')
                 }
                 $(".err_msg").remove()
+
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
                     if(result2.status == 'SUCCESS'){
                         $("<p class='err_msg color-red font_12 i'>*Unable to delete: docket number is listed in "+payload.checkTable.join("/")+"</p>").insertAfter($(".sel-id"));
                         $(".deleteProceedButton").prop('disabled', true);
+
                     } else {
                         $(".deleteProceedButton").prop('disabled', false);
                     }
@@ -323,7 +325,8 @@ $.wms.form5 = (function() {
                 $(".editProceedButton").attr('disabled',false)
                 $("#modal-edit").modal('toggle')
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    __attachF5T1PageEvent();
+                    // __attachF5T1PageEvent();
+                    location.reload();
                 }else{
                     //Error Prompt
                 }
@@ -339,7 +342,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T1").table2excel({
@@ -414,16 +416,29 @@ $.wms.form5 = (function() {
         $(".deleteProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
+
             var payload = {
                 "id" : $(".sel-id").html(),
-                "status" : "0"
+                "status" : "0",
+                "created_by" : $.cookie("USER_ID"),
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T1',JSON.stringify(payload)).done(function (result) {
                 $("#modal-delete").modal('toggle')
                 $(".modal-loader").addClass("hidden")
                 $(".deleteProceedButton").attr('disabled',false)
                 if(result.status != undefined && result.status == "SUCCESS"){
-                   __attachF5T1PageEvent();
+                   // __attachF5T1PageEvent();
+
+                    var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                    var payload = {
+                        "created_by" : $.cookie("USER_ID"),
+                        "module" : "CASELOAD",
+                        "action" : form
+                        
+                    }
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                        location.reload();
+                    });
                 }
             });    
         })
@@ -902,7 +917,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T2").table2excel({
@@ -983,7 +997,17 @@ $.wms.form5 = (function() {
                     $(".deleteRCVProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T2PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -1115,7 +1139,17 @@ $.wms.form5 = (function() {
                     $(".deleteACTEDProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T2PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -1233,7 +1267,17 @@ $.wms.form5 = (function() {
                     $(".deleteNOTACTEDProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T2PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -1372,7 +1416,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T3").table2excel({
@@ -1474,7 +1517,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T3PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -1628,7 +1681,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T4").table2excel({
@@ -1731,6 +1783,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
@@ -1738,8 +1791,18 @@ $.wms.form5 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
-                       //__attachF5T4PageEvent();
-                       location.reload();
+                       // __attachF5T4PageEvent();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -1891,7 +1954,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T5").table2excel({
@@ -2003,6 +2065,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T5',JSON.stringify(payload)).done(function (result) {
@@ -2011,7 +2074,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T5PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -2265,7 +2338,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T6").table2excel({
@@ -2379,6 +2451,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
@@ -2387,7 +2460,17 @@ $.wms.form5 = (function() {
                     $(".deleteRCVProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T6PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -2560,6 +2643,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
@@ -2568,7 +2652,17 @@ $.wms.form5 = (function() {
                     $(".deleteCMPLTDProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T6PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -2715,7 +2809,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T7").table2excel({
@@ -2829,6 +2922,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T7',JSON.stringify(payload)).done(function (result) {
@@ -2837,7 +2931,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T7PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -2992,7 +3096,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T8").table2excel({
@@ -3116,6 +3219,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
@@ -3124,7 +3228,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T8PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -3314,7 +3428,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T9").table2excel({
@@ -3444,6 +3557,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
@@ -3452,7 +3566,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T9PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -3633,7 +3757,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T10").table2excel({
@@ -3745,6 +3868,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T10',JSON.stringify(payload)).done(function (result) {
@@ -3753,7 +3877,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T10PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -3934,7 +4068,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T11").table2excel({
@@ -4051,6 +4184,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
@@ -4059,7 +4193,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T11PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -4236,7 +4380,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T12").table2excel({
@@ -4349,6 +4492,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T12',JSON.stringify(payload)).done(function (result) {
@@ -4357,7 +4501,17 @@ $.wms.form5 = (function() {
                     $(".deleteProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T12PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -4620,7 +4774,6 @@ $.wms.form5 = (function() {
                 "action" : form
                 
             }
-            console.log('payload');
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             $("#T_F5T13").table2excel({
@@ -4737,6 +4890,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
@@ -4745,7 +4899,17 @@ $.wms.form5 = (function() {
                     $(".deleteRCVProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T13PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
@@ -4924,6 +5088,7 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
+                    "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
@@ -4932,7 +5097,17 @@ $.wms.form5 = (function() {
                     $(".deleteCMPLTDProceedButton").attr('disabled',false)
                     if(result.status != undefined && result.status == "SUCCESS"){
                        //__attachF5T13PageEvent();
-                       location.reload();
+                       // location.reload();
+                        var form = "Delete: Docket no. "+$(".sel-docket").html()+", Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                            location.reload();
+                        });
                     }
                 });    
             })
