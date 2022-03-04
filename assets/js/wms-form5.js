@@ -2155,10 +2155,10 @@ $.wms.form5 = (function() {
                             $("#r"+r+"c4").html(data.received_date);
                             $("#r"+r+"c5").html(data.reasons);
                             $("#r"+r+"c6").html(data.investigating_officer);
-                            $("#r"+r+"c7").html(data.field_office);
-                            $("#r"+r+"c8").html(source);
+                            $("#r"+r+"c7").html(data.field_office).addClass('');
+                            $("#r"+r+"c8").html(source).addClass('');
                             $("#r"+r+"c9").html("<button class='access_f5_write tn btn-success btn-xs btn-rcv-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete hidden'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                                                "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete hidden'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("");
                             r += 1;
                         });
 

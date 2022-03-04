@@ -36,7 +36,7 @@
             <th style="text-align: center;">INVESTIGATING<br/> OFFICER</th>
             <th class="" style="text-align: center;">FIELD<br/> OFFICE</th>
             <th class="" style="text-align: center;">DATA<br/> SOURCE</th>
-            <th class="options" style="text-align: center;">OPTIONS</th>
+            <th class="" style="text-align: center;">OPTIONS</th>
             <th style="text-align: center;">PETITIONER’S NAME </th>
             <th style="text-align: center;">DATE COMPLETED <br/>AND RETURNED</th>
             <th class="options" style="text-align: center;">FIELD<br/> OFFICE</th>
