@@ -743,6 +743,16 @@ $.wms.dashboard = (function() {
                 console.log(result);
                 if(result.status === 'SUCCESS'){
                    alert("Success")
+
+                    var action = "Forward report "+ $("#fwdReportName").val()
+                    var payload = {
+                        "created_by" : $.cookie("USER_ID"),
+                        "module" : "CASELOAD",
+                        "action" : action
+                        
+                    }
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                    });
                    window.location.reload()
                     
                 }else{
@@ -753,7 +763,7 @@ $.wms.dashboard = (function() {
 
         $("#btnAddSubmit").unbind("click").on("click",function(){
             ___debug("Submit Event")
-
+            console.log("for add report")
             if(___validateAdd()){
                 var optionTexts = [];
                 $("#sortable3 li").each(function() { optionTexts.push($(this).data("id")) });
@@ -772,6 +782,15 @@ $.wms.dashboard = (function() {
                     console.log(result);
                     if(result.status === 'SUCCESS'){
                         
+                        var action = "Added report "+ $("#addtxtFullname").val()
+                        var payload = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : action
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                        });
                         alert("Adding of Report Succeed!")
                         window.location.reload()
                         __attachCaseloadListEvent();

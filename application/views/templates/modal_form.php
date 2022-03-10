@@ -166,6 +166,8 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-regional-quarter">
+                <option value="2022-03">2022 1st Quarter</option>
+                <option value="2021-12">2021 4th Quarter</option>
                 <option value="2021-09">2021 3rd Quarter</option>
                 <option value="2021-06">2021 2nd Quarter</option>
                 <option value="2021-03">2021 1st Quarter</option>
@@ -248,6 +250,8 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-field-quarter">
+                <option value="2022-03">2022 1st Quarter</option>
+                <option value="2021-12">2021 4th Quarter</option>
                 <option value="2021-09">2021 3rd Quarter</option>
                 <option value="2021-06">2021 2nd Quarter</option>
                 <option value="2021-03">2021 1st Quarter</option>
@@ -306,6 +310,8 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-quarterly-quarter">
+                <option value="2022-03">2022 1st Quarter</option>
+                <option value="2021-12">2021 4th Quarter</option>
                 <option value="2021-09">2021 3rd Quarter</option>
                 <option value="2021-06">2021 2nd Quarter</option>
                 <option value="2021-03">2021 1st Quarter</option>

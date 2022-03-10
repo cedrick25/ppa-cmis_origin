@@ -109,16 +109,6 @@
 	            }
 	            else {
 	                console.log("done...")
-	            	
-			        $(".courttt").attr('colspan',5);
-
-					$("#T_F5T6 thead th:eq(12)").remove();
-					$("#T_F5T6 tbody tr").find("td:eq(8)").remove();
-					$("#T_F5T6 thead th:eq(11)").remove();
-					$("#T_F5T6 tbody tr").find("td:eq(7)").remove();
-					$("#T_F5T6 thead th:eq(10)").remove();
-					$("#T_F5T6 tbody tr").find("td:eq(6)").remove();
-
 	                $(".options").remove();
 	                $(".tb-header").removeClass("tb-header")
 	                $(".source").remove();

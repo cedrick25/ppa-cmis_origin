@@ -276,6 +276,21 @@ $.wms.report = (function() {
         }
 
         $(".btn-download").unbind("click").on("click",function(){
+
+            const eym = $.wms.urlParam('date');
+            const d = new Date(eym);
+            const Y_M = d.getFullYear()+'-01';
+
+            var form = "Download Reports Form: "+$.wms.urlParam('form')+", Date-from:"+Y_M +" to "+ $.wms.urlParam('date')
+            var payload = {
+                "created_by" : $.cookie("USER_ID"),
+                "module" : "REPORTS",
+                "action" : form
+                
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+            });
+
             $("#Table").table2excel({
                 // exclude CSS class
                 exclude: ".options",

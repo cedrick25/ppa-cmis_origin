@@ -148,6 +148,31 @@
     		$('.filter-modal select').css('width', '100%')
     		$(".select2").select2()
     		
+	        const eym = $.wms.urlParam('date');
+	        const d = new Date(eym);
+	        const Y_M = d.getFullYear()+'-01';
+
+	        if($.wms.urlParam('reg')){
+
+	            var form = "Visited Reports Field Office Form: "+$.wms.urlParam('form')+", REGION: "+ $.wms.urlParam('reg')+", Date-from:"+Y_M +" to "+ $.wms.urlParam('date')
+	    		var payload = {
+	    			"created_by" : $.cookie("USER_ID"),
+	    			"module" : "REPORTS",
+	    			"action" : form
+            	}
+	        }else{
+
+	            var form = "Visited Reports Form: "+$.wms.urlParam('form')+", Date-from:"+Y_M +" to "+ $.wms.urlParam('date')
+	    		var payload = {
+	    			"created_by" : $.cookie("USER_ID"),
+	    			"module" : "REPORTS",
+	    			"action" : form
+            	}
+	        }
+
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+            });
+
     		$.wms.widget.attachWidgetEvent();
     		$.wms.widget.attachWidgetFilterEvent();
 
