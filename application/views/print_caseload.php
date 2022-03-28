@@ -131,7 +131,7 @@
 	        window.setTimeout(checkPendingRequest, 500);
     		var payload = { form_page : $.wms.urlParam('form') }
 
-	        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/getFormByPage',JSON.stringify(payload)).done(function (result) {
+	        $.wms.executeExternalPost('/ppa-api/wsv1/api/getFormByPage',JSON.stringify(payload)).done(function (result) {
 	            
 	            if(result.status == 'SUCCESS'){
 	            	//alert(result.payload.form_CAPTION)
@@ -145,7 +145,7 @@
     			"action" : form
                 
             }
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
 

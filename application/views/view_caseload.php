@@ -54,7 +54,7 @@
     		var id = $(this).data('id');
             console.log(id);
             var payload = { id : $.wms.urlParam('id') , method : "view_single" }
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/caseload_reports',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-api/wsv1/api/caseload_reports',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
                 if(result.status === 'SUCCESS'){
                 	report_YM = result.payload.report_YM;

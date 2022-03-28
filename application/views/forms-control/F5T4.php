@@ -63,10 +63,40 @@
                 <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: JPI, PI, JRPI, RPI, JTPI, TPI</i></span>
               </div>
             </div>
-            <div class="form-group row">
+           <!--  <div class="form-group row">
               <label for="" class="col-sm-3">Petitioner's Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_petitioner" placeholder="">
+              </div>
+            </div> -->
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Petitioner's First Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_fname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Petitioner's Middle Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_mname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Petitioner's Last Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_lname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Petitioner's Suffix Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_sname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Alias</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_probationer_alias" placeholder="">
               </div>
             </div>
             <div class="form-group row">
@@ -167,10 +197,40 @@
                   <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: JPI, PI, JRPI, RPI, JTPI, TPI</i></span>
                 </div>
               </div>
-              <div class="form-group row">
+             <!--  <div class="form-group row">
                 <label for="" class="col-sm-3">Petitioner's Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_petitioner" placeholder="">
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Petitioner's First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_fname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Petitioner's Middle Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_mname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Petitioner's Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_lname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Petitioner's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_sname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Alias</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_probationer_alias" placeholder="">
                 </div>
               </div>
               <div class="form-group row">

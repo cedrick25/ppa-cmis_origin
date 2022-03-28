@@ -119,7 +119,7 @@
 	            var field = $("#filter_office").val();
 	            let a= document.createElement('a');
 				a.target= '_blank';
-				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_offline?submit=yes&field="+field+"&date="+date;
+				a.href= "/ppa-api/wsv1/api/migrate_offline?submit=yes&field="+field+"&date="+date;
 				a.click();
     		});
 

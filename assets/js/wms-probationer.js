@@ -8,6 +8,189 @@ $.wms.probationer = (typeof $.wms.probationer !== 'undefined') ? $.wms : {};
 
 $.wms.probationer = (function() {
 
+    var __attachProbationerRequestEvent = function() {
+    	console.log('test');
+    	var payload = {
+    		'method' : 'fetchAll'
+    	};
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payload)).done(function (result) {
+        	console.log(result)
+	        var p = result.payload;
+			var arr = [];
+			for(x=0; x<p.length; x++){
+				var obj = {};
+				obj['id'] = p[x].id;
+				obj['FORM_TABLE'] = p[x].FORM_TABLE;
+				obj['LASTNAME'] = p[x].LASTNAME;
+				obj['FIRSTNAME'] = p[x].FIRSTNAME;
+				obj['MIDDLENAME'] = p[x].MIDDLENAME;
+				obj['ALIAS'] = p[x].ALIAS;
+				obj['SUPVOFFICE'] = p[x].SUPVOFFICE;
+				obj['REMARKS'] = p[x].REMARKS;
+				obj['SDOCKETNO'] = p[x].SDOCKETNO;
+				obj['REGION'] = p[x].REGION;
+				obj['YEAR'] = p[x].YEAR;
+				var start_date
+				if (p[x].STARTYY == null) {
+					start_date = ""
+				} else {
+					start_date = p[x].STARTYY +'-'+p[x].STARTMM +'-'+p[x].STARTDD;
+				}
+				var end_date
+				if (p[x].ENDYY == null) {
+					end_date = ""
+				} else {
+					end_date = p[x].ENDYY +'-'+p[x].ENDMM +'-'+p[x].ENDDD;
+				}
+				obj['START_DATE'] = start_date;
+				obj['END_DATE'] = end_date;
+				obj['ACTION'] = ``
+				if (p[x].REQUEST_STATUS == 1) {
+					obj['ACTION'] = `<button class="access_ml_write btn btn-xs btn-success btn-migrateRequest" 
+						data-id="${p[x].id}"
+						data-lastname="${p[x].LASTNAME}" 
+						data-fistname="${p[x].FIRSTNAME}"
+						data-middlename="${p[x].MIDDLENAME}"
+						data-alias="${p[x].ALIAS}"
+						data-super="${p[x].SUPVOFFICE}"
+						data-docket="${p[x].SDOCKETNO}"
+						data-region="${p[x].REGION}"
+						data-year="${p[x].YEAR}"
+						data-startyy="${p[x].STARTYY}"
+						data-startmm="${p[x].STARTMM}"
+						data-startdd="${p[x].STARTDD}"
+						data-endyy="${p[x].ENDYY}"
+						data-endmm="${p[x].ENDMM}"
+						data-enddd="${p[x].ENDDD}"
+					>Approve</button>
+					<button  class="access_ml_write btn btn-xs btn-danger btn-rejectRequest"
+						data-id="${p[x].id}"
+					>Reject</button>
+					`;
+				} else if(p[x].REQUEST_STATUS == 2) {
+					obj['ACTION'] = `<span>Approved</span>`
+				}else{
+					obj['ACTION'] = `<span>Rejected</span>`
+				}
+				arr.push(obj);
+			}
+			$(document).ready(function(){
+				if ( $.fn.DataTable.isDataTable('#probationerRequest_table') ) {
+	            $('#probationerRequest_table').DataTable().destroy();
+	            $('#probationerRequest_table tbody').empty();
+	        }
+				$("#probationerRequest_table").DataTable({
+					"lengthChange": false,
+				"data": arr,
+				"columns": [
+	                {"data": "id"},
+	                {"data": "FORM_TABLE"},
+	                {"data": "LASTNAME"},
+	                {"data": "FIRSTNAME"},
+	                {"data": "MIDDLENAME"},
+	                {"data": "ALIAS"},
+	                {"data": "SUPVOFFICE"},
+	                {"data": "REMARKS"},
+	                {"data": "SDOCKETNO"},
+	                {"data": "REGION"},
+	                {"data": "YEAR"},
+	                {"data": "START_DATE"},
+	                {"data": "END_DATE"},
+	                {"data": "ACTION"}
+	            ],
+	            "fnDrawCallback": function(){
+
+	            	$(".btn-rejectRequest").unbind('click').on('click', function(){
+	    				var id 		= $(this).data("id");
+	            		console.log(id);
+	    				$("#modalReject").modal('toggle')
+	            		$(".saveReject").unbind('click').on('click', function(){
+	                    	var payloadReject = {
+							    "method" : "update",
+							    "id" : id,
+							    "REQUEST_STATUS" : "0"
+	                    	}
+	                    	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadReject)).done(function (result) {
+		                        if(result.status == "SUCCESS"){
+		                            $(".saveRequest").attr('disabled',false)
+		                            $("#modalReject").modal('toggle')
+		                            location.reload();
+		                        }else{
+		                            alert("Failed")
+		                        }
+		                    }); 
+	                    }); 
+		                    
+	            	})
+	            	$(".btn-migrateRequest").unbind('click').on('click', function(){
+	    				console.log($(this).data("lastname"))
+	    				var id 		= $(this).data("id");
+	    				var lname 	= $(this).data("lastname");
+	    				var fname 	= $(this).data("fistname");
+	    				var mname 	= $(this).data("middlename");
+	    				var alias 	= $(this).data("alias");
+	    				var superv 	= $(this).data("super");
+	    				var docket 	= $(this).data("docket");
+	    				var region 	= $(this).data("region");
+	    				var year 	= $(this).data("year");
+	    				var startyy = $(this).data("startyy");
+	    				var startmm = $(this).data("startmm");
+	    				var startdd = $(this).data("startdd");
+	    				var endyy 	= $(this).data("endyy");
+	    				var endmm 	= $(this).data("endmm");
+	    				var enddd 	= $(this).data("enddd");
+	    				$("#modalRequest").modal('toggle')
+
+		            	$(".saveRequest").unbind('click').on('click', function(){
+                            $(".saveRequest").attr('disabled',true)
+	    					console.log(lname)
+
+		                    var payload_request = {
+		                        "method"        :"insert",
+		                        "REGION"        :region,
+		                        "YEAR"          :startyy+"-"+endyy,
+		                        "SDOCKETNO"     :docket,
+		                        "FIRSTNAME"     :fname,
+		                        "MIDDLENAME"    :mname,
+		                        "LASTNAME"      :lname,
+		                        "ALIAS"         :alias,
+		                        "SUPVOFFICE"    :superv,
+		                        "REMARKS"       :"",
+		                        "STARTMM"       :startmm,
+		                        "STARTDD"       :startdd,
+		                        "STARTYY"       :startyy,
+		                        "ENDMM"         :endmm,
+		                        "ENDDD"         :enddd,
+		                        "ENDYY"         :endyy,
+		                    }
+		                    console.log(payload_request)
+		                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload_request)).done(function (result) {
+		                        if(result.status == "SUCCESS"){
+		                        	var payloadStatus = {
+									    "method" : "update",
+									    "id" : id,
+									    "REQUEST_STATUS" : "2"
+		                        	}
+		                        	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadStatus)).done(function (result) {
+				                        if(result.status == "SUCCESS"){
+				                            $(".saveRequest").attr('disabled',false)
+				                            $("#modalRequest").modal('toggle')
+				                            location.reload();
+				                        }else{
+				                            alert("Failed")
+				                        }
+				                    }); 
+		                        }else{
+		                            alert("Failed")
+		                        }
+		                    }); 
+		            	})
+	            	})
+	            }
+				});
+			});
+		})
+    }
     var __attachProbationerEvent = function() {
         
         $(".sshow").unbind("click").on("click",function(){
@@ -23,8 +206,6 @@ $.wms.probationer = (function() {
         })
         
         $(".btn-search").unbind("click").on("click",function(){
-
-	        console.log('test');
 
 	        $('#probationer_table').DataTable().destroy();
 	        $('#probationer_table tbody').empty();
@@ -286,6 +467,7 @@ $.wms.probationer = (function() {
 
     
     return {
-        attachProbationerEvent : __attachProbationerEvent
+        attachProbationerEvent : __attachProbationerEvent,
+        attachProbationerRequestEvent: __attachProbationerRequestEvent
     };
 }());

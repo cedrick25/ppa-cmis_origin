@@ -1729,9 +1729,15 @@ $.wms.form5 = (function() {
         $(".addProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
+            var fullname = $("#add_lname").val() +', '+ $("#add_fname").val() +' y '+ $("#add_mname").val();
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
-                "petitioner": $("#add_petitioner").val(),
+                "petitioner": fullname,
+                "fname": $("#add_fname").val(),
+                "mname": $("#add_mname").val(),
+                "lname": $("#add_lname").val(),
+                "suffixname": $("#add_sname").val(),
+                "alias": $("#add_probationer_alias").val(),
                 "reason_denial": $("#add_reason_denial").val(),
                 "other_types": $("#add_other_types").val(),
                 "disposed_date": $("#add_psir").val(),
@@ -1743,13 +1749,62 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addProceedButton").attr('disabled',false)
-                $("#modal-add").modal('toggle')
-                ___modalReset();
+                // $(".modal-loader").addClass("hidden")
+                // $(".addProceedButton").attr('disabled',false)
+                // $("#modal-add").modal('toggle')
+                // ___modalReset();
+                // if(result.status != undefined && result.status == "SUCCESS"){
+                //     //__attachF5T4PageEvent();
+                //     location.reload();
+                // }else{
+                //     //Error Prompt
+                // }
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T4PageEvent();
-                    location.reload();
+
+                    // var start_date = new Date($("#add_start").val());
+                    // console.log(start_date)
+                    // var start_dd = String(start_date.getDate()).padStart(2, '0');
+                    // var start_mm = String(start_date.getMonth() + 1).padStart(2, '0'); 
+                    // var start_yyyy = start_date.getFullYear();
+
+                    // var end_date = new Date($("#add_end").val());
+                    // console.log(end_date)
+                    // var end_dd = String(end_date.getDate()).padStart(2, '0');
+                    // var end_mm = String(end_date.getMonth() + 1).padStart(2, '0'); 
+                    // var end_yyyy = end_date.getFullYear();
+
+                    var payload_request = {
+                        "method"        :"insert",
+                        "FORM_TABLE"    :"F5T4",
+                        "REGION"        :"",
+                        // "YEAR"          :start_yyyy+"-"+end_yyyy,
+                        "SDOCKETNO"     :$("#add_docket_no").val(),
+                        "FIRSTNAME"     :$("#add_fname").val(),
+                        "MIDDLENAME"    :$("#add_mname").val(),
+                        "LASTNAME"      :$("#add_lname").val(),
+                        "ALIAS"         :$("#add_probationer_alias").val(),
+                        // "SUPVOFFICE"    :$("#add_supervising").val(),
+                        "REMARKS"       :"",
+                        // "STARTMM"       :start_mm,
+                        // "STARTDD"       :start_dd,
+                        // "STARTYY"       :start_yyyy,
+                        // "ENDMM"         :end_mm,
+                        // "ENDDD"         :end_dd,
+                        // "ENDYY"         :end_yyyy,
+                    }
+                    console.log(payload_request)
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payload_request)).done(function (result) {
+                    //__attachF5T8PageEvent();
+                        if(result.status == "SUCCESS"){
+                            $(".modal-loader").addClass("hidden")
+                            $(".addProceedButton").attr('disabled',false)
+                            $("#modal-add").modal('toggle')
+                            ___modalReset();
+                            location.reload();
+                        }else{
+                            alert("Failed")
+                        }
+                    });    
                 }else{
                     //Error Prompt
                 }
@@ -3163,13 +3218,54 @@ $.wms.form5 = (function() {
             }
             console.log(payload)
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addProceedButton").attr('disabled',false)
-                $("#modal-add").modal('toggle')
-                ___modalReset();
+                
                 if(result.status != undefined && result.status == "SUCCESS"){
+
+
+                    var start_date = new Date($("#add_start").val());
+                    console.log(start_date)
+                    var start_dd = String(start_date.getDate()).padStart(2, '0');
+                    var start_mm = String(start_date.getMonth() + 1).padStart(2, '0'); 
+                    var start_yyyy = start_date.getFullYear();
+
+                    var end_date = new Date($("#add_end").val());
+                    console.log(end_date)
+                    var end_dd = String(end_date.getDate()).padStart(2, '0');
+                    var end_mm = String(end_date.getMonth() + 1).padStart(2, '0'); 
+                    var end_yyyy = end_date.getFullYear();
+
+                    var payload_request = {
+                        "method"        :"insert",
+                        "FORM_TABLE"    :"F5T8",
+                        "REGION"        :"",
+                        "YEAR"          :start_yyyy+"-"+end_yyyy,
+                        "SDOCKETNO"     :$("#add_docket_no").val(),
+                        "FIRSTNAME"     :$("#add_fname").val(),
+                        "MIDDLENAME"    :$("#add_mname").val(),
+                        "LASTNAME"      :$("#add_lname").val(),
+                        "ALIAS"         :$("#add_probationer_alias").val(),
+                        "SUPVOFFICE"    :$("#add_supervising").val(),
+                        "REMARKS"       :"",
+                        "STARTMM"       :start_mm,
+                        "STARTDD"       :start_dd,
+                        "STARTYY"       :start_yyyy,
+                        "ENDMM"         :end_mm,
+                        "ENDDD"         :end_dd,
+                        "ENDYY"         :end_yyyy,
+                    }
+                    console.log(payload_request)
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payload_request)).done(function (result) {
                     //__attachF5T8PageEvent();
-                    location.reload();
+                        if(result.status == "SUCCESS"){
+                            $(".modal-loader").addClass("hidden")
+                            $(".addProceedButton").attr('disabled',false)
+                            $("#modal-add").modal('toggle')
+                            ___modalReset();
+                            location.reload();
+                        }else{
+                            alert("Failed")
+                        }
+                    });    
                 }else{
                     //Error Prompt
                 }

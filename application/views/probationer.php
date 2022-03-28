@@ -159,7 +159,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<span class="font_20"><i class="fa fa-users"></i> Masterlist of Probationers</b></span>
+				<span class="font_20"><i class="fa fa-users"></i> <b>Masterlist of Probationers</b></span>
 
 				<span class="pull-right">
 					  <button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
@@ -188,6 +188,41 @@
 				            <th style="text-align: center;">Start Date</th>
 				            <th style="text-align: center;">End Date</th>
 				            <th class="access_ml_write" style="text-align: center;">Options</th>
+				          </tr>
+				        </thead>
+				        <tbody class="small">
+				        </tbody>
+			      	</table>
+		      	</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="font_20"><i class="fa fa-users"></i> <b>Request MasterList</b></span>
+			</div>
+			<div class="panel-body">
+				<div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
+				
+				<div id="result_table" class="">
+					<table id="probationerRequest_table" class="display table-bordered table-condensed nowrap" style="width:100%">
+				        <thead class="tb-header small">
+				          <tr>
+				            <th style="text-align: center;">ID</th>
+				            <th style="text-align: center;">Form Table</th>
+				            <th style="text-align: center;">Last Name</th>
+				            <th style="text-align: center;">First Name</th>
+				            <th style="text-align: center;">Middle Name</th>
+				            <th style="text-align: center;">Alias</th>
+				            <th style="text-align: center;">Supervising Office</th>
+				            <th style="text-align: center;">Remarks</th>
+				            <th style="text-align: center;">Docket No</th>
+				            <th style="text-align: center;">Region</th>
+				            <th style="text-align: center;">Year</th>
+				            <th style="text-align: center;">Start Date</th>
+				            <th style="text-align: center;">End Date</th>
+				            <th class="access_ml_write" style="text-align: center;" id="migrateRequest">Action</th>
 				          </tr>
 				        </thead>
 				        <tbody class="small">
@@ -309,6 +344,43 @@
 	      </div>
 	    </div>
 	  </div>
+	</div>
+
+	<div class="modal fade" id="modalRequest" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+		        	<h4 class="modal-title" id="exampleModalLabel"> Migrate data to masterlist</h4>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        	</button>
+		      	</div>
+		      	<div class="modal-body">
+		      		Are you sure you want to approve?
+		  		</div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-sm btn-primary saveRequest adminTools" id="">Confirm</button>
+		      	</div>
+		  	</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalReject" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+		        	<h4 class="modal-title" id="exampleModalLabel"> Reject</h4>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        	</button>
+		      	</div>
+		      	<div class="modal-body">
+		      		Are you sure you want to reject?
+		  		</div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-sm btn-primary saveReject adminTools" id="">Confirm</button>
+		      	</div>
+		  	</div>
+		</div>
 	</div>
 
 	<div class="modal fade" id="modalAdd" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
@@ -464,6 +536,7 @@
 
 	          $.wms.widget.attachWidgetEvent();
 	          $.wms.probationer.attachProbationerEvent();
+	          $.wms.probationer.attachProbationerRequestEvent();
       		}
         }, 200);
 

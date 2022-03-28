@@ -95,7 +95,7 @@ $.wms.login = (function() {
                             CREATED_BY : "1",
                             message_DATETIME : dt
                         }
-                        $.wms.executeExternalPost('http://192.168.1.200/ppa-cmis-api_origin-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
+                        $.wms.executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
                             
                         });
 
@@ -104,7 +104,7 @@ $.wms.login = (function() {
                             "message_TO" : result.payload.USER_EMAIL,
                             // "message_TO" : "notification@probation.gov.ph",
                         }
-                        $.wms.executeExternalPost('http://192.168.1.219/ppa-cmis-api_origin-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                        $.wms.executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                            
                         });
                         $("#divLogin").addClass("hidden");
@@ -119,7 +119,7 @@ $.wms.login = (function() {
                                 CREATED_BY : "1",
                                 message_DATETIME : dt
                             }
-                            $.wms.executeExternalPost('http://192.168.1.200/ppa-cmis-api_origin-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
+                            $.wms.executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
                             });
 
 
@@ -127,7 +127,7 @@ $.wms.login = (function() {
                                 "message_CONTENT" : "Hi " + result.payload.USER_FULLNAME + ", your OTP KEY is " + $("#otpkeygen").val() +".",
                                 "message_TO" : result.payload.USER_EMAIL,
                             }
-                            $.wms.executeExternalPost('http://192.168.1.219/ppa-cmis-api_origin-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                            $.wms.executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                             
                             });
 

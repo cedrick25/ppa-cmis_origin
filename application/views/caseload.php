@@ -141,7 +141,7 @@
     			"action" : form
                 
             }
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
 
@@ -168,7 +168,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("id")
 		            }
-		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/petitioner/profile/"+result.payload.PETITIONER
@@ -185,7 +185,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("id")
 		            }
-		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/petitioner/profile/"+result.payload.PETITIONER
@@ -202,7 +202,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("id")
 		            }
-		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/docketbook/view/investigation/"+result.payload.PETITIONER
@@ -219,7 +219,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("docket")
 		            }
-		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/docketbook/view/investigation/"+result.payload.PETITIONER
@@ -242,7 +242,7 @@
 		
 		var payload = { form_page : $.wms.urlParam('form') }
 
-        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/getFormByPage',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-api/wsv1/api/getFormByPage',JSON.stringify(payload)).done(function (result) {
             
             if(result.status == 'SUCCESS'){
             	//alert(result.payload.form_CAPTION)
