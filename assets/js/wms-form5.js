@@ -1912,7 +1912,6 @@ $.wms.form5 = (function() {
                         $("#modal-edit").modal('toggle')
                         ___modalReset();
                         location.reload();
-
                     }else{
                         //Error Prompt
                     }
@@ -3064,6 +3063,7 @@ $.wms.form5 = (function() {
     };
 
     var __attachF5T8PageEvent = function() {
+        console.log("open");
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -3074,6 +3074,18 @@ $.wms.form5 = (function() {
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
+        });
+
+        $("#add_type_referrals").change(function() {
+          var val = $(this).children(":selected").val();
+          console.log(val)
+          if (val == "Direct Transfer, Court to Court") {
+            $(".refer").removeClass("hide")
+          } else if(val == "Transfer from other Offices/Courts") {
+            $(".refer").removeClass("hide")
+          } else {
+            $(".refer").addClass("hide")
+          }
         });
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T8',JSON.stringify(payload)).done(function (result) {
             console.log(result);
@@ -3213,13 +3225,14 @@ $.wms.form5 = (function() {
                         "LASTNAME"      :$("#add_lname").val(),
                         "ALIAS"         :$("#add_probationer_alias").val(),
                         "SUPVOFFICE"    :$("#add_supervising").val(),
-                        "REMARKS"       :"",
+                        "REMARKS"       :$("#add_reffering").val(),
                         "STARTMM"       :start_mm,
                         "STARTDD"       :start_dd,
                         "STARTYY"       :start_yyyy,
                         "ENDMM"         :end_mm,
                         "ENDDD"         :end_dd,
                         "ENDYY"         :end_yyyy,
+                        "FIELD_OFFICE"  : $.wms.urlParam('field'),
                     }
                     console.log(payload_request)
                     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payload_request)).done(function (result) {

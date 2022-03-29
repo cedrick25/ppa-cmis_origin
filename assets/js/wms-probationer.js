@@ -9,7 +9,7 @@ $.wms.probationer = (typeof $.wms.probationer !== 'undefined') ? $.wms : {};
 $.wms.probationer = (function() {
 
     var __attachProbationerRequestEvent = function() {
-    	console.log('test');
+    	console.log('testttt');
     	var payload = {
     		'method' : 'fetchAll'
     	};
@@ -44,6 +44,7 @@ $.wms.probationer = (function() {
 				}
 				obj['START_DATE'] = start_date;
 				obj['END_DATE'] = end_date;
+				obj['FIELD_OFFICE'] = p[x].FIELD_OFFICE;
 				obj['ACTION'] = ``
 				if (p[x].REQUEST_STATUS == 1) {
 					obj['ACTION'] = `<button class="access_ml_write btn btn-xs btn-success btn-migrateRequest" 
@@ -63,9 +64,6 @@ $.wms.probationer = (function() {
 						data-endmm="${p[x].ENDMM}"
 						data-enddd="${p[x].ENDDD}"
 					>Approve</button>
-					<button  class="access_ml_write btn btn-xs btn-danger btn-rejectRequest"
-						data-id="${p[x].id}"
-					>Reject</button>
 					`;
 				} else if(p[x].REQUEST_STATUS == 2) {
 					obj['ACTION'] = `<span>Approved</span>`
@@ -96,32 +94,32 @@ $.wms.probationer = (function() {
 	                {"data": "YEAR"},
 	                {"data": "START_DATE"},
 	                {"data": "END_DATE"},
+	                {"data": "FIELD_OFFICE"},
 	                {"data": "ACTION"}
 	            ],
 	            "fnDrawCallback": function(){
-
-	            	$(".btn-rejectRequest").unbind('click').on('click', function(){
-	    				var id 		= $(this).data("id");
-	            		console.log(id);
-	    				$("#modalReject").modal('toggle')
-	            		$(".saveReject").unbind('click').on('click', function(){
-	                    	var payloadReject = {
-							    "method" : "update",
-							    "id" : id,
-							    "REQUEST_STATUS" : "0"
-	                    	}
-	                    	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadReject)).done(function (result) {
-		                        if(result.status == "SUCCESS"){
-		                            $(".saveRequest").attr('disabled',false)
-		                            $("#modalReject").modal('toggle')
-		                            location.reload();
-		                        }else{
-		                            alert("Failed")
-		                        }
-		                    }); 
-	                    }); 
+	        //     	$(".btn-rejectRequest").unbind('click').on('click', function(){
+	    				// var id 		= $(this).data("id");
+	        //     		console.log(id);
+	    				// $("#modalReject").modal('toggle')
+	        //     		$(".saveReject").unbind('click').on('click', function(){
+	        //             	var payloadReject = {
+							  //   "method" : "update",
+							  //   "id" : id,
+							  //   "REQUEST_STATUS" : "0"
+	        //             	}
+	        //             	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadReject)).done(function (result) {
+		       //                  if(result.status == "SUCCESS"){
+		       //                      $(".saveRequest").attr('disabled',false)
+		       //                      $("#modalReject").modal('toggle')
+		       //                      location.reload();
+		       //                  }else{
+		       //                      alert("Failed")
+		       //                  }
+		       //              }); 
+	        //             }); 
 		                    
-	            	})
+	        //     	})
 	            	$(".btn-migrateRequest").unbind('click').on('click', function(){
 	    				console.log($(this).data("lastname"))
 	    				var id 		= $(this).data("id");

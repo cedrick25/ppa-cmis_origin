@@ -268,6 +268,12 @@
                   </select>
                 </div>
               </div>
+              <div class="form-group row refer hide">
+                <label for="" class="col-sm-3">Reffering Office</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control upperCase input-sm" id="add_reffering" placeholder="">
+                </div>
+              </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">CC no.</label>
                 <div class="col-sm-9">

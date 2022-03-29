@@ -222,6 +222,7 @@
 				            <th style="text-align: center;">Year</th>
 				            <th style="text-align: center;">Start Date</th>
 				            <th style="text-align: center;">End Date</th>
+				            <th style="text-align: center;">Field Office</th>
 				            <th class="access_ml_write" style="text-align: center;" id="migrateRequest">Action</th>
 				          </tr>
 				        </thead>
