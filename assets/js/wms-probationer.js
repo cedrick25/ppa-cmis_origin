@@ -53,6 +53,7 @@ $.wms.probationer = (function() {
 						data-fistname="${p[x].FIRSTNAME}"
 						data-middlename="${p[x].MIDDLENAME}"
 						data-alias="${p[x].ALIAS}"
+						data-remarks="${p[x].REMARKS}"
 						data-super="${p[x].SUPVOFFICE}"
 						data-docket="${p[x].SDOCKETNO}"
 						data-region="${p[x].REGION}"
@@ -128,6 +129,7 @@ $.wms.probationer = (function() {
 	    				var mname 	= $(this).data("middlename");
 	    				var alias 	= $(this).data("alias");
 	    				var superv 	= $(this).data("super");
+	    				var remarks = $(this).data("remarks");
 	    				var docket 	= $(this).data("docket");
 	    				var region 	= $(this).data("region");
 	    				var year 	= $(this).data("year");
@@ -153,7 +155,7 @@ $.wms.probationer = (function() {
 		                        "LASTNAME"      :lname,
 		                        "ALIAS"         :alias,
 		                        "SUPVOFFICE"    :superv,
-		                        "REMARKS"       :"",
+		                        "REMARKS"       :remarks,
 		                        "STARTMM"       :startmm,
 		                        "STARTDD"       :startdd,
 		                        "STARTYY"       :startyy,
