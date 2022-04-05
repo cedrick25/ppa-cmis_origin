@@ -54,6 +54,26 @@
 			                <option value="F21T15">Table 15 - NEW COURTESY PAROLE AND PARDON SUPVERVISION REFERRALS RECEIVED AND TERMINATED</option>
 		                </optgroup>
 	              	</select>
+
+
+	              	<select class="form-control  hidden" id="sel-44-forms">
+	              		<optgroup label="Forms 44">
+			                <option value="F44SSCS">SUSPENDED SENTENCE CASELOAD SUMMARY</option>
+			                <option value="F44T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
+			                <option value="F44T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
+			                <option value="F44T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</option>
+			                <option value="F44T4">Table 4 - INVESTIGATION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
+			                <option value="F44T5">Table 5 - CARRY OVER COURTESY REFERRALS RECEIVED</option>
+			                <option value="F44T6">Table 6 - COURTESY INVESTIGATION REFERRALS RECEIVED AND COMPLETED AND RETURNED</option>
+			                <option value="F44T7">Table 7 - CARRY OVER SUPERVISION CASELOAD</option>
+			                <option value="F44T8">Table 8 - SUPERVISION REFERRALS RECEIVED</option>
+			                <option value="F44T9">Table 9 - SUPERVISION CASES ACTED UPON</option>
+			                <option value="F44T10">Table 10 - CARRY OVER SUPERVISION CASES PENDING RESOLUTION BY THE EXECUTIVE DIRECTOR</option>
+			                <option value="F44T11">Table 11 - SUPERVISION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
+			                <option value="F44T12">Table 12 - CARRY OVER COURTESY SUPERVISION SUPERVISION REFERRALS RECEIVED</option>
+			                <option value="F44T13">Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND TERMINATED</option>
+		                </optgroup>
+	              	</select>
 		            
 	            </div>
 	            <div class="form-group col-md-1">

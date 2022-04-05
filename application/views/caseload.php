@@ -49,10 +49,6 @@
 	        <div class="panel panel-primary">
 	        	<div class="panel-heading">
 	        		<?php 
-	        		$current_form = "Form 21 - ";
-	        		$current_table = "Caseload Summary";
-	        		$current_type = "Parole/Executive Clemency ";
-	        		$current_link = "#form21modal";
 	        		$widget = "";
 	        		if(isset($_GET['form'])){
 	        			$str1 = explode("F",$_GET['form']);
@@ -61,8 +57,15 @@
 	        				$current_type = "Probation ";
 	        				$current_link = "#form5modal";
 	        				
-	        			}else{
-	        			
+	        			}else if ($str1[1][0] == "2") {
+			        		$current_form = "Form 21 - ";
+			        		$current_table = "Caseload Summary";
+			        		$current_type = "Parole/Executive Clemency ";
+			        		$current_link = "#form21modal";
+	        			} else {
+	        				$current_form = "Form 44 - ";
+	        				$current_type = "Offender ";
+	        				$current_link = "#form44modal";
 	        			}
 	        			$widget = "widget_filter_probation.php";
 	        			$str2 = explode("T",$str1[1]);
@@ -141,7 +144,7 @@
     			"action" : form
                 
             }
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
 
@@ -168,7 +171,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("id")
 		            }
-		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/petitioner/profile/"+result.payload.PETITIONER
@@ -185,7 +188,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("id")
 		            }
-		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getFactSheet',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/petitioner/profile/"+result.payload.PETITIONER
@@ -202,7 +205,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("id")
 		            }
-		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/docketbook/view/investigation/"+result.payload.PETITIONER
@@ -219,7 +222,7 @@
 		            var payload = {
 		            	"docket_no" : $(this).data("docket")
 		            }
-		            $.wms.executeExternalPost('/ppa-api/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
+		            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getDocketInvID',JSON.stringify(payload)).done(function (result) {
 		            	console.log(result);
 		            	if(result.status === "SUCCESS"){
 		            		var URL = "http://pis.probation.gov.ph/docketbook/view/investigation/"+result.payload.PETITIONER
@@ -242,7 +245,7 @@
 		
 		var payload = { form_page : $.wms.urlParam('form') }
 
-        $.wms.executeExternalPost('/ppa-api/wsv1/api/getFormByPage',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/getFormByPage',JSON.stringify(payload)).done(function (result) {
             
             if(result.status == 'SUCCESS'){
             	//alert(result.payload.form_CAPTION)

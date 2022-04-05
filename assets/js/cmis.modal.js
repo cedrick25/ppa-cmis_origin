@@ -25,6 +25,14 @@ $.wms.modal = (function() {
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
         });
 
+        $(".btn-modal-44").unbind("click").on("click",function(){
+            console.log("Trigger");
+            var sel     = $("#sel-modal-44-forms").val();
+            var date    = $("#modal-44-date").val();
+            var field   = $("#sel-modal-44-field").val();
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
+        });
+
 
         $(".btn-modal-regional").unbind("click").on("click",function(){
             console.log("Trigger");

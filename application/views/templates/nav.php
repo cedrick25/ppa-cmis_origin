@@ -103,6 +103,7 @@
                                
                                 <li><a href="#" class="access_f5"  data-toggle="modal" data-target="#form5modal">Probation Caseload (Form 5)</a></li>
                                 <li><a href="#"  class="access_f21" data-toggle="modal" data-target="#form21modal">Parole/Executive Clemency Caseload (Form 21)</a></li> 
+                                <li><a href="#"  class="access_f44" data-toggle="modal" data-target="#form44modal"> Offender's Caseload (Form 44)</a></li> 
                                 <li><a href="caseload_report"  class="" >Caseload Report</a></li> 
                             </ul>
                         </li>

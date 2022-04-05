@@ -170,7 +170,7 @@
             	}
 	        }
 
-            $.wms.executeExternalPost('/ppa-api/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
     		$.wms.widget.attachWidgetEvent();

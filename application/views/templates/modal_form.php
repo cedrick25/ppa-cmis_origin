@@ -22,7 +22,7 @@
             <label for="" class="col-sm-2">Forms</label>
             <div class="col-sm-10 filter-modal ">  
               <select class="form-control select2 sel" id="sel-modal-probation-forms">
-                <option value="F5PCS">PROBATION CASELOAD SUMMARY</option>
+                <option value="F5PCS" selected>PROBATION CASELOAD SUMMARY</option>
                 <option value="F5T1">TABLE 1 - CARRY OVER PROBATION INVESTIGATION CASELOAD</option>
                 <option value="F5T2">TABLE 2 - COURT INVESTIGATION REFERRALS RECEIVED, ACTED UPON, AND NOT ACTED UPON</option>
                 <option value="F5T3">TABLE 3 - CARRY OVER PROBATION INVESTIGATION CASES PENDING DISPOSITION IN COURT</option>
@@ -58,7 +58,7 @@
 
 
   <div class="modal fade"  id="form21modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
        <div class="modal-header">
          
@@ -114,6 +114,59 @@
   </div>
 
 
+  <div class="modal fade"  id="form44modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+       <div class="modal-header">
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">Offender's Caseload (FORM 44)</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Field Office</label>
+            <div class="col-sm-10 filter-modal">    
+             <select class="form-control select2 modal sel_field_office" id="sel-modal-44-field">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Forms</label>
+            <div class="col-sm-10 filter-modal">
+              <select class="form-control select2" id="sel-modal-44-forms">
+                <option value="F44SSCS">SUSPENDED SENTENCE CASELOAD SUMMARY</option>
+                <option value="F44T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
+                <option value="F44T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
+                <option value="F44T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</option>
+                <option value="F44T4">Table 4 - INVESTIGATION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
+                <option value="F44T5">Table 5 - CARRY OVER COURTESY REFERRALS RECEIVED</option>
+                <option value="F44T6">Table 6 - COURTESY INVESTIGATION REFERRALS RECEIVED AND COMPLETED AND RETURNED</option>
+                <option value="F44T7">Table 7 - CARRY OVER SUPERVISION CASELOAD</option>
+                <option value="F44T8">Table 8 - SUPERVISION REFERRALS RECEIVED</option>
+                <option value="F44T9">Table 9 - SUPERVISION CASES ACTED UPON</option>
+                <option value="F44T10">Table 10 - CARRY OVER SUPERVISION CASES PENDING RESOLUTION BY THE EXECUTIVE DIRECTOR</option>
+                <option value="F44T11">Table 11 - SUPERVISION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
+                <option value="F44T12">Table 12 - CARRY OVER COURTESY SUPERVISION SUPERVISION REFERRALS RECEIVED</option>
+                <option value="F44T13">Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND TERMINATED</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Date</label>
+            <div class="col-sm-10">    
+              <input name="Date" id="modal-44-date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-modal-44">Proceed</button>  
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div class="modal fade" id="regionalmodal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

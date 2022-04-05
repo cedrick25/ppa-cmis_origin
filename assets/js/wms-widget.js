@@ -1028,9 +1028,25 @@ $.wms.widget = (function() {
         switch(selForm){
             case 'F5PCS':   $.wms.form5.attachF5PCSPageEvent(); 
                             $.wms.reports.attachF5PCS(); break;
+            case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
+                            // $.wms.reports.attachF5PCS(); break;
             case 'F21PCS':   $.wms.form21.attachF21PCSPageEvent(); 
                             $.wms.reports.attachF21PCS();
                             break;
+            case 'F44T1': $.wms.form44.attachF44T1PageEvent(); break;
+            case 'F44T2': $.wms.form44.attachF44T2PageEvent(); break;
+            case 'F44T3': $.wms.form44.attachF44T3PageEvent(); break;
+            case 'F44T4': $.wms.form44.attachF44T4PageEvent(); break;
+            case 'F44T5': $.wms.form44.attachF44T5PageEvent(); break;
+            case 'F44T6': $.wms.form44.attachF44T6PageEvent(); break;
+            case 'F44T7': $.wms.form44.attachF44T7PageEvent(); break;
+            case 'F44T8': $.wms.form44.attachF44T8PageEvent(); break;
+            case 'F44T9': $.wms.form44.attachF44T9PageEvent(); break;
+            case 'F44T10': $.wms.form44.attachF44T10PageEvent(); break;
+            case 'F44T11': $.wms.form44.attachF44T11PageEvent(); break;
+            case 'F44T12': $.wms.form44.attachF44T12PageEvent(); break;
+            case 'F44T13': $.wms.form44.attachF44T13PageEvent(); break;
+
             case 'F5T1': $.wms.form5.attachF5T1PageEvent(); break;
             case 'F5T2': $.wms.form5.attachF5T2PageEvent(); break;
             case 'F5T3': $.wms.form5.attachF5T3PageEvent(); break;
@@ -1062,11 +1078,11 @@ $.wms.widget = (function() {
             break;
         }
 
-        var date = $.wms.urlParam('date')
-        var field = $.wms.urlParam('field')
-        var reg2 = $.wms.urlParam('reg2')
-        var reg = $.wms.urlParam('reg')
-       
+        var date    = $.wms.urlParam('date')
+        var field   = $.wms.urlParam('field')
+        var reg2    = $.wms.urlParam('reg2')
+        var reg     = $.wms.urlParam('reg')
+
 
         $(".btn-print").unbind("click").on("click",function(){
             window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field, '_blank'); 
@@ -1120,15 +1136,19 @@ $.wms.widget = (function() {
             }
         };
         window.setTimeout(checkPendingRequest, 250);
-
         if(~selForm.indexOf("F5")){
             $("#sel-probation-forms").removeClass("hidden")
             $("#sel-probation-forms").select2();
             $("#sel-probation-forms").val(selForm).trigger("change")
-        }else{
+        }else if (~selForm.indexOf("F21")) {
             $("#sel-parole-forms").removeClass("hidden")
             $("#sel-parole-forms").select2()
             $("#sel-parole-forms").val(selForm).trigger("change")
+
+        } else {
+            $("#sel-44-forms").removeClass("hidden")
+            $("#sel-44-forms").select2()
+            $("#sel-44-forms").val(selForm).trigger("change")
 
         }
 
@@ -1143,8 +1163,10 @@ $.wms.widget = (function() {
             var sel = "";
             if(~selForm.indexOf("F5")){
                 sel = $("#sel-probation-forms").val();
-            }else{
+            }else if (~selForm.indexOf("F21")) {
                 sel = $("#sel-parole-forms").val();
+            } else {
+                sel = $("#sel-44-forms").val();
             }
 
 
