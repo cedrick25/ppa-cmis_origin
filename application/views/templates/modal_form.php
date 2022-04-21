@@ -287,7 +287,7 @@
             <label for="" class="col-sm-2">Forms</label>
             <div class="col-sm-10 filter-modal">
               <select class="form-control select2" id="sel-modal-51-forms">
-                <option value="F51CSCS">RELEASE ON RECOGNIZANCE CASELOAD SUMMARY</option>
+                <option value="F51RORCS">RELEASE ON RECOGNIZANCE CASELOAD SUMMARY</option>
                 <option value="F51T1">Table 1 - CARRY OVER SUPERVISION CASELOAD</option>
                 <option value="F51T2">Table 2 - SUPERVISION REFERRALS RECEIVED</option>
                 <option value="F51T3">Table 3 - MONITORING REPORT SUBMITTED TO COURT</option>

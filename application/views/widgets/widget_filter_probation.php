@@ -103,11 +103,11 @@
 
 	              	<select class="form-control  hidden" id="sel-51-forms">
 	              		<optgroup label="Forms 51">
-			                <option value="F50RORCS">RELEASE ON RECOGNIZANCE CASELOAD SUMMARY</option>
-			                <option value="F51T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
-			                <option value="F51T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
-			                <option value="F51T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</option>
-			                <option value="F51T4">Table 4 - INVESTIGATION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
+			                <option value="F51RORCS">RELEASE ON RECOGNIZANCE CASELOAD SUMMARY</option>
+			                <option value="F51T1">Table 1 - CARRY OVER SUPERVISION CASELOAD</option>
+			                <option value="F51T2">Table 2 - SUPERVISION REFERRALS RECEIVED</option>
+			                <option value="F51T3">Table 3 - MONITORING REPORT SUBMITTED TO COURT</option>
+			                <option value="F51T4">Table 4 - COURT DISPOSITION OF RELEASE ON RECOGNIZANCE</option>
 		                </optgroup>
 	              	</select>
 

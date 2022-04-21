@@ -1143,6 +1143,26 @@ $.wms.widget = (function() {
             $("#sel-parole-forms").removeClass("hidden")
             $("#sel-parole-forms").select2()
             $("#sel-parole-forms").val(selForm).trigger("change")
+        }else if (~selForm.indexOf("F44")) {
+            $("#sel-44-forms").removeClass("hidden")
+            $("#sel-44-forms").select2()
+            $("#sel-44-forms").val(selForm).trigger("change")
+        }else if (~selForm.indexOf("F45")) {
+            $("#sel-45-forms").removeClass("hidden")
+            $("#sel-45-forms").select2()
+            $("#sel-45-forms").val(selForm).trigger("change")
+        }else if (~selForm.indexOf("F50")) {
+            $("#sel-50-forms").removeClass("hidden")
+            $("#sel-50-forms").select2()
+            $("#sel-50-forms").val(selForm).trigger("change")
+        }else if (~selForm.indexOf("F51")) {
+            $("#sel-51-forms").removeClass("hidden")
+            $("#sel-51-forms").select2()
+            $("#sel-51-forms").val(selForm).trigger("change")
+        }else if (~selForm.indexOf("F53")) {
+            $("#sel-53-forms").removeClass("hidden")
+            $("#sel-53-forms").select2()
+            $("#sel-53-forms").val(selForm).trigger("change")
 
         } else {
             $("#sel-44-forms").removeClass("hidden")
@@ -1164,6 +1184,16 @@ $.wms.widget = (function() {
                 sel = $("#sel-probation-forms").val();
             }else if (~selForm.indexOf("F21")) {
                 sel = $("#sel-parole-forms").val();
+            }else if (~selForm.indexOf("F44")) {
+                sel = $("#sel-44-forms").val();
+            }else if (~selForm.indexOf("F45")) {
+                sel = $("#sel-45-forms").val();
+            }else if (~selForm.indexOf("F50")) {
+                sel = $("#sel-50-forms").val();
+            }else if (~selForm.indexOf("F51")) {
+                sel = $("#sel-51-forms").val();
+            }else if (~selForm.indexOf("F53")) {
+                sel = $("#sel-53-forms").val();
             } else {
                 sel = $("#sel-44-forms").val();
             }

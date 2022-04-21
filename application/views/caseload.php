@@ -52,7 +52,7 @@
 	        		$widget = "";
 	        		if(isset($_GET['form'])){
 	        			$str1 = explode("F",$_GET['form']);
-	        			if($str1[1][0] == "5"){
+	        			if($str1[1][0] == "5" && $str1[1][1] == "T"){
 	        				$current_form = "Form 5 - ";
 	        				$current_type = "Probation ";
 	        				$current_link = "#form5modal";
@@ -63,19 +63,19 @@
 			        		$current_type = "Parole/Executive Clemency ";
 			        		$current_link = "#form21modal";
 
-	        			}else if ($str1[1][0][0] == "4") {
+	        			}else if ($str1[1][1] == "4") {
 	        				$current_form = "Form 44 - ";
 	        				$current_type = "Offender ";
 	        				$current_link = "#form44modal";
-	        			}else if ($str1[1][0][0] == "5") {
+	        			}else if ($str1[1][1] == "5") {
 	        				$current_form = "Form 45 - ";
 	        				$current_type = "COMMUNITY SERVICE CASELOAD SUMMARY ";
 	        				$current_link = "#form45modal";
-	        			}else if ($str1[1][0][0] == "0") {
+	        			}else if ($str1[1][1] == "0") {
 	        				$current_form = "Form 50 - ";
 	        				$current_type = "VOLUNTARY CONFINEMENT CASELOAD SUMMARY ";
 	        				$current_link = "#form50modal";
-	        			}else if ($str1[1][0][0] == "1") {
+	        			}else if ($str1[1][1] == "1") {
 	        				$current_form = "Form 51 - ";
 	        				$current_type = "RELEASE ON RECOGNIZANCE CASELOAD SUMMARY ";
 	        				$current_link = "#form51modal";
