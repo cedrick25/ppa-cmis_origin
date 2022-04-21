@@ -62,10 +62,27 @@
 			        		$current_table = "Caseload Summary";
 			        		$current_type = "Parole/Executive Clemency ";
 			        		$current_link = "#form21modal";
-	        			} else {
+
+	        			}else if ($str1[1][0][0] == "4") {
 	        				$current_form = "Form 44 - ";
 	        				$current_type = "Offender ";
 	        				$current_link = "#form44modal";
+	        			}else if ($str1[1][0][0] == "5") {
+	        				$current_form = "Form 45 - ";
+	        				$current_type = "COMMUNITY SERVICE CASELOAD SUMMARY ";
+	        				$current_link = "#form45modal";
+	        			}else if ($str1[1][0][0] == "0") {
+	        				$current_form = "Form 50 - ";
+	        				$current_type = "VOLUNTARY CONFINEMENT CASELOAD SUMMARY ";
+	        				$current_link = "#form50modal";
+	        			}else if ($str1[1][0][0] == "1") {
+	        				$current_form = "Form 51 - ";
+	        				$current_type = "RELEASE ON RECOGNIZANCE CASELOAD SUMMARY ";
+	        				$current_link = "#form51modal";
+	        			} else {
+	        				$current_form = "Form 53 - ";
+	        				$current_type = "COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY ";
+	        				$current_link = "#form53modal";
 	        			}
 	        			$widget = "widget_filter_probation.php";
 	        			$str2 = explode("T",$str1[1]);

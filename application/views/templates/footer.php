@@ -62,6 +62,10 @@
 	<script src="<?php ?>assets/js/wms-form5.js?version=<?php echo filemtime("assets/js/wms-form5.js"); ?>"></script>
 	<script src="<?php ?>assets/js/wms-form21.js?version=<?php echo filemtime("assets/js/wms-form21.js"); ?>"></script>
 	<script src="<?php ?>assets/js/wms-form44.js?version=<?php echo filemtime("assets/js/wms-form44.js"); ?>"></script>
+	<script src="<?php ?>assets/js/wms-form45.js?version=<?php echo filemtime("assets/js/wms-form45.js"); ?>"></script>
+	<script src="<?php ?>assets/js/wms-form50.js?version=<?php echo filemtime("assets/js/wms-form50.js"); ?>"></script>
+	<script src="<?php ?>assets/js/wms-form51.js?version=<?php echo filemtime("assets/js/wms-form51.js"); ?>"></script>
+	<script src="<?php ?>assets/js/wms-form53.js?version=<?php echo filemtime("assets/js/wms-form53.js"); ?>"></script>
 	<script src="<?php ?>assets/js/wms-probationer.js?version=<?php echo filemtime("assets/js/wms-probationer.js"); ?>"></script>
 
 	<script src="<?php ?>assets/js/wms-report.js?version=<?php echo filemtime("assets/js/wms-report.js"); ?>"></script>

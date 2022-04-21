@@ -1028,10 +1028,10 @@ $.wms.widget = (function() {
         switch(selForm){
             case 'F5PCS':   $.wms.form5.attachF5PCSPageEvent(); 
                             $.wms.reports.attachF5PCS(); break;
-            case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
-                            // $.wms.reports.attachF5PCS(); break;
-            case 'F21PCS':   $.wms.form21.attachF21PCSPageEvent(); 
+            case 'F21PCS':  $.wms.form21.attachF21PCSPageEvent(); 
                             $.wms.reports.attachF21PCS();
+            case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
+                            $.wms.reports.attachF44PCS(); break;
                             break;
             case 'F44T1': $.wms.form44.attachF44T1PageEvent(); break;
             case 'F44T2': $.wms.form44.attachF44T2PageEvent(); break;
@@ -1046,7 +1046,6 @@ $.wms.widget = (function() {
             case 'F44T11': $.wms.form44.attachF44T11PageEvent(); break;
             case 'F44T12': $.wms.form44.attachF44T12PageEvent(); break;
             case 'F44T13': $.wms.form44.attachF44T13PageEvent(); break;
-
             case 'F5T1': $.wms.form5.attachF5T1PageEvent(); break;
             case 'F5T2': $.wms.form5.attachF5T2PageEvent(); break;
             case 'F5T3': $.wms.form5.attachF5T3PageEvent(); break;

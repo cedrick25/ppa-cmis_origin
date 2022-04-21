@@ -127,7 +127,7 @@
         <div class="modal-body">
           <div class="form-group row">
             <label for="" class="col-sm-2">Field Office</label>
-            <div class="col-sm-10 filter-modal">    
+            <div class="col-sm-10 filter-modal">
              <select class="form-control select2 modal sel_field_office" id="sel-modal-44-field">
               </select>
             </div>
@@ -168,6 +168,199 @@
     </div>
   </div>
 
+  <div class="modal fade"  id="form45modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+       <div class="modal-header">
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">Offender's Caseload (FORM 45)</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Field Office</label>
+            <div class="col-sm-10 filter-modal">
+             <select class="form-control select2 modal sel_field_office" id="sel-modal-45-field">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Forms</label>
+            <div class="col-sm-10 filter-modal">
+              <select class="form-control select2" id="sel-modal-45-forms">
+                <option value="F45CSCS">COMMUNITY SERVICE CASELOAD SUMMARY</option>
+                <option value="F45T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
+                <option value="F45T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
+                <option value="F45T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE COURT</option>
+                <option value="F45T4">Table 4 - INVESTIGATION CASES DISPOSED OF BY THE COURT</option>
+                <option value="F45T5">Table 5 - CARRY OVER COURTESY INVESTIGATION REFERRALS RECEIVED</option>
+                <option value="F45T6">Table 6 - COURTESY INVESTIGATION REFERRALS RECEIVED AND COMPLETED AND RETURNED</option>
+                <option value="F45T7">Table 7 - CARRY OVER SUPERVISION CASELOAD</option>
+                <option value="F45T8">Table 8 - SUPERVISION REFERRALS RECEIVED</option>
+                <option value="F45T9">Table 9 - SUPERVISION REFERRALS ACTED UPON</option>
+                <option value="F45T10">Table 10 - CARRY OVER SUPERVISION CASES PENDING DISPOSITION BY THE COURT</option>
+                <option value="F45T11">Table 11 - SUPERVISION CASES DISPOSED OF BY THE COURT</option>
+                <option value="F45T12">Table 12 - CARRY OVER COURTESY SUPERVISION REFERRALS RECEIVED</option>
+                <option value="F45T13">Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND COMPLETED AND TERMINATED</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Date</label>
+            <div class="col-sm-10">    
+              <input name="Date" id="modal-45-date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-modal-45">Proceed</button>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade"  id="form50modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+       <div class="modal-header">
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">VOLUNTARY CONFINEMENT CASELOAD SUMMARY (FORM 50)</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Field Office</label>
+            <div class="col-sm-10 filter-modal">
+             <select class="form-control select2 modal sel_field_office" id="sel-modal-50-field">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Forms</label>
+            <div class="col-sm-10 filter-modal">
+              <select class="form-control select2" id="sel-modal-50-forms">
+                <option value="F50VCCS">VOLUNTARY CONFINEMENT CASELOAD SUMMARY</option>
+                <option value="F50T1">Table 1 - VOLUNTARY CONFINEMENT CASES HANDLED</option>
+                <option value="F50T2">Table 2 - COURT DISPOSITION ON VOLUNTARY CONFINEMENT</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Date</label>
+            <div class="col-sm-10">    
+              <input name="Date" id="modal-50-date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-modal-50">Proceed</button>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade"  id="form51modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+       <div class="modal-header">
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">Release on Recognizance Caseload Summary (FORM 51)</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Field Office</label>
+            <div class="col-sm-10 filter-modal">
+             <select class="form-control select2 modal sel_field_office" id="sel-modal-51-field">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Forms</label>
+            <div class="col-sm-10 filter-modal">
+              <select class="form-control select2" id="sel-modal-51-forms">
+                <option value="F51CSCS">RELEASE ON RECOGNIZANCE CASELOAD SUMMARY</option>
+                <option value="F51T1">Table 1 - CARRY OVER SUPERVISION CASELOAD</option>
+                <option value="F51T2">Table 2 - SUPERVISION REFERRALS RECEIVED</option>
+                <option value="F51T3">Table 3 - MONITORING REPORT SUBMITTED TO COURT</option>
+                <option value="F51T4">Table 4 - COURT DISPOSITION OF RELEASE ON RECOGNIZANCE</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Date</label>
+            <div class="col-sm-10">    
+              <input name="Date" id="modal-51-date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-modal-51">Proceed</button>  
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade"  id="form53modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+       <div class="modal-header">
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">Release on Recognizance Caseload Summary (FORM 53)</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Field Office</label>
+            <div class="col-sm-10 filter-modal">
+             <select class="form-control select2 modal sel_field_office" id="sel-modal-53-field">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Forms</label>
+            <div class="col-sm-10 filter-modal">
+              <select class="form-control select2" id="sel-modal-53-forms">
+                <option value="F53CSAIPCS">COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY</option>
+                <option value="F53T1">Table 1 - CARRY OVER FOR APPLICATION FOR COMMUNITY SERVICE CASELOAD</option>
+                <option value="F53T2">Table 2 - NEW APPLICATION FOR COMMUNITY SERVICE RECEIVED</option>
+                <option value="F53T3">Table 3 - CARRY OVER NOTICE OF HEARING RECEIVED</option>
+                <option value="F53T4">Table 4 - NEW NOTICE OF HEARING RECEIVED</option>
+                <option value="F53T5">Table 5 - CARRY OVER FOR ORDER RECEIVED REGARDING SETTING APPLICATION FOR HEARING AND SUBMISSION REPORTS</option>
+                <option value="F53T6">Table 6 - NEW ORDER RECEIVED REGARDING SETTING APPLICATION FOR HEARING AND SUBMISSION OF REPORTS AND COMMUNITY SERVICE PROGRAM AND REHABILITATION COUNSELLING SCHEDULE SUBMITTED</option>
+                <option value="F53T7">Table 7 - CARRY OVER APPLICATION PENDING DISPOSITION IN COURT</option>
+                <option value="F53T8">Table 8 - APPLICATION FOR COMMUNITY SERVICE RESOLVED BY THE COURT</option>
+                <option value="F53T9">Table 9 - CARRY OVER COMMUNITY SERVICE CASELOAD</option>
+                <option value="F53T10">Table 10 - NEW COMMUNITY SERVICE CASELOAD</option>
+                <option value="F53T11">Table 11 - COMMUNITY SERVICES TERMINATED</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Date</label>
+            <div class="col-sm-10">    
+              <input name="Date" id="modal-53-date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-modal-53">Proceed</button>  
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="regionalmodal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

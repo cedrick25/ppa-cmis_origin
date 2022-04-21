@@ -33,6 +33,38 @@ $.wms.modal = (function() {
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
         });
 
+        $(".btn-modal-45").unbind("click").on("click",function(){
+            console.log("Trigger");
+            var sel     = $("#sel-modal-45-forms").val();
+            var date    = $("#modal-45-date").val();
+            var field   = $("#sel-modal-45-field").val();
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
+        });
+
+        $(".btn-modal-50").unbind("click").on("click",function(){
+            console.log("Trigger");
+            var sel     = $("#sel-modal-50-forms").val();
+            var date    = $("#modal-50-date").val();
+            var field   = $("#sel-modal-50-field").val();
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
+        });
+
+        $(".btn-modal-51").unbind("click").on("click",function(){
+            console.log("Trigger");
+            var sel     = $("#sel-modal-51-forms").val();
+            var date    = $("#modal-51-date").val();
+            var field   = $("#sel-modal-51-field").val();
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
+        });
+
+        $(".btn-modal-53").unbind("click").on("click",function(){
+            console.log("Trigger");
+            var sel     = $("#sel-modal-53-forms").val();
+            var date    = $("#modal-53-date").val();
+            var field   = $("#sel-modal-53-field").val();
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
+        });
+
 
         $(".btn-modal-regional").unbind("click").on("click",function(){
             console.log("Trigger");
