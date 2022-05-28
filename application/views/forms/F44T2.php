@@ -31,15 +31,12 @@
                   <th colspan="10" style="text-align: center;">REFERRALS RECEIVED</th>
                 </tr>
                 <tr>
-                  <th style="text-align: center;">Docket<br/>No.</th>
-                  <th style="text-align: center;">Offender's<br/>Name</th>
-                  <th style="text-align: center;">CC No.</th>
-                  <th style="text-align: center;">Court of Origin</th>
-                  <th style="text-align: center;">Offense</th>
-                  <th style="text-align: center;">Date Rec'd</th>
-                  <th style="text-align: center;">Investigating<br/>Officer</th>
-                  <th class="options" style="text-align: center;">FIELD<br/>OFFICE</th>
-                  <th class="options" style="text-align: center;">DATA<br/>SOURCE</th>
+                  <th style="text-align: center;">DOCKET NO.</th>
+                  <th style="text-align: center;">OFFENDER'S NAME</th>
+                  <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
+                  <th style="text-align: center;">INVESTIGATING OFFICER</th>
+                  <th class="options" style="text-align: center;">FIELD OFFICE</th>
+                  <th class="options" style="text-align: center;">DATA SOURCE</th>
                   <th class="options" style="text-align: center;">OPTIONS</th>
                 </tr>
               </thead>

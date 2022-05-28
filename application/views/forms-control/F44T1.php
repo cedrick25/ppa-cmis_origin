@@ -64,9 +64,27 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Name</label>
+              <label for="" class="col-sm-3">Offender's First Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_offender" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_fname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Middle Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_mname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Last Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_lname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Suffix Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
@@ -135,13 +153,31 @@
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: SSI, RSSI, TSSI</i></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Name</label>
+                <label for="" class="col-sm-3">Offender's First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_offender_fname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Middle Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_mname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_lname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">

@@ -5,7 +5,7 @@
 				<span class="font_16">Filter Options</span>
 			</div>
 			<div class="panel-body">
-				
+					
 				<div class="form-group col-md-3">
 					<b>Field Office:</b><br/>
 		              <select class="form-control select2  sel_field_office" id="filter_office">

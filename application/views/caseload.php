@@ -54,6 +54,7 @@
 	        			$str1 = explode("F",$_GET['form']);
 	        			if($str1[1][0] == "5" && $str1[1][1] == "T"){
 	        				$current_form = "Form 5 - ";
+			        		$current_table = "CASELOAD SUMMARY ";
 	        				$current_type = "Probation ";
 	        				$current_link = "#form5modal";
 	        				
@@ -65,23 +66,28 @@
 
 	        			}else if ($str1[1][1] == "4") {
 	        				$current_form = "Form 44 - ";
+			        		$current_table = "CASELOAD SUMMARY ";
 	        				$current_type = "Offender ";
 	        				$current_link = "#form44modal";
 	        			}else if ($str1[1][1] == "5") {
 	        				$current_form = "Form 45 - ";
-	        				$current_type = "COMMUNITY SERVICE CASELOAD SUMMARY ";
+			        		$current_table = "CASELOAD SUMMARY ";
+	        				$current_type = "COMMUNITY SERVICE ";
 	        				$current_link = "#form45modal";
 	        			}else if ($str1[1][1] == "0") {
 	        				$current_form = "Form 50 - ";
-	        				$current_type = "VOLUNTARY CONFINEMENT CASELOAD SUMMARY ";
+			        		$current_table = "CASELOAD SUMMARY ";
+	        				$current_type = "VOLUNTARY CONFINEMENT ";
 	        				$current_link = "#form50modal";
 	        			}else if ($str1[1][1] == "1") {
 	        				$current_form = "Form 51 - ";
-	        				$current_type = "RELEASE ON RECOGNIZANCE CASELOAD SUMMARY ";
+			        		$current_table = "CASELOAD SUMMARY ";
+	        				$current_type = "RELEASE ON RECOGNIZANCE ";
 	        				$current_link = "#form51modal";
 	        			} else {
 	        				$current_form = "Form 53 - ";
-	        				$current_type = "COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY ";
+			        		$current_table = "CASELOAD SUMMARY ";
+	        				$current_type = "COMMUNITY SERVICE AS IMPRISONMENT PENALTY";
 	        				$current_link = "#form53modal";
 	        			}
 	        			$widget = "widget_filter_probation.php";

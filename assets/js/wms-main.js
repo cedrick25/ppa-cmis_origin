@@ -137,6 +137,9 @@ $.wms = (function() {
             method: "POST",
             url: path,
             dataType: "json",
+            headers: {
+                'Content-Type':'application/json'
+            },
             data: jsonObj
         }).done(function (data, textStatus, jqXHR) {
             if(customLoader != ""){
@@ -164,6 +167,90 @@ $.wms = (function() {
         
         return d.promise();
     };
+    var __executeExternalPut = function(path, jsonObj, customLoader) {
+        path = $.wms.getContext() + path;
+        var d = $.Deferred();
+        if(customLoader != ""){
+            $("#"+customLoader).show();
+            $("#"+customLoader).removeClass("hide");
+        }
+        $.ajax({
+            method: "PUT",
+            url: path,
+            dataType: "json",
+            headers: {
+                'Content-Type':'application/json'
+            },
+            data: jsonObj
+        }).done(function (data, textStatus, jqXHR) {
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+            d.resolve(data)
+        }).fail(function (jqXHR, textStatus, errorThrown,request) {
+            console.log('---FAILED---');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+            console.log('---FAILED---');
+            
+            d.resolve({
+                status : 'ERROR',
+                message : request
+            });
+            
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+        });
+        
+        return d.promise();
+    };
+
+    var __executeExternalDelete = function(path, jsonObj, customLoader) {
+        path = $.wms.getContext() + path;
+        var d = $.Deferred();
+        if(customLoader != ""){
+            $("#"+customLoader).show();
+            $("#"+customLoader).removeClass("hide");
+        }
+        $.ajax({
+            method: "DELETE",
+            url: path,
+            dataType: "json",
+            headers: {
+                'Content-Type':'application/json'
+            },
+            data: jsonObj
+        }).done(function (data, textStatus, jqXHR) {
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+            d.resolve(data)
+        }).fail(function (jqXHR, textStatus, errorThrown,request) {
+            console.log('---FAILED---');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+            console.log('---FAILED---');
+            
+            d.resolve({
+                status : 'ERROR',
+                message : request
+            });
+            
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+        });
+        
+        return d.promise();
+    };
+
 
     var __executeExternalGet = function(path, customLoader) {
         // path = $.wms.getContextPath() + path;
@@ -251,6 +338,8 @@ $.wms = (function() {
         getImgPath : __getImgPath,
         executePost : __executePost,
         executeExternalPost : __executeExternalPost,
+        executeExternalPut : __executeExternalPut,
+        executeExternalDelete : __executeExternalDelete,
         executeGet : __executeGet,
         executeFile : __executeFile,
         executeExternalGet : __executeExternalGet,

@@ -762,7 +762,7 @@ $.wms.reports = (function() {
         });
     }
 
-
+    
 
     function numberToLetters(num) {
         let letters = ''

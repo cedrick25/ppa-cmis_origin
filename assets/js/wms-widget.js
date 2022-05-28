@@ -46,7 +46,8 @@ $.wms.widget = (function() {
                     $(".sel_field_office").append($('<option>', {
                         value: field.NAME,
                         text: field.NAME,
-                        "data-region" : field.REGION
+                        "data-region" : field.REGION,
+                        "data-id" : field.ID
                     }));
 
                     $(".sel_field_office2").append($('<option>', {
@@ -1031,8 +1032,23 @@ $.wms.widget = (function() {
             case 'F21PCS':  $.wms.form21.attachF21PCSPageEvent(); 
                             $.wms.reports.attachF21PCS();
             case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
-                            $.wms.reports.attachF44PCS(); break;
                             break;
+            case 'F45CSCS': $.wms.form44.attachF45CSCSPageEvent(); 
+                            break;
+            case 'F45T1': $.wms.form45.attachF45T1PageEvent(); break;
+            case 'F45T2': $.wms.form45.attachF45T2PageEvent(); break;
+            case 'F45T3': $.wms.form45.attachF45T3PageEvent(); break;
+            case 'F45T4': $.wms.form45.attachF45T4PageEvent(); break;
+            case 'F45T5': $.wms.form45.attachF45T5PageEvent(); break;
+            case 'F45T6': $.wms.form45.attachF45T6PageEvent(); break;
+            case 'F45T7': $.wms.form45.attachF45T7PageEvent(); break;
+            case 'F45T8': $.wms.form45.attachF45T8PageEvent(); break;
+            case 'F45T9': $.wms.form45.attachF45T9PageEvent(); break;
+            case 'F45T10': $.wms.form45.attachF45T10PageEvent(); break;
+            case 'F45T11': $.wms.form45.attachF45T11PageEvent(); break;
+            case 'F45T12': $.wms.form45.attachF45T12PageEvent(); break;
+            case 'F45T13': $.wms.form45.attachF45T13PageEvent(); break;
+                            
             case 'F44T1': $.wms.form44.attachF44T1PageEvent(); break;
             case 'F44T2': $.wms.form44.attachF44T2PageEvent(); break;
             case 'F44T3': $.wms.form44.attachF44T3PageEvent(); break;
@@ -1077,14 +1093,15 @@ $.wms.widget = (function() {
             break;
         }
 
-        var date    = $.wms.urlParam('date')
-        var field   = $.wms.urlParam('field')
-        var reg2    = $.wms.urlParam('reg2')
-        var reg     = $.wms.urlParam('reg')
+        var date        = $.wms.urlParam('date')
+        var field       = $.wms.urlParam('field')
+        var officeId    = $.wms.urlParam('officeId')
+        var reg2        = $.wms.urlParam('reg2')
+        var reg         = $.wms.urlParam('reg')
 
 
         $(".btn-print").unbind("click").on("click",function(){
-            window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field, '_blank'); 
+            window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field+"&officeId="+officeId+"&page="+0+"&size="+15, '_blank'); 
         });
 
         $(".btn-print-report").unbind("click").on("click",function(){
@@ -1199,10 +1216,11 @@ $.wms.widget = (function() {
             }
 
 
-            var date = $("#filter_date").val();
+            var date  = $("#filter_date").val();
             var field = $("#filter_office").val();
+            var officeId   = $("#filter_office").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
         });
 
         $(".btn-regional-filter").unbind("click").on("click",function(){
