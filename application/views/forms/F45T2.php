@@ -3,7 +3,7 @@
 <div class="container-fluid" style="padding-top: 30px">
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style=""><b>FORM 44</b></h4>
+      <h4 class="" style=""><b>FORM 45</b></h4>
     </div>
   </div>
   <div class="row">
@@ -25,25 +25,23 @@
     <div id="ReferralsReceived" class="tab-pane fade in active">
         <div class="row">
           <div class="col-lg-12 col-sm-12 col-md-12 div-table" >
-            <table class="table table-bordered text-nowrap" style="width:100%" id="T_F44T2_a">
+            <table class="table table-bordered text-nowrap" style="width:100%" id="T_F45T2_a">
               <thead class="small tb-header">
                 <tr>
                   <th colspan="10" style="text-align: center;">REFERRALS RECEIVED</th>
                 </tr>
                 <tr>
-                  <th style="text-align: center;">Docket<br/>No.</th>
-                  <th style="text-align: center;">Offender's<br/>Name</th>
-                  <th style="text-align: center;">CC No.</th>
-                  <th style="text-align: center;">Court of Origin</th>
-                  <th style="text-align: center;">Offense</th>
-                  <th style="text-align: center;">Date Rec'd</th>
-                  <th style="text-align: center;">Investigating<br/>Officer</th>
-                  <th class="options" style="text-align: center;">FIELD<br/>OFFICE</th>
-                  <th class="options" style="text-align: center;">DATA<br/>SOURCE</th>
+                  <th style="text-align: center;">DOCKET NO.</th>
+                  <th style="text-align: center;">OFFENDER'S NAME</th>
+                  <th style="text-align: center;">CC NO.</th>
+                  <th style="text-align: center;">DATE RECEIVED</th>
+                  <th style="text-align: center;">INVESTIGATING OFFICER</th>
+                  <th class="options" style="text-align: center;">FIELD OFFICE</th>
+                  <th class="options" style="text-align: center;">DATA SOURCE</th>
                   <th class="options" style="text-align: center;">OPTIONS</th>
                 </tr>
               </thead>
-              <tbody class="F44T2_tbody_a tbody-sm">
+              <tbody class="F45T2_tbody_a tbody-sm">
                 
               </tbody>
             </table>
@@ -53,7 +51,7 @@
     <div id="menu1" class="tab-pane fade">
         <div class="row">
           <div class="col-lg-12 col-sm-12 col-md-12 div-table" >
-            <table class="table table-bordered text-nowrap" style="width:100%" id="T_F44T2_b">
+            <table class="table table-bordered text-nowrap" style="width:100%" id="T_F45T2_b">
               <thead class="small tb-header">
                 <tr>
                   <th colspan="9" style="text-align: center;">REFERRALS ACTED UPON</th>
@@ -70,7 +68,7 @@
                   <th class="options" style="text-align: center;">OPTIONS</th>
                 </tr>
               </thead>
-              <tbody class="F44T2_tbody_b tbody-sm">
+              <tbody class="F45T2_tbody_b tbody-sm">
                 
               </tbody>
             </table>

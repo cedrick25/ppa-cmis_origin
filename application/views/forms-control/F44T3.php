@@ -104,17 +104,8 @@
                 <div class="col-sm-9 filter-modal">
                   
                   <select class="form-control select2 modal" id="edit_recommendation" >
-                    <option value="">None</option>
-                    <option value="Parole - For Granted">Parole - For Grant</option>
-                    <option value="Parole - For Denial">Parole - For Denial</option>
-                    <option value="Commutation - For Granted">Commutation - For Grant</option>
-                    <option value="Commutation - For Denial">Commutation - For Denial</option>
-                    <option value="Conditional Pardon - For Granted">Conditional Pardon - For Grant</option>
-                    <option value="Conditional Pardon - For Denial">Conditional Pardon - For Denial</option>
-                    <option value="Absolute Pardon - For Granted">Absolute Pardon - For Grant</option>
-                    <option value="Absolute Pardon - For Denial">Absolute Pardon - For Denial</option>
-                    <option value="Other">Other</option>
-                    <!-- <option value="Transferred">Transferred</option> -->
+                    <option value="FOR_GRANT">For Grant</option>
+                    <option value="FOR_DENIAL">For Denial</option>
                   </select>
                 </div>
                
@@ -200,22 +191,11 @@
               <div class="form-group row">
                 <label for="" class="col-sm-3">Recommendation</label>
                 <div class="col-sm-9 filter-modal">
-                  
                   <select class="form-control select2 modal" id="add_recommendation" >
-                    <option value="">None</option>
-                    <option value="Parole - For Granted">Parole - For Grant</option>
-                    <option value="Parole - For Denial">Parole - For Denial</option>
-                    <option value="Commutation - For Granted">Commutation - For Grant</option>
-                    <option value="Commutation - For Denial">Commutation - For Denial</option>
-                    <option value="Conditional Pardon - For Granted">Conditional Pardon - For Grant</option>
-                    <option value="Conditional Pardon - For Denial">Conditional Pardon - For Denial</option>
-                    <option value="Absolute Pardon - For Granted">Absolute Pardon - For Grant</option>
-                    <option value="Absolute Pardon - For Denial">Absolute Pardon - For Denial</option>
-                    <option value="Other">Other</option>
-                    <!-- <option value="Transferred">Transferred</option> -->
+                    <option value="FOR_GRANT">For Grant</option>
+                    <option value="FOR_DENIAL">For Denial</option>
                   </select>
                 </div>
-               
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Date Recommendation</label>

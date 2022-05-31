@@ -52,7 +52,7 @@
 	        		$widget = "";
 	        		if(isset($_GET['form'])){
 	        			$str1 = explode("F",$_GET['form']);
-	        			if($str1[1][0] == "5" && $str1[1][1] == "T"){
+	        			if($str1[1][0] == "5" && $str1[1][1] == "T" || $str1[1][0] == "5" && $str1[1][1] == "P"){
 	        				$current_form = "Form 5 - ";
 			        		$current_table = "CASELOAD SUMMARY ";
 	        				$current_type = "Probation ";
@@ -60,7 +60,7 @@
 	        				
 	        			}else if ($str1[1][0] == "2") {
 			        		$current_form = "Form 21 - ";
-			        		$current_table = "Caseload Summary";
+			        		$current_table = "CASELOAD SUMMARY ";
 			        		$current_type = "Parole/Executive Clemency ";
 			        		$current_link = "#form21modal";
 
@@ -84,11 +84,13 @@
 			        		$current_table = "CASELOAD SUMMARY ";
 	        				$current_type = "RELEASE ON RECOGNIZANCE ";
 	        				$current_link = "#form51modal";
-	        			} else {
+	        			}else if ($str1[1][1] == "3") {
 	        				$current_form = "Form 53 - ";
 			        		$current_table = "CASELOAD SUMMARY ";
-	        				$current_type = "COMMUNITY SERVICE AS IMPRISONMENT PENALTY";
+	        				$current_type = "COMMUNITY SERVICE AS IMPRISONMENT PENALTY ";
 	        				$current_link = "#form53modal";
+	        			} else {
+
 	        			}
 	        			$widget = "widget_filter_probation.php";
 	        			$str2 = explode("T",$str1[1]);

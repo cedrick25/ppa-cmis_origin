@@ -69,7 +69,7 @@
 			                <option value="F44T9">Table 9 - SUPERVISION CASES ACTED UPON</option>
 			                <option value="F44T10">Table 10 - CARRY OVER SUPERVISION CASES PENDING RESOLUTION BY THE EXECUTIVE DIRECTOR</option>
 			                <option value="F44T11">Table 11 - SUPERVISION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
-			                <option value="F44T12">Table 12 - CARRY OVER COURTESY SUPERVISION SUPERVISION REFERRALS RECEIVED</option>
+			                <option value="F44T12">Table 12 - CARRY OVER COURTESY SUPERVISION REFERRALS RECEIVED</option>
 			                <option value="F44T13">Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND TERMINATED</option>
 		                </optgroup>
 	              	</select>

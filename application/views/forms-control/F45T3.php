@@ -60,42 +60,60 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Name</label>
+              <label for="" class="col-sm-3">Offender's First Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_offender" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_fname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Date Received by the PPO</label>
+              <label for="" class="col-sm-3">Offender's Middle Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  sel_date2" id="edit_date_rcv">
+                <input type="text" class="form-control  upperCase" id="edit_offender_mname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Investigating Officer</label>
+              <label for="" class="col-sm-3">Offender's Last Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_investigating_officer" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_lname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Field Office</label>
-              <div class="col-sm-9   filter-modal ">    
-                <select class="form-control select2 modal sel_field_office2" id="edit_field_office">
-                  
-                  <!-- <option value="">OFFICE 2</option> -->
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="" class="col-sm-3">Year-Month</label>
+              <label for="" class="col-sm-3">Offender's Suffix Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control sel_date" Id="edit_Y_M" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
               </div>
             </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Recommendation</label>
+                <div class="col-sm-9 filter-modal">
+                  <select class="form-control select2 modal" id="edit_recommendation" >
+                    <option value="FOR_GRANT">For Grant</option>
+                    <option value="FOR_DENIAL">For Denial</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Report Submitted</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="edit_submitted_report">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Investigating Officer</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_investigating_officer" placeholder="">
+                </div>
+              </div>
           </div>
         </div>
         <div class="confirmEdit hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>
@@ -135,40 +153,52 @@
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Name</label>
+                <label for="" class="col-sm-3">Offender's First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_offender_fname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Date Received by the PPO</label>
+                <label for="" class="col-sm-3">Offender's Middle Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  sel_date2" id="add_date_rcv">
+                  <input type="text" class="form-control  upperCase" id="add_offender_mname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_lname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Recommendation</label>
+                <div class="col-sm-9 filter-modal">
+                  <select class="form-control select2 modal" id="add_recommendation" >
+                    <option value="FOR_GRANT">For Grant</option>
+                    <option value="FOR_DENIAL">For Denial</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Report Submitted</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="add_submitted_report">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Investigating Officer</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_investigating_officer" placeholder="">
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="" class="col-sm-3">Field Office</label>
-                <div class="col-sm-9   filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="add_field_office">
-                    
-                    <!-- <option value="">OFFICE 2</option> -->
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="" class="col-sm-3">Year-Month</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control  sel_date" id="add_Y_M" placeholder="">
                 </div>
               </div>
             </div>

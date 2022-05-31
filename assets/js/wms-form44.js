@@ -1349,10 +1349,9 @@ $.wms.form44 = (function() {
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
                         $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
-                        // $("#edit_referring_office").val(payload.referringOffice)
-                        // $("#edit_date_rcv_by_the_ppo").val(payload.dateReceivedByPpo)
-                        // $("#edit_investigating_officer").val(payload.investigatingOfficer)
-                        // $("#edit_reason_for_referral").val(payload.reasonForReferral)
+                        $("#edit_investigating_officer").val(payload.investigatingOfficer)
+                        $("#edit_recommendation").val(payload.recommendation)
+                        $("#edit_date_recommendation").val(payload.dateRecommendation)
                        
                             //Update proceed
                             $(".editProceedButton").unbind("click").on("click",function(){
@@ -1518,7 +1517,7 @@ $.wms.form44 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
                 }
                 else{
@@ -3101,7 +3100,7 @@ $.wms.form44 = (function() {
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'SSS', 'TSSS' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_date_rcv_by_the_ppo'];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
             var check = true
             var checkTable = ['F44t8', 'F44t7']
 
@@ -4202,11 +4201,11 @@ $.wms.form44 = (function() {
             //     }
             //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             //     });
-                $("#T_F44T11").table2excel({
+                $("#T_F44T13").table2excel({
                     // exclude CSS class
                     exclude: ".options",
-                    name: "Form44-Table11",
-                    filename: "Form44-Table11.xls", //do not include extension
+                    name: "Form44-Table13",
+                    filename: "Form44-Table13.xls", //do not include extension
                     fileext: ".xls",
                     preserveColors: true
                   }); 

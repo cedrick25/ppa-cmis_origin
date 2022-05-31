@@ -1033,8 +1033,14 @@ $.wms.widget = (function() {
                             $.wms.reports.attachF21PCS();
             case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
                             break;
-            case 'F45CSCS': $.wms.form44.attachF45CSCSPageEvent(); 
+            case 'F45CSCS': $.wms.form45.attachF45CSCSPageEvent(); 
                             break;
+            case 'F50CSCS': $.wms.form50.attachF50CSCSPageEvent(); 
+                            break;
+            case 'F51VCCS': $.wms.form51.attachF51VCCSPageEvent(); 
+                            break;
+            case 'F50T1': $.wms.form50.attachF50T1PageEvent(); break;
+            case 'F50T2': $.wms.form50.attachF50T2PageEvent(); break;
             case 'F45T1': $.wms.form45.attachF45T1PageEvent(); break;
             case 'F45T2': $.wms.form45.attachF45T2PageEvent(); break;
             case 'F45T3': $.wms.form45.attachF45T3PageEvent(); break;
@@ -1099,7 +1105,6 @@ $.wms.widget = (function() {
         var reg2        = $.wms.urlParam('reg2')
         var reg         = $.wms.urlParam('reg')
 
-
         $(".btn-print").unbind("click").on("click",function(){
             window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field+"&officeId="+officeId+"&page="+0+"&size="+15, '_blank'); 
         });
@@ -1107,12 +1112,6 @@ $.wms.widget = (function() {
         $(".btn-print-report").unbind("click").on("click",function(){
             window.open('report_print?form='+selForm+'&date='+date+'&reg2='+reg2+'&reg='+reg, '_blank'); 
         });
-
-
-
-
-       
-
 
         function checkPendingRequest() {
             if ($.active > 0) {
@@ -1152,69 +1151,58 @@ $.wms.widget = (function() {
             }
         };
         window.setTimeout(checkPendingRequest, 250);
-        if(~selForm.indexOf("F5")){
-            $("#sel-probation-forms").removeClass("hidden")
-            $("#sel-probation-forms").select2();
-            $("#sel-probation-forms").val(selForm).trigger("change")
-        }else if (~selForm.indexOf("F21")) {
+        if (selForm.substring(0,3) == "F21") {
             $("#sel-parole-forms").removeClass("hidden")
             $("#sel-parole-forms").select2()
             $("#sel-parole-forms").val(selForm).trigger("change")
-        }else if (~selForm.indexOf("F44")) {
+        }else if (selForm.substring(0,3) == "F44") {
             $("#sel-44-forms").removeClass("hidden")
             $("#sel-44-forms").select2()
             $("#sel-44-forms").val(selForm).trigger("change")
-        }else if (~selForm.indexOf("F45")) {
+        }else if (selForm.substring(0,3) == "F45") {
             $("#sel-45-forms").removeClass("hidden")
             $("#sel-45-forms").select2()
             $("#sel-45-forms").val(selForm).trigger("change")
-        }else if (~selForm.indexOf("F50")) {
+        }else if (selForm.substring(0,3) == "F50") {
             $("#sel-50-forms").removeClass("hidden")
             $("#sel-50-forms").select2()
             $("#sel-50-forms").val(selForm).trigger("change")
-        }else if (~selForm.indexOf("F51")) {
+        }else if (selForm.substring(0,3) == "F51") {
             $("#sel-51-forms").removeClass("hidden")
             $("#sel-51-forms").select2()
             $("#sel-51-forms").val(selForm).trigger("change")
-        }else if (~selForm.indexOf("F53")) {
+        }else if (selForm.substring(0,3) == "F53") {
             $("#sel-53-forms").removeClass("hidden")
             $("#sel-53-forms").select2()
             $("#sel-53-forms").val(selForm).trigger("change")
 
         } else {
-            $("#sel-44-forms").removeClass("hidden")
-            $("#sel-44-forms").select2()
-            $("#sel-44-forms").val(selForm).trigger("change")
-
+            $("#sel-probation-forms").removeClass("hidden")
+            $("#sel-probation-forms").select2();
+            $("#sel-probation-forms").val(selForm).trigger("change")
         }
 
-        
-
-        
 
         //Case Load Filtering Widget
         $(".btn-filter").unbind("click").on("click",function(){
             console.log("Trigger");
             var selForm = $.wms.urlParam('form')
             var sel = "";
-            if(~selForm.indexOf("F5")){
-                sel = $("#sel-probation-forms").val();
-            }else if (~selForm.indexOf("F21")) {
+            if (selForm.substring(0,3) == "F21") {
                 sel = $("#sel-parole-forms").val();
-            }else if (~selForm.indexOf("F44")) {
+            }else if (selForm.substring(0,3) == "F44") {
                 sel = $("#sel-44-forms").val();
-            }else if (~selForm.indexOf("F45")) {
+            }else if (selForm.substring(0,3) == "F45") {
                 sel = $("#sel-45-forms").val();
-            }else if (~selForm.indexOf("F50")) {
+            }else if (selForm.substring(0,3) == "F50") {
                 sel = $("#sel-50-forms").val();
-            }else if (~selForm.indexOf("F51")) {
+            }else if (selForm.substring(0,3) == "F51") {
                 sel = $("#sel-51-forms").val();
-            }else if (~selForm.indexOf("F53")) {
+            }else if (selForm.substring(0,3) == "F53") {
                 sel = $("#sel-53-forms").val();
             } else {
-                sel = $("#sel-44-forms").val();
+                sel = $("#sel-probation-forms").val();
             }
-
 
             var date  = $("#filter_date").val();
             var field = $("#filter_office").val();

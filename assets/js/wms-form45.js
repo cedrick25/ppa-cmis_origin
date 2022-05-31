@@ -4,9 +4,9 @@
  */
 
 $ = (typeof $ !== 'undefined') ? $ : {};
-$.wms.form44 = (typeof $.wms.form44 !== 'undefined') ? $.wms : {};
+$.wms.form45 = (typeof $.wms.form45 !== 'undefined') ? $.wms : {};
 
-$.wms.form44 = (function() {
+$.wms.form45 = (function() {
 
 
     var ___validateSave = function(allowedDocket,docket,requiredField,check,checkTable){
@@ -185,8 +185,8 @@ $.wms.form44 = (function() {
 
 
 
-    var __attachF44T1PageEvent = function() {
-        console.log("f44t1 events")
+    var __attachF45T1PageEvent = function() {
+        console.log("f45t1 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -195,14 +195,14 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T1_tbody').empty();
+        $('.F45T1_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F44t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -213,15 +213,15 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T1_tbody').append("<tr>"+
+                $('.F45T1_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.dateReceivedByCppo+"</td>"+
                     "<td>"+data.investigatingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -238,7 +238,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t1/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t1/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -259,7 +259,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t1/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t1/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -314,7 +314,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -359,11 +359,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T1").table2excel({
+            $("#T_F45T1").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table1",
-                filename: "Form44-Table1.xls", //do not include extension
+                name: "Form45-Table1",
+                filename: "Form45-Table1.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -371,10 +371,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
+            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
             var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_rcv', 'add_investigating_officer'];
             var check = true
-            var checkTable = ['F44T1', 'F44T2']
+            var checkTable = ['F45T1', 'F45T2']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -423,7 +423,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t1/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t1/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -447,8 +447,8 @@ $.wms.form44 = (function() {
     };
 
 
-    var __attachF44T2PageEvent = function() {
-        console.log("F44t2 events")
+    var __attachF45T2PageEvent = function() {
+        console.log("F45t2 events")
 
 
         var yearMonth   = $.wms.urlParam('date')
@@ -458,8 +458,8 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T2_tbody_a').empty();
-        $('.F44T2_tbody_b').empty();
+        $('.F45T2_tbody_a').empty();
+        $('.F45T2_tbody_b').empty();
         $(".form_loader").removeClass("hidden");
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
@@ -469,8 +469,7 @@ $.wms.form44 = (function() {
         var __ref_received = function(){
             console.log("received")
 
-
-            $.wms.executeExternalGet('http://localhost:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+            $.wms.executeExternalGet('http://localhost:8000/F45t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
 
@@ -481,15 +480,16 @@ $.wms.form44 = (function() {
                     data = $.wms.upper($.wms.sanitize(data))
                     var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                    $('.F44T2_tbody_a').append("<tr>"+
+                    $('.F45T2_tbody_a').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
-                        "<td>"+data.dateReceivedByCppo+"</td>"+
+                        "<td>"+data.criminalCaseNo+"</td>"+
+                        "<td>"+data.dateReceived+"</td>"+
                         "<td>"+data.investigatingOfficer+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -506,7 +506,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://localhost:8000/F44t2/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://localhost:8000/F45t2/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton").attr('disabled',false)
@@ -527,7 +527,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit-rcv").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://localhost:8000/F44t2/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://localhost:8000/F45t2/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -543,6 +543,7 @@ $.wms.form44 = (function() {
                             $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
                             $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                            $("#edit_cc_no").val(payload.criminalCaseNo)
                             $("#edit_date_rcv").val(payload.dateReceivedByCppo)
                             $("#edit_investigating_officer").val(payload.investigatingOfficer)
                            
@@ -567,8 +568,9 @@ $.wms.form44 = (function() {
                                         "encodingMonth"         : $.wms.urlParam('date'),
                                         "fieldOffice"           : $.wms.urlParam('field'),
                                         "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                                        "criminalCaseNo"        : $("#edit_cc_no").val(),
                                         "investigatingOfficer"  : $("#edit_investigating_officer").val(),
-                                        "dateReceivedByCppo"    : $("#edit_date_rcv").val(),
+                                        "dateReceived"          : $("#edit_date_rcv").val(),
                                         "clientProfileDto"      : {
                                             "docketNumber"          : $("#edit_docket_no").val(),
                                             "updatedBy"             : $.cookie("USER_ID"),
@@ -582,7 +584,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://localhost:8000/F44t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://localhost:8000/F45t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                             location.reload();
                                         }else{
@@ -628,11 +630,11 @@ $.wms.form44 = (function() {
             //     }
             //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             //     });
-                $("#T_F44T2_a").table2excel({
+                $("#T_F45T2_a").table2excel({
                     // exclude CSS class
                     exclude: ".options",
-                    name: "Form44-Table2",
-                    filename: "Form44-Table2.xls", //do not include extension
+                    name: "Form45-Table2",
+                    filename: "Form45-Table2.xls", //do not include extension
                     fileext: ".xls",
                     preserveColors: true
                   }); 
@@ -640,10 +642,10 @@ $.wms.form44 = (function() {
 
             //Add
             $(".addSubmitButton").unbind("click").on("click",function(){
-                var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
+                var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
                 var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_rcv', 'add_investigating_officer'];
                 var check = true
-                var checkTable = ['F44T1', 'F44T2']
+                var checkTable = ['F45T1', 'F45T2']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -675,8 +677,9 @@ $.wms.form44 = (function() {
                     "encodingMonth"         : $.wms.urlParam('date'),
                     "fieldOffice"           : $.wms.urlParam('field'),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "criminalCaseNo"        : $("#add_cc_no").val(),
                     "investigatingOfficer"  : $("#add_investigating_officer").val(),
-                    "dateReceivedByCppo"    : $("#add_date_rcv").val(),
+                    "dateReceived"          : $("#add_date_rcv").val(),
                     "clientProfileDto"      : {
                         "docketNumber"          : $("#add_docket_no").val(),
                         "createdBy"             : $.cookie("USER_ID"),
@@ -692,7 +695,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://localhost:8000/F45t2/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -720,7 +723,7 @@ $.wms.form44 = (function() {
         var __ref_acted = function(){
             console.log("acted")
 
-            $.wms.executeExternalGet('http://localhost:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+            $.wms.executeExternalGet('http://localhost:8000/F45t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
 
@@ -731,17 +734,17 @@ $.wms.form44 = (function() {
                     data = $.wms.upper($.wms.sanitize(data))
                     var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                    $('.F44T2_tbody_b').append("<tr>"+
+                    $('.F45T2_tbody_b').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.dateReportSubmitted+"</td>"+
                         "<td>"+data.ppoRecommendation+"</td>"+
                         "<td>"+data.transferDate+"</td>"+
-                        "<td>"+data.transferredTo+"</td>"+
+                        "<td>"+data.transferTo+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit-acted' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F44_write btn btn-danger btn-sm btn-delete-acted' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit-acted' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete-acted' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete-acted").unbind("click").on("click",function(){
@@ -758,7 +761,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://localhost:8000/F44t2Acted/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://localhost:8000/F45t2Acted/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete-acted").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteACTEDProceedButton").attr('disabled',false)
@@ -779,7 +782,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit-acted").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://localhost:8000/F44t2Acted/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://localhost:8000/F45t2Acted/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -798,7 +801,7 @@ $.wms.form44 = (function() {
                             $("#edit_acted_report_submitted").val(payload.dateReportSubmitted)
                             $("#edit_acted_recommendation").val(payload.ppoRecommendation).trigger('change')
                             $("#edit_acted_transfer_date").val(payload.transferDate)
-                            $("#edit_acted_transfer_to").val(payload.transferredTo)
+                            $("#edit_acted_transfer_to").val(payload.transferTo)
                            
                                 //Update proceed
                                 $(".editProceedACTEDButton").unbind("click").on("click",function(){
@@ -824,7 +827,7 @@ $.wms.form44 = (function() {
                                         "dateReportSubmitted"   : $("#edit_acted_report_submitted").val(),
                                         "ppoRecommendation"     : $("#edit_acted_recommendation").val(),
                                         "transferDate"          : $("#edit_acted_transfer_date").val(),
-                                        "transferredTo"         : $("#edit_acted_transfer_to").val(),
+                                        "transferTo"            : $("#edit_acted_transfer_to").val(),
                                         "clientProfileDto"      : {
                                             "docketNumber"          : $("#edit_acted_docket_no").val(),
                                             "updatedBy"             : $.cookie("USER_ID"),
@@ -838,7 +841,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://localhost:8000/F44t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://localhost:8000/F45t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                             location.reload();
                                         }else{
@@ -884,11 +887,11 @@ $.wms.form44 = (function() {
             // //     }
             // //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             // //     });
-            //     $("#T_F44T2_b").table2excel({
+            //     $("#T_F45T2_b").table2excel({
             //         // exclude CSS class
             //         exclude: ".options",
-            //         name: "Form44-Table2",
-            //         filename: "Form44-Table2.xls", //do not include extension
+            //         name: "Form45-Table2",
+            //         filename: "Form45-Table2.xls", //do not include extension
             //         fileext: ".xls",
             //         preserveColors: true
             //       }); 
@@ -896,10 +899,10 @@ $.wms.form44 = (function() {
 
             //Add
             $(".addSubmitButton_acted").unbind("click").on("click",function(){
-                var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
+                var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
                 var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date','add_acted_transfer_to'];
                 var check = true
-                var checkTable = ['F44T1', 'F44T2']
+                var checkTable = ['F45T1', 'F45T2']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_acted_docket_no"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -934,7 +937,7 @@ $.wms.form44 = (function() {
                     "dateReportSubmitted"   : $("#add_acted_report_submitted").val(),
                     "ppoRecommendation"     : $("#add_acted_recommendation").val(),
                     "transferDate"          : $("#add_acted_transfer_date").val(),
-                    "transferredTo"         : $("#add_acted_transfer_to").val(),
+                    "transferTo"            : $("#add_acted_transfer_to").val(),
                     "clientProfileDto"      : {
                         "docketNumber"          : $("#add_acted_docket_no").val(),
                         "createdBy"             : $.cookie("USER_ID"),
@@ -950,7 +953,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F44t2Acted/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://localhost:8000/F45t2Acted/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -985,8 +988,8 @@ $.wms.form44 = (function() {
 
     };
 
-    var __attachF44T3PageEvent = function() {
-        console.log("f44t3 events")
+    var __attachF45T3PageEvent = function() {
+        console.log("f45t3 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -995,14 +998,14 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T3_tbody').empty();
+        $('.F45T3_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F44t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1013,16 +1016,16 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T3_tbody').append("<tr>"+
+                $('.F45T3_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
-                    "<td>"+data.investigatingOfficer+"</td>"+
                     "<td>"+data.recommendation+"</td>"+
-                    "<td>"+data.dateRecommendation+"</td>"+
+                    "<td>"+data.dateReportSubmitted+"</td>"+
+                    "<td>"+data.investigatingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1039,7 +1042,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t3/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t3/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1060,7 +1063,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t3/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t3/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1076,9 +1079,9 @@ $.wms.form44 = (function() {
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
                         $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
-                        $("#edit_investigating_officer").val(payload.investigatingOfficer)
                         $("#edit_recommendation").val(payload.recommendation).trigger('change')
-                        $("#edit_date_recommendation").val(payload.dateRecommendation)
+                        $("#edit_submitted_report").val(payload.dateReportSubmitted)
+                        $("#edit_investigating_officer").val(payload.investigatingOfficer)
                        
                             //Update proceed
                             $(".editProceedButton").unbind("click").on("click",function(){
@@ -1101,9 +1104,9 @@ $.wms.form44 = (function() {
                                     "encodingMonth"         : $.wms.urlParam('date'),
                                     "fieldOffice"           : $.wms.urlParam('field'),
                                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                                    "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                     "recommendation"        : $("#edit_recommendation").val(),
-                                    "dateRecommendation"    : $("#edit_date_recommendation").val(),
+                                    "dateReportSubmitted"   : $("#edit_submitted_report").val(),
+                                    "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val(),
                                         "updatedBy"             : $.cookie("USER_ID"),
@@ -1117,7 +1120,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -1162,11 +1165,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T3").table2excel({
+            $("#T_F45T3").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table3",
-                filename: "Form44-Table3.xls", //do not include extension
+                name: "Form45-Table3",
+                filename: "Form45-Table3.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -1174,10 +1177,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_investigating_officer', 'add_recommendation', 'add_date_recommendation'];
+            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_investigating_officer', 'add_submitted_report'];
             var check = true
-            var checkTable = ['F44T1', 'F44T2']
+            var checkTable = ['F45T1', 'F45T2']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -1209,9 +1212,9 @@ $.wms.form44 = (function() {
                 "encodingMonth"         : $.wms.urlParam('date'),
                 "fieldOffice"           : $.wms.urlParam('field'),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "investigatingOfficer"  : $("#add_investigating_officer").val(),
                 "recommendation"        : $("#add_recommendation").val(),
-                "dateRecommendation"    : $("#add_date_recommendation").val(),
+                "dateReportSubmitted"   : $("#add_submitted_report").val(),
+                "investigatingOfficer"  : $("#add_investigating_officer").val(),
                 "clientProfileDto"      : {
                     "docketNumber"          : $("#add_docket_no").val(),
                     "createdBy"             : $.cookie("USER_ID"),
@@ -1227,7 +1230,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t3/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t3/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1261,8 +1264,8 @@ $.wms.form44 = (function() {
     };
 
 
-    var __attachF44T4PageEvent = function() {
-        console.log("f44t4 events")
+    var __attachF45T4PageEvent = function() {
+        console.log("f45t4 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -1271,11 +1274,11 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T4_tbody').empty();
+        $('.F45T4_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $.wms.executeExternalGet('http://localhost:8000/F44t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1286,16 +1289,15 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T4_tbody').append("<tr>"+
+                $('.F45T4_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
-                    "<td>"+data.investigatingOfficer+"</td>"+
                     "<td>"+data.recommendation+"</td>"+
-                    "<td>"+data.dateRecommendation+"</td>"+
+                    "<td>"+data.dateReceivedFromCourt+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1312,7 +1314,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t4/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t4/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1333,7 +1335,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t4/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t4/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1349,10 +1351,8 @@ $.wms.form44 = (function() {
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
                         $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
-                        // $("#edit_referring_office").val(payload.referringOffice)
-                        // $("#edit_date_rcv_by_the_ppo").val(payload.dateReceivedByPpo)
-                        // $("#edit_investigating_officer").val(payload.investigatingOfficer)
-                        // $("#edit_reason_for_referral").val(payload.reasonForReferral)
+                        $("#edit_recommendation").val(payload.recommendation)
+                        $("#edit_date_received").val(payload.dateReceivedFromCourt)
                        
                             //Update proceed
                             $(".editProceedButton").unbind("click").on("click",function(){
@@ -1375,9 +1375,8 @@ $.wms.form44 = (function() {
                                     "encodingMonth"         : $.wms.urlParam('date'),
                                     "fieldOffice"           : $.wms.urlParam('field'),
                                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                                    "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                     "recommendation"        : $("#edit_recommendation").val(),
-                                    "dateRecommendation"    : $("#edit_date_recommendation").val(),
+                                    "dateReceivedFromCourt" : $("#edit_date_received").val(),
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val(),
                                         "updatedBy"             : $.cookie("USER_ID"),
@@ -1391,7 +1390,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -1436,11 +1435,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T4").table2excel({
+            $("#T_F45T4").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table4",
-                filename: "Form44-Table4.xls", //do not include extension
+                name: "Form45-Table4",
+                filename: "Form45-Table4.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -1448,10 +1447,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_investigating_officer', 'add_recommendation', 'add_date_recommendation'];
+            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_received', 'add_recommendation'];
             var check = true
-            var checkTable = ['F44t3', 'F44t2_acted_upon']
+            var checkTable = ['F45t3', 'F45t2_acted_upon']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -1483,9 +1482,8 @@ $.wms.form44 = (function() {
                 "encodingMonth"         : $.wms.urlParam('date'),
                 "fieldOffice"           : $.wms.urlParam('field'),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "investigatingOfficer"  : $("#add_investigating_officer").val(),
                 "recommendation"        : $("#add_recommendation").val(),
-                "dateRecommendation"    : $("#add_date_recommendation").val(),
+                "dateReceivedFromCourt" : $("#add_date_received").val(),
                 "clientProfileDto"      : {
                     "docketNumber"          : $("#add_docket_no").val(),
                     "createdBy"             : $.cookie("USER_ID"),
@@ -1501,7 +1499,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t4/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t4/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1518,7 +1516,7 @@ $.wms.form44 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
                 }
                 else{
@@ -1535,8 +1533,8 @@ $.wms.form44 = (function() {
     };
 
 
-    var __attachF44T5PageEvent = function() {
-        console.log("f44t5 events")
+    var __attachF45T5PageEvent = function() {
+        console.log("f45t5 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -1545,11 +1543,11 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T5_tbody').empty();
+        $('.F45T5_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $.wms.executeExternalGet('http://localhost:8000/F44t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1560,7 +1558,7 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T5_tbody').append("<tr>"+
+                $('.F45T5_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.referringOffice+"</td>"+
@@ -1569,8 +1567,8 @@ $.wms.form44 = (function() {
                     "<td>"+data.reasonForReferral+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1587,7 +1585,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t5/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t5/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1608,7 +1606,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t5/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t5/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1667,7 +1665,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -1712,11 +1710,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T5").table2excel({
+            $("#T_F45T5").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table5",
-                filename: "Form44-Table5.xls", //do not include extension
+                name: "Form45-Table5",
+                filename: "Form45-Table5.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -1724,10 +1722,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSSI' ];
+            var allowedDocket= [ 'CCSI' ];
             var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_investigating_officer', 'add_date_rcv_by_the_ppo'];
             var check = true
-            var checkTable = ['F44T1', 'F44T2']
+            var checkTable = ['F45T6']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -1778,7 +1776,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t5/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t5/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1811,8 +1809,8 @@ $.wms.form44 = (function() {
 
     };
 
-    var __attachF44T6PageEvent = function() {
-        console.log("f44t6 events")
+    var __attachF45T6PageEvent = function() {
+        console.log("f45t6 events")
         __rcv = function(){
             var yearMonth   = $.wms.urlParam('date')
             var officeId    = $.wms.urlParam('officeId')
@@ -1821,11 +1819,11 @@ $.wms.form44 = (function() {
 
             $(".form_loader").removeClass("hidden")
 
-            $('.F44T6_tbody').empty();
+            $('.F45T6_tbody').empty();
             $(".form_loader").removeClass("hidden")
             $(".result_form").addClass("hidden")
 
-            $.wms.executeExternalGet('http://localhost:8000/F44t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+            $.wms.executeExternalGet('http://localhost:8000/F45t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
 
@@ -1836,7 +1834,7 @@ $.wms.form44 = (function() {
                     data = $.wms.upper($.wms.sanitize(data))
                     var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                    $('.F44T6_tbody').append("<tr>"+
+                    $('.F45T6_tbody').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.referringOffice+"</td>"+
@@ -1845,8 +1843,8 @@ $.wms.form44 = (function() {
                         "<td>"+data.reasonForReferral+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -1863,7 +1861,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://localhost:8000/F44t6/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://localhost:8000/F45t6/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton").attr('disabled',false)
@@ -1884,7 +1882,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://localhost:8000/F44t6/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://localhost:8000/F45t6/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -1943,7 +1941,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://localhost:8000/F44t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://localhost:8000/F45t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                             location.reload();
                                         }else{
@@ -1988,11 +1986,11 @@ $.wms.form44 = (function() {
             //     }
             //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             //     });
-                $("#T_F44T6").table2excel({
+                $("#T_F45T6").table2excel({
                     // exclude CSS class
                     exclude: ".options",
-                    name: "Form44-Table6",
-                    filename: "Form44-Table6.xls", //do not include extension
+                    name: "Form45-Table6",
+                    filename: "Form45-Table6.xls", //do not include extension
                     fileext: ".xls",
                     preserveColors: true
                   }); 
@@ -2000,10 +1998,10 @@ $.wms.form44 = (function() {
 
             //Add
             $(".addSubmitButton").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CSSI' ];
+                var allowedDocket= [ 'CCSI' ];
                 var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_investigating_officer', 'add_date_rcv_by_the_ppo'];
                 var check = true
-                var checkTable = ['F44T1', 'F44T2']
+                var checkTable = ['F45T1', 'F45T2']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -2054,7 +2052,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F44t6/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://localhost:8000/F45t6/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2094,11 +2092,11 @@ $.wms.form44 = (function() {
 
             $(".form_loader").removeClass("hidden")
 
-            $('.F44T6_tbody_b').empty();
+            $('.F45T6_tbody_b').empty();
             $(".form_loader").removeClass("hidden")
             $(".result_form").addClass("hidden")
 
-            $.wms.executeExternalGet('http://localhost:8000/F44t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+            $.wms.executeExternalGet('http://localhost:8000/F45t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
 
@@ -2109,14 +2107,14 @@ $.wms.form44 = (function() {
                     data = $.wms.upper($.wms.sanitize(data))
                     var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                    $('.F44T6_tbody_b').append("<tr>"+
+                    $('.F45T6_tbody_b').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.dateCompletedAndReturned+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete-acted").unbind("click").on("click",function(){
@@ -2133,7 +2131,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://localhost:8000/F44t6CAR/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://localhost:8000/F45t6CAR/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete-acted").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton-acted").attr('disabled',false)
@@ -2154,7 +2152,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit-acted").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://localhost:8000/F44t6CAR/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://localhost:8000/F45t6CAR/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -2208,7 +2206,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://localhost:8000/F44t6CAR/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://localhost:8000/F45t6CAR/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                             location.reload();
                                         }else{
@@ -2253,11 +2251,11 @@ $.wms.form44 = (function() {
             // //     }
             // //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             // //     });
-            //     $("#T_F44T6").table2excel({
+            //     $("#T_F45T6").table2excel({
             //         // exclude CSS class
             //         exclude: ".options",
-            //         name: "Form44-Table6",
-            //         filename: "Form44-Table6.xls", //do not include extension
+            //         name: "Form45-Table6",
+            //         filename: "Form45-Table6.xls", //do not include extension
             //         fileext: ".xls",
             //         preserveColors: true
             //       }); 
@@ -2265,10 +2263,10 @@ $.wms.form44 = (function() {
 
             //Add
             $(".addSubmitButton-acted").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CSSI' ];
+                var allowedDocket= [ 'CCSI' ];
                 var requiredField= [ 'add_offender_fname-acted', 'add_offender_lname-acted', 'add_referring_office-acted', 'add_date_com_and_ret-acted'];
                 var check = true
-                var checkTable = ['F44t5', 'F44t6']
+                var checkTable = ['F45t5', 'F45t6']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_docket_no-acted"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -2316,7 +2314,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F44t6CAR/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://localhost:8000/F45t6CAR/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2353,8 +2351,8 @@ $.wms.form44 = (function() {
     };
 
 
-    var __attachF44T7PageEvent = function() {
-        console.log("f44t7 events")
+    var __attachF45T7PageEvent = function() {
+        console.log("f45t7 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -2363,11 +2361,11 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T7_tbody').empty();
+        $('.F45T7_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $.wms.executeExternalGet('http://localhost:8000/F44t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2378,7 +2376,7 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T7_tbody').append("<tr>"+
+                $('.F45T7_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.supervisingOfficer+"</td>"+
@@ -2387,8 +2385,8 @@ $.wms.form44 = (function() {
                     "<td>"+data.supervisionEnd+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2405,7 +2403,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t7/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t7/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2426,7 +2424,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t7/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t7/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2485,7 +2483,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -2528,11 +2526,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T7").table2excel({
+            $("#T_F45T7").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table7",
-                filename: "Form44-Table7.xls", //do not include extension
+                name: "Form45-Table7",
+                filename: "Form45-Table7.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -2540,10 +2538,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSS', 'TSSS' ];
+            var allowedDocket= [ 'CSS', 'TCSS'];
             var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_date_rcv_by_the_ppo'];
             var check = true
-            var checkTable = ['F44t8', 'F44t7']
+            var checkTable = ['F45t8', 'F45t7']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -2594,7 +2592,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t7/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t7/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2627,8 +2625,8 @@ $.wms.form44 = (function() {
 
     };
 
-    var __attachF44T8PageEvent = function() {
-        console.log("f44t8 events")
+    var __attachF45T8PageEvent = function() {
+        console.log("f45t8 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -2637,11 +2635,11 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T8_tbody').empty();
+        $('.F45T8_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $.wms.executeExternalGet('http://localhost:8000/F44t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2652,7 +2650,7 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T8_tbody').append("<tr>"+
+                $('.F45T8_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.criminalCaseNo+"</td>"+
@@ -2663,8 +2661,8 @@ $.wms.form44 = (function() {
                     "<td>"+data.supervisionEnd+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2681,7 +2679,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t8/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t8/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2702,7 +2700,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t8/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t8/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2765,7 +2763,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -2808,11 +2806,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T8").table2excel({
+            $("#T_F45T8").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table8",
-                filename: "Form44-Table8.xls", //do not include extension
+                name: "Form45-Table8",
+                filename: "Form45-Table8.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -2820,10 +2818,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSS', 'TSSS' ];
+            var allowedDocket= [ 'CSS', 'TCSS'];
             var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_date_rcv_by_the_ppo'];
             var check = true
-            var checkTable = ['F44t8', 'F44t7']
+            var checkTable = ['F45t8', 'F45t7']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -2876,7 +2874,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t8/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t8/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2909,8 +2907,8 @@ $.wms.form44 = (function() {
 
     };
     
-    var __attachF44T9PageEvent = function() {
-        console.log("f44t9 events")
+    var __attachF45T9PageEvent = function() {
+        console.log("f45t9 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -2919,7 +2917,7 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T9_tbody').empty();
+        $('.F45T9_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
@@ -2927,7 +2925,7 @@ $.wms.form44 = (function() {
            placeholder: "Select Field Office",
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
-        $.wms.executeExternalGet('http://localhost:8000/F44t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2938,7 +2936,7 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T9_tbody').append("<tr>"+
+                $('.F45T9_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.report+"</td>"+
@@ -2947,8 +2945,8 @@ $.wms.form44 = (function() {
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2965,7 +2963,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t9/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t9/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2986,7 +2984,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t9/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t9/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3045,7 +3043,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -3088,11 +3086,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T9").table2excel({
+            $("#T_F45T9").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table9",
-                filename: "Form44-Table9.xls", //do not include extension
+                name: "Form45-Table9",
+                filename: "Form45-Table9.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -3100,10 +3098,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSS', 'TSSS' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_date_rcv_by_the_ppo'];
+            var allowedDocket= [ 'CSS', 'TCSS'];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
             var check = true
-            var checkTable = ['F44t8', 'F44t7']
+            var checkTable = ['F45t8', 'F45t7']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -3154,7 +3152,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t9/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t9/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3171,7 +3169,7 @@ $.wms.form44 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
                 }
                 else{
@@ -3186,8 +3184,8 @@ $.wms.form44 = (function() {
         })
 
     };
-    var __attachF44T10PageEvent = function() {
-        console.log("f44t10 events")
+    var __attachF45T10PageEvent = function() {
+        console.log("f45t10 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -3196,7 +3194,7 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T10_tbody').empty();
+        $('.F45T10_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
@@ -3204,7 +3202,7 @@ $.wms.form44 = (function() {
            placeholder: "Select Field Office",
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
-        $.wms.executeExternalGet('http://localhost:8000/F44t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -3215,7 +3213,7 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T10_tbody').append("<tr>"+
+                $('.F45T10_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.report+"</td>"+
@@ -3224,8 +3222,8 @@ $.wms.form44 = (function() {
                     "<td>"+data.supervisingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3242,7 +3240,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t10/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t10/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3263,7 +3261,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t10/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t10/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3322,7 +3320,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -3365,11 +3363,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T10").table2excel({
+            $("#T_F45T10").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table10",
-                filename: "Form44-Table10.xls", //do not include extension
+                name: "Form45-Table10",
+                filename: "Form45-Table10.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -3377,10 +3375,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSS', 'TSSS' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_date_rcv_by_the_ppo'];
+            var allowedDocket= [ 'CSS', 'TCSS'];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
             var check = true
-            var checkTable = ['F44t8', 'F44t7']
+            var checkTable = ['F45t8', 'F45t7']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -3431,7 +3429,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t10/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t10/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3464,8 +3462,8 @@ $.wms.form44 = (function() {
 
     };
     
-    var __attachF44T11PageEvent = function() {
-        console.log("f44t11 events")
+    var __attachF45T11PageEvent = function() {
+        console.log("f45t11 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -3474,7 +3472,7 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T11_tbody').empty();
+        $('.F45T11_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
@@ -3482,7 +3480,7 @@ $.wms.form44 = (function() {
            placeholder: "Select Field Office",
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
-        $.wms.executeExternalGet('http://localhost:8000/F44t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -3493,7 +3491,7 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T11_tbody').append("<tr>"+
+                $('.F45T11_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.report+"</td>"+
@@ -3501,8 +3499,8 @@ $.wms.form44 = (function() {
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3519,7 +3517,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t11/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t11/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3540,7 +3538,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t11/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t11/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3597,7 +3595,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -3640,11 +3638,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T11").table2excel({
+            $("#T_F45T11").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table11",
-                filename: "Form44-Table11.xls", //do not include extension
+                name: "Form45-Table11",
+                filename: "Form45-Table11.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -3652,10 +3650,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SSS', 'TSSS' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_date_rcv_by_the_ppo'];
+            var allowedDocket= [ 'CSS', 'TCSS'];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
             var check = true
-            var checkTable = ['F44t8', 'F44t7']
+            var checkTable = ['F45t8', 'F45t7']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -3705,7 +3703,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t11/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t11/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3738,8 +3736,8 @@ $.wms.form44 = (function() {
 
     };
 
-    var __attachF44T12PageEvent = function() {
-        console.log("f44t12 events")
+    var __attachF45T12PageEvent = function() {
+        console.log("f45t12 events")
 
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
@@ -3748,7 +3746,7 @@ $.wms.form44 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F44T12_tbody').empty();
+        $('.F45T12_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
@@ -3756,7 +3754,7 @@ $.wms.form44 = (function() {
            placeholder: "Select Field Office",
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
-        $.wms.executeExternalGet('http://localhost:8000/F44t12?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://localhost:8000/F45t12?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -3767,17 +3765,17 @@ $.wms.form44 = (function() {
                 data = $.wms.upper($.wms.sanitize(data))
                 var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                $('.F44T12_tbody').append("<tr>"+
+                $('.F45T12_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.referringOffice+"</td>"+
-                    "<td>"+data.dateReceivedByPpo+"</td>"+
+                    "<td>"+data.dateReceived+"</td>"+
                     "<td>"+data.supervisingOfficer+"</td>"+
-                    "<td>"+data.reasonForReferral+"</td>"+
+                    "<td>"+data.reasonsForReferral+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3794,7 +3792,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F44t12/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://localhost:8000/F45t12/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3815,7 +3813,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F44t12/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://localhost:8000/F45t12/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3832,9 +3830,9 @@ $.wms.form44 = (function() {
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
                         $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
                         $("#edit_field_offices").val(payload.referringOffice).trigger('change')
-                        $("#edit_rep_date_submitted").val(payload.dateReceivedByPpo)
+                        $("#edit_rep_date_submitted").val(payload.dateReceived)
                         $("#edit_supervising_officer").val(payload.supervisingOfficer)
-                        $("#edit_reason_for_referral").val(payload.reasonForReferral)
+                        $("#edit_reason_for_referral").val(payload.reasonsForReferral)
                        
                             //Update proceed
                             $(".editProceedButton").unbind("click").on("click",function(){
@@ -3858,9 +3856,9 @@ $.wms.form44 = (function() {
                                     "fieldOffice"           : $.wms.urlParam('field'),
                                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                                     "referringOffice"       : $("#edit_field_offices").val(),
-                                    "dateReceivedByPpo"     : $("#edit_rep_date_submitted").val(),
+                                    "dateReceived"          : $("#edit_rep_date_submitted").val(),
                                     "supervisingOfficer"    : $("#edit_supervising_officer").val(),
-                                    "reasonForReferral"     : $("#edit_reason_for_referral").val(),
+                                    "reasonsForReferral"    : $("#edit_reason_for_referral").val(),
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val(),
                                         "updatedBy"             : $.cookie("USER_ID"),
@@ -3874,7 +3872,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F44t12/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://localhost:8000/F45t12/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -3917,11 +3915,11 @@ $.wms.form44 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F44T12").table2excel({
+            $("#T_F45T12").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form44-Table12",
-                filename: "Form44-Table12.xls", //do not include extension
+                name: "Form45-Table12",
+                filename: "Form45-Table12.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -3929,10 +3927,10 @@ $.wms.form44 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSSS' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer', 'add_rep_date_submitted'];
+            var allowedDocket= [ 'CCSS' ];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
             var check = true
-            var checkTable = ['F44t8', 'F44t7']
+            var checkTable = ['F45t8', 'F45t7']
 
             ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
@@ -3965,9 +3963,9 @@ $.wms.form44 = (function() {
                 "fieldOffice"           : $.wms.urlParam('field'),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "referringOffice"       : $("#add_field_offices").val(),
-                "dateReceivedByPpo"     : $("#add_rep_date_submitted").val(),
+                "dateReceived"          : $("#add_rep_date_submitted").val(),
                 "supervisingOfficer"    : $("#add_supervising_officer").val(),
-                "reasonForReferral"     : $("#add_reason_for_referral").val(),
+                "reasonsForReferral"    : $("#add_reason_for_referral").val(),
                 "clientProfileDto"      : {
                     "docketNumber"          : $("#add_docket_no").val(),
                     "createdBy"             : $.cookie("USER_ID"),
@@ -3983,7 +3981,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F44t12/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://localhost:8000/F45t12/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -4000,7 +3998,7 @@ $.wms.form44 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+reselt.message+"</p>").insertAfter(("#add_docket_no"))
 
                 }
                 else{
@@ -4016,8 +4014,8 @@ $.wms.form44 = (function() {
 
     };
 
-    var __attachF44T13PageEvent = function() {
-        console.log("f44t13 events")
+    var __attachF45T13PageEvent = function() {
+        console.log("f45t13 events")
         __rcv = function(){
 
             var yearMonth   = $.wms.urlParam('date')
@@ -4027,7 +4025,7 @@ $.wms.form44 = (function() {
 
             $(".form_loader").removeClass("hidden")
 
-            $('.F44T13_tbody').empty();
+            $('.F45T13_tbody').empty();
             $(".form_loader").removeClass("hidden")
             $(".result_form").addClass("hidden")
 
@@ -4035,7 +4033,7 @@ $.wms.form44 = (function() {
                placeholder: "Select Field Office",
             });
             $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
-            $.wms.executeExternalGet('http://localhost:8000/F44t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+            $.wms.executeExternalGet('http://localhost:8000/F45t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
 
@@ -4046,7 +4044,7 @@ $.wms.form44 = (function() {
                     data = $.wms.upper($.wms.sanitize(data))
                     var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                    $('.F44T13_tbody').append("<tr>"+
+                    $('.F45T13_tbody').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.criminalCaseNo+"</td>"+
@@ -4057,8 +4055,8 @@ $.wms.form44 = (function() {
                         "<td>"+data.dateReceived+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F44_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -4075,7 +4073,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://localhost:8000/F44t13/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://localhost:8000/F45t13/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton").attr('disabled',false)
@@ -4096,7 +4094,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://localhost:8000/F44t13/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://localhost:8000/F45t13/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -4159,7 +4157,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://localhost:8000/F44t13/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://localhost:8000/F45t13/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                             location.reload();
                                         }else{
@@ -4202,11 +4200,11 @@ $.wms.form44 = (function() {
             //     }
             //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             //     });
-                $("#T_F44T11").table2excel({
+                $("#T_F45T13").table2excel({
                     // exclude CSS class
                     exclude: ".options",
-                    name: "Form44-Table11",
-                    filename: "Form44-Table11.xls", //do not include extension
+                    name: "Form45-Table13",
+                    filename: "Form45-Table13.xls", //do not include extension
                     fileext: ".xls",
                     preserveColors: true
                   }); 
@@ -4214,10 +4212,10 @@ $.wms.form44 = (function() {
 
             //Add
             $(".addSubmitButton").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CSSS' ];
+                var allowedDocket= [ 'CCSS' ];
                 var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
                 var check = true
-                var checkTable = ['F44t12']
+                var checkTable = ['F45t12']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -4270,7 +4268,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F44t13/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://localhost:8000/F45t13/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -4287,7 +4285,7 @@ $.wms.form44 = (function() {
                         $(".modal-loader").addClass("hidden")
                         $("#add_docket_no").attr('disabled',false)
                         $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
                     }
                     else{
@@ -4312,11 +4310,11 @@ $.wms.form44 = (function() {
 
             $(".form_loader").removeClass("hidden")
 
-            $('.F44T13_tbody_b').empty();
+            $('.F45T13_tbody_b').empty();
             $(".form_loader").removeClass("hidden")
             $(".result_form").addClass("hidden")
 
-            $.wms.executeExternalGet('http://localhost:8000/F44t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+            $.wms.executeExternalGet('http://localhost:8000/F45t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
 
@@ -4327,14 +4325,14 @@ $.wms.form44 = (function() {
                     data = $.wms.upper($.wms.sanitize(data))
                     var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                    $('.F44T13_tbody_b').append("<tr>"+
+                    $('.F45T13_tbody_b').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.dateReturned+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit-term' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F44_write btn btn-danger btn-sm btn-delete-term' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit-term' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete-term' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete-term").unbind("click").on("click",function(){
@@ -4351,7 +4349,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://localhost:8000/F44t13CRT/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://localhost:8000/F45t13CRT/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete-term").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton-term").attr('disabled',false)
@@ -4372,7 +4370,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit-term").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://localhost:8000/F44t13CRT/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://localhost:8000/F45t13CRT/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -4425,7 +4423,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://localhost:8000/F44t13CRT/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://localhost:8000/F45t13CRT/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                             location.reload();
                                         }else{
@@ -4468,11 +4466,11 @@ $.wms.form44 = (function() {
             // //     }
             // //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             // //     });
-            //     $("#T_F44T13").table2excel({
+            //     $("#T_F45T13").table2excel({
             //         // exclude CSS class
             //         exclude: ".options",
-            //         name: "Form44-Table13",
-            //         filename: "Form44-Table13.xls", //do not include extension
+            //         name: "Form45-Table13",
+            //         filename: "Form45-Table13.xls", //do not include extension
             //         fileext: ".xls",
             //         preserveColors: true
             //       }); 
@@ -4480,10 +4478,10 @@ $.wms.form44 = (function() {
 
             //Add
             $(".addSubmitButton-term").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CSSS' ];
+                var allowedDocket= [ 'CCSS' ];
                 var requiredField= [ 'add_offender_fname-term', 'add_offender_lname-term', 'add_date_com_and_ret-term'];
                 var check = true
-                var checkTable = ['F44t12']
+                var checkTable = ['F45t12']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_docket_no-term"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -4531,7 +4529,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F44t13CRT/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://localhost:8000/F45t13CRT/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -4548,7 +4546,7 @@ $.wms.form44 = (function() {
                         $(".modal-loader").addClass("hidden")
                         $("#add_docket_no-term").attr('disabled',false)
                         $("#add_docket_no-term").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no-term"))
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no-term"))
 
                     }
                     else{
@@ -4569,7 +4567,7 @@ $.wms.form44 = (function() {
 
 
     var __attachF45CSCSPageEvent = function() {
-        console.log("form44 caseload")
+        console.log("form45 caseload")
         var field_office =  $.wms.urlParam('field')
         var date =  $.wms.urlParam('date')
         var officeId =  $.wms.urlParam('officeId')
@@ -4650,19 +4648,19 @@ $.wms.form44 = (function() {
     
 
     return {
-        attachF44T1PageEvent : __attachF44T1PageEvent,
-        attachF44T2PageEvent : __attachF44T2PageEvent,
-        attachF44T3PageEvent : __attachF44T3PageEvent,
-        attachF44T4PageEvent : __attachF44T4PageEvent,
-        attachF44T5PageEvent : __attachF44T5PageEvent,
-        attachF44T6PageEvent : __attachF44T6PageEvent,
-        attachF44T7PageEvent : __attachF44T7PageEvent,
-        attachF44T8PageEvent : __attachF44T8PageEvent,
-        attachF44T9PageEvent : __attachF44T9PageEvent,
-        attachF44T10PageEvent : __attachF44T10PageEvent,
-        attachF44T11PageEvent : __attachF44T11PageEvent,
-        attachF44T12PageEvent : __attachF44T12PageEvent,
-        attachF44T13PageEvent : __attachF44T13PageEvent,
+        attachF45T1PageEvent : __attachF45T1PageEvent,
+        attachF45T2PageEvent : __attachF45T2PageEvent,
+        attachF45T3PageEvent : __attachF45T3PageEvent,
+        attachF45T4PageEvent : __attachF45T4PageEvent,
+        attachF45T5PageEvent : __attachF45T5PageEvent,
+        attachF45T6PageEvent : __attachF45T6PageEvent,
+        attachF45T7PageEvent : __attachF45T7PageEvent,
+        attachF45T8PageEvent : __attachF45T8PageEvent,
+        attachF45T9PageEvent : __attachF45T9PageEvent,
+        attachF45T10PageEvent : __attachF45T10PageEvent,
+        attachF45T11PageEvent : __attachF45T11PageEvent,
+        attachF45T12PageEvent : __attachF45T12PageEvent,
+        attachF45T13PageEvent : __attachF45T13PageEvent,
         attachF45CSCSPageEvent : __attachF45CSCSPageEvent
     };
 }());

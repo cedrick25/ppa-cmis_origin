@@ -1,10 +1,10 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-    	<span class="pull-right" style="padding-right: 10px;">
-    		<button type="button" class="access_f44_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Record</button>
+      <span class="pull-right" style="padding-right: 10px;">
+        <button type="button" class="access_f44_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Record</button>
         <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button>
-    		<button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
-    	</span>
+        <button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
+      </span>
     </div>
   </div>
 
@@ -60,13 +60,31 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Name</label>
+              <label for="" class="col-sm-3">Offender's First Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_offender" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_fname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Middle Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_mname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Last Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_lname" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Suffix Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
@@ -135,13 +153,31 @@
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Name</label>
+                <label for="" class="col-sm-3">Offender's First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_offender_fname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Middle Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_mname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_lname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
@@ -160,6 +196,7 @@
                 <label for="" class="col-sm-3">Field Office</label>
                 <div class="col-sm-9   filter-modal ">    
                   <select class="form-control select2 modal sel_field_office2" id="add_field_office">
+                    
                     <!-- <option value="">OFFICE 2</option> -->
                   </select>
                 </div>

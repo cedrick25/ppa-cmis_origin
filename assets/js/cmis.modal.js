@@ -40,7 +40,7 @@ $.wms.modal = (function() {
             var sel     = $("#sel-modal-45-forms").val();
             var date    = $("#modal-45-date").val();
             var field   = $("#sel-modal-45-field").val();
-            var officeId= $("#sel-modal-44-field").select2().find(":selected").data("id");
+            var officeId= $("#sel-modal-45-field").select2().find(":selected").data("id");
 
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
         });
@@ -50,7 +50,7 @@ $.wms.modal = (function() {
             var sel     = $("#sel-modal-50-forms").val();
             var date    = $("#modal-50-date").val();
             var field   = $("#sel-modal-50-field").val();
-            var officeId= $("#sel-modal-44-field").select2().find(":selected").data("id");
+            var officeId= $("#sel-modal-50-field").select2().find(":selected").data("id");
 
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
         });
@@ -60,7 +60,7 @@ $.wms.modal = (function() {
             var sel     = $("#sel-modal-51-forms").val();
             var date    = $("#modal-51-date").val();
             var field   = $("#sel-modal-51-field").val();
-            var officeId= $("#sel-modal-44-field").select2().find(":selected").data("id");
+            var officeId= $("#sel-modal-51-field").select2().find(":selected").data("id");
 
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
         });
@@ -70,7 +70,7 @@ $.wms.modal = (function() {
             var sel     = $("#sel-modal-53-forms").val();
             var date    = $("#modal-53-date").val();
             var field   = $("#sel-modal-53-field").val();
-            var officeId= $("#sel-modal-44-field").select2().find(":selected").data("id");
+            var officeId= $("#sel-modal-53-field").select2().find(":selected").data("id");
 
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
         });

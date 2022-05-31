@@ -35,7 +35,7 @@
                   <th style="text-align: center;">OFFENDER'S NAME</th>
                   <th style="text-align: center;">REFERRING OFFICE</th>
                   <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
-                  <th style="text-align: center;">INVESTIGATION OFFICER</th>
+                  <th style="text-align: center;">INVESTIGATING OFFICER</th>
                   <th style="text-align: center;">REASON FOR REFERRAL</th>
                   <th class="options" style="text-align: center;">FIELD OFFICE</th>
                   <th class="options" style="text-align: center;">DATA SOURCE</th>

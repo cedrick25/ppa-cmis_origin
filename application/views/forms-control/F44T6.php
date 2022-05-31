@@ -106,7 +106,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Investigation Officer</label>
+                <label for="" class="col-sm-3">Investigating Officer</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="edit_investigating_officer">
                 </div>
@@ -196,7 +196,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Investigation Officer</label>
+                <label for="" class="col-sm-3">Investigating Officer</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_investigating_officer">
                 </div>

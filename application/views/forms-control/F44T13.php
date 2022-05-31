@@ -66,7 +66,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSI</i></span>
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSS</i></span>
               </div>
             </div>
             <div class="form-group row">
@@ -353,7 +353,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no-term" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id-term" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSI</i></span>
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSS</i></span>
               </div>
             </div>
             <div class="form-group row">

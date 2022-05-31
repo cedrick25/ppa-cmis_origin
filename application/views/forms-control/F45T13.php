@@ -1,8 +1,14 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
       <span class="pull-right" style="padding-right: 10px;">
-        <button type="button" class="access_f44_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Record</button>
+        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+
+        <button type="button" class="access_f44_write btn-add-term btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-term"><i class="fa fa-plus-circle"></i> Add Courtesy Referrals Terminated</button>
+
+      
+        
         <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button>
+
         <button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
       </span>
     </div>
@@ -60,42 +66,72 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CCSS</i></span>
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Name</label>
+              <label for="" class="col-sm-3">Offender's First Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_offender" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_fname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Date Received by the PPO</label>
+              <label for="" class="col-sm-3">Offender's Middle Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  sel_date2" id="edit_date_rcv">
+                <input type="text" class="form-control  upperCase" id="edit_offender_mname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Investigating Officer</label>
+              <label for="" class="col-sm-3">Offender's Last Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_investigating_officer" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_lname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Field Office</label>
-              <div class="col-sm-9   filter-modal ">    
-                <select class="form-control select2 modal sel_field_office2" id="edit_field_office">
-                  
-                  <!-- <option value="">OFFICE 2</option> -->
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="" class="col-sm-3">Year-Month</label>
+              <label for="" class="col-sm-3">Offender's Suffix Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control sel_date" Id="edit_Y_M" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
               </div>
             </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">CC No</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_cc_no" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Court of Origin</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_court_origin" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Referring Office</label>
+                <div class="col-sm-9   filter-modal ">    
+                  <select class="form-control select2 modal sel_field_office2" id="edit_referring_office">
+                    
+                    <!-- <option value="">OFFICE 2</option> -->
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Supervising Officer</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_supervising_officer" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Period Courtesy Supervision</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control  upperCase" id="edit_period_crt" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Received</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="edit_date_rcv" placeholder="">
+                </div>
+              </div>
           </div>
         </div>
         <div class="confirmEdit hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>
@@ -135,40 +171,70 @@
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSS</i></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Name</label>
+                <label for="" class="col-sm-3">Offender's First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_offender_fname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Date Received by the PPO</label>
+                <label for="" class="col-sm-3">Offender's Middle Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  sel_date2" id="add_date_rcv">
+                  <input type="text" class="form-control  upperCase" id="add_offender_mname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Investigating Officer</label>
+                <label for="" class="col-sm-3">Offender's Last Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_investigating_officer" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_offender_lname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Field Office</label>
+                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">CC No</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_cc_no" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Court of Origin</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_court_origin" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Referring Office</label>
                 <div class="col-sm-9   filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="add_field_office">
+                  <select class="form-control select2 modal sel_field_office2" id="add_referring_office">
                     
                     <!-- <option value="">OFFICE 2</option> -->
                   </select>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Year-Month</label>
+                <label for="" class="col-sm-3">Supervising Officer</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  sel_date" id="add_Y_M" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_supervising_officer" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Period Courtesy Supervision</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control  upperCase" id="add_period_crt" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Received</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="add_date_rcv" placeholder="">
                 </div>
               </div>
             </div>
@@ -187,3 +253,178 @@
   </div>
 </div>
 <!-- Add Modal -->
+
+
+
+<!-- Add Modal -->
+<div class="modal fade" id="modal-add-term"  role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header tb-header">
+          <h4 class="modal-title" id=""><i class="fa fa-plus"></i> Add Record</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            
+          </button>
+        </div>
+        <div class="modal-body modal-loader2 hidden">
+          <div class="row b">
+            <div><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Loading Data...</div>
+          </div>
+        </div>
+        <div class="  modal-body modal-form">
+          <div class="row" id="form_">
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Docket No.</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_docket_no-term" placeholder="" >
+                  <input type="hidden" class="form-control " id="add_id" placeholder="">
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSS</i></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's First Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_fname-term" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Middle Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_mname-term" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_lname-term" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offender_sname-term" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Completed And Returned</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="add_date_com_and_ret-term" placeholder="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="confirmAdd-term hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>
+        </div>
+        <div class="modal-footer" id="modal_footer">
+
+          <button type="button" class="btn btn-sm btn-secondary addCancelButton-term" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-sm btn-primary addSubmitButton-term">Submit</button>
+          <button type="button" class="btn btn-sm btn-primary hidden addProceedButton-term">Confirm <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
+        </div>
+      </div>
+      <input type="reset" class="hidden btn-reset-term">
+    </form>
+  </div>
+</div>
+<!-- Add Modal -->
+
+<!-- Edit Modal -->
+<div class="modal fade" id="modal-edit-term" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header tb-header">
+        <h4 class="modal-title" id=""><i class="fa fa-pencil"></i> Update Record</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          
+        </button>
+      </div>
+      <div class="modal-body modal-loader2 hidden">
+        <div class="row b">
+          <div><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Loading Data...</div>
+        </div>
+      </div>
+      <div class=" hidden modal-body modal-form">
+        <div class="row" id="form_">
+          <div class="col-lg-12">
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Docket No.</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_docket_no-term" placeholder="">
+                <input type="hidden" class="form-control " id="edit_id-term" placeholder="">
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CCSS</i></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's First Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_fname-term" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Middle Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_mname-term" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Last Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_lname-term" placeholder="">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="" class="col-sm-3">Offender's Suffix Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control  upperCase" id="edit_offender_sname-term" placeholder="">
+              </div>
+            </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Completed And Returned</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="edit_date_com_and_ret-term" placeholder="">
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="confirmEdit-term hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>
+      </div>
+      <div class="modal-footer" id="modal_footer">
+
+        <button type="button" class="btn btn-sm btn-secondary editCancelButton-term" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-sm btn-primary editSubmitButton-term">Submit</button>
+        <button type="button" class="btn btn-sm btn-primary hidden editProceedButton-term">Confirm <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Modal -->
+
+
+<!-- Delete Modal -->
+  <div class="modal fade" id="modal-delete-term" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header tb-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><b><i class="fa fa-trash-o"></i> Delete Record</b></h4>
+        </div>
+        <div class="modal-body">
+          <p><b>Are you sure you want to delete <u class="color-red">Docket No.:<span class="sel-docket-term"></span></u>?</b></p>
+          <span class="hidden sel-id-term"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger deleteProceedButton-term" >Confirm  <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
+
+
+        </div>
+        
+      </div>
+
+      
+    </div>
+  </div>
+<!-- Delete Modal -->
