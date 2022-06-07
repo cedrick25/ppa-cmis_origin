@@ -60,42 +60,90 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Name</label>
+              <label for="" class="col-sm-3">Client First Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_offender" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_fname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Date Received by the PPO</label>
+              <label for="" class="col-sm-3">Client Middle Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  sel_date2" id="edit_date_rcv">
+                <input type="text" class="form-control  upperCase" id="edit_mname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Investigating Officer</label>
+              <label for="" class="col-sm-3">Client Last Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_investigating_officer" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_lname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Field Office</label>
-              <div class="col-sm-9   filter-modal ">    
-                <select class="form-control select2 modal sel_field_office2" id="edit_field_office">
-                  
-                  <!-- <option value="">OFFICE 2</option> -->
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="" class="col-sm-3">Year-Month</label>
+              <label for="" class="col-sm-3">Client Suffix Name</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control sel_date" Id="edit_Y_M" placeholder="">
+                <input type="text" class="form-control  upperCase" id="edit_sname" placeholder="">
               </div>
             </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">CC no.</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_cc_no" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Court of Origin</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_court_origin" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offense</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_offense" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Sentence</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_sentence" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date of Court Order</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="edit_date_court_order">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Received</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="edit_date_rcv">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Assigned Officer</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_officer" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Submitted</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="edit_date_submitted">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">PPO's Recommendation</label>
+                <div class="col-sm-9 filter-modal">
+                  <select class="form-control select2 modal" id="edit_ppo_recommendation">
+                    <option value="GRANT">GRANT</option>
+                    <option value="DENIED">DENIED</option>
+                  </select>
+                </div>
+              </div>
           </div>
         </div>
         <div class="confirmEdit hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>
@@ -135,40 +183,88 @@
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: PPI, PECI, TPPI, TPECI</i></span>
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Name</label>
+                <label for="" class="col-sm-3">Client First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_fname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Date Received by the PPO</label>
+                <label for="" class="col-sm-3">Client Middle Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_mname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Client Last Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_lname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Client Suffix Name</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_sname" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">CC no.</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_cc_no" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Court of Origin</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_court_origin" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offense</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offense" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Sentence</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_sentence" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date of Court Order</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="add_date_court_order">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Date Received</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="add_date_rcv">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Investigating Officer</label>
+                <label for="" class="col-sm-3">Assigned Officer</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_investigating_officer" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_officer" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Field Office</label>
-                <div class="col-sm-9   filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="add_field_office">
-                    
-                    <!-- <option value="">OFFICE 2</option> -->
+                <label for="" class="col-sm-3">Date Submitted</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="add_date_submitted">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">PPO's Recommendation</label>
+                <div class="col-sm-9 filter-modal">
+                  <select class="form-control select2 modal" id="add_ppo_recommendation">
+                    <option value="GRANT">GRANT</option>
+                    <option value="DENIED">DENIED</option>
                   </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="" class="col-sm-3">Year-Month</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control  sel_date" id="add_Y_M" placeholder="">
                 </div>
               </div>
             </div>

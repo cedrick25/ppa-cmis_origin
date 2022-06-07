@@ -1033,14 +1033,30 @@ $.wms.widget = (function() {
                             $.wms.reports.attachF21PCS();
             case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
                             break;
-            case 'F45CSCS': $.wms.form45.attachF45CSCSPageEvent(); 
-                            break;
-            case 'F50CSCS': $.wms.form50.attachF50CSCSPageEvent(); 
-                            break;
-            case 'F51VCCS': $.wms.form51.attachF51VCCSPageEvent(); 
-                            break;
+            case 'F50VCCS': $.wms.form50.attachF50VCCSPageEvent(); break; 
             case 'F50T1': $.wms.form50.attachF50T1PageEvent(); break;
             case 'F50T2': $.wms.form50.attachF50T2PageEvent(); break;
+
+            case 'F51RORCS': $.wms.form51.attachF51RORCSPageEvent();break;
+            case 'F51T1': $.wms.form51.attachF51T1PageEvent(); break;
+            case 'F51T2': $.wms.form51.attachF51T2PageEvent(); break;
+            case 'F51T3': $.wms.form51.attachF51T3PageEvent(); break;
+            case 'F51T4': $.wms.form51.attachF51T4PageEvent(); break;
+
+            case 'F53CSAIPCS': $.wms.form53.attachF53CSAIPCSPageEvent();break;
+            case 'F53T1': $.wms.form53.attachF53T1PageEvent(); break;
+            case 'F53T2': $.wms.form53.attachF53T2PageEvent(); break;
+            case 'F53T3': $.wms.form53.attachF53T3PageEvent(); break;
+            case 'F53T4': $.wms.form53.attachF53T4PageEvent(); break;
+            case 'F53T5': $.wms.form53.attachF53T5PageEvent(); break;
+            case 'F53T6': $.wms.form53.attachF53T6PageEvent(); break;
+            case 'F53T7': $.wms.form53.attachF53T7PageEvent(); break;
+            case 'F53T8': $.wms.form53.attachF53T8PageEvent(); break;
+            case 'F53T9': $.wms.form53.attachF53T9PageEvent(); break;
+            case 'F53T10': $.wms.form53.attachF53T10PageEvent(); break;
+            case 'F53T11': $.wms.form53.attachF53T11PageEvent(); break;
+
+            case 'F45CSCS': $.wms.form45.attachF45CSCSPageEvent();break;
             case 'F45T1': $.wms.form45.attachF45T1PageEvent(); break;
             case 'F45T2': $.wms.form45.attachF45T2PageEvent(); break;
             case 'F45T3': $.wms.form45.attachF45T3PageEvent(); break;

@@ -602,7 +602,7 @@ $.wms.form50 = (function() {
 
     };
 
-    var __attachF50CSCSPageEvent = function() {
+    var __attachF50VCCSPageEvent = function() {
         console.log("form50 caseload")
         var field_office =  $.wms.urlParam('field')
         var date =  $.wms.urlParam('date')
@@ -686,6 +686,6 @@ $.wms.form50 = (function() {
     return {
         attachF50T1PageEvent : __attachF50T1PageEvent,
         attachF50T2PageEvent : __attachF50T2PageEvent,
-        attachF50CSCSPageEvent : __attachF50CSCSPageEvent
+        attachF50VCCSPageEvent : __attachF50VCCSPageEvent
     };
 }());

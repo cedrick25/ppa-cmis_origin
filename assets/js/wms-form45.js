@@ -439,7 +439,7 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -711,7 +711,7 @@ $.wms.form45 = (function() {
                         $(".modal-loader").addClass("hidden")
                         $("#add_docket_no").attr('disabled',false)
                         $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
                     }
                 });    
             })
@@ -969,15 +969,7 @@ $.wms.form45 = (function() {
                         $(".modal-loader").addClass("hidden")
                         $("#add_acted_docket_no").attr('disabled',false)
                         $("#add_acted_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_acted_docket_no"))
-                    }
-                    else{
-                        $(".err_msg").remove()
-                        $(".addProceedButton_acted").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_acted_docket_no").attr('disabled',false)
-                        $("#add_acted_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket must be existing in t1/t2 rcv</p>").insertAfter(("#add_acted_docket_no"))
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_acted_docket_no"))
                     }
                 });    
             })
@@ -1247,16 +1239,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must be existed in t4/t2 acted</p>").insertAfter(("#add_docket_no"))
                 }
             }); 
         })
@@ -1518,14 +1502,6 @@ $.wms.form45 = (function() {
                     $("#add_docket_no").addClass("error_field");
                     $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must be existed in t3/t2 acted</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -1793,16 +1769,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must be existed in t3/t2 acted</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -2069,22 +2037,14 @@ $.wms.form45 = (function() {
                         $(".modal-loader").addClass("hidden")
                         $("#add_docket_no").attr('disabled',false)
                         $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                    }
-                    else{
-                        $(".err_msg").remove()
-                        $(".addProceedButton").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no").attr('disabled',false)
-                        $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket must be existed in t3/t2 acted</p>").insertAfter(("#add_docket_no"))
                     }
                 });    
             })
 
         }
-        __acted_upon = function(){
+        __CAR = function(){
             var yearMonth   = $.wms.urlParam('date')
             var officeId    = $.wms.urlParam('officeId')
             var page        = $.wms.urlParam('page')
@@ -2331,23 +2291,15 @@ $.wms.form45 = (function() {
                         $(".modal-loader").addClass("hidden")
                         $("#add_docket_no-acted").attr('disabled',false)
                         $("#add_docket_no-acted").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no-acted"))
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no-acted"))
 
-                    }
-                    else{
-                        $(".err_msg").remove()
-                        $(".addProceedButton-acted").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no-acted").attr('disabled',false)
-                        $("#add_docket_no-acted").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket must be existed in t5/t6</p>").insertAfter(("#add_docket_no-acted"))
                     }
                 });    
             })
 
         }
         __rcv();
-        __acted_upon();
+        __CAR();
     };
 
 
@@ -2609,16 +2561,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must be existed in</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -2891,16 +2835,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must be existed in</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -3172,14 +3108,6 @@ $.wms.form45 = (function() {
                     $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
                 }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must exist in t7/t8 but not in t10</p>").insertAfter(("#add_docket_no"))
-                }
             });    
         })
 
@@ -3446,16 +3374,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must exist in t7/t8 but not in table t9</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -3720,16 +3640,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket number existed</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must exist in t7/t8/t10 but not in t9</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -3998,16 +3910,8 @@ $.wms.form45 = (function() {
                     $(".modal-loader").addClass("hidden")
                     $("#add_docket_no").attr('disabled',false)
                     $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+reselt.message+"</p>").insertAfter(("#add_docket_no"))
+                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
-                }
-                else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*Docket must not exist in t13</p>").insertAfter(("#add_docket_no"))
                 }
             });    
         })
@@ -4288,14 +4192,6 @@ $.wms.form45 = (function() {
                         $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
 
                     }
-                    else{
-                        $(".err_msg").remove()
-                        $(".addProceedButton").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no").attr('disabled',false)
-                        $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket must not exist in t12</p>").insertAfter(("#add_docket_no"))
-                    }
                 });    
             })
         
@@ -4548,14 +4444,6 @@ $.wms.form45 = (function() {
                         $("#add_docket_no-term").addClass("error_field");
                         $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no-term"))
 
-                    }
-                    else{
-                        $(".err_msg").remove()
-                        $(".addProceedButton-term").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no-term").attr('disabled',false)
-                        $("#add_docket_no-term").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*Docket must exist in t12/t13</p>").insertAfter(("#add_docket_no-term"))
                     }
                 });    
             })
