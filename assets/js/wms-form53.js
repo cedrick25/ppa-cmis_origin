@@ -283,7 +283,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -543,7 +543,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -803,7 +803,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -1063,7 +1063,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -1323,7 +1323,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -1604,7 +1604,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -1871,7 +1871,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -2128,7 +2128,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'HCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -2391,7 +2391,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'SCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -2664,7 +2664,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'SCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -2925,7 +2925,7 @@ $.wms.form53 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+            var allowedDocket= [ 'SCS' ];
             var requiredField= [ 'add_fname', 'add_lname'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
@@ -3015,66 +3015,27 @@ $.wms.form53 = (function() {
 
         $.wms.executeExternalGet('http://localhost:8000/F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
             console.log(result)
-            $('.Id').text(result.id);
-            $('.Id1').text(result.id1);
-            $('.Id1a').text(result.id1a);
-            $('.Id1b').text(result.id1b);
-            $('.Id2').text(result.id2);
-            $('.IId1').text(result.iid1);
-            $('.IId2').text(result.iid2);
-            $('.IVd').text(result.ivd);
-            $('.IVd1').text(result.ivd1);
-            $('.Ivd2').text(result.ivd2);
-
-            $('.IVd3').text(result.ivd3);
-            $('.IVe').text(result.ive);
-            $('.IVe1').text(result.ive1);
-            $('.IVe1a').text(result.ive1a);
-            $('.IVe1b').text(result.ive1b);
-            $('.IVe1c').text(result.ive1c);
-            $('.Va').text(result.va);
-            $('.Va1').text(result.va1);
-            $('.Va2').text(result.va2);
-            $('.Va3').text(result.va3);
-
-            $('.Ia').text(result.ia);
-            $('.Ib').text(result.ib);
-            $('.Ib1').text(result.ib1);
-            $('.Ib2').text(result.ib2);
-            $('.Ic').text(result.ic);
-            $('.Ie').text(result.ie);
-            $('.IIa').text(result.iia);
-            $('.IIb').text(result.iib);
-            $('.IIc').text(result.iic);
-            $('.IId').text(result.iid);
-
-            $('.IIe').text(result.iie);
-            $('.IIIa').text(result.iiia);
-            $('.IIIb').text(result.iiib);
-            $('.IIIc').text(result.iiic);
-            $('.IIId').text(result.iiid);
-            $('.IIIe').text(result.iiie);
-            $('.IVa').text(result.iva);
-            $('.IVb').text(result.ivb);
-            $('.IVc').text(result.ivc);
-            $('.IVf').text(result.ivf);
-
-            $('.Vb').text(result.vb);
-            $('.Vb1').text(result.vb1);
-            $('.Vb2').text(result.vb2);
-            $('.Vb3').text(result.vb3);
-            $('.Vc').text(result.vc);
-            $('.Vd').text(result.vd);
-            $('.Vd1').text(result.vd1);
-            $('.Vd2').text(result.vd2);
-            $('.Vd3').text(result.vd3);
-            $('.Ve').text(result.ve);
-
-            $('.VIa').text(result.via);
-            $('.VIb').text(result.vib);
-            $('.VIc').text(result.vic);
-            $('.VId').text(result.vid);
-            $('.VIe').text(result.vie);
+            $('.ia').text(result.ia);
+            $('.ib').text(result.ib);
+            $('.iia').text(result.iia);
+            $('.iib').text(result.iib);
+            $('.iiia').text(result.iiia);
+            $('.iiib').text(result.iiib);
+            $('.iiic').text(result.iiic);
+            $('.via').text(result.via);
+            $('.vib').text(result.vib);
+            $('.vic').text(result.vic);
+            $('.vid').text(result.vid);
+            $('.vie').text(result.vie);
+            $('.iv').text(result.iv);
+            $('.v').text(result.v);
+            $('.vid1').text(result.vid1);
+            $('.vid2').text(result.vid2);
+            $('.viia').text(result.viia);
+            $('.viib').text(result.viib);
+            $('.viic').text(result.viic);
+            $('.viid').text(result.viid);
+            $('.viie').text(result.viie);
         });
     };
     

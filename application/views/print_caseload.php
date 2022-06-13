@@ -110,6 +110,9 @@
 	            else {
 	                console.log("done...")
 
+	                $(".nav_list").addClass("hide");
+	                $(".tab_list").addClass("hide");
+	                $(".print_list").removeClass("hide");
 	            	
 			        $(".courttt").attr('colspan',5);
 

@@ -4,11 +4,11 @@
 <div class="col-md-8">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <div><span class="" style="font-size:18px">PPA FORM 50</span>
+      <div><span class="" style="font-size:18px">PPA FORM 51</span>
 
         <span class="form_caption pull-right" style="font-size:18px"></span>
       </div>
-      <h4 class="" style="">PPA-FO-FR-045</h4>
+      <h4 class="" style="">PPA-FO-FR-051</h4>
     </div>
   </div>
   <div class="row">
@@ -26,9 +26,79 @@
     <label class="col-lg-12 col-md-12 col-sm-12 col-print-12">I. SUPERVISION CASELOAD ON ROR</label>
 
   </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
+          &nbsp;&nbsp;&nbsp;
+          A. Total Carry Over Supervision Caseload
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center ia" style="border:1px solid black">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
+          &nbsp;&nbsp;&nbsp;
+            B. Total Supervision Refenals Received
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center ib" style="border:1px solid black">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
+          &nbsp;&nbsp;&nbsp;
+            C. Total Supervision Cases Handled
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center ic" style="border:1px solid black">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
+          &nbsp;&nbsp;&nbsp;
+            D. Total Supervision Cases Dropped*
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center id" style="border:1px solid black">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
+          &nbsp;&nbsp;&nbsp;
+            E. Total Monitoring Reports Submitted to Court
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center ie" style="border:1px solid black">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
+          &nbsp;&nbsp;&nbsp;
+            F. Total Active Supervision Caseload
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center if" style="border:1px solid black">
+            &nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br>
   <div class="row col-lg-12 col-md-12 col-sm-12">
     <label class="col-lg-9 col-md-9 col-sm-9 col-print-9">II. TOTAL COURT DISPOSITION ON ROR</label>
-    <div class="col-lg-3 col-md-3 col-sm-3 col-print-3 center Ia" style="border:1px solid black">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-print-3 center ii" style="border:1px solid black">
       &nbsp;
     </div>
   </div>
@@ -41,6 +111,10 @@
   </div>
   &nbsp;
   <br><br><br>
+  <div class="row col-lg-12 col-md-12 col-sm-12">
+    <label class="col-lg-12 col-md-12 col-sm-12 col-print-12">*Refers to the cases when the accused after the judgment has become final or when the accused has stafted serving the sentence.</label>
+    <br><br>
+  </div>
   &nbsp;
 
 </div>

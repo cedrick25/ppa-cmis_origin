@@ -10,10 +10,29 @@ $.wms.form50 = (function() {
 
     var ___validateSaveCarryOver = function(allowedDocket,docket,requiredField,check,checkTable){
         $(".err_msg").remove()
+        docket.removeClass("error_field")
         var dontSubmit = false;
+        var docketSeries = docket.val().split("-")
         var error_msg = "";
+        console.log(allowedDocket)
+        console.log(docketSeries[0].toUpperCase())
+        console.log(allowedDocket.indexOf(docketSeries[0].toUpperCase()));
+        if(allowedDocket.indexOf(docketSeries[0].toUpperCase()) < 0 ){ 
+            dontSubmit = true;
+            docket.addClass("error_field")
+            $("<p class='err_msg color-red font_12 i'>*Invalid Docket No.</p>").insertAfter(docket)
+            var invalidDocket = 1
+        }else {
+            var invalidDocket = 0
+        }
 
         if(check != undefined){
+            var payload = {
+                "checkTable" : checkTable,
+                "Y_M" : $.wms.urlParam('date'),
+                "docket_no" : docket.val(),
+                "field_office" : $.wms.urlParam('field')
+            }
             var required = 0;
             requiredField.forEach(function(data, value){
                 if($("#"+data).val() == ""){
@@ -28,22 +47,35 @@ $.wms.form50 = (function() {
             console.log(required);
 
             var d = $.Deferred();
-            if (required === 0 ) {
-                
-                dontSubmit = false;
-            }else{
-                dontSubmit = true;
+            // $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+            //     if(result2.status == 'SUCCESS'){
+            //         dontSubmit = true;
 
-            }
+            //         docket.addClass("error_field")
+            //         $("<p class='err_msg color-red font_12 i'>*Docket existing in "+checkTable.join("/")+"</p>").insertAfter(docket)
+            //     }else{
+                    // dontSubmit = false;
+                    if (required === 0 && invalidDocket === 0) {
+                        
+                        dontSubmit = false;
+                    }else{
+                        dontSubmit = true;
 
+                    }
+
+                // }
                
-            if(dontSubmit){
-                d.resolve(false);
-            }else{
-                d.resolve(true);
-            }
+                if(dontSubmit){
+                    d.resolve(false);
+                }else{
+                    d.resolve(true);
+                }
+
                 
+            // });
             return d.promise();
+            
+            
            
         }else{
             requiredField.forEach(function(data){
@@ -66,8 +98,6 @@ $.wms.form50 = (function() {
         }
 
     }
-
-
 
 
     var __attachF50T1PageEvent = function() {
@@ -256,11 +286,12 @@ $.wms.form50 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ '' ];
-            var requiredField= [ 'add_docket_no', 'add_offender_fname', 'add_offender_lname', 'add_date_rcv', ];
+            var allowedDocket= [ 'VC' ];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_rcv', ];
+            var check = true
             var checkTable = ['F50T1', 'F50T2']
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,checkTable).done(function(result){
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
                     $(".modal-form input").attr("disabled",true);
                     $(".addSubmitButton").addClass("hidden");
@@ -525,11 +556,12 @@ $.wms.form50 = (function() {
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ '' ];
-            var requiredField= [ 'add_docket_no', 'add_offender_fname', 'add_offender_lname', 'add_date_rcv', ];
+            var allowedDocket= [ 'VC' ];
+            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_rcv', ];
+            var check = true
             var checkTable = ['F50T1', 'F50T2']
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,checkTable).done(function(result){
+            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
                     $(".modal-form input").attr("disabled",true);
                     $(".addSubmitButton").addClass("hidden");
@@ -618,66 +650,14 @@ $.wms.form50 = (function() {
 
         $.wms.executeExternalGet('http://localhost:8000/F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
             console.log(result)
-            $('.Id').text(result.id);
-            $('.Id1').text(result.id1);
-            $('.Id1a').text(result.id1a);
-            $('.Id1b').text(result.id1b);
-            $('.Id2').text(result.id2);
-            $('.IId1').text(result.iid1);
-            $('.IId2').text(result.iid2);
-            $('.IVd').text(result.ivd);
-            $('.IVd1').text(result.ivd1);
-            $('.Ivd2').text(result.ivd2);
-
-            $('.IVd3').text(result.ivd3);
-            $('.IVe').text(result.ive);
-            $('.IVe1').text(result.ive1);
-            $('.IVe1a').text(result.ive1a);
-            $('.IVe1b').text(result.ive1b);
-            $('.IVe1c').text(result.ive1c);
-            $('.Va').text(result.va);
-            $('.Va1').text(result.va1);
-            $('.Va2').text(result.va2);
-            $('.Va3').text(result.va3);
-
-            $('.Ia').text(result.ia);
-            $('.Ib').text(result.ib);
-            $('.Ib1').text(result.ib1);
-            $('.Ib2').text(result.ib2);
-            $('.Ic').text(result.ic);
-            $('.Ie').text(result.ie);
-            $('.IIa').text(result.iia);
-            $('.IIb').text(result.iib);
-            $('.IIc').text(result.iic);
-            $('.IId').text(result.iid);
-
-            $('.IIe').text(result.iie);
-            $('.IIIa').text(result.iiia);
-            $('.IIIb').text(result.iiib);
-            $('.IIIc').text(result.iiic);
-            $('.IIId').text(result.iiid);
-            $('.IIIe').text(result.iiie);
-            $('.IVa').text(result.iva);
-            $('.IVb').text(result.ivb);
-            $('.IVc').text(result.ivc);
-            $('.IVf').text(result.ivf);
-
-            $('.Vb').text(result.vb);
-            $('.Vb1').text(result.vb1);
-            $('.Vb2').text(result.vb2);
-            $('.Vb3').text(result.vb3);
-            $('.Vc').text(result.vc);
-            $('.Vd').text(result.vd);
-            $('.Vd1').text(result.vd1);
-            $('.Vd2').text(result.vd2);
-            $('.Vd3').text(result.vd3);
-            $('.Ve').text(result.ve);
-
-            $('.VIa').text(result.via);
-            $('.VIb').text(result.vib);
-            $('.VIc').text(result.vic);
-            $('.VId').text(result.vid);
-            $('.VIe').text(result.vie);
+            $('.a').text(result.a);
+            $('.B').text(result.b);
+            $('.c').text(result.c);
+            $('.d').text(result.d);
+            $('.e').text(result.e);
+            $('.f').text(result.f);
+            $('.g').text(result.g);
+            $('.h').text(result.h);
         });
     };
 

@@ -614,30 +614,6 @@ $.wms.form44 = (function() {
                 $(".editProceedButton").addClass("hidden")
             });
 
-
-
-            //Download
-            $(".btn-download").unbind("click").on("click",function(){
-                console.log("clicked")
-                var form = "Download Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
-            //     var payload = {
-            //         "created_by" : $.cookie("USER_ID"),
-            //         "module" : "CASELOAD",
-            //         "action" : form
-                    
-            //     }
-            //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
-            //     });
-                $("#T_F44T2_a").table2excel({
-                    // exclude CSS class
-                    exclude: ".options",
-                    name: "Form44-Table2",
-                    filename: "Form44-Table2.xls", //do not include extension
-                    fileext: ".xls",
-                    preserveColors: true
-                  }); 
-            });
-
             //Add
             $(".addSubmitButton").unbind("click").on("click",function(){
                 var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
@@ -712,8 +688,6 @@ $.wms.form44 = (function() {
                     }
                 });    
             })
-
-
         }
 
         /// for refferals acted upon
@@ -870,30 +844,6 @@ $.wms.form44 = (function() {
                 $(".editProceedACTEDButton").addClass("hidden")
             });
 
-
-
-            //Download
-            // $(".btn-download").unbind("click").on("click",function(){
-            //     console.log("clicked")
-            //     var form = "Download Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
-            // //     var payload = {
-            // //         "created_by" : $.cookie("USER_ID"),
-            // //         "module" : "CASELOAD",
-            // //         "action" : form
-                    
-            // //     }
-            // //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
-            // //     });
-            //     $("#T_F44T2_b").table2excel({
-            //         // exclude CSS class
-            //         exclude: ".options",
-            //         name: "Form44-Table2",
-            //         filename: "Form44-Table2.xls", //do not include extension
-            //         fileext: ".xls",
-            //         preserveColors: true
-            //       }); 
-            // });
-
             //Add
             $(".addSubmitButton_acted").unbind("click").on("click",function(){
                 var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
@@ -972,9 +922,125 @@ $.wms.form44 = (function() {
             })
         }
 
+        var __download_print = function(){
+            var __maxTableSize = 0;
+            var __counter = 0;
+
+            $.wms.executeExternalGet('http://localhost:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c1").html(data.docketNumber);
+                            $("#r"+r+"c2").html(fullname);
+                            $("#r"+r+"c3").html(data.dateReceivedByCppo);
+                            $("#r"+r+"c4").html(data.investigatingOfficer);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            $.wms.executeExternalGet('http://localhost:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c5").html(data.docketNumber);
+                            $("#r"+r+"c6").html(fullname);
+                            $("#r"+r+"c7").html(data.dateReportSubmitted);
+                            $("#r"+r+"c8").html(data.ppoRecommendation);
+                            $("#r"+r+"c9").html(data.transferDate);
+                            $("#r"+r+"c10").html(data.transferredTo);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            var __download_print_list = function(){
+
+                if(__counter == 2){
+                    console.log("FINISH")
+                    console.log(__maxTableSize);
+                    if(__maxTableSize > 0){
+                        $(".T_F44T2_download_print_tbody").empty()
+                        for(i=1;i<=__maxTableSize;i++){
+                            $(".T_F44T2_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td id='r"+i+"c1' class=''>"+
+                                    "<td id='r"+i+"c2' class=''>"+
+                                    "<td id='r"+i+"c3' class=''>"+
+                                    "<td id='r"+i+"c4' class=''>"+
+                                    "<td id='r"+i+"c5' class=''>"+
+                                    "<td id='r"+i+"c6' class=''>"+
+                                    "<td id='r"+i+"c7' class=''>"+
+                                    "<td id='r"+i+"c8' class=''>"+
+                                    "<td id='r"+i+"c9' class=''>"+
+                                    "<td id='r"+i+"c10' class=''>"+
+                                "</tr>"
+                            )
+                        }
+                    }else{
+                        $(".T_F44T2_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td colspan='10' class='center b'>NONE</td>"+
+                                "</tr>");
+                    }
+                };
+                // Download
+                $(".btn-download").unbind("click").on("click",function(){
+                    console.log("clicked")
+                   
+                    $("#T_F44T2_download_print").table2excel({
+                        // exclude CSS class
+                        exclude: ".options",
+                        name: "Form44-Table2",
+                        filename: "Form44-Table2.xls", //do not include extension
+                        fileext: ".xls",
+                        preserveColors: true
+                      }); 
+                });
+            };
+        };
+
         __ref_received();
         __ref_acted();
-
+        __download_print();
     };
 
     var __attachF44T3PageEvent = function() {

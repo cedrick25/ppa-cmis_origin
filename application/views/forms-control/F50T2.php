@@ -56,7 +56,7 @@
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_docket_no" placeholder="">
                 <input type="hidden" class="form-control " id="edit_id" placeholder="">
-                <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span>
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: VC</i></span>
               </div>
             </div>
             <div class="form-group row">
@@ -87,9 +87,9 @@
                 <label for="" class="col-sm-3">Action Type</label>
                 <div class="col-sm-9 filter-modal">
                   <select class="form-control select2 modal" id="edit_action" >
-                    <option value="VOLUNTARY">Voluntary Confinement Filed in court</option>
-                    <option value="HEARINGS">Hearings Conducted</option>
-                    <option value="PETITIONS">Petitions Acted Upon By Court</option>
+                    <option value="VCFC">Voluntary Confinement Filed in court</option>
+                    <option value="HC">Hearings Conducted</option>
+                    <option value="PAUBC">Petitions Acted Upon By Court</option>
                   </select>
                 </div>
               </div>
@@ -156,7 +156,7 @@
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <!-- <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSI, RCSI, TCSI</i></span> -->
+                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: VC</i></span>
                 </div>
               </div>
               <div class="form-group row">
@@ -187,9 +187,9 @@
                 <label for="" class="col-sm-3">Action Type</label>
                 <div class="col-sm-9 filter-modal">
                   <select class="form-control select2 modal" id="add_action">
-                    <option value="VOLUNTARY">Voluntary Confinement Filed in court</option>
-                    <option value="HEARINGS">Hearings Conducted</option>
-                    <option value="PETITIONS">Petitions Acted Upon By Court</option>
+                    <option value="VCFC">Voluntary Confinement Filed in court</option>
+                    <option value="HC">Hearings Conducted</option>
+                    <option value="PAUBC">Petitions Acted Upon By Court</option>
                   </select>
                 </div>
               </div>
