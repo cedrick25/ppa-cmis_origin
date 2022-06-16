@@ -1,13 +1,41 @@
- <div class="row">
+  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
     	<span class="pull-right" style="padding-right: 10px;">
     		<button type="button" class="access_f44_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Record</button>
         <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button>
     		<button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
     	</span>
+      <span class="pull-right" style="padding-right: 10px;">
+        <button type="button" class="btn btn-sm btn-success btn-carryover"  data-toggle="modal" data-target="#modal-carryover"><i class="fa fa-stack-overflow"></i> Carry Over</button>
+      </span>
     </div>
   </div>
 
+<!-- carry over -->
+  <div class="modal fade" id="modal-carryover" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header tb-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><b><i class="fa fa-stack-overflow"></i> Carry Over</b></h4>
+        </div>
+        <div class="modal-body">
+          <p><b>Are you sure you want Carry Over Investigation Caseload?</b></p>
+          <span class="hidden sel-id"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success carryoverProceedButton" >Confirm  <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
+
+
+        </div>
+        
+      </div>
+
+      
+    </div>
+  </div>
 
 <!-- Delete Modal -->
   <div class="modal fade" id="modal-delete" role="dialog" data-backdrop="static" data-keyboard="false">

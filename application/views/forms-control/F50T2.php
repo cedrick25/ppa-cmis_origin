@@ -60,25 +60,25 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's First Name</label>
+              <label for="" class="col-sm-3">First Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_fname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Middle Name</label>
+              <label for="" class="col-sm-3">Middle Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_mname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Last Name</label>
+              <label for="" class="col-sm-3">Last Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_lname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Suffix Name</label>
+              <label for="" class="col-sm-3">Suffix Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
               </div>
@@ -93,25 +93,31 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_filed">
                 <label for="" class="col-sm-3">Date Filed</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="edit_date_filed">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_court">
                 <label for="" class="col-sm-3">Court</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="edit_court" placeholder="">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_hearing hide">
+                <label for="" class="col-sm-3">Date Hearing</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_date_hearing" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row v_court_d hide">
                 <label for="" class="col-sm-3">Court Disposition</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="edit_disposition" placeholder="">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_diposed hide">
                 <label for="" class="col-sm-3">Date Disposed</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="edit_date_disposed">
@@ -160,25 +166,25 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's First Name</label>
+                <label for="" class="col-sm-3">First Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_fname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Middle Name</label>
+                <label for="" class="col-sm-3">Middle Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_mname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Last Name</label>
+                <label for="" class="col-sm-3">Last Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_lname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <label for="" class="col-sm-3">Suffix Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
                 </div>
@@ -193,25 +199,31 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_filed">
                 <label for="" class="col-sm-3">Date Filed</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="add_date_filed">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_court">
                 <label for="" class="col-sm-3">Court</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_court" placeholder="">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_hearing hide">
+                <label for="" class="col-sm-3">Date Hearing</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  sel_date2" id="add_date_hearing" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row v_court_d hide">
                 <label for="" class="col-sm-3">Court Disposition</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_disposition" placeholder="">
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row v_diposed hide">
                 <label for="" class="col-sm-3">Date Disposed</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="add_date_disposed">

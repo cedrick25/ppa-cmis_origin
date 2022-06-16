@@ -975,8 +975,127 @@ $.wms.form45 = (function() {
             })
         }
 
+        var __download_print = function(){
+            var __maxTableSize = 0;
+            var __counter = 0;
+
+            $.wms.executeExternalGet('http://localhost:8000/F45t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c1").html(data.docketNumber);
+                            $("#r"+r+"c2").html(fullname);
+                            $("#r"+r+"c3").html(data.criminalCaseNo);
+                            $("#r"+r+"c4").html(data.dateReceived);
+                            $("#r"+r+"c5").html(data.investigatingOfficer);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            $.wms.executeExternalGet('http://localhost:8000/F45t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c6").html(data.docketNumber);
+                            $("#r"+r+"c7").html(fullname);
+                            $("#r"+r+"c8").html(data.dateReportSubmitted);
+                            $("#r"+r+"c9").html(data.ppoRecommendation);
+                            $("#r"+r+"c10").html(data.transferDate);
+                            $("#r"+r+"c11").html(data.transferredTo);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            var __download_print_list = function(){
+
+                if(__counter == 2){
+                    console.log("FINISH")
+                    console.log(__maxTableSize);
+                    if(__maxTableSize > 0){
+                        $(".T_F45T2_download_print_tbody").empty()
+                        for(i=1;i<=__maxTableSize;i++){
+                            $(".T_F45T2_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td id='r"+i+"c1' class=''>"+
+                                    "<td id='r"+i+"c2' class=''>"+
+                                    "<td id='r"+i+"c3' class=''>"+
+                                    "<td id='r"+i+"c4' class=''>"+
+                                    "<td id='r"+i+"c5' class=''>"+
+                                    "<td id='r"+i+"c6' class=''>"+
+                                    "<td id='r"+i+"c7' class=''>"+
+                                    "<td id='r"+i+"c8' class=''>"+
+                                    "<td id='r"+i+"c9' class=''>"+
+                                    "<td id='r"+i+"c10' class=''>"+
+                                    "<td id='r"+i+"c11' class=''>"+
+                                "</tr>"
+                            )
+                        }
+                    }else{
+                        $(".T_F45T2_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td colspan='11' class='center b'>NONE</td>"+
+                                "</tr>");
+                    }
+                };
+                // Download
+                $(".btn-download").unbind("click").on("click",function(){
+                    console.log("clicked")
+                   
+                    $("#T_F45T2_download_print").table2excel({
+                        // exclude CSS class
+                        exclude: ".options",
+                        name: "Form45-Table2",
+                        filename: "Form45-Table2.xls", //do not include extension
+                        fileext: ".xls",
+                        preserveColors: true
+                      }); 
+                });
+            };
+        };
+
         __ref_received();
         __ref_acted();
+        __download_print();
 
     };
 
@@ -2298,8 +2417,128 @@ $.wms.form45 = (function() {
             })
 
         }
+        var __download_print = function(){
+            var __maxTableSize = 0;
+            var __counter = 0;
+
+            var yearMonth   = $.wms.urlParam('date')
+            var officeId    = $.wms.urlParam('officeId')
+            var page        = $.wms.urlParam('page')
+            var size        = $.wms.urlParam('size')
+
+            $.wms.executeExternalGet('http://localhost:8000/F45t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c1").html(data.docketNumber);
+                            $("#r"+r+"c2").html(fullname);
+                            $("#r"+r+"c3").html(data.referringOffice);
+                            $("#r"+r+"c4").html(data.dateReceivedByPpo);
+                            $("#r"+r+"c5").html(data.investigatingOfficer);
+                            $("#r"+r+"c6").html(data.reasonForReferral);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            $.wms.executeExternalGet('http://localhost:8000/F45t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c7").html(data.docketNumber);
+                            $("#r"+r+"c8").html(fullname);
+                            $("#r"+r+"c9").html(data.dateCompletedAndReturned);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            var __download_print_list = function(){
+
+                if(__counter == 2){
+                    console.log("FINISH")
+                    console.log(__maxTableSize);
+                    if(__maxTableSize > 0){
+                        $(".T_F45T6_download_print_tbody").empty()
+                        for(i=1;i<=__maxTableSize;i++){
+                            $(".T_F45T6_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td id='r"+i+"c1' class=''>"+
+                                    "<td id='r"+i+"c2' class=''>"+
+                                    "<td id='r"+i+"c3' class=''>"+
+                                    "<td id='r"+i+"c4' class=''>"+
+                                    "<td id='r"+i+"c5' class=''>"+
+                                    "<td id='r"+i+"c6' class=''>"+
+                                    "<td id='r"+i+"c7' class=''>"+
+                                    "<td id='r"+i+"c8' class=''>"+
+                                    "<td id='r"+i+"c9' class=''>"+
+                                "</tr>"
+                            )
+                        }
+                    }else{
+                        $(".T_F45T6_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td colspan='9' class='center b'>NONE</td>"+
+                                "</tr>");
+                    }
+                };
+                // Download
+                $(".btn-download").unbind("click").on("click",function(){
+                    console.log("clicked")
+                   
+                    $("#T_F45T6_download_print").table2excel({
+                        // exclude CSS class
+                        exclude: ".options",
+                        name: "Form45-Table6",
+                        filename: "Form45-Table6.xls", //do not include extension
+                        fileext: ".xls",
+                        preserveColors: true
+                      }); 
+                });
+            };
+        };
         __rcv();
         __CAR();
+        __download_print();
+
     };
 
 
@@ -4449,8 +4688,132 @@ $.wms.form45 = (function() {
             })
         
         }
+        var __download_print = function(){
+            var __maxTableSize = 0;
+            var __counter = 0;
+
+            var yearMonth   = $.wms.urlParam('date')
+            var officeId    = $.wms.urlParam('officeId')
+            var page        = $.wms.urlParam('page')
+            var size        = $.wms.urlParam('size')
+
+            $.wms.executeExternalGet('http://localhost:8000/F45t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c1").html(data.docketNumber);
+                            $("#r"+r+"c2").html(fullname);
+                            $("#r"+r+"c3").html(data.criminalCaseNo);
+                            $("#r"+r+"c4").html(data.courtOfOrigin);
+                            $("#r"+r+"c5").html(data.referringOffice);
+                            $("#r"+r+"c6").html(data.supervisingOfficer);
+                            $("#r"+r+"c7").html(data.periodCourtesySupervision);
+                            $("#r"+r+"c8").html(data.dateReceived);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            $.wms.executeExternalGet('http://localhost:8000/F45t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+                console.log(result.content)
+
+                __counter += 1;
+                if(result.content.length > __maxTableSize){
+                    __maxTableSize = result.content.length
+                    // console.log(__maxTableSize);
+                }
+
+                function checkPendingRequest() {
+                    if ($.active > 0) {
+                        console.log("waiting...")
+                        window.setTimeout(checkPendingRequest, 100);
+                    }
+                    else {
+                        r = 1;
+                        result.content.forEach(function(data){
+                            data = $.wms.upper($.wms.sanitize(data))
+                            var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                            source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                            $("#r"+r+"c9").html(data.docketNumber);
+                            $("#r"+r+"c10").html(fullname);
+                            $("#r"+r+"c11").html(data.dateReturned);
+                            r += 1;
+                        });
+                    }
+                };
+                window.setTimeout(checkPendingRequest, 100);
+                __download_print_list();
+            });
+
+            var __download_print_list = function(){
+
+                if(__counter == 2){
+                    console.log("FINISH")
+                    console.log(__maxTableSize);
+                    if(__maxTableSize > 0){
+                        $(".T_F45T13_download_print_tbody").empty()
+                        for(i=1;i<=__maxTableSize;i++){
+                            $(".T_F45T13_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td id='r"+i+"c1' class=''>"+
+                                    "<td id='r"+i+"c2' class=''>"+
+                                    "<td id='r"+i+"c3' class=''>"+
+                                    "<td id='r"+i+"c4' class=''>"+
+                                    "<td id='r"+i+"c5' class=''>"+
+                                    "<td id='r"+i+"c6' class=''>"+
+                                    "<td id='r"+i+"c7' class=''>"+
+                                    "<td id='r"+i+"c8' class=''>"+
+                                    "<td id='r"+i+"c9' class=''>"+
+                                    "<td id='r"+i+"c10' class=''>"+
+                                    "<td id='r"+i+"c11' class=''>"+
+                                "</tr>"
+                            )
+                        }
+                    }else{
+                        $(".T_F45T13_download_print_tbody").append(
+                                "<tr>"+
+                                    "<td colspan='11' class='center b'>NONE</td>"+
+                                "</tr>");
+                    }
+                };
+                // Download
+                $(".btn-download").unbind("click").on("click",function(){
+                    console.log("clicked")
+                   
+                    $("#T_F45T13_download_print").table2excel({
+                        // exclude CSS class
+                        exclude: ".options",
+                        name: "Form45-Table13",
+                        filename: "Form45-Table13.xls", //do not include extension
+                        fileext: ".xls",
+                        preserveColors: true
+                      }); 
+                });
+            };
+        };
+
         __rcv();
         __terminated();
+        __download_print();
     };
 
 

@@ -60,25 +60,25 @@
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's First Name</label>
+              <label for="" class="col-sm-3">First Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_fname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Middle Name</label>
+              <label for="" class="col-sm-3">Middle Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_mname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Last Name</label>
+              <label for="" class="col-sm-3">Last Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_lname" placeholder="">
               </div>
             </div>
             <div class="form-group row">
-              <label for="" class="col-sm-3">Offender's Suffix Name</label>
+              <label for="" class="col-sm-3">Suffix Name</label>
               <div class="col-sm-9">
                 <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
               </div>
@@ -89,15 +89,14 @@
                   <select class="form-control select2 modal" id="edit_action" >
                     <option value="APPLICANTS_GIVEN">Applicants Given Application Form</option>
                     <option value="VERIFIED_APPLICATION">Verified Application</option>
-                    <option value="TRANSFERRED_REFERRED">Transferred / Referred to Other DDB</option>
-                    <option value="REPRESENTATIVES">Representatives</option>
+                    <option value="TRANSFERRED_REFERRED">Transferred / Referred to Other DDB Representatives</option>
                     <option value="REFERRED_FOR_DDEXAM">Reffered for DD Exam</option>
                     <option value="DDE_REPORTS_RECEIVED">DD Reports Received</option>
                   </select>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Date Received</label>
+                <label for="" class="col-sm-3 data_rcv_chng">Date Received</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="edit_date_rcv">
                 </div>
@@ -145,25 +144,25 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's First Name</label>
+                <label for="" class="col-sm-3">First Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_fname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Middle Name</label>
+                <label for="" class="col-sm-3">Middle Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_mname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Last Name</label>
+                <label for="" class="col-sm-3">Last Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_lname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Offender's Suffix Name</label>
+                <label for="" class="col-sm-3">Suffix Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
                 </div>
@@ -171,18 +170,17 @@
               <div class="form-group row">
                 <label for="" class="col-sm-3">Action Type</label>
                 <div class="col-sm-9 filter-modal">
-                  <select class="form-control select2 modal" id="add_action" >
+                  <select class="form-control select2 modal" id="add_action">
                     <option value="APPLICANTS_GIVEN">Applicants Given Application Form</option>
                     <option value="VERIFIED_APPLICATION">Verified Application</option>
-                    <option value="TRANSFERRED_REFERRED">Transferred / Referred to Other DDB</option>
-                    <option value="REPRESENTATIVES">Representatives</option>
+                    <option value="TRANSFERRED_REFERRED">Transferred / Referred to Other DDB Representatives</option>
                     <option value="REFERRED_FOR_DDEXAM">Reffered for DD Exam</option>
                     <option value="DDE_REPORTS_RECEIVED">DD Reports Received</option>
                   </select>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="" class="col-sm-3">Date Received</label>
+                <label for="" class="col-sm-3 data_rcv_chng">Date Received</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="add_date_rcv">
                 </div>
