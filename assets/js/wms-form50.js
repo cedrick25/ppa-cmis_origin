@@ -276,7 +276,7 @@ $.wms.form50 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -285,7 +285,7 @@ $.wms.form50 = (function() {
                                     "actionType"            : $("#edit_action").val(),
                                     "dateReceived"          : $("#edit_date_rcv").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -359,7 +359,7 @@ $.wms.form50 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -369,7 +369,7 @@ $.wms.form50 = (function() {
                 "actionType"            : $("#add_action").val(),
                 "dateReceived"          : $("#add_date_rcv").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -720,7 +720,7 @@ $.wms.form50 = (function() {
                     $('.F50T2_tbody_b').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
-                        "<td>"+data.dateFiled+"</td>"+
+                        "<td>"+data.dateHearing+"</td>"+
                         "<td>"+data.court+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
@@ -800,6 +800,7 @@ $.wms.form50 = (function() {
                         $("#edit_court").val(payload.court)
                         $("#edit_disposition").val(payload.courtDisposition)
                         $("#edit_date_disposed").val(payload.dateDisposed)
+                        $("#edit_date_hearing").val(payload.dateHearing)
                        
                             //Update proceed
                             $(".editProceedButton").unbind("click").on("click",function(){
@@ -816,7 +817,7 @@ $.wms.form50 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -827,8 +828,9 @@ $.wms.form50 = (function() {
                                     "court"                 : $("#edit_court").val(),
                                     "courtDisposition"      : $("#edit_disposition").val(),
                                     "dateDisposed"          : $("#edit_date_disposed").val(),
+                                    "dateHearing"           : $("#edit_date_hearing").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -903,7 +905,7 @@ $.wms.form50 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -915,8 +917,9 @@ $.wms.form50 = (function() {
                 "court"                 : $("#add_court").val(),
                 "courtDisposition"      : $("#add_disposition").val(),
                 "dateDisposed"          : $("#add_date_disposed").val(),
+                "dateHearing"           : $("#add_date_hearing").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -1011,7 +1014,7 @@ $.wms.form50 = (function() {
                             source = ((data.source==1) ? 'PIS' : 'MANUAL');
         
                             $("#r"+r+"c4").html(fullname);
-                            $("#r"+r+"c5").html(data.court);
+                            $("#r"+r+"c5").html(data.dateHearing);
                             $("#r"+r+"c6").html(data.court);
                             r += 1;
                         });

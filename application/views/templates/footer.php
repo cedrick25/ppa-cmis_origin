@@ -71,4 +71,3 @@
 	<script src="<?php ?>assets/js/wms-report.js?version=<?php echo filemtime("assets/js/wms-report.js"); ?>"></script>
 
 	<script src="<?php ?>assets/js/cmis.reports.js?version=<?php echo filemtime("assets/js/cmis.reports.js"); ?>"></script>
-	

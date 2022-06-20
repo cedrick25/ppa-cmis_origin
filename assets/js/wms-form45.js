@@ -202,6 +202,39 @@ $.wms.form45 = (function() {
            placeholder: "Select Field Office",
         });
 
+        var __carryoverF45t1 = function(){
+            $(".carryoverProceedButton").unbind("click").on("click", function(){
+                console.log("clicked")
+                var payload =  {
+                    "officeIdList": [
+                        officeId
+                    ],
+                    "yearMonthList": [
+                        yearMonth
+                    ],
+                      "formTableName": "F45t1"
+                }
+                console.log(payload);
+                $.wms.executeExternalPost('http://localhost:8000/F45t1/carryover',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+                        $(".modal-loader").addClass("hidden")
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $("#modal-carryover").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("<p class='err_msg color-red font_12 i'>*carry over failed</p>").insertAfter((".carryoverProceedButton"))
+                    }
+                });
+            });
+        };
+
+        __carryoverF45t1();
+
         $.wms.executeExternalGet('http://localhost:8000/F45t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -293,7 +326,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -302,7 +335,7 @@ $.wms.form45 = (function() {
                                     "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                     "dateReceivedByCppo"    : $("#edit_date_rcv").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -399,7 +432,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -409,7 +442,7 @@ $.wms.form45 = (function() {
                 "investigatingOfficer"  : $("#add_investigating_officer").val(),
                 "dateReceivedByCppo"    : $("#add_date_rcv").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -562,7 +595,7 @@ $.wms.form45 = (function() {
                                     var date_time = output +" "+time;
 
                                     var payload_update = {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -572,7 +605,7 @@ $.wms.form45 = (function() {
                                         "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                         "dateReceived"          : $("#edit_date_rcv").val(),
                                         "clientProfileDto"      : {
-                                            "docketNumber"          : $("#edit_docket_no").val(),
+                                            "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                             "updatedBy"             : $.cookie("USER_ID"),
                                             "source"                : "2",
                                             "encodingMonth"         : $.wms.urlParam('date'),
@@ -670,7 +703,7 @@ $.wms.form45 = (function() {
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
                 var payload = { 
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "status"                : true,
                     "source"                : "2",
@@ -681,7 +714,7 @@ $.wms.form45 = (function() {
                     "investigatingOfficer"  : $("#add_investigating_officer").val(),
                     "dateReceived"          : $("#add_date_rcv").val(),
                     "clientProfileDto"      : {
-                        "docketNumber"          : $("#add_docket_no").val(),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
                         "updatedBy"             : "",
                         "status"                : true,
@@ -818,7 +851,7 @@ $.wms.form45 = (function() {
                                     var date_time = output +" "+time;
 
                                     var payload_update = {
-                                        "docketNumber"          : $("#edit_acted_docket_no").val(),
+                                        "docketNumber"          : $("#edit_acted_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -829,7 +862,7 @@ $.wms.form45 = (function() {
                                         "transferDate"          : $("#edit_acted_transfer_date").val(),
                                         "transferTo"            : $("#edit_acted_transfer_to").val(),
                                         "clientProfileDto"      : {
-                                            "docketNumber"          : $("#edit_acted_docket_no").val(),
+                                            "docketNumber"          : $("#edit_acted_docket_no").val().toUpperCase(),
                                             "updatedBy"             : $.cookie("USER_ID"),
                                             "source"                : "2",
                                             "encodingMonth"         : $.wms.urlParam('date'),
@@ -927,7 +960,7 @@ $.wms.form45 = (function() {
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
                 var payload = { 
-                    "docketNumber"          : $("#add_acted_docket_no").val(),
+                    "docketNumber"          : $("#add_acted_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "status"                : true,
                     "source"                : "2",
@@ -939,7 +972,7 @@ $.wms.form45 = (function() {
                     "transferDate"          : $("#add_acted_transfer_date").val(),
                     "transferTo"            : $("#add_acted_transfer_to").val(),
                     "clientProfileDto"      : {
-                        "docketNumber"          : $("#add_acted_docket_no").val(),
+                        "docketNumber"          : $("#add_acted_docket_no").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
                         "updatedBy"             : "",
                         "status"                : true,
@@ -1116,6 +1149,38 @@ $.wms.form45 = (function() {
            placeholder: "Select Field Office",
         });
 
+        var __carryoverF45t3 = function(){
+            $(".carryoverProceedButton").unbind("click").on("click", function(){
+                console.log("clicked")
+                var payload =  {
+                    "officeIdList": [
+                        officeId
+                    ],
+                    "yearMonthList": [
+                        yearMonth
+                    ],
+                      "formTableName": "F45t3"
+                }
+                console.log(payload);
+                $.wms.executeExternalPost('http://localhost:8000/F45t3/carryover',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+                        $(".modal-loader").addClass("hidden")
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $("#modal-carryover").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("<p class='err_msg color-red font_12 i'>*carry over failed</p>").insertAfter((".carryoverProceedButton"))
+                    }
+                });
+            });
+        };
+
+        __carryoverF45t3();
         $.wms.executeExternalGet('http://localhost:8000/F45t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -1209,7 +1274,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -1219,7 +1284,7 @@ $.wms.form45 = (function() {
                                     "dateReportSubmitted"   : $("#edit_submitted_report").val(),
                                     "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -1316,7 +1381,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -1327,7 +1392,7 @@ $.wms.form45 = (function() {
                 "dateReportSubmitted"   : $("#add_submitted_report").val(),
                 "investigatingOfficer"  : $("#add_investigating_officer").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -1472,7 +1537,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -1481,7 +1546,7 @@ $.wms.form45 = (function() {
                                     "recommendation"        : $("#edit_recommendation").val(),
                                     "dateReceivedFromCourt" : $("#edit_date_received").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -1578,7 +1643,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -1588,7 +1653,7 @@ $.wms.form45 = (function() {
                 "recommendation"        : $("#add_recommendation").val(),
                 "dateReceivedFromCourt" : $("#add_date_received").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -1641,6 +1706,40 @@ $.wms.form45 = (function() {
         $('.F45T5_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
+
+
+        var __carryoverF45t5 = function(){
+            $(".carryoverProceedButton").unbind("click").on("click", function(){
+                console.log("clicked")
+                var payload =  {
+                    "officeIdList": [
+                        officeId
+                    ],
+                    "yearMonthList": [
+                        yearMonth
+                    ],
+                      "formTableName": "F45t5"
+                }
+                console.log(payload);
+                $.wms.executeExternalPost('http://localhost:8000/F45t5/carryover',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+                        $(".modal-loader").addClass("hidden")
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $("#modal-carryover").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("<p class='err_msg color-red font_12 i'>*carry over failed</p>").insertAfter((".carryoverProceedButton"))
+                    }
+                });
+            });
+        };
+
+        __carryoverF45t5();
 
         $.wms.executeExternalGet('http://localhost:8000/F45t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
@@ -1737,7 +1836,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -1748,7 +1847,7 @@ $.wms.form45 = (function() {
                                     "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                     "reasonForReferral"     : $("#edit_reason_for_referral").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -1845,7 +1944,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -1857,7 +1956,7 @@ $.wms.form45 = (function() {
                 "investigatingOfficer"  : $("#add_investigating_officer").val(),
                 "reasonForReferral"     : $("#add_reason_for_referral").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -2005,7 +2104,7 @@ $.wms.form45 = (function() {
                                     var date_time = output +" "+time;
 
                                     var payload_update = {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -2016,7 +2115,7 @@ $.wms.form45 = (function() {
                                         "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                         "reasonForReferral"     : $("#edit_reason_for_referral").val(),
                                         "clientProfileDto"      : {
-                                            "docketNumber"          : $("#edit_docket_no").val(),
+                                            "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                             "updatedBy"             : $.cookie("USER_ID"),
                                             "source"                : "2",
                                             "encodingMonth"         : $.wms.urlParam('date'),
@@ -2113,7 +2212,7 @@ $.wms.form45 = (function() {
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
                 var payload = { 
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "status"                : true,
                     "source"                : "2",
@@ -2125,7 +2224,7 @@ $.wms.form45 = (function() {
                     "investigatingOfficer"  : $("#add_investigating_officer").val(),
                     "reasonForReferral"     : $("#add_reason_for_referral").val(),
                     "clientProfileDto"      : {
-                        "docketNumber"          : $("#add_docket_no").val(),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
                         "updatedBy"             : "",
                         "status"                : true,
@@ -2265,7 +2364,7 @@ $.wms.form45 = (function() {
                                     var date_time = output +" "+time;
 
                                     var payload_update = {
-                                        "docketNumber"          : $("#edit_docket_no-acted").val(),
+                                        "docketNumber"          : $("#edit_docket_no-acted").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -2273,7 +2372,7 @@ $.wms.form45 = (function() {
                                         "fieldOfficeId"         : $.wms.urlParam('officeId'),
                                         "dateCompletedAndReturned"  : $("#edit_date_com_and_ret-acted").val(),
                                         "clientProfileDto"      : {
-                                            "docketNumber"          : $("#edit_docket_no").val(),
+                                            "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                             "updatedBy"             : $.cookie("USER_ID"),
                                             "source"                : "2",
                                             "encodingMonth"         : $.wms.urlParam('date'),
@@ -2370,7 +2469,7 @@ $.wms.form45 = (function() {
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
                 var payload = { 
-                    "docketNumber"          : $("#add_docket_no-acted").val(),
+                    "docketNumber"          : $("#add_docket_no-acted").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "status"                : true,
                     "source"                : "2",
@@ -2379,7 +2478,7 @@ $.wms.form45 = (function() {
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                     "dateCompletedAndReturned"  : $("#add_date_com_and_ret-acted").val(),
                     "clientProfileDto"      : {
-                        "docketNumber"          : $("#add_docket_no-acted").val(),
+                        "docketNumber"          : $("#add_docket_no-acted").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
                         "updatedBy"             : "",
                         "status"                : true,
@@ -2556,6 +2655,44 @@ $.wms.form45 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
+        $('.F45T5_tbody').empty();
+        $(".form_loader").removeClass("hidden")
+        $(".result_form").addClass("hidden")
+
+
+        var __carryoverF45t7 = function(){
+            $(".carryoverProceedButton").unbind("click").on("click", function(){
+                console.log("clicked")
+                var payload =  {
+                    "officeIdList": [
+                        officeId
+                    ],
+                    "yearMonthList": [
+                        yearMonth
+                    ],
+                      "formTableName": "F45t7"
+                }
+                console.log(payload);
+                $.wms.executeExternalPost('http://localhost:8000/F45t7/carryover',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+                        $(".modal-loader").addClass("hidden")
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $("#modal-carryover").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("<p class='err_msg color-red font_12 i'>*carry over failed</p>").insertAfter((".carryoverProceedButton"))
+                    }
+                });
+            });
+        };
+
+        __carryoverF45t7();
+        
         $.wms.executeExternalGet('http://localhost:8000/F45t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -2651,7 +2788,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -2662,7 +2799,7 @@ $.wms.form45 = (function() {
                                     "supervisionStart"      : $("#edit_supervising_start").val(),
                                     "supervisionEnd"        : $("#edit_supervising_end").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -2757,7 +2894,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -2769,7 +2906,7 @@ $.wms.form45 = (function() {
                 "supervisionStart"      : $("#add_supervising_start").val(),
                 "supervisionEnd"        : $("#add_supervising_end").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -2921,7 +3058,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -2934,7 +3071,7 @@ $.wms.form45 = (function() {
                                     "supervisionStart"      : $("#edit_supervising_start").val(),
                                     "supervisionEnd"        : $("#edit_supervising_end").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -3029,7 +3166,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -3043,7 +3180,7 @@ $.wms.form45 = (function() {
                 "supervisionStart"      : $("#add_supervising_start").val(),
                 "supervisionEnd"        : $("#add_supervising_end").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -3195,7 +3332,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -3206,7 +3343,7 @@ $.wms.form45 = (function() {
                                     "transferredOffice"     : $("#edit_field_offices").val(),
                                     "supervisingOfficer"    : $("#edit_supervising_officer").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -3301,7 +3438,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -3313,7 +3450,7 @@ $.wms.form45 = (function() {
                 "transferredOffice"     : $("#add_field_offices").val(),
                 "supervisingOfficer"    : $("#add_supervising_officer").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -3369,6 +3506,39 @@ $.wms.form45 = (function() {
            placeholder: "Select Field Office",
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
+
+        var __carryoverF45t10 = function(){
+            $(".carryoverProceedButton").unbind("click").on("click", function(){
+                console.log("clicked")
+                var payload =  {
+                    "officeIdList": [
+                        officeId
+                    ],
+                    "yearMonthList": [
+                        yearMonth
+                    ],
+                      "formTableName": "F45t10"
+                }
+                console.log(payload);
+                $.wms.executeExternalPost('http://localhost:8000/F45t10/carryover',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+                        $(".modal-loader").addClass("hidden")
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $("#modal-carryover").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("<p class='err_msg color-red font_12 i'>*carry over failed</p>").insertAfter((".carryoverProceedButton"))
+                    }
+                });
+            });
+        };
+
+        __carryoverF45t10();
         $.wms.executeExternalGet('http://localhost:8000/F45t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -3464,7 +3634,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -3475,7 +3645,7 @@ $.wms.form45 = (function() {
                                     "transferredOffice"     : $("#edit_field_offices").val(),
                                     "supervisingOfficer"    : $("#edit_supervising_officer").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -3570,7 +3740,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -3582,7 +3752,7 @@ $.wms.form45 = (function() {
                 "transferredOffice"     : $("#add_field_offices").val(),
                 "supervisingOfficer"    : $("#add_supervising_officer").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -3732,7 +3902,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -3742,7 +3912,7 @@ $.wms.form45 = (function() {
                                     "reportDateSubmitted"   : $("#edit_rep_date_submitted").val(),
                                     "transferredOffice"     : $("#edit_field_offices").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -3837,7 +4007,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -3848,7 +4018,7 @@ $.wms.form45 = (function() {
                 "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
                 "transferredOffice"     : $("#add_field_offices").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -3905,6 +4075,40 @@ $.wms.form45 = (function() {
            placeholder: "Select Field Office",
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
+
+        var __carryoverF45t12 = function(){
+            $(".carryoverProceedButton").unbind("click").on("click", function(){
+                console.log("clicked")
+                var payload =  {
+                    "officeIdList": [
+                        officeId
+                    ],
+                    "yearMonthList": [
+                        yearMonth
+                    ],
+                      "formTableName": "F45t12"
+                }
+                console.log(payload);
+                $.wms.executeExternalPost('http://localhost:8000/F45t12/carryover',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+                        $(".modal-loader").addClass("hidden")
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $("#modal-carryover").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".carryoverProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("<p class='err_msg color-red font_12 i'>*carry over failed</p>").insertAfter((".carryoverProceedButton"))
+                    }
+                });
+            });
+        };
+
+        __carryoverF45t12();
+
         $.wms.executeExternalGet('http://localhost:8000/F45t12?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -4000,7 +4204,7 @@ $.wms.form45 = (function() {
                                 var date_time = output +" "+time;
 
                                 var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val(),
+                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                     "updatedBy"             : $.cookie("USER_ID"),
                                     "source"                : "2",
                                     "encodingMonth"         : $.wms.urlParam('date'),
@@ -4011,7 +4215,7 @@ $.wms.form45 = (function() {
                                     "supervisingOfficer"    : $("#edit_supervising_officer").val(),
                                     "reasonsForReferral"    : $("#edit_reason_for_referral").val(),
                                     "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -4106,7 +4310,7 @@ $.wms.form45 = (function() {
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
-                "docketNumber"          : $("#add_docket_no").val(),
+                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "status"                : true,
                 "source"                : "2",
@@ -4118,7 +4322,7 @@ $.wms.form45 = (function() {
                 "supervisingOfficer"    : $("#add_supervising_officer").val(),
                 "reasonsForReferral"    : $("#add_reason_for_referral").val(),
                 "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "updatedBy"             : "",
                     "status"                : true,
@@ -4275,7 +4479,7 @@ $.wms.form45 = (function() {
                                     var date_time = output +" "+time;
 
                                     var payload_update = {
-                                        "docketNumber"          : $("#edit_docket_no").val(),
+                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -4288,7 +4492,7 @@ $.wms.form45 = (function() {
                                         "periodCourtesySupervision"     : $("#edit_period_crt").val(),
                                         "dateReceived"           : $("#edit_date_rcv").val(),
                                         "clientProfileDto"      : {
-                                            "docketNumber"          : $("#edit_docket_no").val(),
+                                            "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                             "updatedBy"             : $.cookie("USER_ID"),
                                             "source"                : "2",
                                             "encodingMonth"         : $.wms.urlParam('date'),
@@ -4383,7 +4587,7 @@ $.wms.form45 = (function() {
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
                 var payload = { 
-                    "docketNumber"          : $("#add_docket_no").val(),
+                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "status"                : true,
                     "source"                : "2",
@@ -4397,7 +4601,7 @@ $.wms.form45 = (function() {
                     "periodCourtesySupervision"     : $("#add_period_crt").val(),
                     "dateReceived"           : $("#add_date_rcv").val(),
                     "clientProfileDto"      : {
-                        "docketNumber"          : $("#add_docket_no").val(),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
                         "updatedBy"             : "",
                         "status"                : true,
@@ -4538,7 +4742,7 @@ $.wms.form45 = (function() {
                                     var date_time = output +" "+time;
 
                                     var payload_update = {
-                                        "docketNumber"          : $("#edit_docket_no-term").val(),
+                                        "docketNumber"          : $("#edit_docket_no-term").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
                                         "source"                : "2",
                                         "encodingMonth"         : $.wms.urlParam('date'),
@@ -4546,7 +4750,7 @@ $.wms.form45 = (function() {
                                         "fieldOfficeId"         : $.wms.urlParam('officeId'),
                                         "dateReturned"           : $("#edit_date_com_and_ret-term").val(),
                                         "clientProfileDto"      : {
-                                            "docketNumber"          : $("#edit_docket_no-term").val(),
+                                            "docketNumber"          : $("#edit_docket_no-term").val().toUpperCase(),
                                             "updatedBy"             : $.cookie("USER_ID"),
                                             "source"                : "2",
                                             "encodingMonth"         : $.wms.urlParam('date'),
@@ -4641,7 +4845,7 @@ $.wms.form45 = (function() {
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
                 var payload = { 
-                    "docketNumber"          : $("#add_docket_no-term").val(),
+                    "docketNumber"          : $("#add_docket_no-term").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "status"                : true,
                     "source"                : "2",
@@ -4650,7 +4854,7 @@ $.wms.form45 = (function() {
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                     "dateReturned"           : $("#add_date_com_and_ret-term").val(),
                     "clientProfileDto"      : {
-                        "docketNumber"          : $("#add_docket_no-term").val(),
+                        "docketNumber"          : $("#add_docket_no-term").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
                         "updatedBy"             : "",
                         "status"                : true,

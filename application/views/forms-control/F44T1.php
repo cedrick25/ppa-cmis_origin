@@ -14,26 +14,20 @@
 <!-- carry over -->
   <div class="modal fade" id="modal-carryover" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
-    
       <div class="modal-content">
         <div class="modal-header tb-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title"><b><i class="fa fa-stack-overflow"></i> Carry Over</b></h4>
         </div>
         <div class="modal-body">
-          <p><b>Are you sure you want Carry Over Investigation Caseload?</b></p>
+          <p><b>Are you sure you want CARRY OVER INVESTIGATION CASELOAD?</b></p>
           <span class="hidden sel-id"></span>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-success carryoverProceedButton" >Confirm  <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
-
-
         </div>
-        
       </div>
-
-      
     </div>
   </div>
 
