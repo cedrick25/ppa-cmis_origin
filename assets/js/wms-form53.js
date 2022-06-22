@@ -3164,6 +3164,109 @@ $.wms.form53 = (function() {
         var field_office =  $.wms.urlParam('field')
         var date =  $.wms.urlParam('date')
         var officeId =  $.wms.urlParam('officeId')
+
+        
+        var payload = {
+            field_id : officeId,
+        }
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
+
+            if(result.status != undefined && result.status == "SUCCESS"){
+                const region_name = result.payload.VALUE_
+                __download_cert(region_name);
+            }else{
+                alert ("region Failed");
+            }
+        });
+        var __download_cert = function(region_name){
+                console.log(region_name);
+
+            var result = date.split('-');
+            function GetMonthName(monthNumber) {
+                  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                  return months[monthNumber - 1];
+            }
+            const nth = function(d) {
+                if (d > 3 && d < 21) return 'th';
+                switch (d % 10) {
+                    case 1:  return "st";
+                    case 2:  return "nd";
+                    case 3:  return "rd";
+                    default: return "th";
+                }
+            };
+
+            const dateObj = new Date();
+            const daten = dateObj.getDate();
+            const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][dateObj.getMonth()];
+            const year = dateObj.getFullYear();
+
+            var dateString = daten+nth(daten)+' '+month+' '+year;
+            // alert(dateString)
+
+            var doc = new jsPDF();
+            doc.setFontSize(14);         
+            doc.text('PPA-RFO-FOR-006', 150, 20, {
+                align: 'right',
+            }); 
+            doc.text(105, 30, 'Republic of the Philippines', 'center');  
+            doc.text(105, 36, 'Department of Justice', 'center');  
+
+            doc.setFontSize(13);         
+            doc.text(105, 42, 'PAROLE AND PROBATION ADMINISTRATION', 'center');  
+
+            doc.text(105, 50, region_name, 'center');  
+            doc.text(105, 56, field_office, 'center');  
+            doc.text(105, 64, '_____________________________________________________', 'center');  
+            doc.text(105, 72, '____________________________________________', 'center'); 
+
+            doc.text(105, 82, '__________________________________________________________________', 'center');  
+            doc.text(105, 82, '__________________________________________________________________', 'center');  
+
+            doc.setFontType("bold");
+            doc.text(105, 100, 'CERTIFICATION', 'center');  
+
+            doc.setFontType("normal");
+            doc.text(30, 110, 'This is to certify that ______________________________________ has not', {
+                align: 'left',
+            });   
+            doc.text(22, 118, 'received any referrals pertinent to the following for the month of '+GetMonthName(result[1])+',', {
+                align: 'left',
+            });   
+            doc.text(22, 124, 'year '+result[0]+'.', {
+                align: 'left',
+            });   
+            doc.setFontType("bold");
+            doc.text(40, 136, 'COMMUNITY SERVICE AS IMPRISONMENT PENALTY ', {
+                align: 'left',
+            });    
+            doc.setFontType("normal");
+            doc.text(30, 148, 'Issued this '+daten+nth(daten)+' day of '+month+', '+year+' for whatever legal purpose this may', {
+                align: 'left',
+            });  
+            doc.text(22, 154, 'serve.', {
+                align: 'left',
+            });  
+       
+            doc.text('________________________', 128, 175, {
+                align: 'right',
+            }); 
+            doc.text('Name over Signature', 137, 181, {
+                align: 'right',
+            });
+            doc.text('Position of the Head of the Field Office', 120, 187, {
+                align: 'right',
+            }); 
+ 
+
+            $('.btn-download-cert').click(function () {
+                // doc.fromHTML($('#content').html(), 15, 15, {
+                //     'width': 170,
+                //         'elementHandlers': specialElementHandlers
+                // });         
+                doc.save('Certificates.pdf');
+            });
+        }
         $(".office_selected").html(field_office)
 
         const monthNames = ["January", "February", "March", "April", "May", "June",

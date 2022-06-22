@@ -3,6 +3,7 @@
       <span class="pull-right" style="padding-right: 10px;">
         
         <!-- <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button> -->
+        <button type="button" class="btn btn-sm btn-primary btn-download-cert"><i class="fa fa-download"></i> Certificate</button>
         <button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
       </span>
     </div>

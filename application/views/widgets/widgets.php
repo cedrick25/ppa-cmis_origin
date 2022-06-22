@@ -602,6 +602,266 @@
                 </div>
               </div>
             </div>
+            <div class="col-md-6" data-inner-id="panel-w-3">
+              <div class="panel panel-primary panel-widget" data-inner-id="panel-3">
+                <div class="panel-heading font_18"><i class="fa fa-bar-chart"></i> Widgets F44, F45, F50, F51, F53<span class="pull-right loading-data-widgetsF"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> <span class="hidden-xs">Retrieving Data...</span></span> </div>
+                <div class="panel-body map-wrapper">
+
+                  <span class="pull-right">
+                    <b>Field Office:</b> <select class="form-control sel_field_office select2" id="widgets_field_office"></select>
+                    <b>Date:</b> <input type="text" id="widgets_date" class="sel_date">
+                    <button class="btn btn-success btn-sm btn-widgetsF">Filter</button>
+                  </span>
+                  <span class="pull-left">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a data-toggle="tab" href="#widgets_table"><i class="fa fa-table"></i> Tabular</a></li>
+                      <li><a data-toggle="tab" href="#widgetsInv_graph" class="widgets_graph"><i class="fa fa-pie-chart"></i> Graph</a></li>  
+                    </ul>
+                  </span> 
+
+                  <div class="tab-content">
+
+                    <div id="widgets_table" class="tab-pane fade in active">
+
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 44 Suspended Sentence Investigation</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Cases Handled for Suspended Sentence</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Carry Over</td>
+                          <td align="center" class="ssi1">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; New Refferals Received</td>
+                          <td align="center" class="ssi2">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Cases Handled</td>
+                          <td align="center" class="ssi3">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Cases Completed Submitted to ED</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Number of Cases Completed</td>
+                          <td align="center" class="ssi4">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Percentage of Cases Completed Submitted to DDB</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Completion Rate</td>
+                          <td align="center" class="ssi5">0%</td>
+                        </tr>
+                      </table>  
+
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 44 Suspended Sentence Supervision</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">First-Time Minor Drug Offender Supervised</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total No. of First-Time Minor Drug Offender Supervised</td>
+                          <td align="center" class="ssc6">0</td>
+                        </tr>
+                      </table>
+
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 45 Community Service Investigation</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Cases Handled for Suspended Sentence</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Carry Over</td>
+                          <td align="center" class="csi1">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; New Refferals Received</td>
+                          <td align="center" class="csi2">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Cases Handled</td>
+                          <td align="center" class="csi3">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Cases Completed Submitted to Court</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Number of Cases Completed</td>
+                          <td align="center" class="csi4">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Percentage of Cases Completed Submitted to Court</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Completion Rate</td>
+                          <td align="center" class="csi5">0%</td>
+                        </tr>
+                      </table>  
+
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 45 Community Service Supervision</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Clients Supervised</td>
+                          <td align="center" class="css6"></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Number of clients Supervised</td>
+                          <td align="center" class="">0</td>
+                        </tr>
+                      </table>
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 50 Voluntary Confinement</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Verified Applications Received</td>
+                          <td align="center" class="vc1">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Cases Transferred/Reffered to other DDB Representative</td>
+                          <td align="center" class="vc2">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Applicants Referred for DD Examination</td>
+                          <td align="center" class="vc3">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Petitions for Voluntary Confinement Filed in Court</td>
+                          <td align="center" class="vc4">0</td>
+                        </tr>
+                      </table>
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 51 Released on Recognizance</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Cases Handled for Released on Recognizance</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Carry Over</td>
+                          <td align="center" class="ror1">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; New Refferals Received</td>
+                          <td align="center" class="ror2">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Cases Handled</td>
+                          <td align="center" class="ror3">0</td>
+                        </tr>
+                      </table>
+
+
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 53 Community Service as Imprisonment Penalty Hearing Phase</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Application for Community Service Received</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">Notice of Hearing Received</td>
+                          <td align="center" class="csiph1">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Order Received Regarding Setting Application for Hearing and Submission of Reports</td>
+                          <td align="center" class="csiph2">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Community Service Program and Rehabilitation Counselling Schedule Submitted</td>
+                          <td align="center" class="csiph3">0</td>
+                        </tr>
+
+                        <tr>
+                          <td class="b">Total Order Pending Submission of Report</td>
+                          <td align="center" class="csiph4">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Court Resolution on the Application for Community Service</td>
+                          <td align="center" class="csiph5">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Cases Handled</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Application to be Acted Upon by the Court</td>
+                          <td align="center" class="csiph6">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Application Resolved by the Court</td>
+                          <td align="center" class="csiph7">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Application Pending Disposition in Court</td>
+                          <td align="center" class="csiph8">0</td>
+                        </tr>
+                      </table>
+                      <table class="table table-bordered table-condensed">
+                        <tr class="tb-header">
+                          <td width="50%">Form 53 Community Service as Imprisonment Penalty Supervision Phase</td>
+                          <td align="center" class="b">Number</td>
+                        </tr>
+                        <tr>
+                          <td class="b">Community Service Order Received</td>
+                          <td align="center" class=""></td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Community Service Handled</td>
+                          <td align="center" class="csipsp9">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Community Service Terminated</td>
+                          <td align="center" class="csipsp10">0</td>
+                        </tr>
+                        <tr>
+                          <td class="b">&nbsp;&nbsp; Total Acted Community Service</td>
+                          <td align="center" class="csipsp11">0</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <div id="widgetsInv_graph" class="tab-pane fade">
+                        <canvas id="widgets_table" width="250px"></canvas>
+
+                        <canvas id="widgets_graph" width="250px"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- <div class="col-md-6">
               <div class="panel panel-primary panel-widget">
