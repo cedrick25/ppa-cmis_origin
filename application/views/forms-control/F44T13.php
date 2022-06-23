@@ -89,9 +89,16 @@
             </div>
             <div class="form-group row">
               <label for="" class="col-sm-3">Offender's Suffix Name</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_offender_sname" placeholder="">
-              </div>
+                <div class="col-sm-9 filter-modal">
+                    <select class="form-control select2 modal" id="edit_offender_sname" >
+                      <option value=""> </option>
+                      <option value="II">II</option>
+                      <option value="III">III</option>
+                      <option value="IV">IV</option>
+                      <option value="JR">JR</option>
+                      <option value="SR">SR</option>
+                    </select>
+                </div>
             </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">CC No</label>
@@ -196,6 +203,16 @@
                 <label for="" class="col-sm-3">Offender's Suffix Name</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  upperCase" id="add_offender_sname" placeholder="">
+                </div>
+                <div class="col-sm-9 filter-modal">
+                    <select class="form-control select2 modal" id="edit_offender_sname" >
+                      <option value=""> </option>
+                      <option value="II">II</option>
+                      <option value="III">III</option>
+                      <option value="IV">IV</option>
+                      <option value="JR">JR</option>
+                      <option value="SR">SR</option>
+                    </select>
                 </div>
               </div>
               <div class="form-group row">

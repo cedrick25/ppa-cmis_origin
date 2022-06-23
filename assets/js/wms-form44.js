@@ -633,7 +633,18 @@ $.wms.form44 = (function() {
                                     console.log(payload_update)
                                     $.wms.executeExternalPut('http://localhost:8000/F44t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
-                                            location.reload();
+
+                                            var form = "Update Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                                            var payload_audit = {
+                                                "created_by" : $.cookie("USER_ID"),
+                                                "module" : "CASELOAD",
+                                                "action" : form
+                                                
+                                            }
+                                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                                                location.reload();
+                                            });
+
                                         }else{
                                             //Error Prompt
                                         }
@@ -725,7 +736,18 @@ $.wms.form44 = (function() {
                         $(".addProceedButton").attr('disabled',false)
                         $("#modal-add").modal('toggle')
                         $(".btn-reset").trigger("click")
-                        location.reload();
+
+                        var form = "Added Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                        var payload_audit = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                            location.reload();
+                        });
+
 
                     }else{
                         $(".err_msg").remove()
@@ -863,7 +885,18 @@ $.wms.form44 = (function() {
                                     console.log(payload_update)
                                     $.wms.executeExternalPut('http://localhost:8000/F44t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
-                                            location.reload();
+
+                                            var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                                            var payload_audit = {
+                                                "created_by" : $.cookie("USER_ID"),
+                                                "module" : "CASELOAD",
+                                                "action" : form
+                                                
+                                            }
+                                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                                                location.reload();
+                                            });
+
                                         }else{
                                             //Error Prompt
                                         }
@@ -957,7 +990,18 @@ $.wms.form44 = (function() {
                         $(".addProceedButton_acted").attr('disabled',false)
                         $("#modal-add").modal('toggle')
                         $(".btn-reset").trigger("click")
-                        location.reload();
+
+                        var form = "Added Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                        var payload_audit = {
+                            "created_by" : $.cookie("USER_ID"),
+                            "module" : "CASELOAD",
+                            "action" : form
+                            
+                        }
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                            location.reload();
+                        });
+
                     }
                     else if(result.status == "FAILED"){
                         $(".err_msg").remove()
@@ -1074,7 +1118,16 @@ $.wms.form44 = (function() {
                 // Download
                 $(".btn-download").unbind("click").on("click",function(){
                     console.log("clicked")
-                   
+                    
+                    var form = "Download Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
+                    var payload_audit = {
+                        "created_by" : $.cookie("USER_ID"),
+                        "module" : "CASELOAD",
+                        "action" : form
+                        
+                    }
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                    });
                     $("#T_F44T2_download_print").table2excel({
                         // exclude CSS class
                         exclude: ".options",

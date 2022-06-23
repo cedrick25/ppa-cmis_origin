@@ -1530,8 +1530,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.sentence+"</td>"+
                     "<td>"+data.dateOfCourtOrder+"</td>"+
                     "<td>"+data.dateReceived+"</td>"+
-                    "<td>"+data.dateSubmitted+"</td>"+
                     "<td>"+data.assignedOfficer+"</td>"+
+                    "<td>"+data.dateSubmitted+"</td>"+
                     "<td>"+data.ppoRecommendation+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
@@ -1596,8 +1596,8 @@ $.wms.form53 = (function() {
                         $("#edit_sentence").val(payload.sentence)
                         $("#edit_date_court_order").val(payload.dateOfCourtOrder)
                         $("#edit_date_rcv").val(payload.dateReceived)
-                        $("#edit_officer").val(payload.dateSubmitted)
-                        $("#edit_date_submitted").val(payload.assignedOfficer)
+                        $("#edit_officer").val(payload.assignedOfficer)
+                        $("#edit_date_submitted").val(payload.dateSubmitted)
                         $("#edit_ppo_recommendation").val(payload.ppoRecommendation).trigger('change')
                        
                             //Update proceed
@@ -1627,8 +1627,8 @@ $.wms.form53 = (function() {
                                     "sentence"              : $("#edit_sentence").val(),
                                     "dateOfCourtOrder"      : $("#edit_date_court_order").val(),
                                     "dateReceived"          : $("#edit_date_rcv").val(),
-                                    "dateSubmitted"         : $("#edit_officer").val(),
-                                    "assignedOfficer"       : $("#edit_date_submitted").val(),
+                                    "dateSubmitted"         : $("#edit_date_submitted").val(),
+                                    "assignedOfficer"       : $("#edit_officer").val(),
                                     "ppoRecommendation"     : $("#edit_ppo_recommendation").val(),
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
@@ -1701,7 +1701,7 @@ $.wms.form53 = (function() {
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'HCS' ];
-            var requiredField= [ 'add_fname', 'add_lname'];
+            var requiredField= [ 'add_fname', 'add_lname', 'add_date_submitted'];
             var check = true
             var checkTable = ['F53T1', 'F53T2']
 
@@ -1741,8 +1741,8 @@ $.wms.form53 = (function() {
                 "sentence"              : $("#add_sentence").val(),
                 "dateOfCourtOrder"      : $("#add_date_court_order").val(),
                 "dateReceived"          : $("#add_date_rcv").val(),
-                "dateSubmitted"         : $("#add_officer").val(),
-                "assignedOfficer"       : $("#add_date_submitted").val(),
+                "dateSubmitted"         : $("#add_date_submitted").val(),
+                "assignedOfficer"       : $("#add_officer").val(),
                 "ppoRecommendation"     : $("#add_ppo_recommendation").val(),
                 "clientProfileDto"      : {
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),

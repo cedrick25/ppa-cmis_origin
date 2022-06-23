@@ -518,150 +518,150 @@ $.wms.widget = (function() {
         })
 
 
-        //Completed Investigation Cases
-        // $(".btn-CmpltdInv").unbind("click").on("click",function(){
-        //     console.log("WorkloadHandled");
-        //     $(".loading-data-CmpltdInv").fadeIn();
-        //     var payload = {
-        //         "start_date" : $("#widget_cic_date").val(),
-        //         "end_date" : $("#widget_cic_date").val(),
-        //         "field_office" : $("#widget_cic_field_office").val(),
-        //         "region_id" : $('#widget_cic_field_office option:selected').data('region'),
-        //         "method" : "completed_inv_cases"
-        //     }
+        // Completed Investigation Cases
+        $(".btn-CmpltdInv").unbind("click").on("click",function(){
+            console.log("WorkloadHandled");
+            $(".loading-data-CmpltdInv").fadeIn();
+            var payload = {
+                "start_date" : $("#widget_cic_date").val(),
+                "end_date" : $("#widget_cic_date").val(),
+                "field_office" : $("#widget_cic_field_office").val(),
+                "region_id" : $('#widget_cic_field_office option:selected').data('region'),
+                "method" : "completed_inv_cases"
+            }
 
-        //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/widgets',JSON.stringify(payload)).done(function (result) {
-        //         console.log(result);
-        //         $(".loading-data-CmpltdInv").fadeOut();
-        //         if(result.status != undefined && result.status == "SUCCESS"){
-        //             payload = result.payload
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/widgets',JSON.stringify(payload)).done(function (result) {
+                console.log(result);
+                $(".loading-data-CmpltdInv").fadeOut();
+                if(result.status != undefined && result.status == "SUCCESS"){
+                    payload = result.payload
 
-        //             $(".CmpltdInvProbationPSIR").html(payload.ProbationPSIR.count)
-        //             $(".CmpltdInvProbationManifest").html(payload.ProbationManifest.count)
-        //             $(".CmpltdInvProbationTotal").html(payload.ProbationTotal.count)
-        //             $(".CmpltdInvPreParole").html(payload.PreParole.count)
-        //             $(".CmpltdInvPreCommutation").html(payload.PreCommutation.count)
-        //             $(".CmpltdInvPreConditional").html(payload.PreConditional.count)
-        //             $(".CmpltdInvPreAbsolute").html(payload.PreAbsolute.count)
-        //             $(".CmpltdInvPreOther").html(payload.PreOther.count)
-        //             $(".CmpltdInvpreTotal").html(payload.preTotal.count)
+                    $(".CmpltdInvProbationPSIR").html(payload.ProbationPSIR.count)
+                    $(".CmpltdInvProbationManifest").html(payload.ProbationManifest.count)
+                    $(".CmpltdInvProbationTotal").html(payload.ProbationTotal.count)
+                    $(".CmpltdInvPreParole").html(payload.PreParole.count)
+                    $(".CmpltdInvPreCommutation").html(payload.PreCommutation.count)
+                    $(".CmpltdInvPreConditional").html(payload.PreConditional.count)
+                    $(".CmpltdInvPreAbsolute").html(payload.PreAbsolute.count)
+                    $(".CmpltdInvPreOther").html(payload.PreOther.count)
+                    $(".CmpltdInvpreTotal").html(payload.preTotal.count)
 
 
-        //             $(".CmpltdInv_graph").unbind("click").on("click",function(){
-        //                 var config = {
-        //                     type: 'pie',
-        //                     data: {
-        //                         datasets: [{
-        //                             data: [
-        //                                 payload.ProbationPSIR.count,
-        //                                 payload.ProbationManifest.count,
-        //                             ],
-        //                             backgroundColor: [
-        //                                 window.chartColors.red,
-        //                                 window.chartColors.orange,
-        //                             ],
-        //                             label: 'Investigation'
-        //                         }],
-        //                         labels: [
-        //                             'PSIR Submitted ',
-        //                             'Manifestation Submitted',
-        //                         ]
-        //                     },
-        //                     options: {
-        //                         responsive: true,
-        //                         title: {
-        //                             display: true,
-        //                             text: 'Probation',
-        //                             fontSize: '16',
-        //                             fontStyle: 'bold',
-        //                             fontColor: '#000',
+                    $(".CmpltdInv_graph").unbind("click").on("click",function(){
+                        var config = {
+                            type: 'pie',
+                            data: {
+                                datasets: [{
+                                    data: [
+                                        payload.ProbationPSIR.count,
+                                        payload.ProbationManifest.count,
+                                    ],
+                                    backgroundColor: [
+                                        window.chartColors.red,
+                                        window.chartColors.orange,
+                                    ],
+                                    label: 'Investigation'
+                                }],
+                                labels: [
+                                    'PSIR Submitted ',
+                                    'Manifestation Submitted',
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                title: {
+                                    display: true,
+                                    text: 'Probation',
+                                    fontSize: '16',
+                                    fontStyle: 'bold',
+                                    fontColor: '#000',
 
-        //                         },
-        //                          plugins: {
-        //                               labels: [{
-        //                                 render: 'percentage',
-        //                                 fontSize: 14,
-        //                                 fontStyle: 'bold',
-        //                                 fontColor: '#000',
-        //                               },{
-        //                                 render: 'label',
-        //                                 position: 'outside',
-        //                                 fontSize: 14,
-        //                                 fontStyle: 'bold',
-        //                                 fontColor: '#000',
-        //                               }]
-        //                             }
-        //                     }
-        //                 };
+                                },
+                                 plugins: {
+                                      labels: [{
+                                        render: 'percentage',
+                                        fontSize: 14,
+                                        fontStyle: 'bold',
+                                        fontColor: '#000',
+                                      },{
+                                        render: 'label',
+                                        position: 'outside',
+                                        fontSize: 14,
+                                        fontStyle: 'bold',
+                                        fontColor: '#000',
+                                      }]
+                                    }
+                            }
+                        };
                         
 
 
-        //                 var config2 = {
-        //                     type: 'pie',
-        //                     data: {
-        //                         datasets: [{
-        //                             data: [
-        //                                 payload.PreParole.count,
-        //                                 payload.PreCommutation.count,
-        //                                 payload.PreConditional.count,
-        //                                 payload.PreAbsolute.count,
-        //                                 payload.PreOther.count
-        //                             ],
-        //                             backgroundColor: [
-        //                                 window.chartColors.red,
-        //                                 window.chartColors.orange,
-        //                                 window.chartColors.yellow,
-        //                                 window.chartColors.blue,
-        //                                 window.chartColors.grey,
-        //                             ],
-        //                             label: 'Pre-Parole/Executive Clemency'
-        //                         }],
-        //                         labels: [
-        //                             'Parole',
-        //                             'Commutation of Sentence',
-        //                             'Conditional Pardon',
-        //                             'Absolute Pardon',
-        //                             'Others',
-        //                         ]
-        //                     },
-        //                     options: {
-        //                         responsive: true,
-        //                         title: {
-        //                             display: true,
-        //                             text: 'Supervision',
-        //                             fontSize: '16',
-        //                             fontStyle: 'bold',
-        //                             fontColor: '#000',
-        //                         },
-        //                          plugins: {
-        //                               labels: [{
-        //                                 render: 'percentage',
-        //                                 fontSize: 14,
-        //                                 fontStyle: 'bold',
-        //                                 fontColor: '#000',
-        //                               },{
-        //                                 render: 'label',
-        //                                 position: 'outside',
-        //                                 fontSize: 14,
-        //                                 fontStyle: 'bold',
-        //                                 fontColor: '#000',
-        //                               }]
-        //                             }
-        //                     }
-        //                 };
-        //                 setTimeout(function () {
-        //                     var ctx1 = document.getElementById('CmpltdInv_graph1').getContext('2d');
-        //                     window.myPie = new Chart(ctx1, config);
+                        var config2 = {
+                            type: 'pie',
+                            data: {
+                                datasets: [{
+                                    data: [
+                                        payload.PreParole.count,
+                                        payload.PreCommutation.count,
+                                        payload.PreConditional.count,
+                                        payload.PreAbsolute.count,
+                                        payload.PreOther.count
+                                    ],
+                                    backgroundColor: [
+                                        window.chartColors.red,
+                                        window.chartColors.orange,
+                                        window.chartColors.yellow,
+                                        window.chartColors.blue,
+                                        window.chartColors.grey,
+                                    ],
+                                    label: 'Pre-Parole/Executive Clemency'
+                                }],
+                                labels: [
+                                    'Parole',
+                                    'Commutation of Sentence',
+                                    'Conditional Pardon',
+                                    'Absolute Pardon',
+                                    'Others',
+                                ]
+                            },
+                            options: {
+                                responsive: true,
+                                title: {
+                                    display: true,
+                                    text: 'Supervision',
+                                    fontSize: '16',
+                                    fontStyle: 'bold',
+                                    fontColor: '#000',
+                                },
+                                 plugins: {
+                                      labels: [{
+                                        render: 'percentage',
+                                        fontSize: 14,
+                                        fontStyle: 'bold',
+                                        fontColor: '#000',
+                                      },{
+                                        render: 'label',
+                                        position: 'outside',
+                                        fontSize: 14,
+                                        fontStyle: 'bold',
+                                        fontColor: '#000',
+                                      }]
+                                    }
+                            }
+                        };
+                        setTimeout(function () {
+                            var ctx1 = document.getElementById('CmpltdInv_graph1').getContext('2d');
+                            window.myPie = new Chart(ctx1, config);
 
 
-        //                     var ctx2 = document.getElementById('CmpltdInv_graph2').getContext('2d');
-        //                     window.myPie = new Chart(ctx2, config2);
-        //                 },250);
-        //             })
+                            var ctx2 = document.getElementById('CmpltdInv_graph2').getContext('2d');
+                            window.myPie = new Chart(ctx2, config2);
+                        },250);
+                    })
                     
-        //         }
-        //     });
-        // })
+                }
+            });
+        })
 
 
         //Completed Supervision Cases
@@ -1006,25 +1006,20 @@ $.wms.widget = (function() {
             console.log("widgetsF");
             $(".loading-data-widgetsF").fadeIn();
 
-            var fi = [];
-            for (var x=0; x<=242; x++) {
-                fi.push(x);
-            }
-            console.log(fi)
 
             var officeId; 
             if ($("#widgets_field_office").val() === "ALL") {
-                var officeId = 1; 
+                var fi = [];
+                for (var x=0; x<=242; x++) {
+                    fi.push(x);
+                }
+                var officeId = fi; 
             } else {
                 var officeId = $("#widgets_field_office").select2().find(":selected").data("id"); 
             }
-            console.log($("#widgets_field_office").select2().find(":selected").data("id"))
-            console.log($("#widgets_field_office").val() === "ALL")
-            console.log("-----------------------")
+
             var payload =  {
-                "officeIdList": [
-                    officeId
-                ],
+                "officeIdList": officeId,
                 "yearMonthList": [
                     $("#widgets_date").val()
                 ],
