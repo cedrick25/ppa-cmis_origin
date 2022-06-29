@@ -615,7 +615,7 @@
                   <span class="pull-left">
                     <ul class="nav nav-tabs">
                       <li class="active"><a data-toggle="tab" href="#widgets_table"><i class="fa fa-table"></i> Tabular</a></li>
-                      <li><a data-toggle="tab" href="#widgetsInv_graph" class="widgets_graph"><i class="fa fa-pie-chart"></i> Graph</a></li>  
+                      <!-- <li><a data-toggle="tab" href="#widgetsInv_graph" class="widgets_graph"><i class="fa fa-pie-chart"></i> Graph</a></li>   -->
                     </ul>
                   </span> 
 
@@ -856,7 +856,7 @@
                     <div id="widgetsInv_graph" class="tab-pane fade">
                         <canvas id="widgets_table" width="250px"></canvas>
 
-                        <canvas id="widgets_graph" width="250px"></canvas>
+                        <!-- <canvas id="widgets_graph" width="250px"></canvas> -->
                     </div>
                   </div>
                 </div>

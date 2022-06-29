@@ -4,11 +4,13 @@
 <div class="col-md-8">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <div><span class="" style="font-size:18px">PPA FORM 45</span>
+      <div>
+        <span class="" style="font-size:18px">PPA FORM 45</span>
 
-        <span class="form_caption pull-right" style="font-size:18px"></span>
+        <div class="col-sm-3 pull-right">
+          <input type="text" class="form-control pull-right isocode_" value="PPA-FO-FR-045">
+        </div>
       </div>
-      <h4 class="" style="">PPA-FO-FR-045</h4>
     </div>
   </div>
   <div class="row">

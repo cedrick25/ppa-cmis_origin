@@ -138,7 +138,9 @@ $.wms = (function() {
             url: path,
             dataType: "json",
             headers: {
-                'Content-Type':'application/json'
+                // 'Content-Type': 'multipart/form-data; boundary=something'
+                // 'Content-Type': 'multipart/form-data;'
+                'Content-Type':'multipart/form-data, application/json'
             },
             data: jsonObj
         }).done(function (data, textStatus, jqXHR) {

@@ -224,7 +224,7 @@ $.wms.form51 = (function() {
                         $("#edit_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_date_rcv").val(payload.dateReceivedByCppo)
                         $("#edit_officer").val(payload.supervisingOfficer)
                        
@@ -489,7 +489,7 @@ $.wms.form51 = (function() {
                         $("#edit_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_date_rcv").val(payload.dateReceivedByCppo)
                         $("#edit_officer").val(payload.supervisingOfficer)
                        
@@ -756,7 +756,7 @@ $.wms.form51 = (function() {
                         $("#edit_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_officer").val(payload.supervisingOfficer)
                         $("#edit_date_report").val(payload.dateReportSubmitted)
                        
@@ -1027,7 +1027,7 @@ $.wms.form51 = (function() {
                         $("#edit_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_disposition").val(payload.courtDisposition)
                         $("#edit_date_disposed").val(payload.dateDisposed)
                        
@@ -1206,6 +1206,16 @@ $.wms.form51 = (function() {
         var field_office =  $.wms.urlParam('field')
         var date =  $.wms.urlParam('date')
         var officeId =  $.wms.urlParam('officeId')
+        var isocode      =  $.wms.urlParam('isocode')
+        console.log(isocode)
+
+        if (isocode == null) {
+            $(".isocode_").val("PPA-FO-FR-051")
+        } else if (isocode != null) {
+            $(".isocode_").val(isocode)
+        } else {
+            $(".isocode_").val()
+        }
 
         var payload = {
             field_id : officeId,

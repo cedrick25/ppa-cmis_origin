@@ -307,7 +307,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_date_rcv").val(payload.dateReceivedByCppo)
                         $("#edit_investigating_officer").val(payload.investigatingOfficer)
                        
@@ -591,7 +591,7 @@ $.wms.form44 = (function() {
                             $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                             $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                            $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                            $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                             $("#edit_date_rcv").val(payload.dateReceivedByCppo)
                             $("#edit_investigating_officer").val(payload.investigatingOfficer)
                            
@@ -839,7 +839,7 @@ $.wms.form44 = (function() {
                             $("#edit_acted_offenders_fname").val(payload.clientProfileDto.firstName)
                             $("#edit_acted_offenders_mname").val(payload.clientProfileDto.middleName)
                             $("#edit_acted_offenders_lname").val(payload.clientProfileDto.lastName)
-                            $("#edit_acted_offenders_sname").val(payload.clientProfileDto.suffix)
+                            $("#edit_acted_offenders_sname").val(payload.clientProfileDto.suffix).trigger('change')
                             $("#edit_acted_report_submitted").val(payload.dateReportSubmitted)
                             $("#edit_acted_recommendation").val(payload.ppoRecommendation).trigger('change')
                             $("#edit_acted_transfer_date").val(payload.transferDate)
@@ -929,7 +929,7 @@ $.wms.form44 = (function() {
             //Add
             $(".addSubmitButton_acted").unbind("click").on("click",function(){
                 var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
-                var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date','add_acted_transfer_to'];
+                var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date'];
                 var check = true
                 var checkTable = ['F44T1', 'F44T2']
 
@@ -1269,7 +1269,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_investigating_officer").val(payload.investigatingOfficer)
                         $("#edit_recommendation").val(payload.recommendation).trigger('change')
                         $("#edit_date_recommendation").val(payload.dateRecommendation)
@@ -1534,7 +1534,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_investigating_officer").val(payload.investigatingOfficer)
                         $("#edit_recommendation").val(payload.recommendation)
                         $("#edit_date_recommendation").val(payload.dateRecommendation)
@@ -1834,7 +1834,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_referring_office").val(payload.referringOffice)
                         $("#edit_date_rcv_by_the_ppo").val(payload.dateReceivedByPpo)
                         $("#edit_investigating_officer").val(payload.investigatingOfficer)
@@ -2102,7 +2102,7 @@ $.wms.form44 = (function() {
                             $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                             $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                            $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                            $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                             $("#edit_referring_office").val(payload.referringOffice)
                             $("#edit_date_rcv_by_the_ppo").val(payload.dateReceivedByPpo)
                             $("#edit_investigating_officer").val(payload.investigatingOfficer)
@@ -2364,7 +2364,7 @@ $.wms.form44 = (function() {
                             $("#edit_offender_fname-acted").val(payload.clientProfileDto.firstName)
                             $("#edit_offender_mname-acted").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname-acted").val(payload.clientProfileDto.lastName)
-                            $("#edit_offender_sname-acted").val(payload.clientProfileDto.suffix)
+                            $("#edit_offender_sname-acted").val(payload.clientProfileDto.suffix).trigger('change')
                             $("#edit_referring_office-acted").val(payload.referringOffice)
                             $("#edit_date_rcv_by_the_ppo-acted").val(payload.dateReceivedByPpo)
                            
@@ -2783,7 +2783,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_supervising_officer").val(payload.supervisingOfficer)
                         $("#edit_date_rcv_by_the_ppo").val(payload.dateReceivedByPpo)
                         $("#edit_supervising_start").val(payload.supervisionStart)
@@ -3051,7 +3051,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_criminal_case").val(payload.criminalCaseNo)
                         $("#edit_court_origin").val(payload.courtOfOrigin)
                         $("#edit_supervising_officer").val(payload.supervisingOfficer)
@@ -3327,7 +3327,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_report").val(payload.report)
                         $("#edit_rep_date_submitted").val(payload.reportDateSubmitted)
                         $("#edit_field_offices").val(payload.transferredOffice).trigger('change')
@@ -3630,7 +3630,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_report").val(payload.report)
                         $("#edit_rep_date_submitted").val(payload.reportDateSubmitted)
                         $("#edit_field_offices").val(payload.transferredOffice).trigger('change')
@@ -3899,7 +3899,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_report").val(payload.report)
                         $("#edit_rep_date_submitted").val(payload.reportDateSubmitted)
                         $("#edit_field_offices").val(payload.transferredOffice).trigger('change')
@@ -4200,7 +4200,7 @@ $.wms.form44 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_field_offices").val(payload.referringOffice).trigger('change')
                         $("#edit_rep_date_submitted").val(payload.dateReceivedByPpo)
                         $("#edit_supervising_officer").val(payload.supervisingOfficer)
@@ -4473,7 +4473,7 @@ $.wms.form44 = (function() {
                             $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                             $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                            $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                            $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                             $("#edit_cc_no").val(payload.criminalCaseNo)
                             $("#edit_court_origin").val(payload.courtOfOrigin)
                             $("#edit_referring_office").val(payload.referringOffice).trigger('change')
@@ -4741,7 +4741,7 @@ $.wms.form44 = (function() {
                             $("#edit_offender_fname-term").val(payload.clientProfileDto.firstName)
                             $("#edit_offender_mname-term").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname-term").val(payload.clientProfileDto.lastName)
-                            $("#edit_offender_sname-term").val(payload.clientProfileDto.suffix)
+                            $("#edit_offender_sname-term").val(payload.clientProfileDto.suffix).trigger('change')
                             $("#edit_date_com_and_ret-term").val(payload.dateReturned)
                            
                                 //Update proceed
@@ -5042,10 +5042,21 @@ $.wms.form44 = (function() {
     var __attachF44SSCSPageEvent = function() {
         console.log("form44 caseload")
 
-
         var field_office =  $.wms.urlParam('field')
-        var date =  $.wms.urlParam('date')
-        var officeId =  $.wms.urlParam('officeId')
+        var date         =  $.wms.urlParam('date')
+        var officeId     =  $.wms.urlParam('officeId')
+        var isocode      =  $.wms.urlParam('isocode')
+        console.log($.wms.urlParam('field'))
+        console.log($.wms.urlParam('date'))
+        console.log($.wms.urlParam('officeId'))
+
+        if (isocode == null) {
+            $(".isocode_").val("PPA-FO-FR-044")
+        } else if (isocode != null) {
+            $(".isocode_").val(isocode)
+        } else {
+            $(".isocode_").val()
+        }
 
         var payload = {
             field_id : officeId,
@@ -5056,9 +5067,98 @@ $.wms.form44 = (function() {
                 const region_name = result.payload.VALUE_
                 __download_cert(region_name);
             }else{
-                alert ("region Failed");
+                // alert ("region Failed");
             }
         });
+
+        $(".certUpload").unbind("click").on("click", function(){
+            console.log("clicked")
+            var input = document.getElementById('myFile');
+            var fileToUpload = $('#myFile').prop('files')[0];
+
+            if (fileToUpload === undefined) {
+                alert("Please Choose File Before Upload!")
+            }else {
+                var formdata = new FormData();
+                formdata.append("files", input.files[0], "/C:/Users/Meister-Legion/Documents/AMS TOR_PNU.pdf");
+
+                var requestOptions = {
+                  method: 'POST',
+                  body: formdata,
+                  redirect: 'follow'
+                };
+                console.log(requestOptions)
+                fetch("http://localhost:8000/cert/upload?officeId=1&yearMonth=2022-06&uploaderId=1", requestOptions)
+                  .then(response => response.text())
+                  .then(result => console.log(result))
+                  .catch(error => console.log('error', error));
+                // var fr = new FileReader();
+                // var file = input.files[0];
+                // fr.onload = receivedText;
+                // //fr.readAsText(file);
+                // //fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
+                // fr.readAsDataURL(file);
+                  
+                // function receivedText() {
+                //     document.getElementById('editor').appendChild(document.createTextNode(fr.result));
+                //     $("#editor").html(fr.result)
+                //     $("#editor").html()
+                //     var payload = {
+                //         "files": [
+                //             $("#editor").html()
+                //         ],
+
+                //         "certificate"   : {
+                //             "filePath"      : $('#myFile').val(),
+                //             "fileName"      : fileToUpload.name,
+                //             "fileSize"      : fileToUpload.size,
+                //             "fileType"      : fileToUpload.type,
+                //             "createdBy"     : $.cookie("USER_ID"),
+                //             "status"        : true,
+                //             "encodingMonth" : $.wms.urlParam('date'),
+                //             "fieldOfficeId" : $.wms.urlParam('officeId'),
+                //             "uploaderId"    : $.cookie("USER_ID")
+                //         }
+                //     }
+                //     console.log(payload)
+                //     $.wms.executeExternalPost('http://localhost:8000/cert/upload?officeId=1&yearMonth=2022-06&uploaderId=1',JSON.stringify(payload)).done(function (result) {
+                //         console.log(result)
+                //         if(result.status == "SUCCESS"){
+                //                 __cert_list_upload();
+
+                //         }else{
+                //             // alert ("region Failed");
+                //         }
+                //     });
+                // } 
+            } 
+        })
+        var __cert_list_upload = function(){
+            console.log("cert list")
+
+            // $.wms.executeExternalGet('http://localhost:8000/document/list').done(function (result) {
+            //     console.log(result.content)
+            //     $(".form_loader").removeClass("hidden")
+
+            //     $(".form_loader").addClass("hidden")
+            //     $(".result_form").removeClass("hidden")
+
+            //     result.content.forEach(function(data){
+            //         data = $.wms.upper($.wms.sanitize(data))
+            //         var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+            //         source = ((data.source==1) ? 'PIS' : 'MANUAL');
+            //         $('.F45T1_tbody').append("<tr>"+
+            //             "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
+            //             "<td>"+fullname.toUpperCase()+"</td>"+
+            //             "<td>"+data.dateReceivedByCppo+"</td>"+
+            //             "<td>"+data.investigatingOfficer+"</td>"+
+            //             "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-view' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-eyes'></i> View</button> "+
+            //             "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            //     });
+            // });
+        }
+            __cert_list_upload();
+
         var __download_cert = function(region_name){
                 console.log(region_name);
 

@@ -109,7 +109,7 @@
 	            }
 	            else {
 	                console.log("done...")
-
+	                $(".isocode_").replaceWith($("<span />").text($(".isocode_").val()));
 	                $(".nav_list").addClass("hide");
 	                $(".tab_list").addClass("hide");
 	                $(".print_list").removeClass("hide");

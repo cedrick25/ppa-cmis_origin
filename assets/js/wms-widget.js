@@ -1015,7 +1015,7 @@ $.wms.widget = (function() {
                 }
                 var officeId = fi; 
             } else {
-                var officeId = $("#widgets_field_office").select2().find(":selected").data("id"); 
+                var officeId = [$("#widgets_field_office").select2().find(":selected").data("id")]; 
             }
 
             var payload =  {
@@ -1095,8 +1095,10 @@ $.wms.widget = (function() {
                             $.wms.reports.attachF5PCS(); break;
             case 'F21PCS':  $.wms.form21.attachF21PCSPageEvent(); 
                             $.wms.reports.attachF21PCS();
+                            break;
             case 'F44SSCS': $.wms.form44.attachF44SSCSPageEvent(); 
                             break;
+
             case 'F50VCCS': $.wms.form50.attachF50VCCSPageEvent(); break; 
             case 'F50T1': $.wms.form50.attachF50T1PageEvent(); break;
             case 'F50T2': $.wms.form50.attachF50T2PageEvent(); break;
@@ -1148,6 +1150,7 @@ $.wms.widget = (function() {
             case 'F44T11': $.wms.form44.attachF44T11PageEvent(); break;
             case 'F44T12': $.wms.form44.attachF44T12PageEvent(); break;
             case 'F44T13': $.wms.form44.attachF44T13PageEvent(); break;
+
             case 'F5T1': $.wms.form5.attachF5T1PageEvent(); break;
             case 'F5T2': $.wms.form5.attachF5T2PageEvent(); break;
             case 'F5T3': $.wms.form5.attachF5T3PageEvent(); break;
@@ -1161,6 +1164,7 @@ $.wms.widget = (function() {
             case 'F5T11': $.wms.form5.attachF5T11PageEvent(); break;
             case 'F5T12': $.wms.form5.attachF5T12PageEvent(); break;
             case 'F5T13': $.wms.form5.attachF5T13PageEvent(); break;
+
             case 'F21T1': $.wms.form21.attachF21T1PageEvent(); break;
             case 'F21T2': $.wms.form21.attachF21T2PageEvent(); break;
             case 'F21T3': $.wms.form21.attachF21T3PageEvent(); break;
@@ -1186,8 +1190,10 @@ $.wms.widget = (function() {
         var reg         = $.wms.urlParam('reg')
 
         $(".btn-print").unbind("click").on("click",function(){
-            window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field+"&officeId="+officeId+"&page="+0+"&size="+15, '_blank'); 
+            var isocode     = $(".isocode_").val()
+            window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field+"&officeId="+officeId+"&page="+0+"&size="+"15"+"&isocode="+isocode, '_blank'); 
         });
+        
 
         $(".btn-print-report").unbind("click").on("click",function(){
             window.open('report_print?form='+selForm+'&date='+date+'&reg2='+reg2+'&reg='+reg, '_blank'); 

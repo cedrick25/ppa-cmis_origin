@@ -257,7 +257,7 @@ $.wms.form50 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_action").val(payload.actionType).trigger('change')
                         $("#edit_date_rcv").val(payload.dateReceived)
                        
@@ -794,7 +794,7 @@ $.wms.form50 = (function() {
                         $("#edit_offender_fname").val(payload.clientProfileDto.firstName)
                         $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                         $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
-                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix)
+                        $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
                         $("#edit_action").val(payload.actionType).trigger('change')
                         $("#edit_date_filed").val(payload.dateFiled)
                         $("#edit_court").val(payload.court)
@@ -1108,6 +1108,16 @@ $.wms.form50 = (function() {
         var field_office =  $.wms.urlParam('field')
         var date =  $.wms.urlParam('date')
         var officeId =  $.wms.urlParam('officeId')
+        var isocode      =  $.wms.urlParam('isocode')
+        console.log(isocode)
+
+        if (isocode == null) {
+            $(".isocode_").val("PPA-FO-FR-050")
+        } else if (isocode != null) {
+            $(".isocode_").val(isocode)
+        } else {
+            $(".isocode_").val()
+        }
 
         var payload = {
             field_id : officeId,

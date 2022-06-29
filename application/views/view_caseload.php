@@ -61,25 +61,32 @@
                 	report_field = result.payload.report_field;
                 	report_content = JSON.parse(result.payload.report_content);
 
-                	report_content.forEach(function(key){
-                		console.log();
+                    var payload = { field_office : report_field}
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getFieldOfficeByFieldOffice',JSON.stringify(payload)).done(function (result) {
+                        if(result.status === 'SUCCESS'){
+                            var officeId = result.payload.ID
+                            
+                            report_content.forEach(function(key){
 
-                		$("#load").append('<iframe id="'+key+'"  class="iframe" height="500px"  width="100%" onload="setIframeHeight(this.id)" src="report_caseload?form='+key+'&date='+report_YM+'&field='+report_field+'"></iframe>')
+                                $("#load").append('<iframe id="'+key+'"  class="iframe" height="500px"  width="100%" onload="setIframeHeight(this.id)" src="report_caseload?form='+key+'&date='+report_YM+'&field='+report_field+'&officeId='+officeId+'&page='+0+'&size='+15+'"></iframe>')
 
 
-                		/*var div = document.getElementById(key); 
-				        div.onload = function() { 
-				            div.style.height = 
-				              div.contentWindow.document.body.scrollHeight + 'px'; 
-				        } */
-                	});
+                                /*var div = document.getElementById(key); 
+                                div.onload = function() { 
+                                    div.style.height = 
+                                      div.contentWindow.document.body.scrollHeight + 'px'; 
+                                } */
+                                $(".isocode_").replaceWith($("<span />").text($(".isocode_").val()));
+                            });
+
+                        }
+                    });
                 	
 
                 }
                 
 
             });
-    		
     		
 
         }, 200);

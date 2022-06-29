@@ -4,7 +4,6 @@
     		
         <!-- <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button> -->
         <button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
-    		<button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Certificate</button>
     	</span>
     </div>
   </div>

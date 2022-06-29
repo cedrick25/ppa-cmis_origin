@@ -4,11 +4,12 @@
 <div class="col-md-8">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <div><span class="" style="font-size:18px">PPA FORM 44</span>
-
-        <span class="form_caption pull-right" style="font-size:18px"></span>
+      <div class="row">
+        <span class="" style="font-size:18px">PPA FORM 44</span>
+        <div class="col-sm-3 pull-right">
+          <input type="text" class="form-control pull-right isocode_" value="PPA-FO-FR-044">
+        </div>
       </div>
-      <h4 class="" style="">PPA-FO-FR-004</h4>
     </div>
   </div>
   <div class="row">
@@ -715,7 +716,29 @@
         </div>
       </div>
     </div>
-  </div><br><br><br>
+  </div>
+  <br><br><br>
+  <div class="row">
+    <div class="col-lg-4 col-sm-4 col-md-4">
+      <input type="file" id="myFile" name="filename" style="display: inline-block!important;">
+      <button type="submit" class="btn btn-sm btn-info pull-right certUpload"><i class="fa fa-upload"></i> Upload</button>
+      <p id="editor"></p>
+    </div>
+  </div><br>
+  <div class="row cert_">
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <table class="table table-bordered table-darker text-nowrap" id="cert_table">
+        <thead>
+          <tr class="tb-header">
+            <th style="text-align: center;">Filename</th>
+            <th style="text-align: center;">CreateDate</th>
+            <th style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody class="cert_tbody tbody-sm">
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
 <br><br><br>

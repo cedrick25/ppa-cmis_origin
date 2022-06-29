@@ -83,9 +83,16 @@
             </div>
             <div class="form-group row">
               <label for="" class="col-sm-3">Client Suffix Name</label>
-              <div class="col-sm-9">
-                <input type="text" class="form-control  upperCase" id="edit_sname" placeholder="">
-              </div>
+                <div class="col-sm-9 filter-modal">
+                    <select class="form-control select2 modal" id="edit_sname" >
+                      <option value=""> </option>
+                      <option value="II">II</option>
+                      <option value="III">III</option>
+                      <option value="IV">IV</option>
+                      <option value="JR">JR</option>
+                      <option value="SR">SR</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group row">
               <label for="" class="col-sm-3">Date Order Received From the Court</label>
@@ -155,8 +162,15 @@
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Client Suffix Name</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_sname" placeholder="">
+                <div class="col-sm-9 filter-modal">
+                    <select class="form-control select2 modal" id="add_sname" >
+                      <option value=""> </option>
+                      <option value="II">II</option>
+                      <option value="III">III</option>
+                      <option value="IV">IV</option>
+                      <option value="JR">JR</option>
+                      <option value="SR">SR</option>
+                    </select>
                 </div>
               </div>
               <div class="form-group row">

@@ -692,9 +692,8 @@ $.wms.dashboard = (function() {
                     console.log(id);
                     var payload = { id : id , method : "view_single" }
                     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/caseload_reports',JSON.stringify(payload)).done(function (result) {
-                        console.log(result)
                         if(result.status === 'SUCCESS'){
-                            location.href="view_caseload?id="+id    
+                            window.location.href="view_caseload?id="+id
                         }
                         
 
