@@ -299,4 +299,28 @@
   <br><br><br>
   &nbsp;
 
+  <br><br><br>
+  <div class="row cert_">
+    <div class="col-lg-4 col-sm-4 col-md-4 cert_upload">
+      <input type="file" id="fileupload" name="fileupload" style="display: inline-block!important;">
+      <button type="submit" class="btn btn-sm btn-info pull-right certUpload"><i class="fa fa-upload"></i> Upload</button>
+      <!-- <p id="editor"></p> -->
+    </div>
+    <br><br>
+    <div class="col-lg-12 col-sm-12 col-md-12">
+      <table class="table table-bordered table-darker text-nowrap" id="cert_table">
+        <thead>
+          <tr class="tb-header">
+            <th style="text-align: center;">Uploader</th>
+            <th style="text-align: center;">Filename</th>
+            <th style="text-align: center;">CreateDate</th>
+            <th style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody class="cert_tbody tbody-sm">
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+<br><br><br>

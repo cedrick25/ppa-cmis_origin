@@ -3189,6 +3189,80 @@ $.wms.form53 = (function() {
                 alert ("region Failed");
             }
         });
+
+        $(".certUpload").unbind("click").on("click", function(){
+            console.log("clicked")
+            var fileToUpload = $('#fileupload').prop('files')[0];
+
+            if (fileToUpload === undefined) {
+                alert("Please Choose File Before Upload!")
+            }else {
+                var formdata = new FormData();
+                formdata.append("files", fileupload.files[0], fileupload.files[0].name);
+
+                $.wms.executeFile('http://localhost:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f53',formdata).done(function (result) {
+                    console.log(result)
+                    if(result){
+                        __cert_list_upload();
+
+                    }else{
+                        // alert ("region Failed");
+                    }
+                });
+            } 
+        })
+        var __cert_list_upload = function(){
+            console.log("cert list")
+            var payload = {
+                encodingMonth : date,
+                fieldOfficeId : officeId,
+                formTable : "f53"
+            }
+            $.wms.executeExternalPost('http://localhost:8000/cert/list',JSON.stringify(payload)).done(function (result) {
+                console.log(result)
+
+                if (result.response.length != 0) {
+                    $(".cert_upload").addClass("hidden")
+                    $(".cert_tbody").empty()
+                    result.response.forEach(function(data){
+                        data = $.wms.upper($.wms.sanitize(data))
+                        // var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                        // source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                        $('.cert_tbody').append("<tr>"+
+                            "<td>"+data.uploaderId+"</td>"+
+                            "<td>"+data.fileName+"</td>"+
+                            "<td>"+data.createdDate+"</td>"+
+                            "<td align='center' class='options'><a href="+'http://localhost:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                        )
+                    });
+                } else {
+                    $(".cert_upload").removeClass("hidden")
+                }
+                
+
+                // $(".btn-view").unbind("click").on("click",function(){
+                //     var data_id = $(this).data("id");
+                //     var file_path = $(this).data("file_path");
+                //     var file_name = $(this).data("file_name");
+                //     console.log(data_id)
+                //     console.log(file_path)
+                //     console.log(file_name)
+
+                //     // window.location.href="view_cert?certId="+data_id
+                //     // var certId =  $.wms.urlParam('certId')
+
+                //     // $.wms.executeExternalGet('http://localhost:8000/cert/view/'+data_id).done(function (result2) {
+                //     //     console.log(result2);
+
+                //     //     window.location='<iframe src="'+result2+'" height="100%" width="100%" scrolling="auto"></iframe>'
+
+                //     // });
+
+                // });
+
+            });
+        }
+        __cert_list_upload();
         var __download_cert = function(region_name){
                 console.log(region_name);
 

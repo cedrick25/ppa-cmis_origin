@@ -5073,91 +5073,77 @@ $.wms.form44 = (function() {
 
         $(".certUpload").unbind("click").on("click", function(){
             console.log("clicked")
-            var input = document.getElementById('myFile');
-            var fileToUpload = $('#myFile').prop('files')[0];
+            var fileToUpload = $('#fileupload').prop('files')[0];
 
             if (fileToUpload === undefined) {
                 alert("Please Choose File Before Upload!")
             }else {
                 var formdata = new FormData();
-                formdata.append("files", input.files[0], "/C:/Users/Meister-Legion/Documents/AMS TOR_PNU.pdf");
+                formdata.append("files", fileupload.files[0], fileupload.files[0].name);
 
-                var requestOptions = {
-                  method: 'POST',
-                  body: formdata,
-                  redirect: 'follow'
-                };
-                console.log(requestOptions)
-                fetch("http://localhost:8000/cert/upload?officeId=1&yearMonth=2022-06&uploaderId=1", requestOptions)
-                  .then(response => response.text())
-                  .then(result => console.log(result))
-                  .catch(error => console.log('error', error));
-                // var fr = new FileReader();
-                // var file = input.files[0];
-                // fr.onload = receivedText;
-                // //fr.readAsText(file);
-                // //fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
-                // fr.readAsDataURL(file);
-                  
-                // function receivedText() {
-                //     document.getElementById('editor').appendChild(document.createTextNode(fr.result));
-                //     $("#editor").html(fr.result)
-                //     $("#editor").html()
-                //     var payload = {
-                //         "files": [
-                //             $("#editor").html()
-                //         ],
+                $.wms.executeFile('http://localhost:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f44',formdata).done(function (result) {
+                    console.log(result)
+                    if(result){
+                        __cert_list_upload();
 
-                //         "certificate"   : {
-                //             "filePath"      : $('#myFile').val(),
-                //             "fileName"      : fileToUpload.name,
-                //             "fileSize"      : fileToUpload.size,
-                //             "fileType"      : fileToUpload.type,
-                //             "createdBy"     : $.cookie("USER_ID"),
-                //             "status"        : true,
-                //             "encodingMonth" : $.wms.urlParam('date'),
-                //             "fieldOfficeId" : $.wms.urlParam('officeId'),
-                //             "uploaderId"    : $.cookie("USER_ID")
-                //         }
-                //     }
-                //     console.log(payload)
-                //     $.wms.executeExternalPost('http://localhost:8000/cert/upload?officeId=1&yearMonth=2022-06&uploaderId=1',JSON.stringify(payload)).done(function (result) {
-                //         console.log(result)
-                //         if(result.status == "SUCCESS"){
-                //                 __cert_list_upload();
-
-                //         }else{
-                //             // alert ("region Failed");
-                //         }
-                //     });
-                // } 
+                    }else{
+                        // alert ("region Failed");
+                    }
+                });
             } 
         })
         var __cert_list_upload = function(){
             console.log("cert list")
+            var payload = {
+                encodingMonth : date,
+                fieldOfficeId : officeId,
+                formTable : "f44"
+            }
+            $.wms.executeExternalPost('http://localhost:8000/cert/list',JSON.stringify(payload)).done(function (result) {
+                console.log(result)
 
-            // $.wms.executeExternalGet('http://localhost:8000/document/list').done(function (result) {
-            //     console.log(result.content)
-            //     $(".form_loader").removeClass("hidden")
+                if (result.response.length != 0) {
+                    $(".cert_upload").addClass("hidden")
+                    $(".cert_tbody").empty()
+                    result.response.forEach(function(data){
+                        data = $.wms.upper($.wms.sanitize(data))
+                        // var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
+                        // source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                        $('.cert_tbody').append("<tr>"+
+                            "<td>"+data.uploaderId+"</td>"+
+                            "<td>"+data.fileName+"</td>"+
+                            "<td>"+data.createdDate+"</td>"+
+                            "<td align='center' class='options'><a href="+'http://localhost:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                        )
+                    });
+                } else {
+                    $(".cert_upload").removeClass("hidden")
+                }
+                
 
-            //     $(".form_loader").addClass("hidden")
-            //     $(".result_form").removeClass("hidden")
+                // $(".btn-view").unbind("click").on("click",function(){
+                //     var data_id = $(this).data("id");
+                //     var file_path = $(this).data("file_path");
+                //     var file_name = $(this).data("file_name");
+                //     console.log(data_id)
+                //     console.log(file_path)
+                //     console.log(file_name)
 
-            //     result.content.forEach(function(data){
-            //         data = $.wms.upper($.wms.sanitize(data))
-            //         var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
-            //         source = ((data.source==1) ? 'PIS' : 'MANUAL');
-            //         $('.F45T1_tbody').append("<tr>"+
-            //             "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
-            //             "<td>"+fullname.toUpperCase()+"</td>"+
-            //             "<td>"+data.dateReceivedByCppo+"</td>"+
-            //             "<td>"+data.investigatingOfficer+"</td>"+
-            //             "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-view' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-eyes'></i> View</button> "+
-            //             "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
-            //     });
-            // });
+                //     // window.location.href="view_cert?certId="+data_id
+                //     // var certId =  $.wms.urlParam('certId')
+
+                //     // $.wms.executeExternalGet('http://localhost:8000/cert/view/'+data_id).done(function (result2) {
+                //     //     console.log(result2);
+
+                //     //     window.location='<iframe src="'+result2+'" height="100%" width="100%" scrolling="auto"></iframe>'
+
+                //     // });
+
+                // });
+
+            });
         }
-            __cert_list_upload();
+        __cert_list_upload();
 
         var __download_cert = function(region_name){
                 console.log(region_name);
