@@ -1,9 +1,11 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
       <span class="pull-right" style="padding-right: 10px;">
-        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+        <button type="button" class="btn btn-sm btn-success btn-form-submit form_lock" data-toggle="modal" data-target="#modal-submit"><i class="fa fa-paper-plane"></i> Submit to CPPO Review</button>
 
-        <button type="button" class="access_f44_write btn-add-term btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-term"><i class="fa fa-plus-circle"></i> Add Courtesy Referrals Terminated</button>
+        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+
+        <button type="button" class="access_f44_write btn-add-term btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-term"><i class="fa fa-plus-circle"></i> Add Courtesy Referrals Terminated</button>
 
       
         
@@ -14,7 +16,31 @@
     </div>
   </div>
 
+  <div class="modal fade" id="modal-submit" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header tb-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><b><i class="fa fa-paper-plane"></i> Submit To CPPO</b></h4>
+        </div>
+        <div class="modal-body">
+          <p><b>Are you sure you want to submit this to CPPO?</b></p>
+          <span class="hidden sel-id"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success btnSubmitProceed" >Confirm  <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
 
+
+        </div>
+        
+      </div>
+
+      
+    </div>
+  </div>
+  
 <!-- Delete Modal -->
   <div class="modal fade" id="modal-delete" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
@@ -291,41 +317,35 @@
             <div class="col-lg-12">
               <div class="form-group row">
                 <label for="" class="col-sm-3">Docket No.</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_docket_no-term" placeholder="" >
+                <div class="col-sm-9   filter-modal ">    
+                  <select class="form-control select2 modal docket_list" id="add_docket_no-term">
+                    <option disabled selected>Select Docket number</option>
+                  </select>
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CCSS</i></span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender_fname-term" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_fname-term" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's Middle Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender_mname-term" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_mname-term" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's Last Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender_lname-term" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_lname-term" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's Suffix Name</label>
                 <div class="col-sm-9 filter-modal">
-                    <select class="form-control select2 modal" id="add_offender_sname-term" >
-                      <option value=""> </option>
-                      <option value="II">II</option>
-                      <option value="III">III</option>
-                      <option value="IV">IV</option>
-                      <option value="JR">JR</option>
-                      <option value="SR">SR</option>
-                    </select>
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_sname-term" placeholder="">
                 </div>
               </div>
               <div class="form-group row">

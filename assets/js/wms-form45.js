@@ -253,8 +253,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.investigatingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -521,8 +521,8 @@ $.wms.form45 = (function() {
                         "<td>"+data.investigatingOfficer+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -931,80 +931,102 @@ $.wms.form45 = (function() {
             // });
 
             //Add
-            $(".addSubmitButton_acted").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
-                var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date','add_acted_transfer_to'];
-                var check = true
-                var checkTable = ['F45T1', 'F45T2']
+            $.wms.executeExternalGet('http://localhost:8000/F45t2Acted/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                console.log(result.response)
 
-                ___validateSaveCarryOver(allowedDocket,$("#add_acted_docket_no"),requiredField,check,checkTable).done(function(result){
-                    if(result){
-                        $(".modal-form input").attr("disabled",true);
-                        $(".addSubmitButton_acted").addClass("hidden");
-                        $(".confirmAdd").removeClass("hidden")
-                        $(".addProceedButton_acted").removeClass("hidden")
-                    }
+                result.response.forEach(function(docket){
+
+                    $(".docket_list").append($('<option>', {
+                        value    : docket.docketNumber,
+                        text     : docket.docketNumber,
+                        "data-f" : docket.clientProfileDto.firstName,
+                        "data-m" : docket.clientProfileDto.middleName,
+                        "data-l" : docket.clientProfileDto.lastName,
+                        "data-s" : docket.clientProfileDto.suffix,
+                        "data-fid" : docket.clientProfileDto.id,
+                    }));
+                })
+
+                $('.docket_list').unbind('change').on('change', function() {
+                    console.log($(".docket_list").select2().find(":selected").data("fid"))
+                    $("#add_acted_offenders_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                    $("#add_acted_offenders_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                    $("#add_acted_offenders_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                    $("#add_acted_offenders_sname").val($(".docket_list").select2().find(":selected").data("s"));
                 });
-            });
 
-            $(".addCancelButton").unbind("click").on("click",function(){
-                $(".modal-form input").attr("disabled",false);
-                $(".confirmAdd").addClass("hidden")
-                $(".addSubmitButton_acted").removeClass("hidden")
-                $(".addProceedButton_acted").addClass("hidden")
-                $(".btn-reset").trigger("click")
-            });
+                $(".addSubmitButton_acted").unbind("click").on("click",function(){
+                    var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+                    var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date','add_acted_transfer_to'];
+                    var check = true
+                    var checkTable = ['F45T1', 'F45T2']
 
-            //Add
-            $(".addProceedButton_acted").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
-                $(".modal-loader").removeClass("hidden")
-                var payload = { 
-                    "docketNumber"          : $("#add_acted_docket_no").val().toUpperCase(),
-                    "createdBy"             : $.cookie("USER_ID"),
-                    "status"                : true,
-                    "source"                : "2",
-                    "encodingMonth"         : $.wms.urlParam('date'),
-                    "fieldOffice"           : $.wms.urlParam('field'),
-                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "dateReportSubmitted"   : $("#add_acted_report_submitted").val(),
-                    "ppoRecommendation"     : $("#add_acted_recommendation").val(),
-                    "transferDate"          : $("#add_acted_transfer_date").val(),
-                    "transferTo"            : $("#add_acted_transfer_to").val(),
-                    "clientProfileDto"      : {
+                    ___validateSaveCarryOver(allowedDocket,$("#add_acted_docket_no"),requiredField,check,checkTable).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".addSubmitButton_acted").addClass("hidden");
+                            $(".confirmAdd").removeClass("hidden")
+                            $(".addProceedButton_acted").removeClass("hidden")
+                        }
+                    });
+                });
+
+                $(".addCancelButton").unbind("click").on("click",function(){
+                    $(".modal-form input").attr("disabled",false);
+                    $(".confirmAdd").addClass("hidden")
+                    $(".addSubmitButton_acted").removeClass("hidden")
+                    $(".addProceedButton_acted").addClass("hidden")
+                    $(".btn-reset").trigger("click")
+                });
+
+                //Add
+                $(".addProceedButton_acted").unbind("click").on("click",function(){
+                    $(this).attr('disabled',true)
+                    $(".modal-loader").removeClass("hidden")
+                    var payload = { 
                         "docketNumber"          : $("#add_acted_docket_no").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
-                        "updatedBy"             : "",
                         "status"                : true,
                         "source"                : "2",
                         "encodingMonth"         : $.wms.urlParam('date'),
-                        "firstName"             : $("#add_acted_offenders_fname").val(),
-                        "middleName"            : $("#add_acted_offenders_mname").val(),
-                        "lastName"              : $("#add_acted_offenders_lname").val(),
-                        "suffix"                : $("#add_acted_offenders_sname").val()
-                    },
+                        "fieldOffice"           : $.wms.urlParam('field'),
+                        "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                        "dateReportSubmitted"   : $("#add_acted_report_submitted").val(),
+                        "ppoRecommendation"     : $("#add_acted_recommendation").val(),
+                        "transferDate"          : $("#add_acted_transfer_date").val(),
+                        "transferTo"            : $("#add_acted_transfer_to").val(),
+                        "clientProfileDto"      : {
+                            "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                            "docketNumber"          : $("#add_acted_docket_no").val().toUpperCase(),
+                            "createdBy"             : $.cookie("USER_ID"),
+                            "updatedBy"             : "",
+                            "status"                : true,
+                            "source"                : "2",
+                            "encodingMonth"         : $.wms.urlParam('date'),
+                        },
 
-                }
-                console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F45t2Acted/create',JSON.stringify(payload)).done(function (result) {
-      
-                    if(result.status != undefined && result.status == "SUCCESS"){
+                    }
+                    console.log(payload)
+                    $.wms.executeExternalPost('http://localhost:8000/F45t2Acted/create',JSON.stringify(payload)).done(function (result) {
+          
+                        if(result.status != undefined && result.status == "SUCCESS"){
 
-                        $(".modal-loader").addClass("hidden")
-                        $(".addProceedButton_acted").attr('disabled',false)
-                        $("#modal-add").modal('toggle')
-                        $(".btn-reset").trigger("click")
-                        location.reload();
-                    }
-                    else if(result.status == "FAILED"){
-                        $(".err_msg").remove()
-                        $(".addProceedButton_acted").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_acted_docket_no").attr('disabled',false)
-                        $("#add_acted_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_acted_docket_no"))
-                    }
-                });    
+                            $(".modal-loader").addClass("hidden")
+                            $(".addProceedButton_acted").attr('disabled',false)
+                            $("#modal-add").modal('toggle')
+                            $(".btn-reset").trigger("click")
+                            location.reload();
+                        }
+                        else if(result.status == "FAILED"){
+                            $(".err_msg").remove()
+                            $(".addProceedButton_acted").attr('disabled',false)
+                            $(".modal-loader").addClass("hidden")
+                            $("#add_acted_docket_no").attr('disabled',false)
+                            $("#add_acted_docket_no").addClass("error_field");
+                            $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_acted_docket_no"))
+                        }
+                    });    
+                })
             })
         }
 
@@ -1200,8 +1222,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.investigatingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1464,8 +1486,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.dateReceivedFromCourt+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1614,82 +1636,101 @@ $.wms.form45 = (function() {
         });
 
         //Add
-        $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_received', 'add_recommendation'];
-            var check = true
-            var checkTable = ['F45t3', 'F45t2_acted_upon']
+        $.wms.executeExternalGet('http://localhost:8000/F45t4/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            console.log(result.response)
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
-                }
+            result.response.forEach(function(docket){
+
+                $(".docket_list").append($('<option>', {
+                    value    : docket.docketNumber,
+                    text     : docket.docketNumber,
+                    "data-f" : docket.clientProfileDto.firstName,
+                    "data-m" : docket.clientProfileDto.middleName,
+                    "data-l" : docket.clientProfileDto.lastName,
+                    "data-s" : docket.clientProfileDto.suffix,
+                    "data-fid" : docket.clientProfileDto.id,
+                }));
+            })
+
+            $('.docket_list').unbind('change').on('change', function() {
+                console.log($(".docket_list").select2().find(":selected").data("fid"))
+                $("#add_offender_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                $("#add_offender_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                $("#add_offender_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                $("#add_offender_sname").val($(".docket_list").select2().find(":selected").data("s"));
             });
-        });
+            $(".addSubmitButton").unbind("click").on("click",function(){
+                var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
+                var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_date_received', 'add_recommendation'];
+                var check = true
+                var checkTable = ['F45t3', 'F45t2_acted_upon']
 
-        $(".addCancelButton").unbind("click").on("click",function(){
-            $(".modal-form input").attr("disabled",false);
-            $(".confirmAdd").addClass("hidden")
-            $(".addSubmitButton").removeClass("hidden")
-            $(".addProceedButton").addClass("hidden")
-            $(".btn-reset").trigger("click")
-        });
+                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                    if(result){
+                        $(".modal-form input").attr("disabled",true);
+                        $(".addSubmitButton").addClass("hidden");
+                        $(".confirmAdd").removeClass("hidden")
+                        $(".addProceedButton").removeClass("hidden")
+                    }
+                });
+            });
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "recommendation"        : $("#add_recommendation").val(),
-                "dateReceivedFromCourt" : $("#add_date_received").val(),
-                "clientProfileDto"      : {
+            $(".addCancelButton").unbind("click").on("click",function(){
+                $(".modal-form input").attr("disabled",false);
+                $(".confirmAdd").addClass("hidden")
+                $(".addSubmitButton").removeClass("hidden")
+                $(".addProceedButton").addClass("hidden")
+                $(".btn-reset").trigger("click")
+            });
+
+            //Add
+            $(".addProceedButton").unbind("click").on("click",function(){
+                $(this).attr('disabled',true)
+                $(".modal-loader").removeClass("hidden")
+                var payload = { 
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
                     "status"                : true,
                     "source"                : "2",
                     "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_offender_fname").val(),
-                    "middleName"            : $("#add_offender_mname").val(),
-                    "lastName"              : $("#add_offender_lname").val(),
-                    "suffix"                : $("#add_offender_sname").val()
-                },
-
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F45t4/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
-                    location.reload();
-
+                    "fieldOffice"           : $.wms.urlParam('field'),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "recommendation"        : $("#add_recommendation").val(),
+                    "dateReceivedFromCourt" : $("#add_date_received").val(),
+                    "clientProfileDto"      : {
+                        "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "updatedBy"             : "",
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                    },
                 }
-                else if(result.status == "FAILED"){
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                console.log(payload)
+                $.wms.executeExternalPost('http://localhost:8000/F45t4/create',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
 
-                }
-            });    
+                        $(".modal-loader").addClass("hidden")
+                        $(".addProceedButton").attr('disabled',false)
+                        $("#modal-add").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+
+                    }
+                    else if(result.status == "FAILED"){
+                        $(".err_msg").remove()
+                        $(".addProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("#add_docket_no").attr('disabled',false)
+                        $("#add_docket_no").addClass("error_field");
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+
+                    }
+                });    
+            })
         })
-
     };
 
 
@@ -1761,8 +1802,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.reasonForReferral+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2029,8 +2070,8 @@ $.wms.form45 = (function() {
                         "<td>"+data.reasonForReferral+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -2291,28 +2332,28 @@ $.wms.form45 = (function() {
                         "<td>"+data.dateCompletedAndReturned+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
-                $(".btn-delete-acted").unbind("click").on("click",function(){
+                $(".btn-delete").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
                     var docket_no   = $(this).data("docket");
                     var profid      = $.cookie("USER_ID");
                     console.log(data_id);
                     $(".sel-docket").html(docket_no)
                     $(".sel-id").html(data_id)
-                    $("#modal-delete-acted").modal();
+                    $("#modal-delete").modal();
 
                     //Delete
-                    $(".deleteProceedButton-acted").unbind("click").on("click",function(){
+                    $(".deleteProceedButton").unbind("click").on("click",function(){
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
                         $.wms.executeExternalDelete('http://localhost:8000/F45t6CAR/'+data_id+'?&user='+profid).done(function (result) {
-                            $("#modal-delete-acted").modal('toggle')
+                            $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
-                            $(".deleteProceedButton-acted").attr('disabled',false)
+                            $(".deleteProceedButton").attr('disabled',false)
                             if(result.status != undefined && result.status == "SUCCESS"){
                                     location.reload();
                             }
@@ -2440,79 +2481,100 @@ $.wms.form45 = (function() {
             // });
 
             //Add
-            $(".addSubmitButton-acted").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CCSI' ];
-                var requiredField= [ 'add_offender_fname-acted', 'add_offender_lname-acted', 'add_referring_office-acted', 'add_date_com_and_ret-acted'];
-                var check = true
-                var checkTable = ['F45t5', 'F45t6']
+            $.wms.executeExternalGet('http://localhost:8000/F45t6CAR/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                console.log(result.response)
 
-                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no-acted"),requiredField,check,checkTable).done(function(result){
-                    if(result){
-                        $(".modal-form input").attr("disabled",true);
-                        $(".addSubmitButton-acted").addClass("hidden");
-                        $(".confirmAdd-acted").removeClass("hidden")
-                        $(".addProceedButton-acted").removeClass("hidden")
-                    }
+                result.response.forEach(function(docket){
+
+                    $(".docket_list").append($('<option>', {
+                        value    : docket.docketNumber,
+                        text     : docket.docketNumber,
+                        "data-f" : docket.clientProfileDto.firstName,
+                        "data-m" : docket.clientProfileDto.middleName,
+                        "data-l" : docket.clientProfileDto.lastName,
+                        "data-s" : docket.clientProfileDto.suffix,
+                        "data-fid" : docket.clientProfileDto.id,
+                    }));
+                })
+
+                $('.docket_list').unbind('change').on('change', function() {
+                    console.log($(".docket_list").select2().find(":selected").data("fid"))
+                    $("#add_offender_fname-acted").val($(".docket_list").select2().find(":selected").data("f"));
+                    $("#add_offender_mname-acted").val($(".docket_list").select2().find(":selected").data("m"));
+                    $("#add_offender_lname-acted").val($(".docket_list").select2().find(":selected").data("l"));
+                    $("#add_offender_sname-acted").val($(".docket_list").select2().find(":selected").data("s"));
                 });
-            });
+                $(".addSubmitButton-acted").unbind("click").on("click",function(){
+                    var allowedDocket= [ 'CCSI' ];
+                    var requiredField= [ 'add_offender_fname-acted', 'add_offender_lname-acted', 'add_referring_office-acted', 'add_date_com_and_ret-acted'];
+                    var check = true
+                    var checkTable = ['F45t5', 'F45t6']
 
-            $(".addCancelButton-acted").unbind("click").on("click",function(){
-                $(".modal-form input").attr("disabled",false);
-                $(".confirmAdd-acted").addClass("hidden")
-                $(".addSubmitButton-acted").removeClass("hidden")
-                $(".addProceedButton-acted").addClass("hidden")
-                $(".btn-reset-acted").trigger("click")
-            });
+                    ___validateSaveCarryOver(allowedDocket,$("#add_docket_no-acted"),requiredField,check,checkTable).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".addSubmitButton-acted").addClass("hidden");
+                            $(".confirmAdd-acted").removeClass("hidden")
+                            $(".addProceedButton-acted").removeClass("hidden")
+                        }
+                    });
+                });
 
-            //Add
-            $(".addProceedButton-acted").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
-                $(".modal-loader").removeClass("hidden")
-                var payload = { 
-                    "docketNumber"          : $("#add_docket_no-acted").val().toUpperCase(),
-                    "createdBy"             : $.cookie("USER_ID"),
-                    "status"                : true,
-                    "source"                : "2",
-                    "encodingMonth"         : $.wms.urlParam('date'),
-                    "fieldOffice"           : $.wms.urlParam('field'),
-                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "dateCompletedAndReturned"  : $("#add_date_com_and_ret-acted").val(),
-                    "clientProfileDto"      : {
+                $(".addCancelButton-acted").unbind("click").on("click",function(){
+                    $(".modal-form input").attr("disabled",false);
+                    $(".confirmAdd-acted").addClass("hidden")
+                    $(".addSubmitButton-acted").removeClass("hidden")
+                    $(".addProceedButton-acted").addClass("hidden")
+                    $(".btn-reset-acted").trigger("click")
+                });
+
+                //Add
+                $(".addProceedButton-acted").unbind("click").on("click",function(){
+                    $(this).attr('disabled',true)
+                    $(".modal-loader").removeClass("hidden")
+                    var payload = { 
                         "docketNumber"          : $("#add_docket_no-acted").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
-                        "updatedBy"             : "",
                         "status"                : true,
                         "source"                : "2",
                         "encodingMonth"         : $.wms.urlParam('date'),
-                        "firstName"             : $("#add_offender_fname-acted").val(),
-                        "middleName"            : $("#add_offender_mname-acted").val(),
-                        "lastName"              : $("#add_offender_lname-acted").val(),
-                        "suffix"                : $("#add_offender_sname-acted").val()
-                    },
-
-                }
-                console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F45t6CAR/create',JSON.stringify(payload)).done(function (result) {
-      
-                    if(result.status != undefined && result.status == "SUCCESS"){
-
-                        $(".modal-loader").addClass("hidden")
-                        $(".addProceedButton-acted").attr('disabled',false)
-                        $("#modal-add-acted").modal('toggle')
-                        $(".btn-reset-acted").trigger("click")
-                        location.reload();
+                        "fieldOffice"           : $.wms.urlParam('field'),
+                        "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                        "dateCompletedAndReturned"  : $("#add_date_com_and_ret-acted").val(),
+                        "clientProfileDto"      : {
+                            "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                            "docketNumber"          : $("#add_docket_no-acted").val().toUpperCase(),
+                            "createdBy"             : $.cookie("USER_ID"),
+                            "updatedBy"             : "",
+                            "status"                : true,
+                            "source"                : "2",
+                            "encodingMonth"         : $.wms.urlParam('date'),
+                        },
 
                     }
-                    else if(result.status == "FAILED"){
-                        $(".err_msg").remove()
-                        $(".addProceedButton-acted").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no-acted").attr('disabled',false)
-                        $("#add_docket_no-acted").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no-acted"))
+                    console.log(payload)
+                    $.wms.executeExternalPost('http://localhost:8000/F45t6CAR/create',JSON.stringify(payload)).done(function (result) {
+          
+                        if(result.status != undefined && result.status == "SUCCESS"){
 
-                    }
-                });    
+                            $(".modal-loader").addClass("hidden")
+                            $(".addProceedButton-acted").attr('disabled',false)
+                            $("#modal-add-acted").modal('toggle')
+                            $(".btn-reset-acted").trigger("click")
+                            location.reload();
+
+                        }
+                        else if(result.status == "FAILED"){
+                            $(".err_msg").remove()
+                            $(".addProceedButton-acted").attr('disabled',false)
+                            $(".modal-loader").addClass("hidden")
+                            $("#add_docket_no-acted").attr('disabled',false)
+                            $("#add_docket_no-acted").addClass("error_field");
+                            $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no-acted"))
+
+                        }
+                    });    
+                })
             })
 
         }
@@ -2713,8 +2775,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.supervisionEnd+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2981,8 +3043,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.supervisionEnd+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3233,8 +3295,19 @@ $.wms.form45 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $(".sel_field_office2").select2({
-           placeholder: "Select Field Office",
+        // $(".sel_field_office2").select2({
+        //    placeholder: "Select Field Office",
+        // });
+        var fo_val = '';
+        $('#add_report').on('change', function() {
+          console.log(this.value)
+          if (this.value != "TRANSFER") {
+            fo_val = $("#add_field_offices").val()
+            $("#fo_id").addClass('hide')
+          }else{
+            $("#fo_id").removeClass('hide')
+            fo_val = '';
+          }
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
         $.wms.executeExternalGet('http://localhost:8000/F45t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
@@ -3257,8 +3330,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3287,6 +3360,19 @@ $.wms.form45 = (function() {
             });
 
             $(".btn-edit").unbind("click").on("click",function(){
+
+                var fo_val_edit = '';
+                $('#edit_report').on('change', function() {
+                  console.log(this.value)
+                  if (this.value != "TRANSFER") {
+                    fo_val_edit = $("#edit_field_offices").val()
+                    $("#fo_id_edit").addClass('hide')
+                  }else{
+                    $("#fo_id_edit").removeClass('hide')
+                    fo_val_edit = '';
+                  }
+                });
+
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 console.log(docket_no)
@@ -3340,7 +3426,7 @@ $.wms.form45 = (function() {
                                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                                     "report"                : $("#edit_report").val(),
                                     "reportDateSubmitted"   : $("#edit_rep_date_submitted").val(),
-                                    "transferredOffice"     : $("#edit_field_offices").val(),
+                                    "transferredOffice"     : fo_val_edit,
                                     "supervisingOfficer"    : $("#edit_supervising_officer").val(),
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
@@ -3409,84 +3495,107 @@ $.wms.form45 = (function() {
         });
 
         //Add
-        $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSS', 'TCSS'];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
-            var check = true
-            var checkTable = ['F45t8', 'F45t7']
+        $.wms.executeExternalGet('http://localhost:8000/F45t9/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            console.log(result.response)
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
-                }
+            result.response.forEach(function(docket){
+
+                $(".docket_list").append($('<option>', {
+                    value    : docket.docketNumber,
+                    text     : docket.docketNumber,
+                    "data-f" : docket.clientProfileDto.firstName,
+                    "data-m" : docket.clientProfileDto.middleName,
+                    "data-l" : docket.clientProfileDto.lastName,
+                    "data-s" : docket.clientProfileDto.suffix,
+                    "data-fid" : docket.clientProfileDto.id,
+                }));
+            })
+
+            $('.docket_list').unbind('change').on('change', function() {
+                console.log($(".docket_list").select2().find(":selected").data("fid"))
+                $("#add_offender_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                $("#add_offender_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                $("#add_offender_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                $("#add_offender_sname").val($(".docket_list").select2().find(":selected").data("s"));
             });
-        });
+            $(".addSubmitButton").unbind("click").on("click",function(){
+                var allowedDocket= [ 'CSS', 'TCSS'];
+                var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
+                var check = true
+                var checkTable = ['F45t8', 'F45t7']
 
-        $(".addCancelButton").unbind("click").on("click",function(){
-            $(".modal-form input").attr("disabled",false);
-            $(".confirmAdd").addClass("hidden")
-            $(".addSubmitButton").removeClass("hidden")
-            $(".addProceedButton").addClass("hidden")
-            $(".btn-reset").trigger("click")
-        });
+                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                    if(result){
+                        $(".modal-form input").attr("disabled",true);
+                        $(".addSubmitButton").addClass("hidden");
+                        $(".confirmAdd").removeClass("hidden")
+                        $(".addProceedButton").removeClass("hidden")
+                    }
+                });
+            });
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "report"                : $("#add_report").val(),
-                "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
-                "transferredOffice"     : $("#add_field_offices").val(),
-                "supervisingOfficer"    : $("#add_supervising_officer").val(),
-                "clientProfileDto"      : {
+            $(".addCancelButton").unbind("click").on("click",function(){
+                $(".modal-form input").attr("disabled",false);
+                $(".confirmAdd").addClass("hidden")
+                $(".addSubmitButton").removeClass("hidden")
+                $(".addProceedButton").addClass("hidden")
+                $(".btn-reset").trigger("click")
+            });
+
+            //Add
+            $(".addProceedButton").unbind("click").on("click",function(){
+                $(this).attr('disabled',true)
+                $(".modal-loader").removeClass("hidden")
+                var payload = { 
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
                     "status"                : true,
                     "source"                : "2",
                     "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_offender_fname").val(),
-                    "middleName"            : $("#add_offender_mname").val(),
-                    "lastName"              : $("#add_offender_lname").val(),
-                    "suffix"                : $("#add_offender_sname").val()
-                },
-
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F45t9/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
-                    location.reload();
-
-                }
-                else if(result.status == "FAILED"){
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                    "fieldOffice"           : $.wms.urlParam('field'),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "report"                : $("#add_report").val(),
+                    "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
+                    "transferredOffice"     : $("#add_field_offices").val(),
+                    "supervisingOfficer"    : $("#add_supervising_officer").val(),
+                    "clientProfileDto"      : {
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "updatedBy"             : "",
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                        "firstName"             : $("#add_offender_fname").val(),
+                        "middleName"            : $("#add_offender_mname").val(),
+                        "lastName"              : $("#add_offender_lname").val(),
+                        "suffix"                : $("#add_offender_sname").val()
+                    },
 
                 }
-            });    
+                console.log(payload)
+                $.wms.executeExternalPost('http://localhost:8000/F45t9/create',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+
+                        $(".modal-loader").addClass("hidden")
+                        $(".addProceedButton").attr('disabled',false)
+                        $("#modal-add").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+
+                    }
+                    else if(result.status == "FAILED"){
+                        $(".err_msg").remove()
+                        $(".addProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("#add_docket_no").attr('disabled',false)
+                        $("#add_docket_no").addClass("error_field");
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+
+                    }
+                });    
+            })
         })
-
     };
     var __attachF45T10PageEvent = function() {
         console.log("f45t10 events")
@@ -3502,8 +3611,19 @@ $.wms.form45 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $(".sel_field_office2").select2({
-           placeholder: "Select Field Office",
+        // $(".sel_field_office2").select2({
+        //    placeholder: "Select Field Office",
+        // });
+        var fo_val = '';
+        $('#add_report').on('change', function() {
+          console.log(this.value)
+          if (this.value != "TRANSFER") {
+            fo_val = $("#add_field_offices").val()
+            $("#fo_id").addClass('hide')
+          }else{
+            $("#fo_id").removeClass('hide')
+            fo_val = '';
+          }
         });
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
 
@@ -3559,8 +3679,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.supervisingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3589,6 +3709,17 @@ $.wms.form45 = (function() {
             });
 
             $(".btn-edit").unbind("click").on("click",function(){
+                var fo_val_edit = '';
+                $('#edit_report').on('change', function() {
+                  console.log(this.value)
+                  if (this.value != "TRANSFER") {
+                    fo_val_edit = $("#edit_field_offices").val()
+                    $("#fo_id_edit").addClass('hide')
+                  }else{
+                    $("#fo_id_edit").removeClass('hide')
+                    fo_val_edit = '';
+                  }
+                });
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 console.log(docket_no)
@@ -3642,7 +3773,7 @@ $.wms.form45 = (function() {
                                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                                     "report"                : $("#edit_report").val(),
                                     "reportDateSubmitted"   : $("#edit_rep_date_submitted").val(),
-                                    "transferredOffice"     : $("#edit_field_offices").val(),
+                                    "transferredOffice"     : fo_val_edit,
                                     "supervisingOfficer"    : $("#edit_supervising_officer").val(),
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
@@ -3711,84 +3842,107 @@ $.wms.form45 = (function() {
         });
 
         //Add
-        $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSS', 'TCSS'];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
-            var check = true
-            var checkTable = ['F45t8', 'F45t7']
+        $.wms.executeExternalGet('http://localhost:8000/F45t10/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            console.log(result.response)
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
-                }
+            result.response.forEach(function(docket){
+
+                $(".docket_list").append($('<option>', {
+                    value    : docket.docketNumber,
+                    text     : docket.docketNumber,
+                    "data-f" : docket.clientProfileDto.firstName,
+                    "data-m" : docket.clientProfileDto.middleName,
+                    "data-l" : docket.clientProfileDto.lastName,
+                    "data-s" : docket.clientProfileDto.suffix,
+                    "data-fid" : docket.clientProfileDto.id,
+                }));
+            })
+
+            $('.docket_list').unbind('change').on('change', function() {
+                console.log($(".docket_list").select2().find(":selected").data("fid"))
+                $("#add_offender_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                $("#add_offender_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                $("#add_offender_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                $("#add_offender_sname").val($(".docket_list").select2().find(":selected").data("s"));
             });
-        });
+            $(".addSubmitButton").unbind("click").on("click",function(){
+                var allowedDocket= [ 'CSS', 'TCSS'];
+                var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
+                var check = true
+                var checkTable = ['F45t8', 'F45t7']
 
-        $(".addCancelButton").unbind("click").on("click",function(){
-            $(".modal-form input").attr("disabled",false);
-            $(".confirmAdd").addClass("hidden")
-            $(".addSubmitButton").removeClass("hidden")
-            $(".addProceedButton").addClass("hidden")
-            $(".btn-reset").trigger("click")
-        });
+                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                    if(result){
+                        $(".modal-form input").attr("disabled",true);
+                        $(".addSubmitButton").addClass("hidden");
+                        $(".confirmAdd").removeClass("hidden")
+                        $(".addProceedButton").removeClass("hidden")
+                    }
+                });
+            });
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "report"                : $("#add_report").val(),
-                "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
-                "transferredOffice"     : $("#add_field_offices").val(),
-                "supervisingOfficer"    : $("#add_supervising_officer").val(),
-                "clientProfileDto"      : {
+            $(".addCancelButton").unbind("click").on("click",function(){
+                $(".modal-form input").attr("disabled",false);
+                $(".confirmAdd").addClass("hidden")
+                $(".addSubmitButton").removeClass("hidden")
+                $(".addProceedButton").addClass("hidden")
+                $(".btn-reset").trigger("click")
+            });
+
+            //Add
+            $(".addProceedButton").unbind("click").on("click",function(){
+                $(this).attr('disabled',true)
+                $(".modal-loader").removeClass("hidden")
+                var payload = { 
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
                     "status"                : true,
                     "source"                : "2",
                     "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_offender_fname").val(),
-                    "middleName"            : $("#add_offender_mname").val(),
-                    "lastName"              : $("#add_offender_lname").val(),
-                    "suffix"                : $("#add_offender_sname").val()
-                },
-
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F45t10/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
-                    location.reload();
-
-                }
-                else if(result.status == "FAILED"){
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                    "fieldOffice"           : $.wms.urlParam('field'),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "report"                : $("#add_report").val(),
+                    "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
+                    "transferredOffice"     : $("#add_field_offices").val(),
+                    "supervisingOfficer"    : $("#add_supervising_officer").val(),
+                    "clientProfileDto"      : {
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "updatedBy"             : "",
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                        "firstName"             : $("#add_offender_fname").val(),
+                        "middleName"            : $("#add_offender_mname").val(),
+                        "lastName"              : $("#add_offender_lname").val(),
+                        "suffix"                : $("#add_offender_sname").val()
+                    },
 
                 }
-            });    
+                console.log(payload)
+                $.wms.executeExternalPost('http://localhost:8000/F45t10/create',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+
+                        $(".modal-loader").addClass("hidden")
+                        $(".addProceedButton").attr('disabled',false)
+                        $("#modal-add").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+
+                    }
+                    else if(result.status == "FAILED"){
+                        $(".err_msg").remove()
+                        $(".addProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("#add_docket_no").attr('disabled',false)
+                        $("#add_docket_no").addClass("error_field");
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+
+                    }
+                });    
+            })
         })
-
     };
     
     var __attachF45T11PageEvent = function() {
@@ -3805,9 +3959,22 @@ $.wms.form45 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $(".sel_field_office2").select2({
-           placeholder: "Select Field Office",
+        // $(".sel_field_office2").select2({
+        //    placeholder: "Select Field Office",
+        // });
+
+        var fo_val = '';
+        $('#add_report').on('change', function() {
+          console.log(this.value)
+          if (this.value != "TRANSFERRED") {
+            fo_val = $("#add_field_offices").val()
+            $("#fo_id").addClass('hide')
+          }else{
+            $("#fo_id").removeClass('hide')
+            fo_val = '';
+          }
         });
+
         $("#add_field_offices").val($.wms.urlParam('field')).trigger('change');
         $.wms.executeExternalGet('http://localhost:8000/F45t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
@@ -3828,8 +3995,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3858,6 +4025,19 @@ $.wms.form45 = (function() {
             });
 
             $(".btn-edit").unbind("click").on("click",function(){
+
+                var fo_val_edit = '';
+                $('#edit_report').on('change', function() {
+                  console.log(this.value)
+                  if (this.value != "TRANSFER") {
+                    fo_val_edit = $("#edit_field_offices").val()
+                    $("#fo_id_edit").addClass('hide')
+                  }else{
+                    $("#fo_id_edit").removeClass('hide')
+                    fo_val_edit = '';
+                  }
+                });
+
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 console.log(docket_no)
@@ -3910,7 +4090,7 @@ $.wms.form45 = (function() {
                                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                                     "report"                : $("#edit_report").val(),
                                     "reportDateSubmitted"   : $("#edit_rep_date_submitted").val(),
-                                    "transferredOffice"     : $("#edit_field_offices").val(),
+                                    "transferredOffice"     : fo_val_edit,
                                     "clientProfileDto"      : {
                                         "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
                                         "updatedBy"             : $.cookie("USER_ID"),
@@ -3978,83 +4158,103 @@ $.wms.form45 = (function() {
         });
 
         //Add
-        $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'CSS', 'TCSS'];
-            var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
-            var check = true
-            var checkTable = ['F45t8', 'F45t7']
+        $.wms.executeExternalGet('http://localhost:8000/F45t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            console.log(result.response)
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
-                }
+            result.response.forEach(function(docket){
+
+                $(".docket_list").append($('<option>', {
+                    value    : docket.docketNumber,
+                    text     : docket.docketNumber,
+                    "data-f" : docket.clientProfileDto.firstName,
+                    "data-m" : docket.clientProfileDto.middleName,
+                    "data-l" : docket.clientProfileDto.lastName,
+                    "data-s" : docket.clientProfileDto.suffix,
+                    "data-fid" : docket.clientProfileDto.id,
+                }));
+            })
+
+            $('.docket_list').unbind('change').on('change', function() {
+                console.log($(".docket_list").select2().find(":selected").data("fid"))
+                $("#add_offender_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                $("#add_offender_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                $("#add_offender_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                $("#add_offender_sname").val($(".docket_list").select2().find(":selected").data("s"));
             });
-        });
+            $(".addSubmitButton").unbind("click").on("click",function(){
+                var allowedDocket= [ 'CSS', 'TCSS'];
+                var requiredField= [ 'add_offender_fname', 'add_offender_lname'];
+                var check = true
+                var checkTable = ['F45t8', 'F45t7']
 
-        $(".addCancelButton").unbind("click").on("click",function(){
-            $(".modal-form input").attr("disabled",false);
-            $(".confirmAdd").addClass("hidden")
-            $(".addSubmitButton").removeClass("hidden")
-            $(".addProceedButton").addClass("hidden")
-            $(".btn-reset").trigger("click")
-        });
+                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                    if(result){
+                        $(".modal-form input").attr("disabled",true);
+                        $(".addSubmitButton").addClass("hidden");
+                        $(".confirmAdd").removeClass("hidden")
+                        $(".addProceedButton").removeClass("hidden")
+                    }
+                });
+            });
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "report"                : $("#add_report").val(),
-                "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
-                "transferredOffice"     : $("#add_field_offices").val(),
-                "clientProfileDto"      : {
+            $(".addCancelButton").unbind("click").on("click",function(){
+                $(".modal-form input").attr("disabled",false);
+                $(".confirmAdd").addClass("hidden")
+                $(".addSubmitButton").removeClass("hidden")
+                $(".addProceedButton").addClass("hidden")
+                $(".btn-reset").trigger("click")
+            });
+
+            //Add
+            $(".addProceedButton").unbind("click").on("click",function(){
+                $(this).attr('disabled',true)
+                $(".modal-loader").removeClass("hidden")
+                var payload = { 
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
                     "status"                : true,
                     "source"                : "2",
                     "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_offender_fname").val(),
-                    "middleName"            : $("#add_offender_mname").val(),
-                    "lastName"              : $("#add_offender_lname").val(),
-                    "suffix"                : $("#add_offender_sname").val()
-                },
-
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F45t11/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
-                    location.reload();
+                    "fieldOffice"           : $.wms.urlParam('field'),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "report"                : $("#add_report").val(),
+                    "reportDateSubmitted"   : $("#add_rep_date_submitted").val(),
+                    "transferredOffice"     : $("#add_field_offices").val(),
+                    "clientProfileDto"      : {
+                        "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "updatedBy"             : "",
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                    },
 
                 }
-                else if(result.status == "FAILED"){
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                console.log(payload)
+                $.wms.executeExternalPost('http://localhost:8000/F45t11/create',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
 
-                }
-            });    
+                        $(".modal-loader").addClass("hidden")
+                        $(".addProceedButton").attr('disabled',false)
+                        $("#modal-add").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+
+                    }
+                    else if(result.status == "FAILED"){
+                        $(".err_msg").remove()
+                        $(".addProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("#add_docket_no").attr('disabled',false)
+                        $("#add_docket_no").addClass("error_field");
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+
+                    }
+                });    
+            })
         })
-
     };
 
     var __attachF45T12PageEvent = function() {
@@ -4129,8 +4329,8 @@ $.wms.form45 = (function() {
                     "<td>"+data.reasonsForReferral+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -4402,8 +4602,8 @@ $.wms.form45 = (function() {
                         "<td>"+data.dateReceived+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -4558,86 +4758,107 @@ $.wms.form45 = (function() {
             });
 
             //Add
-            $(".addSubmitButton").unbind("click").on("click",function(){
-                var allowedDocket= [ 'CCSS' ];
-                var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
-                var check = true
-                var checkTable = ['F45t12']
+            $.wms.executeExternalGet('http://localhost:8000/F45t13CRT/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                console.log(result.response)
 
-                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                    if(result){
-                        $(".modal-form input").attr("disabled",true);
-                        $(".addSubmitButton").addClass("hidden");
-                        $(".confirmAdd").removeClass("hidden")
-                        $(".addProceedButton").removeClass("hidden")
-                    }
+                result.response.forEach(function(docket){
+
+                    $(".docket_list").append($('<option>', {
+                        value    : docket.docketNumber,
+                        text     : docket.docketNumber,
+                        "data-f" : docket.clientProfileDto.firstName,
+                        "data-m" : docket.clientProfileDto.middleName,
+                        "data-l" : docket.clientProfileDto.lastName,
+                        "data-s" : docket.clientProfileDto.suffix,
+                        "data-fid" : docket.clientProfileDto.id,
+                    }));
+                })
+
+                $('.docket_list').unbind('change').on('change', function() {
+                    console.log($(".docket_list").select2().find(":selected").data("fid"))
+                    $("#add_offender_fname-term").val($(".docket_list").select2().find(":selected").data("f"));
+                    $("#add_offender_mname-term").val($(".docket_list").select2().find(":selected").data("m"));
+                    $("#add_offender_lname-term").val($(".docket_list").select2().find(":selected").data("l"));
+                    $("#add_offender_sname-term").val($(".docket_list").select2().find(":selected").data("s"));
                 });
-            });
 
-            $(".addCancelButton").unbind("click").on("click",function(){
-                $(".modal-form input").attr("disabled",false);
-                $(".confirmAdd").addClass("hidden")
-                $(".addSubmitButton").removeClass("hidden")
-                $(".addProceedButton").addClass("hidden")
-                $(".btn-reset").trigger("click")
-            });
+                $(".addSubmitButton").unbind("click").on("click",function(){
+                    var allowedDocket= [ 'CCSS' ];
+                    var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_supervising_officer'];
+                    var check = true
+                    var checkTable = ['F45t12']
 
-            //Add
-            $(".addProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
-                $(".modal-loader").removeClass("hidden")
-                var payload = { 
-                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                    "createdBy"             : $.cookie("USER_ID"),
-                    "status"                : true,
-                    "source"                : "2",
-                    "encodingMonth"         : $.wms.urlParam('date'),
-                    "fieldOffice"           : $.wms.urlParam('field'),
-                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "criminalCaseNo"        : $("#add_cc_no").val(),
-                    "courtOfOrigin"          : $("#add_court_origin").val(),
-                    "referringOffice"        : $("#add_referring_office").val(),
-                    "supervisingOfficer"    : $("#add_supervising_officer").val(),
-                    "periodCourtesySupervision"     : $("#add_period_crt").val(),
-                    "dateReceived"           : $("#add_date_rcv").val(),
-                    "clientProfileDto"      : {
+                    ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".addSubmitButton").addClass("hidden");
+                            $(".confirmAdd").removeClass("hidden")
+                            $(".addProceedButton").removeClass("hidden")
+                        }
+                    });
+                });
+
+                $(".addCancelButton").unbind("click").on("click",function(){
+                    $(".modal-form input").attr("disabled",false);
+                    $(".confirmAdd").addClass("hidden")
+                    $(".addSubmitButton").removeClass("hidden")
+                    $(".addProceedButton").addClass("hidden")
+                    $(".btn-reset").trigger("click")
+                });
+
+                //Add
+                $(".addProceedButton").unbind("click").on("click",function(){
+                    $(this).attr('disabled',true)
+                    $(".modal-loader").removeClass("hidden")
+                    var payload = { 
                         "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                         "createdBy"             : $.cookie("USER_ID"),
-                        "updatedBy"             : "",
                         "status"                : true,
                         "source"                : "2",
                         "encodingMonth"         : $.wms.urlParam('date'),
-                        "firstName"             : $("#add_offender_fname").val(),
-                        "middleName"            : $("#add_offender_mname").val(),
-                        "lastName"              : $("#add_offender_lname").val(),
-                        "suffix"                : $("#add_offender_sname").val()
-                    },
-
-                }
-                console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F45t13/create',JSON.stringify(payload)).done(function (result) {
-      
-                    if(result.status != undefined && result.status == "SUCCESS"){
-
-                        $(".modal-loader").addClass("hidden")
-                        $(".addProceedButton").attr('disabled',false)
-                        $("#modal-add").modal('toggle')
-                        $(".btn-reset").trigger("click")
-                        location.reload();
-
-                    }
-                    else if(result.status == "FAILED"){
-                        $(".err_msg").remove()
-                        $(".addProceedButton").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no").attr('disabled',false)
-                        $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                        "fieldOffice"           : $.wms.urlParam('field'),
+                        "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                        "criminalCaseNo"        : $("#add_cc_no").val(),
+                        "courtOfOrigin"          : $("#add_court_origin").val(),
+                        "referringOffice"        : $("#add_referring_office").val(),
+                        "supervisingOfficer"    : $("#add_supervising_officer").val(),
+                        "periodCourtesySupervision"     : $("#add_period_crt").val(),
+                        "dateReceived"           : $("#add_date_rcv").val(),
+                        "clientProfileDto"      : {
+                            "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                            "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                            "createdBy"             : $.cookie("USER_ID"),
+                            "updatedBy"             : "",
+                            "status"                : true,
+                            "source"                : "2",
+                            "encodingMonth"         : $.wms.urlParam('date'),
+                        },
 
                     }
-                });    
+                    console.log(payload)
+                    $.wms.executeExternalPost('http://localhost:8000/F45t13/create',JSON.stringify(payload)).done(function (result) {
+          
+                        if(result.status != undefined && result.status == "SUCCESS"){
+
+                            $(".modal-loader").addClass("hidden")
+                            $(".addProceedButton").attr('disabled',false)
+                            $("#modal-add").modal('toggle')
+                            $(".btn-reset").trigger("click")
+                            location.reload();
+
+                        }
+                        else if(result.status == "FAILED"){
+                            $(".err_msg").remove()
+                            $(".addProceedButton").attr('disabled',false)
+                            $(".modal-loader").addClass("hidden")
+                            $("#add_docket_no").attr('disabled',false)
+                            $("#add_docket_no").addClass("error_field");
+                            $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+
+                        }
+                    });    
+                })
             })
-        
         }
         __terminated = function(){
 
@@ -5015,6 +5236,35 @@ $.wms.form45 = (function() {
             };
         };
 
+        
+        var __submitCPPO = function(){
+            var yearMonth   = $.wms.urlParam('date')
+            var officeId    = $.wms.urlParam('officeId')
+            var page        = $.wms.urlParam('page')
+            var size        = $.wms.urlParam('size')
+            var field       = $.wms.urlParam('field')
+            
+            $(".btnSubmitProceed").unbind("click").on('click', function (){
+                console.log("submit CPPO")
+
+                var payload = {
+                  "encodingMonth"   : yearMonth,
+                  "fieldOfficeId"   : officeId,
+                  "fieldOfficeName" : field,
+                  "formTable"       : 'F45',
+                  "requestorId"     : $.cookie("USER_ID"),
+                  "createdBy"       : $.cookie("USER_ID"),
+                }
+
+                $.wms.executeExternalPost('http://localhost:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                        location.reload();
+                })
+            })
+        };
+
+        __submitCPPO();
+
         __rcv();
         __terminated();
         __download_print();
@@ -5092,7 +5342,7 @@ $.wms.form45 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+'http://localhost:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+'http://localhost:8000/cert/view/'+data.id+"><button class='access_F45_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {

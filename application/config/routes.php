@@ -68,7 +68,7 @@ $route['caseload_report'] = "portal/caseload_report";
 $route['report_caseload'] = "portal/report_caseload";
 $route['view_caseload'] = "portal/view_caseload";
 $route['login2'] = "portal/login2";
-$route['view_cert'] = "portal/view_cert";
+$route['form_review'] = "portal/form_review";
 
 
 $route['login'] = "Portal/index";

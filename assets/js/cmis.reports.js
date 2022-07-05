@@ -762,7 +762,144 @@ $.wms.reports = (function() {
         });
     }
 
-    
+    var __form_lock = function(){
+        console.log("------------")
+        console.log('form lock checker')
+
+        var yearMonth   = $.wms.urlParam('date')
+        var officeId    = $.wms.urlParam('officeId')
+        var form        = $.wms.urlParam('form')
+        var result      = form.split('T');
+        var payload = {
+          "encodingMonth"   : yearMonth,
+          "fieldOfficeId"   : officeId,
+          "formTable"       : result[0],
+        }
+        $.wms.executeExternalPost('http://localhost:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
+            console.log(result)
+            if (result.response == false) {
+                console.log('false')
+                $(".form_lock").removeClass('hide')
+            } else {
+                console.log('true')
+                $(".form_lock").addClass('hide')
+            }
+        })
+        console.log("------------")
+    }
+
+    var __form_review = function(){
+        console.log("------------")
+        console.log('form lock review')
+
+        // var yearMonth   = $.wms.urlParam('date')
+        var officeId    = $.wms.urlParam('officeId')
+        var form        = $.wms.urlParam('form')
+        var page        = $.wms.urlParam('page')
+        var size        = $.wms.urlParam('size')
+        var field       = $.wms.urlParam('field')
+
+        var payload = {
+          "fieldOfficeId"   : officeId,
+          "formTable"       : form,
+          "page"            : page,
+          "size"            : size
+        }
+
+        // $('.rlist_tbody').empty();
+        $.wms.executeExternalPost('http://localhost:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
+            console.log(result)
+
+            var data = [];
+            result.response.content.forEach(function(data){
+                data = $.wms.upper($.wms.sanitize(data))
+                var hide;
+                if (data.approvalStatus === "NEW") {
+                    hide = '';
+                } else {
+                    hide = 'hide'
+                }
+                $('#rlist_table').append("<tr>"+
+                    "<td>"+data.formTable+"</td>"+
+                    "<td>"+data.fieldOfficeName+"</td>"+
+                    "<td>"+data.encodingMonth+"</td>"+
+                    "<td>"+data.approvalDate+"</td>"+
+                    "<td>"+data.approvalStatus+"</td>"+
+                    "<td>"+data.remarks+"</td>"+
+                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-approve "+hide+"' data-id='"+data.id+"'><i class='fa fa-check'></i> Approve</button> "+
+                    "<button class='access_F44_write btn btn-danger btn-sm btn-reject "+hide+"' data-id='"+data.id+"'><i class='fa fa-ban'></i> Reject</button> </td></tr>")
+            });
+            if ( $.fn.DataTable.isDataTable('#rlist_table') ) {
+              $('#rlist_table').DataTable().destroy();
+              $('#rlist_table tbody').empty();
+            }
+
+            var dtSensorList = $("#rlist_table").DataTable({
+                dom: 'Blfrtip',
+                "scrollX": true,
+                buttons: [],
+                "columns": [
+                    { "width": "5%" },
+                    { "width": "25%" },
+                    { "width": "10%" },
+                    { "width": "10%" },
+                    { "width": "10%" },
+                    { "width": "20%" },
+                    { "width": "20%" },
+                  ]
+            });
+
+            $(".btn-approve").unbind("click").on("click",function(){
+                var data_id     = $(this).data("id");
+                console.log(data_id);
+                $("#modal-approve").modal();
+
+                $(".btnApprove").unbind("click").on("click",function(){
+                    $(this).attr('disabled',true)
+                    $(".modal-loader").removeClass("hidden")
+
+                    var payload = {
+                        approverId      : $.cookie("USER_ID"),
+                        updatedBy       : $.cookie("USER_ID"),
+                        remarks         : $("#remarks_a").val(),
+                    }
+
+                    $.wms.executeExternalPost('http://localhost:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
+                        $("#modal-approve").modal('toggle')
+                        $(".modal-loader").addClass("hidden")
+                        $(".btnApprove").attr('disabled',false)
+                        location.reload();
+                    });
+                })
+            });
+
+
+            $(".btn-reject").unbind("click").on("click",function(){
+                var data_id     = $(this).data("id");
+                console.log(data_id);
+                $("#modal-reject").modal();
+
+                $(".btnReject").unbind("click").on("click",function(){
+                    $(this).attr('disabled',true)
+                    $(".modal-loader").removeClass("hidden")
+
+                    var payload = {
+                        approverId      : $.cookie("USER_ID"),
+                        updatedBy       : $.cookie("USER_ID"),
+                        remarks         : $("#remarks_r").val(),
+                    }
+
+                    $.wms.executeExternalPost('http://localhost:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
+                        $("#modal-reject").modal('toggle')
+                        $(".modal-loader").addClass("hidden")
+                        $(".btnReject").attr('disabled',false)
+                        location.reload();
+                    });
+                })
+            });
+        console.log("------------")
+        })        
+    }
 
     function numberToLetters(num) {
         let letters = ''
@@ -777,7 +914,9 @@ $.wms.reports = (function() {
 
     return {
         attachF5PCS : __attachF5PCS,
-        attachF21PCS : __attachF21PCS
+        attachF21PCS : __attachF21PCS,
+        form_lock : __form_lock,
+        form_review : __form_review
        
     };
 }());

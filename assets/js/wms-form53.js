@@ -164,8 +164,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.assignedOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -424,8 +424,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.assignedOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -716,8 +716,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.assignedOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -976,8 +976,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.assignedOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1268,8 +1268,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.assignedOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1535,8 +1535,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.ppoRecommendation+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1848,8 +1848,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.assignedOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2107,8 +2107,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.dateOrderReceived+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2255,78 +2255,99 @@ $.wms.form53 = (function() {
         });
 
         //Add
-        $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'HCS' ];
-            var requiredField= [ 'add_fname', 'add_lname'];
-            var check = true
-            var checkTable = ['F53T1', 'F53T2']
+        $.wms.executeExternalGet('http://localhost:8000/F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            console.log(result.response)
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
-                }
+            result.response.forEach(function(docket){
+
+                $(".docket_list").append($('<option>', {
+                    value    : docket.docketNumber,
+                    text     : docket.docketNumber,
+                    "data-f" : docket.clientProfileDto.firstName,
+                    "data-m" : docket.clientProfileDto.middleName,
+                    "data-l" : docket.clientProfileDto.lastName,
+                    "data-s" : docket.clientProfileDto.suffix,
+                    "data-fid" : docket.clientProfileDto.id,
+                }));
+            })
+
+            $('.docket_list').unbind('change').on('change', function() {
+                console.log($(".docket_list").select2().find(":selected").data("fid"))
+                $("#add_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                $("#add_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                $("#add_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                $("#add_sname").val($(".docket_list").select2().find(":selected").data("s"));
             });
-        });
 
-        $(".addCancelButton").unbind("click").on("click",function(){
-            $(".modal-form input").attr("disabled",false);
-            $(".confirmAdd").addClass("hidden")
-            $(".addSubmitButton").removeClass("hidden")
-            $(".addProceedButton").addClass("hidden")
-            $(".btn-reset").trigger("click")
-        });
+            $(".addSubmitButton").unbind("click").on("click",function(){
+                var allowedDocket= [ 'HCS' ];
+                var requiredField= [ 'add_fname', 'add_lname'];
+                var check = true
+                var checkTable = ['F53T6', 'F53T7']
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "dateOrderReceived"     : $("#add_date_rcv").val(),
-                "clientProfileDto"      : {
+                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                    if(result){
+                        $(".modal-form input").attr("disabled",true);
+                        $(".addSubmitButton").addClass("hidden");
+                        $(".confirmAdd").removeClass("hidden")
+                        $(".addProceedButton").removeClass("hidden")
+                    }
+                });
+            });
+
+            $(".addCancelButton").unbind("click").on("click",function(){
+                $(".modal-form input").attr("disabled",false);
+                $(".confirmAdd").addClass("hidden")
+                $(".addSubmitButton").removeClass("hidden")
+                $(".addProceedButton").addClass("hidden")
+                $(".btn-reset").trigger("click")
+            });
+
+            //Add
+            $(".addProceedButton").unbind("click").on("click",function(){
+                $(this).attr('disabled',true)
+                $(".modal-loader").removeClass("hidden")
+                var payload = { 
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
                     "status"                : true,
                     "source"                : "2",
                     "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_fname").val(),
-                    "middleName"            : $("#add_mname").val(),
-                    "lastName"              : $("#add_lname").val(),
-                    "suffix"                : $("#add_sname").val()
-                },
+                    "fieldOffice"           : $.wms.urlParam('field'),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "dateOrderReceived"     : $("#add_date_rcv").val(),
+                    "clientProfileDto"      : {
+                        "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "updatedBy"             : "",
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                    },
 
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
-                    location.reload();
-                }else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
                 }
-            });
-        })
+                console.log(payload)
+                $.wms.executeExternalPost('http://localhost:8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
 
+                        $(".modal-loader").addClass("hidden")
+                        $(".addProceedButton").attr('disabled',false)
+                        $("#modal-add").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".addProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("#add_docket_no").attr('disabled',false)
+                        $("#add_docket_no").addClass("error_field");
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                    }
+                });
+            })
+        })
     };
     var __attachF53T9PageEvent = function() {
         console.log("f53t9 events")
@@ -2338,7 +2359,7 @@ $.wms.form53 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F53T8_tbody').empty();
+        $('.F53T9_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
@@ -2397,8 +2418,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.communityServiceEnd+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2638,7 +2659,7 @@ $.wms.form53 = (function() {
 
         $(".form_loader").removeClass("hidden")
 
-        $('.F53T8_tbody').empty();
+        $('.F53T10_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
@@ -2667,8 +2688,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.communityServiceEnd+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2921,6 +2942,34 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
+        var __submitCPPO = function(){
+            var yearMonth   = $.wms.urlParam('date')
+            var officeId    = $.wms.urlParam('officeId')
+            var page        = $.wms.urlParam('page')
+            var size        = $.wms.urlParam('size')
+            var field       = $.wms.urlParam('field')
+            
+            $(".btnSubmitProceed").unbind("click").on('click', function (){
+                console.log("submit CPPO")
+
+                var payload = {
+                  "encodingMonth"   : yearMonth,
+                  "fieldOfficeId"   : officeId,
+                  "fieldOfficeName" : field,
+                  "formTable"       : 'F53',
+                  "requestorId"     : $.cookie("USER_ID"),
+                  "createdBy"       : $.cookie("USER_ID"),
+                }
+
+                $.wms.executeExternalPost('http://localhost:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                        location.reload();
+                })
+            })
+        };
+
+        __submitCPPO();
+
         $.wms.executeExternalGet('http://localhost:8000/F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -2938,8 +2987,8 @@ $.wms.form53 = (function() {
                     "<td>"+data.dateOrderReceived+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_F53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                    "<button class='access_F53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3086,76 +3135,97 @@ $.wms.form53 = (function() {
         });
 
         //Add
-        $(".addSubmitButton").unbind("click").on("click",function(){
-            var allowedDocket= [ 'SCS' ];
-            var requiredField= [ 'add_fname', 'add_lname'];
-            var check = true
-            var checkTable = ['F53T1', 'F53T2']
+        $.wms.executeExternalGet('http://localhost:8000/F53t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            console.log(result.response)
 
-            ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                if(result){
-                    $(".modal-form input").attr("disabled",true);
-                    $(".addSubmitButton").addClass("hidden");
-                    $(".confirmAdd").removeClass("hidden")
-                    $(".addProceedButton").removeClass("hidden")
-                }
+            result.response.forEach(function(docket){
+
+                $(".docket_list").append($('<option>', {
+                    value    : docket.docketNumber,
+                    text     : docket.docketNumber,
+                    "data-f" : docket.clientProfileDto.firstName,
+                    "data-m" : docket.clientProfileDto.middleName,
+                    "data-l" : docket.clientProfileDto.lastName,
+                    "data-s" : docket.clientProfileDto.suffix,
+                    "data-fid" : docket.clientProfileDto.id,
+                }));
+            })
+
+            $('.docket_list').unbind('change').on('change', function() {
+                console.log($(".docket_list").select2().find(":selected").data("fid"))
+                $("#add_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                $("#add_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                $("#add_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                $("#add_sname").val($(".docket_list").select2().find(":selected").data("s"));
             });
-        });
+            $(".addSubmitButton").unbind("click").on("click",function(){
+                var allowedDocket= [ 'SCS' ];
+                var requiredField= [ 'add_fname', 'add_lname'];
+                var check = true
+                var checkTable = ['F53T1', 'F53T2']
 
-        $(".addCancelButton").unbind("click").on("click",function(){
-            $(".modal-form input").attr("disabled",false);
-            $(".confirmAdd").addClass("hidden")
-            $(".addSubmitButton").removeClass("hidden")
-            $(".addProceedButton").addClass("hidden")
-            $(".btn-reset").trigger("click")
-        });
+                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                    if(result){
+                        $(".modal-form input").attr("disabled",true);
+                        $(".addSubmitButton").addClass("hidden");
+                        $(".confirmAdd").removeClass("hidden")
+                        $(".addProceedButton").removeClass("hidden")
+                    }
+                });
+            });
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "dateOrderReceived"     : $("#add_date_rcv").val(),
-                "clientProfileDto"      : {
+            $(".addCancelButton").unbind("click").on("click",function(){
+                $(".modal-form input").attr("disabled",false);
+                $(".confirmAdd").addClass("hidden")
+                $(".addSubmitButton").removeClass("hidden")
+                $(".addProceedButton").addClass("hidden")
+                $(".btn-reset").trigger("click")
+            });
+
+            //Add
+            $(".addProceedButton").unbind("click").on("click",function(){
+                $(this).attr('disabled',true)
+                $(".modal-loader").removeClass("hidden")
+                var payload = { 
                     "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
                     "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
                     "status"                : true,
                     "source"                : "2",
                     "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_fname").val(),
-                    "middleName"            : $("#add_mname").val(),
-                    "lastName"              : $("#add_lname").val(),
-                    "suffix"                : $("#add_sname").val()
-                },
+                    "fieldOffice"           : $.wms.urlParam('field'),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "dateOrderReceived"     : $("#add_date_rcv").val(),
+                    "clientProfileDto"      : {
+                        "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "updatedBy"             : "",
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                    },
 
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t11/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
-                    location.reload();
-                }else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
                 }
-            });
+                console.log(payload)
+                $.wms.executeExternalPost('http://localhost:8000/F53t11/create',JSON.stringify(payload)).done(function (result) {
+      
+                    if(result.status != undefined && result.status == "SUCCESS"){
+
+                        $(".modal-loader").addClass("hidden")
+                        $(".addProceedButton").attr('disabled',false)
+                        $("#modal-add").modal('toggle')
+                        $(".btn-reset").trigger("click")
+                        location.reload();
+                    }else{
+                        $(".err_msg").remove()
+                        $(".addProceedButton").attr('disabled',false)
+                        $(".modal-loader").addClass("hidden")
+                        $("#add_docket_no").attr('disabled',false)
+                        $("#add_docket_no").addClass("error_field");
+                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                    }
+                });
+            })
         })
 
     };

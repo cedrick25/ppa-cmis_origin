@@ -1,9 +1,9 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
       <span class="pull-right" style="padding-right: 10px;">
-        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
 
-        <button type="button" class="access_f44_write btn-add-acted btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-acted"><i class="fa fa-plus-circle"></i> Add Referrals Completed and Returned</button>
+        <button type="button" class="access_f44_write btn-add-acted btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-acted"><i class="fa fa-plus-circle"></i> Add Referrals Completed and Returned</button>
 
       
         
@@ -261,41 +261,35 @@
             <div class="col-lg-12">
               <div class="form-group row">
                 <label for="" class="col-sm-3">Docket No.</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_docket_no-acted" placeholder="" >
+                <div class="col-sm-9   filter-modal ">    
+                  <select class="form-control select2 modal docket_list" id="add_docket_no-acted">
+                    <option disabled selected>Select Docket number</option>
+                  </select>
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: CSSI</i></span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender_fname-acted" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_fname-acted" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's Middle Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender_mname-acted" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_mname-acted" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's Last Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_offender_lname-acted" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_lname-acted" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Offender's Suffix Name</label>
                 <div class="col-sm-9 filter-modal">
-                    <select class="form-control select2 modal" id="add_offender_sname-acted" >
-                      <option value=""> </option>
-                      <option value="II">II</option>
-                      <option value="III">III</option>
-                      <option value="IV">IV</option>
-                      <option value="JR">JR</option>
-                      <option value="SR">SR</option>
-                    </select>
+                  <input type="text" class="form-control  upperCase" disabled id="add_offender_sname-acted" placeholder="">
                 </div>
               </div>
               <div class="form-group row">

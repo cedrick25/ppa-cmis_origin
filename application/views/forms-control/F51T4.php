@@ -142,41 +142,35 @@
             <div class="col-lg-12">
               <div class="form-group row">
                 <label for="" class="col-sm-3">Docket No.</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_docket_no" placeholder="" >
+                <div class="col-sm-9   filter-modal ">    
+                  <select class="form-control select2 modal docket_list" id="add_docket_no">
+                    <option disabled selected>Select Docket number</option>
+                  </select>
                   <input type="hidden" class="form-control " id="add_id" placeholder="">
-                  <span class="font_10 error_msg"><i class="b">Acceptable Docket Series: ROR</i></span>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">First Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_fname" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_fname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Middle Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_mname" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_mname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Last Name</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="add_lname" placeholder="">
+                  <input type="text" class="form-control  upperCase" disabled id="add_lname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-3">Suffix Name</label>
                 <div class="col-sm-9 filter-modal">
-                    <select class="form-control select2 modal" id="add_sname" >
-                      <option value=""> </option>
-                      <option value="II">II</option>
-                      <option value="III">III</option>
-                      <option value="IV">IV</option>
-                      <option value="JR">JR</option>
-                      <option value="SR">SR</option>
-                    </select>
+                  <input type="text" class="form-control  upperCase" disabled id="add_sname" placeholder="">
                 </div>
               </div>
               <div class="form-group row">

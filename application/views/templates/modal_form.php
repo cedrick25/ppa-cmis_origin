@@ -362,6 +362,49 @@
     </div>
   </div>
 
+  <div class="modal fade"  id="formCPPOmodal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+       <div class="modal-header">
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">CPPO REVIEW</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Field Office</label>
+            <div class="col-sm-10 filter-modal">
+             <select class="form-control select2 modal sel_field_office" id="sel-modal-cppo-field">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-2">Forms</label>
+            <div class="col-sm-10 filter-modal">
+              <select class="form-control select2" id="sel-modal-cppo-forms">
+                <option value="F44">F44</option>
+                <option value="F45">F45</option>
+                <option value="F51">F51</option>
+                <option value="F53">F53</option>
+              </select>
+            </div>
+          </div>
+         <!--  <div class="form-group row">
+            <label for="" class="col-sm-2">Date</label>
+            <div class="col-sm-10">    
+              <input name="Date" id="modal-50-date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" />
+            </div>
+          </div> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn-modal-cppo">Proceed</button>  
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade" id="regionalmodal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">

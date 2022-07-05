@@ -75,6 +75,16 @@ $.wms.modal = (function() {
             window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
         });
 
+        $(".btn-modal-cppo").unbind("click").on("click",function(){
+            console.log("Trigger");
+            var sel     = $("#sel-modal-cppo-forms").val();
+            // var date    = $("#modal-cppo-date").val();
+            var field   = $("#sel-modal-cppo-field").val();
+            var officeId= $("#sel-modal-cppo-field").select2().find(":selected").data("id");
+
+            window.location.href="form_review?form="+sel+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+15
+        });
+
 
         $(".btn-modal-regional").unbind("click").on("click",function(){
             console.log("Trigger");

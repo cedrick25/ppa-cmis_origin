@@ -4,7 +4,7 @@
   #sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 10px; width: 100%; }
   </style>
 <body style="background-color: #f1f1f1;">
-<?php $this->load->view('templates/nav.php'); ?> 
+<?php $this->load->view('templates/nav.php'); ?>
 
 <div class="container loggedBody" hidden>
 	<div class="row">

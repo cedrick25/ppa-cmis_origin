@@ -110,9 +110,9 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('migrate_offline');
 	}
-	public function view_cert()
+	public function form_review()
 	{
-		$this->load->view('view_cert');
+		$this->load->view('form_review');
 	}
 
 	
