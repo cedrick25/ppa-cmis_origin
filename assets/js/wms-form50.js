@@ -138,7 +138,7 @@ $.wms.form50 = (function() {
           }
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -221,7 +221,7 @@ $.wms.form50 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F50t1/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F50t1/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -242,7 +242,7 @@ $.wms.form50 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F50t1/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -297,7 +297,7 @@ $.wms.form50 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F50t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F50t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -383,7 +383,7 @@ $.wms.form50 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F50t1/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F50t1/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -409,7 +409,7 @@ $.wms.form50 = (function() {
             var __maxTableSize = 0;
             var __counter = 0;
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -441,7 +441,7 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -472,7 +472,7 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -503,7 +503,7 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -534,7 +534,7 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -694,7 +694,7 @@ $.wms.form50 = (function() {
             }
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -758,7 +758,7 @@ $.wms.form50 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F50t2/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F50t2/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -779,7 +779,7 @@ $.wms.form50 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F50t2/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -842,7 +842,7 @@ $.wms.form50 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F50t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F50t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -933,7 +933,7 @@ $.wms.form50 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F50t2/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F50t2/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -960,7 +960,7 @@ $.wms.form50 = (function() {
             var __maxTableSize = 0;
             var __counter = 0;
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VCFC'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VCFC'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -992,7 +992,7 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'HC'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'HC'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -1024,7 +1024,7 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://localhost:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'PAUBC'+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'PAUBC'+'').done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -1143,7 +1143,7 @@ $.wms.form50 = (function() {
                 var formdata = new FormData();
                 formdata.append("files", fileupload.files[0], fileupload.files[0].name);
 
-                $.wms.executeFile('http://localhost:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f50',formdata).done(function (result) {
+                $.wms.executeFile('http://192.168.1.184:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f50',formdata).done(function (result) {
                     console.log(result)
                     if(result){
                         __cert_list_upload();
@@ -1161,7 +1161,7 @@ $.wms.form50 = (function() {
                 fieldOfficeId : officeId,
                 formTable : "f50"
             }
-            $.wms.executeExternalPost('http://localhost:8000/cert/list',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/cert/list',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
 
                 if (result.response.length != 0) {
@@ -1175,7 +1175,7 @@ $.wms.form50 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+'http://localhost:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+'http://192.168.1.184:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {
@@ -1194,7 +1194,7 @@ $.wms.form50 = (function() {
                 //     // window.location.href="view_cert?certId="+data_id
                 //     // var certId =  $.wms.urlParam('certId')
 
-                //     // $.wms.executeExternalGet('http://localhost:8000/cert/view/'+data_id).done(function (result2) {
+                //     // $.wms.executeExternalGet('http://192.168.1.184:8000/cert/view/'+data_id).done(function (result2) {
                 //     //     console.log(result2);
 
                 //     //     window.location='<iframe src="'+result2+'" height="100%" width="100%" scrolling="auto"></iframe>'
@@ -1304,7 +1304,7 @@ $.wms.form50 = (function() {
         $(".year_selected").html(date.substr(0,4))
         $(".month_selected").html(month)
 
-        $.wms.executeExternalGet('http://localhost:8000/F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
             console.log(result)
             $('.a').text(result.a);
             $('.B').text(result.b);

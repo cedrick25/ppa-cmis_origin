@@ -127,7 +127,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t1"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://localhost:8000/F53t1/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t1/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -146,7 +146,7 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t1();
-        $.wms.executeExternalGet('http://localhost:8000/F53t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -182,7 +182,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t1/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t1/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -203,7 +203,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t1/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t1/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -258,7 +258,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -367,7 +367,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t1/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t1/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -406,7 +406,7 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F53t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -442,7 +442,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t2/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t2/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -463,7 +463,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t2/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t2/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -518,7 +518,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -627,7 +627,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t2/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t2/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -679,7 +679,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t3"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://localhost:8000/F53t3/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t3/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -698,7 +698,7 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t3();
-        $.wms.executeExternalGet('http://localhost:8000/F53t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -734,7 +734,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t3/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t3/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -755,7 +755,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t3/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t3/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -810,7 +810,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -919,7 +919,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t3/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t3/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -958,7 +958,7 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F53t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -994,7 +994,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t4/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t4/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1015,7 +1015,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t4/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t4/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1070,7 +1070,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -1179,7 +1179,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t4/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t4/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1231,7 +1231,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t5"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://localhost:8000/F53t5/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t5/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -1250,7 +1250,7 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t5();
-        $.wms.executeExternalGet('http://localhost:8000/F53t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1286,7 +1286,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t5/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t5/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1307,7 +1307,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t5/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t5/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1362,7 +1362,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -1471,7 +1471,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t5/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t5/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1510,7 +1510,7 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F53t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1553,7 +1553,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t6/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t6/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1574,7 +1574,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t6/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t6/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1643,7 +1643,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -1759,7 +1759,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t6/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t6/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1811,7 +1811,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t7"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://localhost:8000/F53t7/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t7/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -1830,7 +1830,7 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t7();
-        $.wms.executeExternalGet('http://localhost:8000/F53t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1866,7 +1866,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t7/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t7/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1887,7 +1887,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t7/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t7/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1942,7 +1942,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -2051,7 +2051,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t7/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t7/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2090,7 +2090,7 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F53t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2125,7 +2125,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t8/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t8/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2146,7 +2146,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t8/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t8/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2199,7 +2199,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -2255,7 +2255,7 @@ $.wms.form53 = (function() {
         });
 
         //Add
-        $.wms.executeExternalGet('http://localhost:8000/F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
             console.log(result.response)
 
             result.response.forEach(function(docket){
@@ -2328,7 +2328,7 @@ $.wms.form53 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2379,7 +2379,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t9"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://localhost:8000/F53t9/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t9/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -2398,7 +2398,7 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t9();
-        $.wms.executeExternalGet('http://localhost:8000/F53t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2436,7 +2436,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t9/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t9/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2457,7 +2457,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t9/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t9/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2516,7 +2516,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -2627,7 +2627,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t9/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t9/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2666,7 +2666,7 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://localhost:8000/F53t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2706,7 +2706,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t10/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t10/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2727,7 +2727,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t10/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t10/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2790,7 +2790,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -2903,7 +2903,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://localhost:8000/F53t10/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53t10/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2961,7 +2961,7 @@ $.wms.form53 = (function() {
                   "createdBy"       : $.cookie("USER_ID"),
                 }
 
-                $.wms.executeExternalPost('http://localhost:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                         location.reload();
                 })
@@ -2970,7 +2970,7 @@ $.wms.form53 = (function() {
 
         __submitCPPO();
 
-        $.wms.executeExternalGet('http://localhost:8000/F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -3005,7 +3005,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://localhost:8000/F53t11/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F53t11/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3026,7 +3026,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://localhost:8000/F53t11/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.184:8000/F53t11/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3079,7 +3079,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://localhost:8000/F53t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.184:8000/F53t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         location.reload();
                                     }else{
@@ -3135,7 +3135,7 @@ $.wms.form53 = (function() {
         });
 
         //Add
-        $.wms.executeExternalGet('http://localhost:8000/F53t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
             console.log(result.response)
 
             result.response.forEach(function(docket){
@@ -3207,7 +3207,7 @@ $.wms.form53 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://localhost:8000/F53t11/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t11/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3270,7 +3270,7 @@ $.wms.form53 = (function() {
                 var formdata = new FormData();
                 formdata.append("files", fileupload.files[0], fileupload.files[0].name);
 
-                $.wms.executeFile('http://localhost:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f53',formdata).done(function (result) {
+                $.wms.executeFile('http://192.168.1.184:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f53',formdata).done(function (result) {
                     console.log(result)
                     if(result){
                         __cert_list_upload();
@@ -3288,7 +3288,7 @@ $.wms.form53 = (function() {
                 fieldOfficeId : officeId,
                 formTable : "f53"
             }
-            $.wms.executeExternalPost('http://localhost:8000/cert/list',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.184:8000/cert/list',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
 
                 if (result.response.length != 0) {
@@ -3302,7 +3302,7 @@ $.wms.form53 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+'http://localhost:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+'http://192.168.1.184:8000/cert/view/'+data.id+"><button class='access_F44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {
@@ -3321,7 +3321,7 @@ $.wms.form53 = (function() {
                 //     // window.location.href="view_cert?certId="+data_id
                 //     // var certId =  $.wms.urlParam('certId')
 
-                //     // $.wms.executeExternalGet('http://localhost:8000/cert/view/'+data_id).done(function (result2) {
+                //     // $.wms.executeExternalGet('http://192.168.1.184:8000/cert/view/'+data_id).done(function (result2) {
                 //     //     console.log(result2);
 
                 //     //     window.location='<iframe src="'+result2+'" height="100%" width="100%" scrolling="auto"></iframe>'
@@ -3431,7 +3431,7 @@ $.wms.form53 = (function() {
         $(".year_selected").html(date.substr(0,4))
         $(".month_selected").html(month)
 
-        $.wms.executeExternalGet('http://localhost:8000/F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+        $.wms.executeExternalGet('http://192.168.1.184:8000/F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
             console.log(result)
             $('.ia').text(result.ia);
             $('.ib').text(result.ib);

@@ -239,8 +239,8 @@ $.wms.probationer = (function() {
 	            'bStateSave': true,
 	            'searchDelay': 50,
 	            'ajax': {
-	                // 'url': 'http://localhost/cmt-api/index.php/Search/sspSearch',
-	                'url': origin+'ppa-api/wsv1/Cmis/masterlistSSP',
+	                // 'url': 'http://192.168.1.184/cmt-api/index.php/Search/sspSearch',
+	                'url': origin+'ppa-cmis-api_origin/wsv1/Cmis/masterlistSSP',
 	                
 	                // 'url': 'http://192.168.200.149/cmt-api/index.php/Search/sspSearch',
 	                // 'url': 'http://192.168.200.168/cmt-api/index.php/Search/sspSearch',
