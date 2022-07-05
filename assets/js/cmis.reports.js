@@ -775,7 +775,7 @@ $.wms.reports = (function() {
           "fieldOfficeId"   : officeId,
           "formTable"       : result[0],
         }
-        $.wms.executeExternalPost('http://localhost:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
             console.log(result)
             if (result.response == false) {
                 console.log('false')
@@ -807,7 +807,7 @@ $.wms.reports = (function() {
         }
 
         // $('.rlist_tbody').empty();
-        $.wms.executeExternalPost('http://localhost:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('http://192.168.1.184:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
             console.log(result)
 
             var data = [];
@@ -864,7 +864,7 @@ $.wms.reports = (function() {
                         remarks         : $("#remarks_a").val(),
                     }
 
-                    $.wms.executeExternalPost('http://localhost:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
                         $("#modal-approve").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".btnApprove").attr('disabled',false)
@@ -889,7 +889,7 @@ $.wms.reports = (function() {
                         remarks         : $("#remarks_r").val(),
                     }
 
-                    $.wms.executeExternalPost('http://localhost:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
                         $("#modal-reject").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".btnReject").attr('disabled',false)
