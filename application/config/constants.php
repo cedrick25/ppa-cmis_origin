@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
-define('MIN_URL',"/ppa-cmis/min?f=/ppa-cmis_origin/");
+define('MIN_URL',"/ppa-cmis_origin/min?f=/ppa-cmis_origin/");
 // define('MIN_URL',"/ppa-cmis/min?f=/ppa-cmis/");
 /*
 |--------------------------------------------------------------------------
