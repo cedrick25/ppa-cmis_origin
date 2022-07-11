@@ -1,13 +1,13 @@
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
     	<span class="pull-right" style="padding-right: 10px;">
-    		<button type="button" class="access_f44_write btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Record</button>
+    		<button type="button" class="access_f44_write btn btn-sm btn-primary form_lock " data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Record</button>
         <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button>
     		<button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
     	</span>
-      <!-- <span class="pull-right" style="padding-right: 10px;">
+      <span class="pull-right" style="padding-right: 10px;">
         <button type="button" class="btn btn-sm btn-success btn-carryover"  data-toggle="modal" data-target="#modal-carryover"><i class="fa fa-stack-overflow"></i> Carry Over</button>
-      </span> -->
+      </span>
     </div>
   </div>
 

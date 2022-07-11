@@ -765,26 +765,31 @@ $.wms.reports = (function() {
     var __form_lock = function(){
         console.log("------------")
         console.log('form lock checker')
-
         var yearMonth   = $.wms.urlParam('date')
         var officeId    = $.wms.urlParam('officeId')
         var form        = $.wms.urlParam('form')
         var result      = form.split('T');
+
         var payload = {
           "encodingMonth"   : yearMonth,
           "fieldOfficeId"   : officeId,
           "formTable"       : result[0],
         }
-        $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
-            console.log(result)
-            if (result.response == false) {
-                console.log('false')
-                $(".form_lock").removeClass('hide')
-            } else {
-                console.log('true')
-                $(".form_lock").addClass('hide')
-            }
-        })
+        const myTimeout = setTimeout(timeout, 100);
+        function timeout(){
+            $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
+                console.log(result)
+                if (result.response == false) {
+                    console.log('false')
+                    $(".form_lock").removeClass('hide')
+                } else {
+                    console.log('true')
+                    $(".form_lock").addClass('hide')
+                    // $(".btn-carryover").removeClass('hide')
+                    $(".btn-carryover").addClass('hide')
+                }
+            })
+        }
         console.log("------------")
     }
 
