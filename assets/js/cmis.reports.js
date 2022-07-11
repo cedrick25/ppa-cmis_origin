@@ -775,7 +775,7 @@ $.wms.reports = (function() {
           "fieldOfficeId"   : officeId,
           "formTable"       : result[0],
         }
-        const myTimeout = setTimeout(timeout, 100);
+        const myTimeout = setTimeout(timeout, 1);
         function timeout(){
             $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
