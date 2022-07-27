@@ -782,11 +782,21 @@ $.wms.reports = (function() {
                 if (result.response == false) {
                     console.log('false')
                     $(".form_lock").removeClass('hide')
+                    $(".btn-carryover").addClass('hide')
                 } else {
                     console.log('true')
                     $(".form_lock").addClass('hide')
-                    // $(".btn-carryover").removeClass('hide')
-                    $(".btn-carryover").addClass('hide')
+
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                        console.log(result2)
+                        if (result2.response == true) {
+                            console.log('true')
+                            $(".btn-carryover").removeClass('hide')
+                        } else {
+                            console.log('false')
+                            $(".btn-carryover").addClass('hide')
+                        }
+                    })
                 }
             })
         }
