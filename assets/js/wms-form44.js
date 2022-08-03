@@ -989,7 +989,7 @@ $.wms.form44 = (function() {
 
                 $(".addSubmitButton_acted").unbind("click").on("click",function(){
                     var allowedDocket= [ 'SSI', 'RSSI', 'TSSI' ];
-                    var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date'];
+                    var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation'];
                     var check = true
                     var checkTable = ['F44T1', 'F44T2']
 
