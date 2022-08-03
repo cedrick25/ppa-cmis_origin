@@ -19,7 +19,7 @@
   </div>
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-      <h4 class="" style="text-align: center;"><b>VOLUNTARY CONFINEMENT CASELOAD SUMMARY</b></h4>
+      <h4 class="" style="text-align: center;"><b>RELEASE ON RECOGNIZANCE CASELOAD</b></h4>
     </div>
   </div><br>
   <div class="row col-lg-12 col-md-12 col-sm-12">
