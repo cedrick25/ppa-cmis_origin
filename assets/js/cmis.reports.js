@@ -788,6 +788,8 @@ $.wms.reports = (function() {
                     $(".form_lock").addClass('hide')
 
                 }
+            })
+            
             
                 $.wms.executeExternalPost('http://192.168.1.184:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2)
@@ -799,7 +801,6 @@ $.wms.reports = (function() {
                         $(".btn-carryover").addClass('hide')
                     }
                 })
-            })
         }
         console.log("------------")
     }
