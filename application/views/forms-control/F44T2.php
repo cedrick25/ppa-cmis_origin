@@ -74,6 +74,24 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label for="" class="col-sm-3">CC no</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_cc" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Court of Origin</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_coc" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offense</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="add_offense" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
                 <label for="" class="col-sm-3">Date Received by the PPO</label>
                 <div class="col-sm-9">
                   <input type="text" class="form-control  sel_date2" id="add_date_rcv">
@@ -174,6 +192,24 @@
                     </select>
                 </div>
             </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">CC no</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_cc" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Court of Origin</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_coc" placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-sm-3">Offense</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control  upperCase" id="edit_offense" placeholder="">
+                </div>
+              </div>
             <div class="form-group row">
               <label for="" class="col-sm-3">Date Received by the PPO</label>
               <div class="col-sm-9">

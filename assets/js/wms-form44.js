@@ -552,6 +552,9 @@ $.wms.form44 = (function() {
                     $('.F44T2_tbody_a').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
+                        "<td>"+data.criminalCaseNo+"</td>"+
+                        "<td>"+data.courtOfOrigin+"</td>"+
+                        "<td>"+data.offense+"</td>"+
                         "<td>"+data.dateReceivedByCppo+"</td>"+
                         "<td>"+data.investigatingOfficer+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
@@ -620,6 +623,9 @@ $.wms.form44 = (function() {
                             $("#edit_offender_mname").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname").val(payload.clientProfileDto.lastName)
                             $("#edit_offender_sname").val(payload.clientProfileDto.suffix).trigger('change')
+                            $("#edit_cc").val(payload.criminalCaseNo)
+                            $("#edit_coc").val(payload.courtOfOrigin)
+                            $("#edit_offense").val(payload.offense)
                             $("#edit_date_rcv").val(payload.dateReceivedByCppo)
                             $("#edit_investigating_officer").val(payload.investigatingOfficer)
                            
@@ -644,6 +650,9 @@ $.wms.form44 = (function() {
                                         "encodingMonth"         : $.wms.urlParam('date'),
                                         "fieldOffice"           : $.wms.urlParam('field'),
                                         "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                                        "criminalCaseNo"        : $("#edit_cc").val(),
+                                        "courtOfOrigin"         : $("#edit_coc").val(),
+                                        "offense"               : $("#edit_offense").val(),
                                         "investigatingOfficer"  : $("#edit_investigating_officer").val(),
                                         "dateReceivedByCppo"    : $("#edit_date_rcv").val(),
                                         "clientProfileDto"      : {
@@ -739,6 +748,9 @@ $.wms.form44 = (function() {
                     "encodingMonth"         : $.wms.urlParam('date'),
                     "fieldOffice"           : $.wms.urlParam('field'),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "criminalCaseNo"        : $("#add_cc").val(),
+                    "courtOfOrigin"         : $("#add_coc").val(),
+                    "offense"               : $("#add_offense").val(),
                     "investigatingOfficer"  : $("#add_investigating_officer").val(),
                     "dateReceivedByCppo"    : $("#add_date_rcv").val(),
                     "clientProfileDto"      : {

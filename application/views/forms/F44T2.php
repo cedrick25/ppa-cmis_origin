@@ -33,7 +33,10 @@
                 <tr>
                   <th style="text-align: center;">DOCKET NO.</th>
                   <th style="text-align: center;">OFFENDER'S NAME</th>
-                  <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
+                  <th style="text-align: center;">CC. NO.</th>
+                  <th style="text-align: center;">COURT OF ORIGIN</th>
+                  <th style="text-align: center;">OFFENSE</th>
+                  <th style="text-align: center;">DATE RECEIVED</th>
                   <th style="text-align: center;">INVESTIGATING OFFICER</th>
                   <th class="options" style="text-align: center;">FIELD OFFICE</th>
                   <th class="options" style="text-align: center;">DATA SOURCE</th>
