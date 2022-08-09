@@ -19,16 +19,19 @@
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12 div-table">
       <table class="table table-bordered table-darker text-nowrap" id="T_F44T3">
-        <thead>
-          <tr class="tb-header">
-            <th style="text-align: center;">DOCKET NO.</th>
-            <th style="text-align: center;">OFFENDER'S NAME</th>
-            <th style="text-align: center;">INVESTIGATING OFFICER</th>
-            <th style="text-align: center;">RECOMMENDATION</th>
-            <th style="text-align: center;">DATE RECOMMENDATION</th>
-            <th class="options" style="text-align: center;">FIELD OFFICE</th>
-            <th class="options" style="text-align: center;">DATA SOURCE</th>
-            <th class="options" style="text-align: center;">OPTIONS</th>
+        <thead class="tb-header">
+          <tr>
+            <th colspan="1" rowspan="2" style="text-align: center;">DOCKET NO.</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">OFFENDER'S NAME</th>
+            <th colspan="2" style="text-align: center;">DATE REPORT SUBMITTED TO THE EXECUTIVE DIRECTOR BY PPO</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">INVESTIGATING OFFICER</th>
+            <th colspan="1" rowspan="2" class="options" style="text-align: center;">FIELD OFFICE</th>
+            <th colspan="1" rowspan="2" class="options" style="text-align: center;">DATA SOURCE</th>
+            <th colspan="1" rowspan="2" class="options" style="text-align: center;">OPTIONS</th>
+          </tr>
+          <tr>
+            <th style="text-align: center;">FOR GRANT</th>
+            <th style="text-align: center;">FOR DENIAL</th>
           </tr>
         </thead>
         <tbody class="F44T3_tbody tbody-sm">

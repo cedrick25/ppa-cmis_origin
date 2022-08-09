@@ -537,6 +537,7 @@ $.wms.form44 = (function() {
             console.log("received")
 
 
+            // $.wms.executeExternalGet('http://localhost:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
                 console.log(result.content)
                 $(".form_loader").removeClass("hidden")
@@ -1277,9 +1278,10 @@ $.wms.form44 = (function() {
                 $('.F44T3_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
+                    "<td>"+(data.recommendation == "FOR_GRANT" ? data.recommendation : "")+"</td>"+
+                    "<td>"+(data.recommendation == "FOR_DENIAL" ? data.recommendation : "")+"</td>"+
                     "<td>"+data.investigatingOfficer+"</td>"+
-                    "<td>"+data.recommendation+"</td>"+
-                    "<td>"+data.dateRecommendation+"</td>"+
+                    // "<td>"+data.dateRecommendation+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
@@ -3574,9 +3576,9 @@ $.wms.form44 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        // $(".sel_field_office2").select2({
-        //    placeholder: "Select Field Office",
-        // });
+        $(".sel_field_office2").select2({
+           placeholder: "Select Field Office",
+        });
         var fo_val = '';
         $('#add_report').on('change', function() {
           console.log(this.value)
@@ -3606,7 +3608,7 @@ $.wms.form44 = (function() {
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+data.report+"</td>"+
                     "<td>"+data.reportDateSubmitted+"</td>"+
-                    "<td>"+data.supervisingOfficer+"</td>"+
+                    // "<td>"+data.supervisingOfficer+"</td>"+
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
@@ -3917,9 +3919,9 @@ $.wms.form44 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        // $(".sel_field_office2").select2({
-        //    placeholder: "Select Field Office",
-        // });
+        $(".sel_field_office2").select2({
+           placeholder: "Select Field Office",
+        });
         var fo_val = '';
         $('#add_report').on('change', function() {
           console.log(this.value)
@@ -4302,9 +4304,9 @@ $.wms.form44 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        // $(".sel_field_office2").select2({
-        //    placeholder: "Select Field Office",
-        // });
+        $(".sel_field_office2").select2({
+           placeholder: "Select Field Office",
+        });
 
         var fo_val = '';
         $('#add_report').on('change', function() {

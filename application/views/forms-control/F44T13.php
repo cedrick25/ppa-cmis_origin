@@ -155,7 +155,7 @@
               <div class="form-group row">
                 <label for="" class="col-sm-3">Period Courtesy Supervision</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control  upperCase" id="edit_period_crt" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="edit_period_crt" placeholder="1Y2M1D">
                 </div>
               </div>
               <div class="form-group row">
@@ -267,7 +267,7 @@
               <div class="form-group row">
                 <label for="" class="col-sm-3">Period Courtesy Supervision</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control  upperCase" id="add_period_crt" placeholder="">
+                  <input type="text" class="form-control  upperCase" id="add_period_crt" placeholder="1Y2M1D">
                 </div>
               </div>
               <div class="form-group row">
