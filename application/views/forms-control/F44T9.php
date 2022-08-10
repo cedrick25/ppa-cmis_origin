@@ -98,8 +98,8 @@
                 <label for="" class="col-sm-3">Report</label>
                 <div class="col-sm-9 filter-modal">
                   <select class="form-control select2 modal" id="edit_report" >
-                    <option value="TERMINATION">TERMINATION</option>
-                    <option value="REVOCATION">REVOCATION</option>
+                    <option value="TERMINATION">FINAL REPORT</option>
+                    <option value="REVOCATION">VIOLATION REPORT</option>
                     <option value="TRANSFER">TRANSFER</option>
                   </select>
                 </div>
@@ -195,8 +195,8 @@
                 <label for="" class="col-sm-3">Report</label>
                 <div class="col-sm-9 filter-modal">
                   <select class="form-control select2 modal" id="add_report" >
-                    <option value="TERMINATION">TERMINATION</option>
-                    <option value="REVOCATION">REVOCATION</option>
+                    <option value="TERMINATION">FINAL REPORT</option>
+                    <option value="REVOCATION">VIOLATION REPORT</option>
                     <option value="TRANSFER">TRANSFER</option>
                   </select>
                 </div>

@@ -768,6 +768,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
+                // $.wms.executeExternalPost('http://localhost:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
                 $.wms.executeExternalPost('http://192.168.1.184:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
@@ -1276,6 +1277,7 @@ $.wms.form44 = (function() {
 
         __carryoverF44t3();
 
+        // $.wms.executeExternalGet('http://localhost:8000/F44t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
         $.wms.executeExternalGet('http://192.168.1.184:8000/F44t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -1570,6 +1572,7 @@ $.wms.form44 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
+        // $.wms.executeExternalGet('http://localhost:8000/F44t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
         $.wms.executeExternalGet('http://192.168.1.184:8000/F44t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
@@ -5953,6 +5956,7 @@ $.wms.form44 = (function() {
         $(".year_selected").html(date.substr(0,4))
         $(".month_selected").html(month)
 
+        // $.wms.executeExternalGet('http://localhost:8000/F44Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
         $.wms.executeExternalGet('http://192.168.1.184:8000/F44Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
             console.log(result)
             $('.Id').text(result.id);
