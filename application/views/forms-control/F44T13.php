@@ -140,7 +140,7 @@
               <div class="form-group row">
                 <label for="" class="col-sm-3">Referring Office</label>
                 <div class="col-sm-9   filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="edit_referring_office">
+                  <select class="form-control select2 modal sel_field_office3" id="edit_referring_office">
                     
                     <!-- <option value="">OFFICE 2</option> -->
                   </select>
@@ -252,7 +252,7 @@
               <div class="form-group row">
                 <label for="" class="col-sm-3">Referring Office</label>
                 <div class="col-sm-9   filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="add_referring_office">
+                  <select class="form-control select2 modal sel_field_office3" id="add_referring_office">
                     
                     <!-- <option value="">OFFICE 2</option> -->
                   </select>

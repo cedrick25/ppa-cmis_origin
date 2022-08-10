@@ -113,7 +113,7 @@
               <div class="form-group row hide" id="fo_id_edit">
                 <label for="" class="col-sm-3">Transfer Field Office (Optional)</label>
                 <div class="col-sm-9 filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="edit_field_offices">
+                  <select class="form-control select2 modal sel_field_office3" id="edit_field_offices">
                     <option value="">None</option>
                   </select>
                 </div>
@@ -204,7 +204,7 @@
               <div class="form-group row hide" id="fo_id">
                 <label for="" class="col-sm-3">Transfer Field Office (Optional)</label>
                 <div class="col-sm-9   filter-modal ">    
-                  <select class="form-control select2 modal sel_field_office2" id="add_field_offices">
+                  <select class="form-control select2 modal sel_field_office3" id="add_field_offices">
                     <option value="">None</option>
                   </select>
                 </div>

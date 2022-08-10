@@ -3590,10 +3590,7 @@ $.wms.form44 = (function() {
         $('.F44T9_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
-
-        $(".sel_field_office2").select2({
-           placeholder: "Select Field Office",
-        });
+        
         var fo_val = '';
         $('#add_report').on('change', function() {
           console.log(this.value)
@@ -3621,8 +3618,8 @@ $.wms.form44 = (function() {
                 $('.F44T9_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
-                    "<td>"+data.report+"</td>"+
-                    "<td>"+data.reportDateSubmitted+"</td>"+
+                    "<td>"+(data.report == "TERMINATION" ? data.reportDateSubmitted : "")+"</td>"+
+                    "<td>"+(data.report == "REVOCATION" ? data.reportDateSubmitted : "")+"</td>"+
                     // "<td>"+data.supervisingOfficer+"</td>"+
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
@@ -4008,8 +4005,8 @@ $.wms.form44 = (function() {
                 $('.F44T10_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
-                    "<td>"+data.report+"</td>"+
-                    "<td>"+data.reportDateSubmitted+"</td>"+
+                    "<td>"+(data.report == "TERMINATION" ? data.reportDateSubmitted : "")+"</td>"+
+                    "<td>"+(data.report == "REVOCATION" ? data.reportDateSubmitted : "")+"</td>"+
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td>"+data.supervisingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
@@ -4349,8 +4346,8 @@ $.wms.form44 = (function() {
                 $('.F44T11_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
-                    "<td>"+data.report+"</td>"+
-                    "<td>"+data.reportDateSubmitted+"</td>"+
+                    "<td>"+(data.report == "TERMINATED" ? data.reportDateSubmitted : "")+"</td>"+
+                    "<td>"+(data.report == "REVOKED" ? data.reportDateSubmitted : "")+"</td>"+
                     "<td>"+data.transferredOffice+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
