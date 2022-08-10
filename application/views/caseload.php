@@ -67,7 +67,7 @@
 	        			}else if ($str1[1][1] == "4") {
 	        				$current_form = "Form 44 - ";
 			        		$current_table = "CASELOAD SUMMARY ";
-	        				$current_type = "Offender ";
+	        				$current_type = "SUSPENDED SENTENCE ";
 	        				$current_link = "#form44modal";
 	        			}else if ($str1[1][1] == "5") {
 	        				$current_form = "Form 45 - ";
