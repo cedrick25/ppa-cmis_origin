@@ -5301,6 +5301,10 @@ $.wms.form45 = (function() {
                             "status"                : true,
                             "source"                : "2",
                             "encodingMonth"         : $.wms.urlParam('date'),
+                            "firstName"             : $("#add_offender_fname").val(),
+                            "middleName"            : $("#add_offender_mname").val(),
+                            "lastName"              : $("#add_offender_lname").val(),
+                            "suffix"                : $("#add_offender_sname").val()
                         },
 
                     }
