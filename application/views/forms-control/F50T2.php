@@ -115,7 +115,7 @@
               <div class="form-group row v_hearing hide">
                 <label for="" class="col-sm-3">Date Hearing</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control  upperCase" id="edit_date_hearing" placeholder="">
+                  <input type="text" class="form-control  sel_date2" id="edit_date_hearing" placeholder="">
                 </div>
               </div>
               <div class="form-group row v_court_d hide">

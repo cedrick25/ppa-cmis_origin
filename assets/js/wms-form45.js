@@ -2558,7 +2558,7 @@ $.wms.form45 = (function() {
                         "<td>"+data.dateCompletedAndReturned+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<td align='center' class='options'> <button class='access_F45_write btn btn-success btn-sm btn-edit-acted form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_F45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
@@ -2622,8 +2622,8 @@ $.wms.form45 = (function() {
                             $("#edit_offender_mname-acted").val(payload.clientProfileDto.middleName)
                             $("#edit_offender_lname-acted").val(payload.clientProfileDto.lastName)
                             $("#edit_offender_sname-acted").val(payload.clientProfileDto.suffix).trigger('change')
-                            $("#edit_referring_office-acted").val(payload.referringOffice)
-                            $("#edit_date_rcv_by_the_ppo-acted").val(payload.dateReceivedByPpo)
+                            $("#edit_date_com_and_ret-acted").val(payload.dateCompletedAndReturned)
+                            // $("#edit_date_rcv_by_the_ppo-acted").val(payload.dateReceivedByPpo)
                            
                                 //Update proceed
                                 $(".editProceedButton-acted").unbind("click").on("click",function(){

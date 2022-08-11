@@ -633,11 +633,11 @@ $.wms.form51 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F51T1").table2excel({
+            $("#T_F51T2").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form51-Table1",
-                filename: "Form51-Table1.xls", //do not include extension
+                name: "Form51-Table2",
+                filename: "Form51-Table2.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -1271,11 +1271,11 @@ $.wms.form51 = (function() {
         //     }
         //     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
         //     });
-            $("#T_F51T3").table2excel({
+            $("#T_F51T4").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form51-Table3",
-                filename: "Form51-Table3.xls", //do not include extension
+                name: "Form51-Table4",
+                filename: "Form51-Table4.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
