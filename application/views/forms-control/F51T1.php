@@ -20,7 +20,7 @@
           <h4 class="modal-title"><b><i class="fa fa-stack-overflow"></i> Carry Over</b></h4>
         </div>
         <div class="modal-body">
-          <p><b>Are you sure you want CARRY OVER INVESTIGATION CASELOAD?</b></p>
+          <p><b>Are you sure you want CARRY OVER SUPERVISION CASELOAD?</b></p>
           <span class="hidden sel-id"></span>
         </div>
         <div class="modal-footer">
