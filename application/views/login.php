@@ -8,7 +8,7 @@
 	<div class="row" >
 		<div class="col-md-12" >
 				<div class="panel panel-default">
-					 <div class="panel-body" >
+					 <div class="panel-body" style="background-image: url('assets/img/bg.jpg');height:450px">
 					 	<div class="col-md-3">
 							</div>		
 
