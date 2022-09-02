@@ -23,7 +23,8 @@ $.wms.widget = (function() {
         if($.cookie("USER_LEVEL_ID") == 1 || $.cookie("USER_LEVEL_ID") == 2 || $.cookie("USER_LEVEL_ID") == 8 || $.cookie("USER_LEVEL_ID") == 9){
             $(".sel_field_office").append($('<option>', {
                 value: "ALL",
-                text: 'All'
+                text: 'All',
+                "data-id" : "ALL"
             }));    
         }
         

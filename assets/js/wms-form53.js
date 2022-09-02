@@ -156,7 +156,14 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t1();
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -444,7 +451,13 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -774,7 +787,14 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t3();
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t3?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1062,7 +1082,13 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t4?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1392,7 +1418,14 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t5();
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t5?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1680,7 +1713,13 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2038,7 +2077,14 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t7();
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t7?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2326,7 +2372,118 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t8?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            
+            //Add
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                console.log(result.response)
+
+                result.response.forEach(function(docket){
+
+                    $(".docket_list").append($('<option>', {
+                        value    : docket.docketNumber,
+                        text     : docket.docketNumber,
+                        "data-f" : docket.clientProfileDto.firstName,
+                        "data-m" : docket.clientProfileDto.middleName,
+                        "data-l" : docket.clientProfileDto.lastName,
+                        "data-s" : docket.clientProfileDto.suffix,
+                        "data-fid" : docket.clientProfileDto.id,
+                    }));
+                })
+
+                $('.docket_list').unbind('change').on('change', function() {
+                    console.log($(".docket_list").select2().find(":selected").data("fid"))
+                    $("#add_fname").val($(".docket_list").select2().find(":selected").data("f"));
+                    $("#add_mname").val($(".docket_list").select2().find(":selected").data("m"));
+                    $("#add_lname").val($(".docket_list").select2().find(":selected").data("l"));
+                    $("#add_sname").val($(".docket_list").select2().find(":selected").data("s"));
+                });
+
+                $(".addSubmitButton").unbind("click").on("click",function(){
+                    var allowedDocket= [ 'HCS' ];
+                    var requiredField= [ 'add_fname', 'add_lname'];
+                    var check = true
+                    var checkTable = ['F53T6', 'F53T7']
+
+                    ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+                        if(result){
+                            $(".modal-form input").attr("disabled",true);
+                            $(".addSubmitButton").addClass("hidden");
+                            $(".confirmAdd").removeClass("hidden")
+                            $(".addProceedButton").removeClass("hidden")
+                        }
+                    });
+                });
+
+                $(".addCancelButton").unbind("click").on("click",function(){
+                    $(".modal-form input").attr("disabled",false);
+                    $(".confirmAdd").addClass("hidden")
+                    $(".addSubmitButton").removeClass("hidden")
+                    $(".addProceedButton").addClass("hidden")
+                    $(".btn-reset").trigger("click")
+                });
+
+                //Add
+                $(".addProceedButton").unbind("click").on("click",function(){
+                    $(this).attr('disabled',true)
+                    $(".modal-loader").removeClass("hidden")
+                    var payload = { 
+                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "status"                : true,
+                        "source"                : "2",
+                        "encodingMonth"         : $.wms.urlParam('date'),
+                        "fieldOffice"           : $.wms.urlParam('field'),
+                        "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                        "dateOrderReceived"     : $("#add_date_rcv").val(),
+                        "clientProfileDto"      : {
+                            "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
+                            "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
+                            "createdBy"             : $.cookie("USER_ID"),
+                            "updatedBy"             : "",
+                            "status"                : true,
+                            "source"                : "2",
+                            "encodingMonth"         : $.wms.urlParam('date'),
+                        },
+
+                    }
+                    console.log(payload)
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
+          
+                        if(result.status != undefined && result.status == "SUCCESS"){
+
+                            $(".modal-loader").addClass("hidden")
+                            $(".addProceedButton").attr('disabled',false)
+                            $("#modal-add").modal('toggle')
+                            $(".btn-reset").trigger("click")
+
+                            var form = "Added Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                            var payload_audit = {
+                                "created_by" : $.cookie("USER_ID"),
+                                "module" : "CASELOAD",
+                                "action" : form
+                                
+                            }
+                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                                location.reload();
+                            });
+                        }else{
+                            $(".err_msg").remove()
+                            $(".addProceedButton").attr('disabled',false)
+                            $(".modal-loader").addClass("hidden")
+                            $("#add_docket_no").attr('disabled',false)
+                            $("#add_docket_no").addClass("error_field");
+                            $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                        }
+                    });
+                })
+            })
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2508,110 +2665,6 @@ $.wms.form53 = (function() {
               }); 
         });
 
-        //Add
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
-            console.log(result.response)
-
-            result.response.forEach(function(docket){
-
-                $(".docket_list").append($('<option>', {
-                    value    : docket.docketNumber,
-                    text     : docket.docketNumber,
-                    "data-f" : docket.clientProfileDto.firstName,
-                    "data-m" : docket.clientProfileDto.middleName,
-                    "data-l" : docket.clientProfileDto.lastName,
-                    "data-s" : docket.clientProfileDto.suffix,
-                    "data-fid" : docket.clientProfileDto.id,
-                }));
-            })
-
-            $('.docket_list').unbind('change').on('change', function() {
-                console.log($(".docket_list").select2().find(":selected").data("fid"))
-                $("#add_fname").val($(".docket_list").select2().find(":selected").data("f"));
-                $("#add_mname").val($(".docket_list").select2().find(":selected").data("m"));
-                $("#add_lname").val($(".docket_list").select2().find(":selected").data("l"));
-                $("#add_sname").val($(".docket_list").select2().find(":selected").data("s"));
-            });
-
-            $(".addSubmitButton").unbind("click").on("click",function(){
-                var allowedDocket= [ 'HCS' ];
-                var requiredField= [ 'add_fname', 'add_lname'];
-                var check = true
-                var checkTable = ['F53T6', 'F53T7']
-
-                ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
-                    if(result){
-                        $(".modal-form input").attr("disabled",true);
-                        $(".addSubmitButton").addClass("hidden");
-                        $(".confirmAdd").removeClass("hidden")
-                        $(".addProceedButton").removeClass("hidden")
-                    }
-                });
-            });
-
-            $(".addCancelButton").unbind("click").on("click",function(){
-                $(".modal-form input").attr("disabled",false);
-                $(".confirmAdd").addClass("hidden")
-                $(".addSubmitButton").removeClass("hidden")
-                $(".addProceedButton").addClass("hidden")
-                $(".btn-reset").trigger("click")
-            });
-
-            //Add
-            $(".addProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
-                $(".modal-loader").removeClass("hidden")
-                var payload = { 
-                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                    "createdBy"             : $.cookie("USER_ID"),
-                    "status"                : true,
-                    "source"                : "2",
-                    "encodingMonth"         : $.wms.urlParam('date'),
-                    "fieldOffice"           : $.wms.urlParam('field'),
-                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "dateOrderReceived"     : $("#add_date_rcv").val(),
-                    "clientProfileDto"      : {
-                        "id"                    : $(".docket_list").select2().find(":selected").data("fid"),
-                        "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                        "createdBy"             : $.cookie("USER_ID"),
-                        "updatedBy"             : "",
-                        "status"                : true,
-                        "source"                : "2",
-                        "encodingMonth"         : $.wms.urlParam('date'),
-                    },
-
-                }
-                console.log(payload)
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
-      
-                    if(result.status != undefined && result.status == "SUCCESS"){
-
-                        $(".modal-loader").addClass("hidden")
-                        $(".addProceedButton").attr('disabled',false)
-                        $("#modal-add").modal('toggle')
-                        $(".btn-reset").trigger("click")
-
-                        var form = "Added Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
-                        var payload_audit = {
-                            "created_by" : $.cookie("USER_ID"),
-                            "module" : "CASELOAD",
-                            "action" : form
-                            
-                        }
-                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
-                            location.reload();
-                        });
-                    }else{
-                        $(".err_msg").remove()
-                        $(".addProceedButton").attr('disabled',false)
-                        $(".modal-loader").addClass("hidden")
-                        $("#add_docket_no").attr('disabled',false)
-                        $("#add_docket_no").addClass("error_field");
-                        $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
-                    }
-                });
-            })
-        })
     };
     var __attachF53T9PageEvent = function() {
         console.log("f53t9 events")
@@ -2672,7 +2725,14 @@ $.wms.form53 = (function() {
         };
 
         __carryoverF53t9();
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t9?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -2968,7 +3028,13 @@ $.wms.form53 = (function() {
            placeholder: "Select Field Office",
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t10?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -3300,7 +3366,13 @@ $.wms.form53 = (function() {
 
         __submitCPPO();
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F53t11?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -3597,27 +3669,6 @@ $.wms.form53 = (function() {
         var isocode      =  $.wms.urlParam('isocode')
         console.log(isocode)
 
-        if (isocode == null) {
-            $(".isocode_").val("PPA-FO-FR-053")
-        } else if (isocode != null) {
-            $(".isocode_").val(isocode)
-        } else {
-            $(".isocode_").val()
-        }
-
-        var payload = {
-            field_id : officeId,
-        }
-        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
-
-            if(result.status != undefined && result.status == "SUCCESS"){
-                const region_name = result.payload.VALUE_
-                __download_cert(region_name);
-            }else{
-                alert ("region Failed");
-            }
-        });
-
         $(".certUpload").unbind("click").on("click", function(){
             console.log("clicked")
             var fileToUpload = $('#fileupload').prop('files')[0];
@@ -3690,7 +3741,93 @@ $.wms.form53 = (function() {
 
             });
         }
-        __cert_list_upload();
+
+        // var officeId;
+        if (officeId === "ALL") {
+            var fi = [];
+            for (var x=0; x<=242; x++) {
+                fi.push(x);
+            }
+            var officeId = fi;
+
+            var payload = {
+                officeIdList  : officeId,
+                yearMonthList : [date]
+            }
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F53Caseload',JSON.stringify(payload)).done(function (result) {
+                console.log(result)
+                $('.ia').text(result.ia);
+                $('.ib').text(result.ib);
+                $('.iia').text(result.iia);
+                $('.iib').text(result.iib);
+                $('.iiia').text(result.iiia);
+                $('.iiib').text(result.iiib);
+                $('.iiic').text(result.iiic);
+                $('.via').text(result.via);
+                $('.vib').text(result.vib);
+                $('.vic').text(result.vic);
+                $('.vid').text(result.vid);
+                $('.vie').text(result.vie);
+                $('.iv').text(result.iv);
+                $('.v').text(result.v);
+                $('.vid1').text(result.vid1);
+                $('.vid2').text(result.vid2);
+                $('.viia').text(result.viia);
+                $('.viib').text(result.viib);
+                $('.viic').text(result.viic);
+                $('.viid').text(result.viid);
+                $('.viie').text(result.viie);
+            });
+
+        } else {
+            var officeId =  $.wms.urlParam('officeId')
+
+            var payload = {
+                field_id : officeId,
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
+
+                if(result.status != undefined && result.status == "SUCCESS"){
+                    const region_name = result.payload.VALUE_
+                    __download_cert(region_name);
+                }else{
+                    alert ("region Failed");
+                }
+            });
+            __cert_list_upload();
+            
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+                console.log(result)
+                $('.ia').text(result.ia);
+                $('.ib').text(result.ib);
+                $('.iia').text(result.iia);
+                $('.iib').text(result.iib);
+                $('.iiia').text(result.iiia);
+                $('.iiib').text(result.iiib);
+                $('.iiic').text(result.iiic);
+                $('.via').text(result.via);
+                $('.vib').text(result.vib);
+                $('.vic').text(result.vic);
+                $('.vid').text(result.vid);
+                $('.vie').text(result.vie);
+                $('.iv').text(result.iv);
+                $('.v').text(result.v);
+                $('.vid1').text(result.vid1);
+                $('.vid2').text(result.vid2);
+                $('.viia').text(result.viia);
+                $('.viib').text(result.viib);
+                $('.viic').text(result.viic);
+                $('.viid').text(result.viid);
+                $('.viie').text(result.viie);
+            });
+        }
+        if (isocode == null) {
+            $(".isocode_").val("PPA-FO-FR-053")
+        } else if (isocode != null) {
+            $(".isocode_").val(isocode)
+        } else {
+            $(".isocode_").val()
+        }
         var __download_cert = function(region_name){
                 console.log(region_name);
 
@@ -3789,30 +3926,6 @@ $.wms.form53 = (function() {
         $(".year_selected").html(date.substr(0,4))
         $(".month_selected").html(month)
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
-            console.log(result)
-            $('.ia').text(result.ia);
-            $('.ib').text(result.ib);
-            $('.iia').text(result.iia);
-            $('.iib').text(result.iib);
-            $('.iiia').text(result.iiia);
-            $('.iiib').text(result.iiib);
-            $('.iiic').text(result.iiic);
-            $('.via').text(result.via);
-            $('.vib').text(result.vib);
-            $('.vic').text(result.vic);
-            $('.vid').text(result.vid);
-            $('.vie').text(result.vie);
-            $('.iv').text(result.iv);
-            $('.v').text(result.v);
-            $('.vid1').text(result.vid1);
-            $('.vid2').text(result.vid2);
-            $('.viia').text(result.viia);
-            $('.viib').text(result.viib);
-            $('.viic').text(result.viic);
-            $('.viid').text(result.viid);
-            $('.viie').text(result.viie);
-        });
     };
     
 

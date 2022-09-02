@@ -138,7 +138,13 @@ $.wms.form50 = (function() {
           }
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -437,7 +443,13 @@ $.wms.form50 = (function() {
             var __maxTableSize = 0;
             var __counter = 0;
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+'').done(function (result) {
+            var api;
+            if (officeId === "ALL") {
+                var api = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+''
+            }else {
+                var api = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+''
+            }
+            $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -469,7 +481,14 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+'').done(function (result) {
+            var api1;
+            if (officeId === "ALL") {
+                var api1 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+''
+            }else {
+                var api1 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+''
+            }
+
+            $.wms.executeExternalGet(api1).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -500,7 +519,13 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+'').done(function (result) {
+            var api2;
+            if (officeId === "ALL") {
+                var api2 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+''
+            }else {
+                var api2 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+''
+            }
+            $.wms.executeExternalGet(api2).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -531,7 +556,13 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+'').done(function (result) {
+            var api3;
+            if (officeId === "ALL") {
+                var api3 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+''
+            }else {
+                var api3 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+''
+            }
+            $.wms.executeExternalGet(api3).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -562,7 +593,13 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+'').done(function (result) {
+            var api4;
+            if (officeId === "ALL") {
+                var api4 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+''
+            }else {
+                var api4 = 'http://192.168.1.184:8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+''
+            }
+            $.wms.executeExternalGet(api4).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -722,7 +759,14 @@ $.wms.form50 = (function() {
             }
         });
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'').done(function (result) {
+
+        var api;
+        if (officeId === "ALL") {
+            var api = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+        }else {
+            var api = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+        }
+        $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
             $(".form_loader").removeClass("hidden")
 
@@ -1016,7 +1060,13 @@ $.wms.form50 = (function() {
             var __maxTableSize = 0;
             var __counter = 0;
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VCFC'+'').done(function (result) {
+            var api;
+            if (officeId === "ALL") {
+                api = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+            }else {
+                api = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+            }
+            $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -1048,7 +1098,13 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'HC'+'').done(function (result) {
+            var api1;
+            if (officeId === "ALL") {
+                api1 = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+            }else {
+                api1 = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'HC'+''
+            }
+            $.wms.executeExternalGet(api1).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -1080,7 +1136,13 @@ $.wms.form50 = (function() {
                 __download_print_list();
             });
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'PAUBC'+'').done(function (result) {
+            var api2;
+            if (officeId === "ALL") {
+                api2 = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+            }else {
+                api2 = 'http://192.168.1.184:8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'PAUBC'+''
+            }
+            $.wms.executeExternalGet(api2).done(function (result) {
                 console.log(result.content)
 
                 __counter += 1;
@@ -1167,28 +1229,6 @@ $.wms.form50 = (function() {
         var isocode      =  $.wms.urlParam('isocode')
         console.log(isocode)
 
-        if (isocode == null) {
-            $(".isocode_").val("PPA-FO-FR-050")
-        } else if (isocode != null) {
-            $(".isocode_").val(isocode)
-        } else {
-            $(".isocode_").val()
-        }
-
-        var payload = {
-            field_id : officeId,
-        }
-        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
-
-            if(result.status != undefined && result.status == "SUCCESS"){
-                const region_name = result.payload.VALUE_
-                __download_cert(region_name);
-            }else{
-                alert ("region Failed");
-            }
-        });
-
-
         $(".certUpload").unbind("click").on("click", function(){
             console.log("clicked")
             var fileToUpload = $('#fileupload').prop('files')[0];
@@ -1237,31 +1277,70 @@ $.wms.form50 = (function() {
                 } else {
                     $(".cert_upload").removeClass("hidden")
                 }
-                
-
-                // $(".btn-view").unbind("click").on("click",function(){
-                //     var data_id = $(this).data("id");
-                //     var file_path = $(this).data("file_path");
-                //     var file_name = $(this).data("file_name");
-                //     console.log(data_id)
-                //     console.log(file_path)
-                //     console.log(file_name)
-
-                //     // window.location.href="view_cert?certId="+data_id
-                //     // var certId =  $.wms.urlParam('certId')
-
-                //     // $.wms.executeExternalGet('http://192.168.1.184:8000/cert/view/'+data_id).done(function (result2) {
-                //     //     console.log(result2);
-
-                //     //     window.location='<iframe src="'+result2+'" height="100%" width="100%" scrolling="auto"></iframe>'
-
-                //     // });
-
-                // });
-
             });
         }
-        __cert_list_upload();
+
+        // var officeId;
+        if (officeId === "ALL") {
+            var fi = [];
+            for (var x=0; x<=242; x++) {
+                fi.push(x);
+            }
+            var officeId = fi;
+
+            var payload = {
+                officeIdList  : officeId,
+                yearMonthList : [date]
+            }
+            $.wms.executeExternalPost('http://192.168.1.184:8000/F50Caseload',JSON.stringify(payload)).done(function (result) {
+                console.log(result)
+                $('.a').text(result.a);
+                $('.B').text(result.b);
+                $('.c').text(result.c);
+                $('.d').text(result.d);
+                $('.e').text(result.e);
+                $('.f').text(result.f);
+                $('.g').text(result.g);
+                $('.h').text(result.h);
+            });
+
+        } else {
+            var officeId =  $.wms.urlParam('officeId')
+
+            var payload = {
+                field_id : officeId,
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
+
+                if(result.status != undefined && result.status == "SUCCESS"){
+                    const region_name = result.payload.VALUE_
+                    __download_cert(region_name);
+                }else{
+                    alert ("region Failed");
+                }
+            });
+            __cert_list_upload();
+            
+            $.wms.executeExternalGet('http://192.168.1.184:8000/F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+                console.log(result)
+                $('.a').text(result.a);
+                $('.B').text(result.b);
+                $('.c').text(result.c);
+                $('.d').text(result.d);
+                $('.e').text(result.e);
+                $('.f').text(result.f);
+                $('.g').text(result.g);
+                $('.h').text(result.h);
+            });
+        }
+        if (isocode == null) {
+            $(".isocode_").val("PPA-FO-FR-050")
+        } else if (isocode != null) {
+            $(".isocode_").val(isocode)
+        } else {
+            $(".isocode_").val()
+        }
+
         var __download_cert = function(region_name){
                 console.log(region_name);
 
@@ -1360,17 +1439,6 @@ $.wms.form50 = (function() {
         $(".year_selected").html(date.substr(0,4))
         $(".month_selected").html(month)
 
-        $.wms.executeExternalGet('http://192.168.1.184:8000/F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
-            console.log(result)
-            $('.a').text(result.a);
-            $('.B').text(result.b);
-            $('.c').text(result.c);
-            $('.d').text(result.d);
-            $('.e').text(result.e);
-            $('.f').text(result.f);
-            $('.g').text(result.g);
-            $('.h').text(result.h);
-        });
     };
 
     

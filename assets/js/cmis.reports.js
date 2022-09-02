@@ -770,39 +770,48 @@ $.wms.reports = (function() {
         var form        = $.wms.urlParam('form')
         var result      = form.split('T');
 
-        var payload = {
-          "encodingMonth"   : yearMonth,
-          "fieldOfficeId"   : officeId,
-          "formTable"       : result[0],
-        }
-        const myTimeout = setTimeout(timeout, 1);
-        function timeout(){
-            $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
-                console.log(result)
-                if (result.response == false) {
-                    console.log('false')
-                    $(".form_lock").removeClass('hide')
-                    $(".btn-carryover").addClass('hide')
-                } else {
-                    console.log('true')
-                    $(".form_lock").addClass('hide')
+        if (officeId === "ALL") {
+            setTimeout(OIALL, 100);
+            function OIALL(){
+                $(".form_lock").addClass('hide')
+                $(".btn-carryover").addClass('hide')
+            }
+        }else {
 
-                }
-                
-                const myTimeout2 = setTimeout(timeout2, 1);
-                function timeout2(){
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
-                        console.log(result2)
-                        if (result2.response == true) {
-                            console.log('true')
-                            $(".btn-carryover").removeClass('hide')
-                        } else {
-                            console.log('false')
-                            $(".btn-carryover").addClass('hide')
-                        }
-                    })
-                }
-            })
+            var payload = {
+              "encodingMonth"   : yearMonth,
+              "fieldOfficeId"   : officeId,
+              "formTable"       : result[0],
+            }
+            const myTimeout = setTimeout(timeout, 1);
+            function timeout(){
+                $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                    if (result.response == false) {
+                        console.log('false')
+                        $(".form_lock").removeClass('hide')
+                        $(".btn-carryover").addClass('hide')
+                    } else {
+                        console.log('true')
+                        $(".form_lock").addClass('hide')
+
+                    }
+                    
+                    const myTimeout2 = setTimeout(timeout2, 1);
+                    function timeout2(){
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                            console.log(result2)
+                            if (result2.response == true) {
+                                console.log('true')
+                                $(".btn-carryover").removeClass('hide')
+                            } else {
+                                console.log('false')
+                                $(".btn-carryover").addClass('hide')
+                            }
+                        })
+                    }
+                })
+            }
         }
         console.log("------------")
     }
