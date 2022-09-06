@@ -6,7 +6,7 @@
     		<button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
     	</span>
       <span class="pull-right" style="padding-right: 10px;">
-        <button type="button" class="btn btn-sm btn-success btn-carryover"  data-toggle="modal" data-target="#modal-carryover"><i class="fa fa-stack-overflow"></i> Carry Over</button>
+        <button type="button" class="access_f44_write btn btn-sm btn-success btn-carryover"  data-toggle="modal" data-target="#modal-carryover"><i class="fa fa-stack-overflow"></i> Carry Over</button>
       </span>
     </div>
   </div>

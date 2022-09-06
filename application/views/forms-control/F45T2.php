@@ -1,9 +1,9 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
       <span class="pull-right" style="padding-right: 10px;">
-        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add-rcv"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+        <button type="button" class="access_f45_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add-rcv"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
 
-        <button type="button" class="access_f44_write btn-add-acted btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-acted"><i class="fa fa-plus-circle"></i> Add New Referrals Acted Upon</button>
+        <button type="button" class="access_f45_write btn-add-acted btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-acted"><i class="fa fa-plus-circle"></i> Add New Referrals Acted Upon</button>
 
       
         

@@ -148,7 +148,7 @@ $.wms.dashboard = (function() {
             if(typeof($.cookie("PERMISSIONS")) != "undefined"){
                 var ACCESS_RIGHTS = JSON.parse($.cookie("PERMISSIONS"))
                 for(i=0;i<ACCESS_RIGHTS.length;i++){
-                    //console.log(ACCESS_RIGHTS)
+                    console.log(ACCESS_RIGHTS)
                     if(ACCESS_RIGHTS[i].ACCESS_RIGHTS == "0"){
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
                             case LEVEL_ID :  window.location.href="dashboard";
@@ -182,7 +182,7 @@ $.wms.dashboard = (function() {
             if(typeof($.cookie("PERMISSIONS")) != "undefined"){
                 var ACCESS_RIGHTS = JSON.parse($.cookie("PERMISSIONS"))
                 for(i=0;i<ACCESS_RIGHTS.length;i++){
-                    //console.log(ACCESS_RIGHTS)
+                    console.log(ACCESS_RIGHTS)
                     if(ACCESS_RIGHTS[i].ACCESS_RIGHTS == "0"){
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
                             case "1" : $(".access_f5").remove(); break;
@@ -194,7 +194,18 @@ $.wms.dashboard = (function() {
                             case "7" : $(".access_ml").remove(); break;
                             case "8" : $(".access_ml_write").remove(); break;
                             case "9" : $(".access_maintenance").remove(); break;
-                        }    
+                            case "10" : $(".access_report_quarterly").remove(); break;
+                            case "11" : $(".access_f44").remove(); break;
+                            case "12" : $(".access_f44_write").remove();   break;
+                            case "13" : $(".access_f45").remove(); break;
+                            case "14" : $(".access_f45_write").remove();   break;
+                            case "15" : $(".access_f50").remove(); break;
+                            case "16" : $(".access_f50_write").remove();   break;
+                            case "17" : $(".access_f51").remove(); break;
+                            case "18" : $(".access_f51_write").remove();   break;
+                            case "19" : $(".access_f53").remove(); break;
+                            case "20" : $(".access_f53_write").remove();   break;
+                        }
                     }else{
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
                             case "2": 

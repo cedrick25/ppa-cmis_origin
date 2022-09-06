@@ -3,9 +3,9 @@
       <span class="pull-right" style="padding-right: 10px;">
         <button type="button" class="btn btn-sm btn-success btn-form-submit form_lock" data-toggle="modal" data-target="#modal-submit"><i class="fa fa-paper-plane"></i> Submit to CPPO Review</button>
 
-        <button type="button" class="access_f44_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+        <button type="button" class="access_f45_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
 
-        <button type="button" class="access_f44_write btn-add-term btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-term"><i class="fa fa-plus-circle"></i> Add Courtesy Referrals Terminated</button>
+        <button type="button" class="access_f45_write btn-add-term btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-term"><i class="fa fa-plus-circle"></i> Add Courtesy Referrals Terminated</button>
 
       
         

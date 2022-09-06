@@ -108,8 +108,8 @@
                                 <li><a href="#"  class="access_f50" data-toggle="modal" data-target="#form50modal">Voluntary Confinement Caseload Summary (Form 50)</a></li> 
                                 <li><a href="#"  class="access_f51" data-toggle="modal" data-target="#form51modal">Release on Recognizance Caseload Summary (Form 51)</a></li> 
                                 <li><a href="#"  class="access_f53" data-toggle="modal" data-target="#form53modal">Community Service as Imprisonment Penalty Caseload Summary (Form 53)</a></li> 
-                                <li><a href="caseload_report"  class="" >Caseload Report</a></li> 
-                                <li><a href="#"  class="access_CPPO" data-toggle="modal" data-target="#formCPPOmodal">CPPO FORM REVIEW</a></li> 
+                                <li><a href="caseload_report"  class="">Caseload Report</a></li> 
+                                <li><a href="#"  class="access_CPPO" data-toggle="modal" data-target="#formCPPOmodal">CPPO FORM REVIEW</a></li>
                             </ul>
                         </li>
 
@@ -119,7 +119,7 @@
                                
                                 <li><a href="#" class="access_report_regional" data-toggle="modal" data-target="#regionalmodal">Regional</a></li>
                                 <li><a href="#" class="access_report_field" data-toggle="modal" data-target="#fieldmodal">Field</a></li> 
-                                <li><a href="#" class="access_report_field" data-toggle="modal" data-target="#quarterlymodal">Quarterly</a></li> 
+                                <li><a href="#" class="access_report_quarterly" data-toggle="modal" data-target="#quarterlymodal">Quarterly</a></li> 
                             </ul>
                         </li>
 
