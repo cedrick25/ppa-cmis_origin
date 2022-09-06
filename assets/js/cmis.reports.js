@@ -827,13 +827,19 @@ $.wms.reports = (function() {
         var size        = $.wms.urlParam('size')
         var field       = $.wms.urlParam('field')
 
-        var payload = {
-          "fieldOfficeId"   : officeId,
-          "formTable"       : form,
-          "page"            : page,
-          "size"            : size
+        var FI;
+        if (officeId === "ALL") {
+            FI = 0;
+        }else {
+            FI = officeId;
         }
 
+        var payload = {
+              "fieldOfficeId"   : FI,
+              "formTable"       : form,
+              "page"            : page,
+              "size"            : size
+            }
         // $('.rlist_tbody').empty();
         $.wms.executeExternalPost('http://192.168.1.184:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
             console.log(result)
@@ -854,8 +860,8 @@ $.wms.reports = (function() {
                     "<td>"+data.approvalDate+"</td>"+
                     "<td>"+data.approvalStatus+"</td>"+
                     "<td>"+data.remarks+"</td>"+
-                    "<td align='center' class='options'> <button class='access_F44_write btn btn-success btn-sm btn-approve "+hide+"' data-id='"+data.id+"'><i class='fa fa-check'></i> Approve</button> "+
-                    "<button class='access_F44_write btn btn-danger btn-sm btn-reject "+hide+"' data-id='"+data.id+"'><i class='fa fa-ban'></i> Reject</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_cppo_write btn btn-success btn-sm btn-approve "+hide+"' data-id='"+data.id+"'><i class='fa fa-check'></i> Approve</button> "+
+                    "<button class='access_cppo_write btn btn-danger btn-sm btn-reject "+hide+"' data-id='"+data.id+"'><i class='fa fa-ban'></i> Reject</button> </td></tr>")
             });
             if ( $.fn.DataTable.isDataTable('#rlist_table') ) {
               $('#rlist_table').DataTable().destroy();

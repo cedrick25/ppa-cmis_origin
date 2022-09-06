@@ -182,7 +182,7 @@ $.wms.dashboard = (function() {
             if(typeof($.cookie("PERMISSIONS")) != "undefined"){
                 var ACCESS_RIGHTS = JSON.parse($.cookie("PERMISSIONS"))
                 for(i=0;i<ACCESS_RIGHTS.length;i++){
-                    console.log(ACCESS_RIGHTS)
+                    // console.log(ACCESS_RIGHTS)
                     if(ACCESS_RIGHTS[i].ACCESS_RIGHTS == "0"){
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
                             case "1" : $(".access_f5").remove(); break;
@@ -205,6 +205,8 @@ $.wms.dashboard = (function() {
                             case "18" : $(".access_f51_write").remove();   break;
                             case "19" : $(".access_f53").remove(); break;
                             case "20" : $(".access_f53_write").remove();   break;
+                            case "21" : $(".access_cppo").remove();   break;
+                            case "22" : $(".access_cppo_write").remove();   break;
                         }
                     }else{
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
