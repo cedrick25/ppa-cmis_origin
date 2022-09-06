@@ -838,7 +838,8 @@ $.wms.reports = (function() {
               "fieldOfficeId"   : FI,
               "formTable"       : form,
               "page"            : page,
-              "size"            : size
+              "size"            : size,
+              "fieldOffice"     : field
             }
         // $('.rlist_tbody').empty();
         $.wms.executeExternalPost('http://192.168.1.184:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
