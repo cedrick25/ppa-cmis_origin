@@ -675,17 +675,6 @@
       <div class="row">
         <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
           &nbsp;&nbsp;&nbsp;
-           B. Total Courtesy Supervision Referrals Received
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-print-12 center VIb" style="border:1px solid black">
-            &nbsp;
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-9 col-md-9 col-sm-9 col-print-9">
-          &nbsp;&nbsp;&nbsp;
            C. Total Courtesy Supervision Cases Handled
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-print-3">
