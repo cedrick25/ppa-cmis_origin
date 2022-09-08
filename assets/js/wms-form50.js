@@ -200,7 +200,7 @@ $.wms.form50 = (function() {
                     )
                 
                 } else if (data.actionType == "DDE_REPORTS_RECEIVED") {
-                    $('.F50T1_tbody_d').append("<tr>"+
+                    $('.F50T1_tbody_e').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.dateReceived+"</td>"+
