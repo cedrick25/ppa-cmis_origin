@@ -1167,8 +1167,9 @@ $.wms.form44 = (function() {
                             $("#r"+r+"c2").html(fullname);
                             $("#r"+r+"c3").html(data.courtOfOrigin);
                             $("#r"+r+"c4").html(data.criminalCaseNo);
-                            $("#r"+r+"c5").html(data.dateReceivedByCppo);
-                            $("#r"+r+"c6").html(data.investigatingOfficer);
+                            $("#r"+r+"c5").html(data.offense);
+                            $("#r"+r+"c6").html(data.dateReceivedByCppo);
+                            $("#r"+r+"c7").html(data.investigatingOfficer);
                             r += 1;
                         });
                     }
@@ -1203,12 +1204,12 @@ $.wms.form44 = (function() {
                             data = $.wms.upper($.wms.sanitize(data))
                             var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                             source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                            $("#r"+r+"c7").html(data.docketNumber);
-                            $("#r"+r+"c8").html(fullname);
-                            $("#r"+r+"c9").html(data.dateReportSubmitted);
-                            $("#r"+r+"c10").html(data.ppoRecommendation);
-                            $("#r"+r+"c11").html(data.transferDate);
-                            $("#r"+r+"c12").html(data.transferredTo);
+                            $("#r"+r+"c8").html(data.docketNumber);
+                            $("#r"+r+"c9").html(fullname);
+                            $("#r"+r+"c10").html(data.dateReportSubmitted);
+                            $("#r"+r+"c11").html(data.ppoRecommendation);
+                            $("#r"+r+"c12").html(data.transferDate);
+                            $("#r"+r+"c13").html(data.transferredTo);
                             r += 1;
                         });
                     }
@@ -1237,13 +1238,16 @@ $.wms.form44 = (function() {
                                     "<td id='r"+i+"c8' class=''>"+
                                     "<td id='r"+i+"c9' class=''>"+
                                     "<td id='r"+i+"c10' class=''>"+
+                                    "<td id='r"+i+"c11' class=''>"+
+                                    "<td id='r"+i+"c12' class=''>"+
+                                    "<td id='r"+i+"c13' class=''>"+
                                 "</tr>"
                             )
                         }
                     }else{
                         $(".T_F44T2_download_print_tbody").append(
                                 "<tr>"+
-                                    "<td colspan='10' class='center b'>NONE</td>"+
+                                    "<td colspan='13' class='center b'>NONE</td>"+
                                 "</tr>");
                     }
                 };

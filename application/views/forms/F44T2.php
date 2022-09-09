@@ -83,13 +83,16 @@
       <table class="table table-bordered text-nowrap" style="width:100%" id="T_F44T2_download_print">
         <thead class="small tb-header">
           <tr>
-            <th colspan="4" style="text-align: center;">REFERRALS RECEIVED</th>
+            <th colspan="7" style="text-align: center;">REFERRALS RECEIVED</th>
             <th colspan="6" style="text-align: center;">REFERRALS ACTED UPON</th>
           </tr>
           <tr>
             <th style="text-align: center;">DOCKET NO.</th>
             <th style="text-align: center;">OFFENDER'S NAME</th>
-            <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
+            <th style="text-align: center;">CC. NO.</th>
+            <th style="text-align: center;">COURT OF ORIGIN</th>
+            <th style="text-align: center;">OFFENSE</th>
+            <th style="text-align: center;">DATE RECEIVED</th>
             <th style="text-align: center;">INVESTIGATING OFFICER</th>
 
             <th style="text-align: center;">Docket No.</th>
