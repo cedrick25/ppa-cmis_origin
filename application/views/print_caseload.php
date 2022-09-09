@@ -109,6 +109,7 @@
 	            }
 	            else {
 	                console.log("done...")
+	                $('#T_F44T1').DataTable().destroy();
 	                $(".isocode_").replaceWith($("<span />").text($(".isocode_").val()));
 	                $(".cert_").addClass("hide");
 	                $(".nav_list").addClass("hide");

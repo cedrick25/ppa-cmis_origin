@@ -271,6 +271,10 @@ $.wms.form44 = (function() {
                     "<td align='center' class='options'> <button class='access_f44_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+              var table = $('#T_F44T1').DataTable();
+              $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -1161,8 +1165,10 @@ $.wms.form44 = (function() {
                             source = ((data.source==1) ? 'PIS' : 'MANUAL');
                             $("#r"+r+"c1").html(data.docketNumber);
                             $("#r"+r+"c2").html(fullname);
-                            $("#r"+r+"c3").html(data.dateReceivedByCppo);
-                            $("#r"+r+"c4").html(data.investigatingOfficer);
+                            $("#r"+r+"c3").html(data.courtOfOrigin);
+                            $("#r"+r+"c4").html(data.criminalCaseNo);
+                            $("#r"+r+"c5").html(data.dateReceivedByCppo);
+                            $("#r"+r+"c6").html(data.investigatingOfficer);
                             r += 1;
                         });
                     }
@@ -1197,12 +1203,12 @@ $.wms.form44 = (function() {
                             data = $.wms.upper($.wms.sanitize(data))
                             var fullname = data.clientProfileDto.firstName +" "+ data.clientProfileDto.middleName +" "+  data.clientProfileDto.lastName + " "+ data.clientProfileDto.suffix
                             source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                            $("#r"+r+"c5").html(data.docketNumber);
-                            $("#r"+r+"c6").html(fullname);
-                            $("#r"+r+"c7").html(data.dateReportSubmitted);
-                            $("#r"+r+"c8").html(data.ppoRecommendation);
-                            $("#r"+r+"c9").html(data.transferDate);
-                            $("#r"+r+"c10").html(data.transferredTo);
+                            $("#r"+r+"c7").html(data.docketNumber);
+                            $("#r"+r+"c8").html(fullname);
+                            $("#r"+r+"c9").html(data.dateReportSubmitted);
+                            $("#r"+r+"c10").html(data.ppoRecommendation);
+                            $("#r"+r+"c11").html(data.transferDate);
+                            $("#r"+r+"c12").html(data.transferredTo);
                             r += 1;
                         });
                     }
