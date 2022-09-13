@@ -23,7 +23,7 @@
           <tr >
             <th colspan="1" rowspan="2" style="text-align: center;">DOCKET NO.</th>
             <th colspan="1" rowspan="2" style="text-align: center;">OFFENDER'S NAME</th>
-            <th colspan="3" rowspan="1" style="text-align: center;">DATE REPORTS SUBMITTED TO THE EXECUTIVE DIRECTOR</th>
+            <th colspan="3" rowspan="1" style="text-align: center;">DATE ORDER RECEIVED FROM THE EXECUTIVE DIRECTOR</th>
             <th colspan="1" rowspan="2" class="options" style="text-align: center;">FIELD OFFICE</th>
             <th colspan="1" rowspan="2" class="options" style="text-align: center;">DATA SOURCE</th>
             <th colspan="1" rowspan="2" class="options" style="text-align: center;">OPTIONS</th>

@@ -24,8 +24,8 @@
             <th style="text-align: center;">DOCKET NO.</th>
             <th style="text-align: center;">OFFENDER'S NAME</th>
             <th style="text-align: center;">INVESTIGATING OFFICER</th>
-            <th style="text-align: center;">RECOMMENDATION</th>
-            <th style="text-align: center;">DATE RECOMMENDATION</th>
+            <th style="text-align: center;">ORDER</th>
+            <th style="text-align: center;">DATE ORDER RECEIVED FROM THE EXECUTIVE DIRECTOR</th>
             <th class="options" style="text-align: center;">FIELD OFFICE</th>
             <th class="options" style="text-align: center;">DATA SOURCE</th>
             <th class="options" style="text-align: center;">OPTIONS</th>

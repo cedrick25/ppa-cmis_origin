@@ -13,7 +13,7 @@
   </div>
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style="text-align: center;"><b>CARRY OVER INVESTIGATION CASELOAD PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</b></h4>
+      <h4 class="" style="text-align: center;"><b>CARRY OVER INVESTIGATION CASESLOAD PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</b></h4>
     </div>
   </div><br>
   <div class="row">

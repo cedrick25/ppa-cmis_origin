@@ -17,8 +17,8 @@
     </div>
   </div><br>
   <ul class="nav nav-pills nav_list">
-    <li class="active"><a data-toggle="pill" href="#ReferralsReceived">Referrals Received</a></li>
-    <li><a data-toggle="pill" href="#menu1">Referrals Completed and Returned</a></li>
+    <li class="active"><a data-toggle="pill" href="#ReferralsReceived">Courtesy Referrals Received</a></li>
+    <li><a data-toggle="pill" href="#menu1">Courtesy Referrals Completed and Returned</a></li>
   </ul>
   <br>
   <div class="tab-content tab_list">
@@ -28,15 +28,15 @@
             <table class="table table-bordered text-nowrap" style="width:100%" id="T_F44T6">
               <thead class="small tb-header">
                 <tr>
-                  <th colspan="10" style="text-align: center;">REFERRALS RECEIVED</th>
+                  <th colspan="10" style="text-align: center;">COURTESY REFERRALS RECEIVED</th>
                 </tr>
                 <tr class="tb-header">
                   <th style="text-align: center;">DOCKET NO.</th>
                   <th style="text-align: center;">OFFENDER'S NAME</th>
                   <th style="text-align: center;">REFERRING OFFICE</th>
                   <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
+                  <th style="text-align: center;">REASONS FOR REFERRAL</th>
                   <th style="text-align: center;">INVESTIGATING OFFICER</th>
-                  <th style="text-align: center;">REASON FOR REFERRAL</th>
                   <th class="options" style="text-align: center;">FIELD OFFICE</th>
                   <th class="options" style="text-align: center;">DATA SOURCE</th>
                   <th class="options" style="text-align: center;">OPTIONS</th>
@@ -55,7 +55,7 @@
             <table class="table table-bordered text-nowrap" style="width:100%" id="T_F44T6_b">
               <thead class="small tb-header">
                 <tr>
-                  <th colspan="9" style="text-align: center;">REFERRALS COMPLETED AND RETURNED</th>
+                  <th colspan="9" style="text-align: center;">COURTESY REFERRALS COMPLETED AND RETURNED</th>
                 </tr>
                 <tr>
                   <th style="text-align: center;">DOCKET NO.</th>

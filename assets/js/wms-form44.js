@@ -1375,8 +1375,8 @@ $.wms.form44 = (function() {
                 $('.F44T3_tbody').append("<tr>"+
                     "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
                     "<td>"+fullname.toUpperCase()+"</td>"+
-                    "<td>"+(data.recommendation == "FOR_GRANT" ? data.recommendation : "")+"</td>"+
-                    "<td>"+(data.recommendation == "FOR_DENIAL" ? data.recommendation : "")+"</td>"+
+                    "<td>"+(data.recommendation == "FOR_GRANT" ? data.dateRecommendation : "")+"</td>"+
+                    "<td>"+(data.recommendation == "FOR_DENIAL" ? data.dateRecommendation : "")+"</td>"+
                     "<td>"+data.investigatingOfficer+"</td>"+
                     // "<td>"+data.dateRecommendation+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
@@ -2357,8 +2357,8 @@ $.wms.form44 = (function() {
                         "<td>"+fullname.toUpperCase()+"</td>"+
                         "<td>"+data.referringOffice+"</td>"+
                         "<td>"+data.dateReceivedByPpo+"</td>"+
-                        "<td>"+data.investigatingOfficer+"</td>"+
                         "<td>"+data.reasonForReferral+"</td>"+
+                        "<td>"+data.investigatingOfficer+"</td>"+
                         "<td class='options field'>"+data.fieldOffice+"</td>"+
                         "<td class='options'>"+source+"</td>"+
                         "<td align='center' class='options'> <button class='access_f44_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
@@ -2541,7 +2541,7 @@ $.wms.form44 = (function() {
                 var allowedDocket= [ 'CSSI' ];
                 var requiredField= [ 'add_offender_fname', 'add_offender_lname', 'add_investigating_officer', 'add_date_rcv_by_the_ppo'];
                 var check = true
-                var checkTable = ['F44T1', 'F44T2']
+                var checkTable = ['F44T5', 'F44T6']
 
                 ___validateSaveCarryOver(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                     if(result){
@@ -4246,7 +4246,7 @@ $.wms.form44 = (function() {
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+(data.report == "TERMINATION" ? data.reportDateSubmitted : "")+"</td>"+
                     "<td>"+(data.report == "REVOCATION" ? data.reportDateSubmitted : "")+"</td>"+
-                    "<td>"+data.transferredOffice+"</td>"+
+                    "<td>"+(data.report == "TRANSFER" ? data.reportDateSubmitted : "")+"</td>"+
                     "<td>"+data.supervisingOfficer+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
@@ -4622,7 +4622,7 @@ $.wms.form44 = (function() {
                     "<td>"+fullname.toUpperCase()+"</td>"+
                     "<td>"+(data.report == "TERMINATED" ? data.reportDateSubmitted : "")+"</td>"+
                     "<td>"+(data.report == "REVOKED" ? data.reportDateSubmitted : "")+"</td>"+
-                    "<td>"+data.transferredOffice+"</td>"+
+                    "<td>"+(data.report == "TRANSFERRED" ? data.reportDateSubmitted : "")+"</td>"+
                     "<td class='options field'>"+data.fieldOffice+"</td>"+
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f44_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+

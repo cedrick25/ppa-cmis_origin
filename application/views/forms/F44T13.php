@@ -17,7 +17,7 @@
     </div>
   </div><br>
   <ul class="nav nav-pills nav_list">
-    <li class="active"><a data-toggle="pill" href="#ReferralsReceived">Referrals Received</a></li>
+    <li class="active"><a data-toggle="pill" href="#ReferralsReceived">Courtesy Referrals Received</a></li>
     <li><a data-toggle="pill" href="#menu1">Courtesy Referrals Terminated</a></li>
   </ul>
   <br>
@@ -28,7 +28,7 @@
             <table class="table table-bordered text-nowrap" style="width:100%" id="T_F44T13">
               <thead class="small tb-header">
                 <tr>
-                  <th colspan="11" style="text-align: center;">REFERRALS RECEIVED</th>
+                  <th colspan="11" style="text-align: center;">COURTESY REFERRALS RECEIVED</th>
                 </tr>
                 <tr class="tb-header">
                   <th style="text-align: center;">DOCKET NO.</th>
