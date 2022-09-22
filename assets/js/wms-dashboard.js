@@ -207,6 +207,7 @@ $.wms.dashboard = (function() {
                             case "20" : $(".access_f53_write").remove();   break;
                             case "21" : $(".access_cppo").remove();   break;
                             case "22" : $(".access_cppo_write").remove();   break;
+                            case "23" : $.cookie("carryoverOverride", "false");   break;
                         }
                     }else{
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
