@@ -56,6 +56,8 @@
                 	<option value="f45_css_f3">FIELD OFFICE QUARTERLY COURTESY COMMUNITY SERVICE SUPERVISION CASELOAD</option>
                 	<option value="f50_vc_f1">FIELD OFFICE QUARTERLY VOLUNTARY CONFINEMENT CASELOAD</option>
                 	<option value="f51_ror_f1">FIELD OFFICE QUARTERLY RELEASE ON RECOGNIZANCE CASELOAD</option>
+                	<option value="f53_f1">FIELD OFFICE QUARTERLY COMMUNITY SERVICE AS IMPRISONMENT CASELOAD - HEARING PHASE</option>
+                	<option value="f53_f2">FIELD OFFICE QUARTERLY COMMUNITY SERVICE AS IMPRISONMENT CASELOAD - SUPERVISION PHASE</option>
 	              </select>
 	            </div>
 	            <div class="form-group col-md-2">

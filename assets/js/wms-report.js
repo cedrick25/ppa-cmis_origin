@@ -70,6 +70,12 @@ $.wms.report = (function() {
             case "f51_ror_f1":
                 f51_ror_f1();
             break;
+            case "f53_f1":
+                f53_f1();
+            break;
+            case "f53_f2":
+                f53_f2();
+            break;
 
             case "quarterly_f1":
                 quarterly_f1();
@@ -444,6 +450,18 @@ $.wms.report = (function() {
         $("#divLoading").addClass("hidden");
     }
     var f51_ror_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f53_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f53_f2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
