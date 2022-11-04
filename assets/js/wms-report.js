@@ -21,6 +21,56 @@ $.wms.report = (function() {
 
         switch(form){
             
+            case "f44_ssi_f1":
+                f44_ssi_f1();
+            break;
+            case "f44_ssi_f2":
+                f44_ssi_f2();
+            break;
+            case "f44_ssi_f3":
+                f44_ssi_f3();
+            break;
+            case "f44_sss_f1":
+                f44_sss_f1();
+            break;
+            case "f44_sss_f2_p1":
+                f44_sss_f2_p1();
+            break;
+            case "f44_sss_f2_p2":
+                f44_sss_f2_p2();
+            break;
+            case "f44_sss_f3":
+                f44_sss_f3();
+            break;
+
+            case "f45_csi_f1":
+                f45_csi_f1();
+            break;
+            case "f45_csi_f2":
+                f45_csi_f2();
+            break;
+            case "f45_csi_f3":
+                f45_csi_f3();
+            break;
+            case "f45_css_f1":
+                f45_css_f1();
+            break;
+            case "f45_css_f2_p1":
+                f45_css_f2_p1();
+            break;
+            case "f45_css_f2_p2":
+                f45_css_f2_p2();
+            break;
+            case "f45_css_f3":
+                f45_css_f3();
+            break;
+            case "f50_vc_f1":
+                f50_vc_f1();
+            break;
+            case "f51_ror_f1":
+                f51_ror_f1();
+            break;
+
             case "quarterly_f1":
                 quarterly_f1();
             break;
@@ -303,6 +353,103 @@ $.wms.report = (function() {
 
     };  
     // sel
+    var f44_ssi_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_ssi_f2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_ssi_f3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_sss_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_sss_f2_p1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_sss_f2_p2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_sss_f3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_csi_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_csi_f2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_csi_f3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_css_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_css_f2_p1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_css_f2_p2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_css_f3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f50_vc_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f51_ror_f1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+
     var quarterly_f1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);

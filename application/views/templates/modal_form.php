@@ -455,6 +455,9 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-regional-quarter">
+                <option value="2022-12">2022 4th Quarter</option>
+                <option value="2022-09">2022 3rd Quarter</option>
+                <option value="2022-06">2022 2nd Quarter</option>
                 <option value="2022-03">2022 1st Quarter</option>
                 <option value="2021-12">2021 4th Quarter</option>
                 <option value="2021-09">2021 3rd Quarter</option>
@@ -479,9 +482,6 @@
       </div>
     </div>
   </div>
-
-
-
 
   <div class="modal fade" id="fieldmodal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -531,7 +531,23 @@
                 <option value="f21_field_office_pr_pd_f2_p1">FIELD OFFICE QUARTERLY BOARD RESOLUTION OF PAROLE /PARDON SUPERVISION CASELOAD PAGE 1</option>
                 <option value="f21_field_office_pr_pd_f2_p2">FIELD OFFICE QUARTERLY BOARD RESOLUTION OF PAROLE /PARDON SUPERVISION CASELOAD PAGE 2</option>
                 <option value="f21_field_office_pr_pd_f3">FIELD OFFICE QUARTERLY REGIONAL DIRECTOR’S RESOLUTION OF PAROLE /PARDON SUPERVISION CASELOAD</option>
-                <option value="f21_field_office_pr_pd_f4">OFFICE QUARTERLY COURTESY PAROLE /PARDON SUPERVISION CASELOAD</option>
+                <option value="f21_field_office_pr_pd_f4">FIELD OFFICE QUARTERLY COURTESY PAROLE /PARDON SUPERVISION CASELOAD</option>
+                <option value="f44_ssi_f1">FIELD OFFICE QUARTERLY SUSPENDED SENTENCE INVESTIGATION CASELOAD</option>
+                <option value="f44_ssi_f2">FIELD OFFICE QUARTERLY EXECUTIVE DIRECTOR DISPOSITION OF SUSPENDED SENTENCE INVESTIGATION CASELOAD</option>
+                <option value="f44_ssi_f3">FIELD OFFICE QUARTERLY COURTESY SUSPENDED INVESTIGATION CASELOAD</option>
+                <option value="f44_sss_f1">FIELD OFFICE QUARTERLY SUSPENDED SENTENCE SUPERVISION CASELOAD</option>
+                <option value="f44_sss_f2_p1">FIELD OFFICE QUARTERLY EXECUTIVE DIRECTOR DISPOSITION OF SUSPENDED SENTENCE SUPERVISION CASELOAD</option>
+                <option value="f44_sss_f2_p2">FIELD OFFICE QUARTERLY EXECUTIVE DIRECTOR DISPOSITION OF SUSPENDED SENTENCE SUPERVISION CASELOAD</option>
+                <option value="f44_sss_f3">FIELD OFFICE QUARTERLY COURTESY SUSPENDED SENTENCE SUPERVISION CASELOAD</option>
+                <option value="f45_csi_f1">FIELD OFFICE QUARTERLY COMMUNITY SERVICE INVESTIGATION CASELOAD</option>
+                <option value="f45_csi_f2">FIELD OFFICE QUARTERLY COURT DISPOSITION OF COMMUNITY SERVICE INVESTIGATION CASELOAD</option>
+                <option value="f45_csi_f3">FIELD OFFICE QUARTERLY COURTESY COMMUNITY SERVICE INVESTIGATION CASELOAD</option>
+                <option value="f45_css_f1">FIELD OFFICE QUARTERLY COMMUNITY SERVICE SUPERVISION CASELOAD</option>
+                <option value="f45_css_f2_p1">FIELD OFFICE QUARTERLY COURT DISPOSITION OF COMMUNITY SERVICE SUPERVISION CASELOAD</option>
+                <option value="f45_css_f2_p2">FIELD OFFICE QUARTERLY COURT DISPOSITION OF COMMUNITY SERVICE SUPERVISION CASELOAD</option>
+                <option value="f45_css_f3">FIELD OFFICE QUARTERLY COURTESY COMMUNITY SERVICE SUPERVISION CASELOAD</option>
+                <option value="f50_vc_f1">FIELD OFFICE QUARTERLY VOLUNTARY CONFINEMENT CASELOAD</option>
+                <option value="f51_ror_f1">FIELD OFFICE QUARTERLY RELEASE ON RECOGNIZANCE CASELOAD</option>
               </select>
             </div>
           </div>
@@ -539,6 +555,9 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-field-quarter">
+                <option value="2022-12">2022 4th Quarter</option>
+                <option value="2022-09">2022 3rd Quarter</option>
+                <option value="2022-06">2022 2nd Quarter</option>
                 <option value="2022-03">2022 1st Quarter</option>
                 <option value="2021-12">2021 4th Quarter</option>
                 <option value="2021-09">2021 3rd Quarter</option>
@@ -599,6 +618,9 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-quarterly-quarter">
+                <option value="2022-12">2022 4th Quarter</option>
+                <option value="2022-09">2022 3rd Quarter</option>
+                <option value="2022-06">2022 2nd Quarter</option>
                 <option value="2022-03">2022 1st Quarter</option>
                 <option value="2021-12">2021 4th Quarter</option>
                 <option value="2021-09">2021 3rd Quarter</option>
