@@ -20,14 +20,15 @@
 <div class="container-fluid" style="padding-top: 30px">
   <div class="row pull-right">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style=""><b>PPA-CMR-FO-045</b></h4>
-      <h4 class="" style=""><b>CMRD-CSI-F2</b></h4>   
+      <!-- <h4 class="" style=""><b>PPA-CMR-FO-058</b></h4> -->
+      <!-- <h4 class="" style=""><b>CMRD-ROR-F1</b></h4>    -->
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style="text-align: center;"><b>FIELD OFFICE QUARTERLY COURT DISPOSITION OF COMMUNITY SERVICE INVESTIGATION CASELOAD</b></h4>
-      <h4 class="" style="text-align: center;"><b>As of <span class='curr_date'></span></b></h4>
+      <h4 class=""><b>Region: <span class="curr_reg"></span></b></h4>
+      <h4 class="" style="text-align: center;"><b>SUPERVISION PHASE</b></h4>
+      <!-- <h4 class="" style="text-align: center;"><b>As of <span class='curr_date'></span></b></h4> -->
     </div>
   </div><br>
   <div class="row">
@@ -38,30 +39,18 @@
       <table class="table table-bordered" id="Table" style="width:100%">
         <thead class="small tb-header">
           <tr>
-            <th colspan="1" rowspan="3" style="text-align: center;">
-              REGION<br>
-              <span class="curr_reg"></span><br>
-              PROBATION OFFICE
+            <th colspan="1" rowspan="2" style="text-align: center;">
+              Regions
             </th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(A) TOTAL CARRY OVER</th>
-            <th colspan="3" rowspan="1" style="text-align: center;">(B) INVESTIGATION REFERRALS RECEIVED</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(C) TOTAL INVESTIGATION CASES HANDLED</th>
-            <th colspan="4" rowspan="1" style="text-align: center;">(D) INVESTIGATION REFERRALS ACTED UPON</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL ACTIVE INVESTIGATION CASELOAD</th>
+            <th colspan="5" rowspan="1" style="text-align: center;">Community Service Order Received</th>
           </tr>
           <tr>
-            <th colspan="1" rowspan="2" style="text-align: center;">INVESTIGATION REFERRALS</th>
-            <th colspan="1" rowspan="2" style="text-align: center;">RE INVESTIGATION REFERRALS</th>
-            <th colspan="1" rowspan="2" style="text-align: center;">TOTAL</th>
-            <th colspan="2" rowspan="1" style="text-align: center;">REPORTS SUBMITTED TO THE COURT</th>
-            <th colspan="1" rowspan="2" style="text-align: center;">INVESTIGATION TRANSFERRED TO OTHER PPOs</th>
-            <th colspan="1" rowspan="2" style="text-align: center;">TOTAL</th>
+            <th colspan="1" rowspan="1" style="text-align: center;">Total Carry Over</th>
+            <th colspan="1" rowspan="1" style="text-align: center;">New Community Service</th>
+            <th colspan="1" rowspan="1" style="text-align: center;">Total Community Service Handled</th>
+            <th colspan="1" rowspan="1" style="text-align: center;">Total Community Service Terminated</th>
+            <th colspan="1" rowspan="1" style="text-align: center;">Total Active Community Service</th>
           </tr>
-          <tr>
-            <th colspan="1" rowspan="1" style="text-align: center;">GRANT</th>
-            <th colspan="1" rowspan="1" style="text-align: center;">DENIAL</th>
-          </tr>
-
         </thead>
         <tbody class="repbody">
         </tbody>

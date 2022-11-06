@@ -20,13 +20,13 @@
 <div class="container-fluid" style="padding-top: 30px">
   <div class="row pull-right">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style=""><b>PPA-CMR-FO-033</b></h4>
-      <h4 class="" style=""><b>(CMRD-SSI-F2)</b></h4>   
+      <h4 class="" style=""><b>PPA-CMR-FO-040</b></h4>
+      <h4 class="" style=""><b>(CMRD-SSI-R3)</b></h4>   
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style="text-align: center;"><b>FIELD OFFICE QUARTERLY EXECUTIVE DIRECTOR DISPOSITION OF SUSPENDED SENTENCE INVESTIGATION CASELOAD</b></h4>
+      <h4 class="" style="text-align: center;"><b>REGIONAL QUARTERLY COURTESY SUSPENDED SENTENCE INVESTIGATION CASELOAD</b></h4>
       <h4 class="" style="text-align: center;"><b>As of <span class='curr_date'></span></b></h4>
     </div>
   </div><br>
@@ -40,19 +40,13 @@
           <tr>
             <th colspan="1" rowspan="3" style="text-align: center;">
               REGION<br>
-              <span class="curr_reg"></span><br>
-              PROBATION OFFICE
+              <!-- <span class="curr_reg"></span><br> -->
             </th>
             <th colspan="1" rowspan="3" style="text-align: center;">(A) TOTAL CARRY OVER</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(B) TOTAL REPORTS SUBMITTED TO EXECUTIVE DIRECTOR</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(C) TOTAL CASES TO BE ACTED UPON BY EXECUTIVE DIRECTOR</th>
-            <th colspan="3" style="text-align: center;">(D) CASES DISPOSED OF BY EXECUTIVE DIRECTOR</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL CASES PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</th>
-          </tr>
-          <tr>
-            <th colspan="1" style="text-align: center;">GRANT</th>
-            <th colspan="1" style="text-align: center;">DENIAL</th>
-            <th colspan="1" style="text-align: center;">TOTAL</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(B) TOTAL COURTESY INVESTIGATION REFERRALS</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(C) TOTAL COURTESY INVESTIGATION CASES HANDLED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(D) TOTAL COURTESY INVESTIGATION COMPLETED AND RETURNED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL ACTIVE COURTESY SUPERVISION CASELOAD</th>
           </tr>
 
         </thead>

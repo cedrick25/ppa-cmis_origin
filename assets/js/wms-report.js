@@ -21,62 +21,117 @@ $.wms.report = (function() {
 
         switch(form){
             
-            case "f44_ssi_f1":
-                f44_ssi_f1();
+            case "f44_field_officessi_f1":
+                f44_field_officessi_f1();
             break;
-            case "f44_ssi_f2":
-                f44_ssi_f2();
+            case "f44_field_officessi_f2":
+                f44_field_officessi_f2();
             break;
-            case "f44_ssi_f3":
-                f44_ssi_f3();
+            case "f44_field_officessi_f3":
+                f44_field_officessi_f3();
             break;
-            case "f44_sss_f1":
-                f44_sss_f1();
+            case "f44_field_officesss_f1":
+                f44_field_officesss_f1();
             break;
-            case "f44_sss_f2_p1":
-                f44_sss_f2_p1();
+            case "f44_field_officesss_f2_p1":
+                f44_field_officesss_f2_p1();
             break;
-            case "f44_sss_f2_p2":
-                f44_sss_f2_p2();
+            case "f44_field_officesss_f2_p2":
+                f44_field_officesss_f2_p2();
             break;
-            case "f44_sss_f3":
-                f44_sss_f3();
-            break;
-
-            case "f45_csi_f1":
-                f45_csi_f1();
-            break;
-            case "f45_csi_f2":
-                f45_csi_f2();
-            break;
-            case "f45_csi_f3":
-                f45_csi_f3();
-            break;
-            case "f45_css_f1":
-                f45_css_f1();
-            break;
-            case "f45_css_f2_p1":
-                f45_css_f2_p1();
-            break;
-            case "f45_css_f2_p2":
-                f45_css_f2_p2();
-            break;
-            case "f45_css_f3":
-                f45_css_f3();
-            break;
-            case "f50_vc_f1":
-                f50_vc_f1();
-            break;
-            case "f51_ror_f1":
-                f51_ror_f1();
-            break;
-            case "f53_f1":
-                f53_f1();
-            break;
-            case "f53_f2":
-                f53_f2();
+            case "f44_field_officesss_f3":
+                f44_field_officesss_f3();
             break;
 
+            case "f45_field_officecsi_f1":
+                f45_field_officecsi_f1();
+            break;
+            case "f45_field_officecsi_f2":
+                f45_field_officecsi_f2();
+            break;
+            case "f45_field_officefield_officecsi_f3":
+                f45_field_officefield_officecsi_f3();
+            break;
+            case "f45_field_officecss_f1":
+                f45_field_officecss_f1();
+            break;
+            case "f45_field_officecss_f2_p1":
+                f45_field_officecss_f2_p1();
+            break;
+            case "f45_field_officecss_f2_p2":
+                f45_field_officecss_f2_p2();
+            break;
+            case "f45_field_officecss_f3":
+                f45_field_officecss_f3();
+            break;
+            case "f50_field_officevc_f1":
+                f50_field_officevc_f1();
+            break;
+            case "f51_field_officeror_f1":
+                f51_field_officeror_f1();
+            break;
+            case "f53_field_officef1":
+                f53_field_officef1();
+            break;
+            case "f53_field_officef2":
+                f53_field_officef2();
+            break;
+
+            case "f44_regional_ssi_r1":
+                f44_regional_ssi_r1();
+            break;
+            case "f44_regional_ssi_r2":
+                f44_regional_ssi_r2();
+            break;
+            case "f44_regional_ssi_r3":
+                f44_regional_ssi_r3();
+            break;
+            case "f44_regional_sss_r1":
+                f44_regional_sss_r1();
+            break;
+            case "f44_regional_sss_r2_p1":
+                f44_regional_sss_r2_p1();
+            break;
+            case "f44_regional_sss_r2_p2":
+                f44_regional_sss_r2_p2();
+            break;
+            case "f44_regional_sss_r3":
+                f44_regional_sss_r3();
+            break;
+
+            case "f45_regional_csi_r1":
+                f45_regional_csi_r1();
+            break;
+            case "f45_regional_csi_r2":
+                f45_regional_csi_r2();
+            break;
+            case "f45_regional_csi_r3":
+                f45_regional_csi_r3();
+            break;
+            case "f45_regional_css_r1":
+                f45_regional_css_r1();
+            break;
+            case "f45_regional_css_r2_p1":
+                f45_regional_css_r2_p1();
+            break;
+            case "f45_regional_css_r2_p2":
+                f45_regional_css_r2_p2();
+            break;
+            case "f45_regional_css_r3":
+                f45_regional_css_r3();
+            break;
+            case "f50_regional_vc_r1":
+                f50_regional_vc_r1();
+            break;
+            case "f51_regional_ror_r1":
+                f51_regional_ror_r1();
+            break;
+            case "f53_regional_r1":
+                f53_regional_r1();
+            break;
+            case "f53_regional_r2":
+                f53_regional_r2();
+            break;
             case "quarterly_f1":
                 quarterly_f1();
             break;
@@ -468,6 +523,114 @@ $.wms.report = (function() {
         $("#divLoading").addClass("hidden");
     }
 
+    var f44_regional_ssi_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_regional_ssi_r2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_regional_ssi_r3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_regional_sss_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_regional_sss_r2_p1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_regional_sss_r2_p2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f44_regional_sss_r3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_csi_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_csi_r2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_csi_r3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_css_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_css_r2_p1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_css_r2_p2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f45_regional_css_r3 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f50_regional_vc_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f51_regional_ror_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f53_regional_r1 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
+    var f53_regional_r2 = function(){
+        const eym = $.wms.urlParam('date');
+        const d = new Date(eym);
+        const Y_M = d.getFullYear()+'-01';
+        $("#divLoading").addClass("hidden");
+    }
     var quarterly_f1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);

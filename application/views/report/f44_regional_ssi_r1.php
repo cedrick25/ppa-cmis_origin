@@ -20,14 +20,13 @@
 <div class="container-fluid" style="padding-top: 30px">
   <div class="row pull-right">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style=""><b>PPA-CMR-FO-036</b></h4>
-      <h4 class="" style=""><b>CMRD-SSS-F2</b></h4>   
-      <h4 class="" style=""><b>Page 1</b></h4>   
+      <h4 class="" style=""><b>PPA-CMR-FO-038</b></h4>
+      <h4 class="" style=""><b>(CMRD-SSI-R1)</b></h4>   
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style="text-align: center;"><b>FIELD OFFICE QUARTERLY EXECUTIVE DIRECTOR DISPOSITION OF SUSPENDED SENTENCE SUPERVISION CASELOAD</b></h4>
+      <h4 class="" style="text-align: center;"><b>REGIONAL QUARTERLY SUSPENDED SENTENCE INVESTIGATION CASELOAD</b></h4>
       <h4 class="" style="text-align: center;"><b>As of <span class='curr_date'></span></b></h4>
     </div>
   </div><br>
@@ -39,24 +38,27 @@
       <table class="table table-bordered" id="Table" style="width:100%">
         <thead class="small tb-header">
           <tr>
-            <th colspan="1" rowspan="2" style="text-align: center;">
+            <th colspan="1" rowspan="3" style="text-align: center;">
               REGION<br>
-              <span class="curr_reg"></span><br>
-              PROBATION OFFICE
+              <!-- <span class="curr_reg"></span><br> -->
             </th>
-            <th colspan="4" style="text-align: center;">(A) CARRY OVER</th>
-            <th colspan="4" style="text-align: center;">(B) SUBMITTED TO EXECUTIVE DIRECTOR</th>
-            <th colspan="1" rowspan="2" style="text-align: center;">(C) TOTAL CASES TO BE ACTED UPON BY EXECUTIVE DIRECTOR</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(A) TOTAL CARRY OVER</th>
+            <th colspan="3" rowspan="1" style="text-align: center;">(B) INVESTIGATION REFERRALS RECEIVED</th>
+            <th colspan="1" rowspan="4" style="text-align: center;">(C) TOTAL INVESTIGATION CASES HANDLED</th>
+            <th colspan="4" style="text-align: center;">(D) INVESTIGATION REFERRALS ACTED UPON</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL ACTIVE INVESTIGATION CASELOAD</th>
           </tr>
           <tr>
-            <th colspan="1" style="text-align: center;">TERMINATED</th>
-            <th colspan="1" style="text-align: center;">REVOCATION</th>
-            <th colspan="1" style="text-align: center;">TRANS. TO OTHER OFFICES</th>
-            <th colspan="1" style="text-align: center;">TOTAL CARRY OVER</th>
-            <th colspan="1" style="text-align: center;">TERMINATION</th>
-            <th colspan="1" style="text-align: center;">REVOCATION</th>
-            <th colspan="1" style="text-align: center;">TRANS. TO OTHER OFFICES</th>
-            <th colspan="1" style="text-align: center;">TOTAL REPORTS SUBMITTED TO EXEC. DIR.</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">INVESTIGATION REFERRALS</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">RE INVESTIGATION REFERRALS</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">TOTAL</th>
+            <th colspan="2" style="text-align: center;">SSIR for</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">INVESTIGATION TRANSFERRED TO OTHER PPOs</th>
+            <th colspan="1" rowspan="2" style="text-align: center;">TOTAL</th>
+          </tr>
+          <tr>
+            <th colspan="1" style="text-align: center;">GRANT</th>
+            <th colspan="1" style="text-align: center;">DENIAL</th>
           </tr>
 
         </thead>

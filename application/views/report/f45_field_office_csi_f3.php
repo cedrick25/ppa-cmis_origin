@@ -20,14 +20,13 @@
 <div class="container-fluid" style="padding-top: 30px">
   <div class="row pull-right">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style=""><b>PPA-CMR-FO-036</b></h4>
-      <h4 class="" style=""><b>CMRD-SSS-F2</b></h4>   
-      <h4 class="" style=""><b>Page 2</b></h4>   
+      <h4 class="" style=""><b>PPA-CMR-FO-046</b></h4>
+      <h4 class="" style=""><b>CMRD-CSI-F3</b></h4>   
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style="text-align: center;"><b>FIELD OFFICE QUARTERLY EXECUTIVE DIRECTOR DISPOSITION OF SUSPENDED SENTENCE SUPERVISION CASELOAD</b></h4>
+      <h4 class="" style="text-align: center;"><b>FIELD OFFICE QUARTERLY COURTESY COMMUNITY SERVICE INVESTIGATION CASELOAD</b></h4>
       <h4 class="" style="text-align: center;"><b>As of <span class='curr_date'></span></b></h4>
     </div>
   </div><br>
@@ -39,20 +38,16 @@
       <table class="table table-bordered" id="Table" style="width:100%">
         <thead class="small tb-header">
           <tr>
-            <th colspan="1" rowspan="2" style="text-align: center;">
+            <th colspan="1" rowspan="3" style="text-align: center;">
               REGION<br>
               <span class="curr_reg"></span><br>
               PROBATION OFFICE
             </th>
-            <th colspan="1" rowspan="2" style="text-align: center;">(C) TOTAL CASES TO BE ACTED UPON BY EXECUTIVE DIRECTOR</th>
-            <th colspan="4" style="text-align: center;">(D) CASES DISPOSED OF BY EXECUTIVE DIRECTOR</th>
-            <th colspan="1" rowspan="2" style="text-align: center;">(E) TOTAL CASES PENDING DISPOSITION BY EXECUTIVE DIRECTOR</th>
-          </tr>
-          <tr>
-            <th colspan="1" style="text-align: center;">TERMINATED</th>
-            <th colspan="1" style="text-align: center;">REVOCATION</th>
-            <th colspan="1" style="text-align: center;">TRANS. TO OTHER OFFICES</th>
-            <th colspan="1" style="text-align: center;">TOTAL CASES DISPOSED OF BY EXECUTIVE DIRECTOR</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(A) TOTAL CARRY OVER</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(B) TOTAL COURTESY INVESTIGATION REFERRALS RECEIVED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(C) TOTAL COURTESY INVESTIGATION CASES HANDLED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(D) TOTAL COURTESY INVESTIGATION COMPLETED AND RETURNED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL ACTIVE COURTESY INVESTIGATION CASELOAD</th>
           </tr>
 
         </thead>

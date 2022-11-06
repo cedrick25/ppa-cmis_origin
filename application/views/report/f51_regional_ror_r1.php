@@ -20,13 +20,13 @@
 <div class="container-fluid" style="padding-top: 30px">
   <div class="row pull-right">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style=""><b>PPA-CMR-FO-034</b></h4>
-      <h4 class="" style=""><b>(CMRD-SSI-F3)</b></h4>   
+      <h4 class="" style=""><b>PPA-CMR-FO-059</b></h4>
+      <h4 class="" style=""><b>CMRD-ROR-R1</b></h4>   
     </div>
   </div>
   <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
-      <h4 class="" style="text-align: center;"><b>FIELD OFFICE QUARTERLY COURTESY SUSPENDED INVESTIGATION CASELOAD</b></h4>
+      <h4 class="" style="text-align: center;"><b>REGIONAL QUARTERLY RELEASE ON RECOGNIZANCE CASELOAD</b></h4>
       <h4 class="" style="text-align: center;"><b>As of <span class='curr_date'></span></b></h4>
     </div>
   </div><br>
@@ -40,16 +40,18 @@
           <tr>
             <th colspan="1" rowspan="3" style="text-align: center;">
               REGION<br>
-              <span class="curr_reg"></span><br>
-              PROBATION OFFICE
             </th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(A) TOTAL CARRY OVER</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(B) TOTAL COURTESY INVESTIGATION REFERRALS</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(C) TOTAL COURTESY INVESTIGATION CASES HANDLED</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(D) TOTAL COURTESY INVESTIGATION COMPLETED AND RETURNED</th>
-            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL ACTIVE COURTESY SUPERVISION CASELOAD</th>
+            <th colspan="6" rowspan="1" style="text-align: center;">SUPERVISION CASELOAD</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">TOTAL COURT DISPOSITION OR ROR</th>
           </tr>
-
+          <tr>
+            <th colspan="1" rowspan="3" style="text-align: center;">(A) TOTAL CARRY OVER SUPERVISION CASELOAD</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(B) TOTAL SUPERVISION REFERRALS RECEIVED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(C) TOTAL SUPERVISION CASES HANDLED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(D) TOTAL SUPERVISION CASES DROPPED</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(E) TOTAL MONITORING REPORTS SUBMITTED TO COURT</th>
+            <th colspan="1" rowspan="3" style="text-align: center;">(F) TOTAL ACTIVE SUPERVISION CASELOAD</th>
+          </tr>
         </thead>
         <tbody class="repbody">
         </tbody>
