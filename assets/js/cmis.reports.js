@@ -964,7 +964,7 @@ $.wms.reports = (function() {
                                 location.reload();
                             break;
                             case "F53" :
-                                var form45list = ['F53t1', 'F53t3', 'F53t5', 'F537', 'F53t9'];
+                                var form45list = ['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'];
                                 form45list.forEach(function(item) {
                                     console.log(item)
 
