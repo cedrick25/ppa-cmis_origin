@@ -5950,84 +5950,182 @@ $.wms.form45 = (function() {
 
             });
         }
-
+        var field =  $.wms.urlParam('field');
+        let firstWord = field.split(" ")[0]
+        console.log(firstWord);
         // var officeId;
         if (officeId === "ALL") {
-            var fi = [];
-            for (var x=0; x<=242; x++) {
-                fi.push(x);
-            }
-            var officeId = fi;
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getAllFieldOffices2',JSON.stringify(payload)).done(function (result) {
+                console.log("================")
+                var fi = [];
+                result.payload.forEach(function(data){
+                    // console.log(data.ID)
+                    fi.push(data.ID);
+                })
+                var officeId = fi;
+                var payload = {
+                    officeIdList  : officeId,
+                    yearMonthList : [date]
+                }
 
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                    $('.Id').text(result.id);
+                    $('.Id1').text(result.id1);
+                    $('.Id1a').text(result.id1a);
+                    $('.Id1b').text(result.id1b);
+                    $('.Id2').text(result.id2);
+                    $('.IId1').text(result.iid1);
+                    $('.IId2').text(result.iid2);
+                    $('.IVd').text(result.ivd);
+                    $('.IVd1').text(result.ivd1);
+                    $('.Ivd2').text(result.ivd2);
+
+                    $('.IVd3').text(result.ivd3);
+                    $('.IVe').text(result.ive);
+                    $('.IVe1').text(result.ive1);
+                    $('.IVe1a').text(result.ive1a);
+                    $('.IVe1b').text(result.ive1b);
+                    $('.IVe1c').text(result.ive1c);
+                    $('.Va').text(result.va);
+                    $('.Va1').text(result.va1);
+                    $('.Va2').text(result.va2);
+                    $('.Va3').text(result.va3);
+
+                    $('.Ia').text(result.ia);
+                    $('.Ib').text(result.ib);
+                    $('.Ib1').text(result.ib1);
+                    $('.Ib2').text(result.ib2);
+                    $('.Ic').text(result.ic);
+                    $('.Ie').text(result.ie);
+                    $('.IIa').text(result.iia);
+                    $('.IIb').text(result.iib);
+                    $('.IIc').text(result.iic);
+                    $('.IId').text(result.iid);
+
+                    $('.IIe').text(result.iie);
+                    $('.IIIa').text(result.iiia);
+                    $('.IIIb').text(result.iiib);
+                    $('.IIIc').text(result.iiic);
+                    $('.IIId').text(result.iiid);
+                    $('.IIIe').text(result.iiie);
+                    $('.IVa').text(result.iva);
+                    $('.IVb').text(result.ivb);
+                    $('.IVc').text(result.ivc);
+                    $('.IVf').text(result.ivf);
+
+                    $('.Vb').text(result.vb);
+                    $('.Vb1').text(result.vb1);
+                    $('.Vb2').text(result.vb2);
+                    $('.Vb3').text(result.vb3);
+                    $('.Vc').text(result.vc);
+                    $('.Vd').text(result.vd);
+                    $('.Vd1').text(result.vd1);
+                    $('.Vd2').text(result.vd2);
+                    $('.Vd3').text(result.vd3);
+                    $('.Ve').text(result.ve);
+
+                    $('.VIa').text(result.via);
+                    $('.VIb').text(result.vib);
+                    $('.VIc').text(result.vic);
+                    $('.VId').text(result.vid);
+                    $('.VIe').text(result.vie);
+                });
+            })
+        } else if (firstWord === "Regional") {
+            var officeId =  $.wms.urlParam('officeId')
             var payload = {
-                officeIdList  : officeId,
-                yearMonthList : [date]
+                field_id  : officeId,
             }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
+                console.log("================")
+                var payload2 = {
+                    REGION  : result.payload.REGION,
+                }
+                console.log(payload2)
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result) {
+                    console.log("================")
+                    console.log(result)
+                    var fi = [];
+                    result.payload.forEach(function(data){
+                        // console.log(data.ID)
+                        fi.push(data.ID);
+                    })
+                    var officeId = fi;
+                    var payload = {
+                        officeIdList  : officeId,
+                        yearMonthList : [date]
+                    }
 
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
-                console.log(result)
-                $('.Id').text(result.id);
-                $('.Id1').text(result.id1);
-                $('.Id1a').text(result.id1a);
-                $('.Id1b').text(result.id1b);
-                $('.Id2').text(result.id2);
-                $('.IId1').text(result.iid1);
-                $('.IId2').text(result.iid2);
-                $('.IVd').text(result.ivd);
-                $('.IVd1').text(result.ivd1);
-                $('.Ivd2').text(result.ivd2);
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
+                        console.log(result)
+                        $('.Id').text(result.id);
+                        $('.Id1').text(result.id1);
+                        $('.Id1a').text(result.id1a);
+                        $('.Id1b').text(result.id1b);
+                        $('.Id2').text(result.id2);
+                        $('.IId1').text(result.iid1);
+                        $('.IId2').text(result.iid2);
+                        $('.IVd').text(result.ivd);
+                        $('.IVd1').text(result.ivd1);
+                        $('.Ivd2').text(result.ivd2);
 
-                $('.IVd3').text(result.ivd3);
-                $('.IVe').text(result.ive);
-                $('.IVe1').text(result.ive1);
-                $('.IVe1a').text(result.ive1a);
-                $('.IVe1b').text(result.ive1b);
-                $('.IVe1c').text(result.ive1c);
-                $('.Va').text(result.va);
-                $('.Va1').text(result.va1);
-                $('.Va2').text(result.va2);
-                $('.Va3').text(result.va3);
+                        $('.IVd3').text(result.ivd3);
+                        $('.IVe').text(result.ive);
+                        $('.IVe1').text(result.ive1);
+                        $('.IVe1a').text(result.ive1a);
+                        $('.IVe1b').text(result.ive1b);
+                        $('.IVe1c').text(result.ive1c);
+                        $('.Va').text(result.va);
+                        $('.Va1').text(result.va1);
+                        $('.Va2').text(result.va2);
+                        $('.Va3').text(result.va3);
 
-                $('.Ia').text(result.ia);
-                $('.Ib').text(result.ib);
-                $('.Ib1').text(result.ib1);
-                $('.Ib2').text(result.ib2);
-                $('.Ic').text(result.ic);
-                $('.Ie').text(result.ie);
-                $('.IIa').text(result.iia);
-                $('.IIb').text(result.iib);
-                $('.IIc').text(result.iic);
-                $('.IId').text(result.iid);
+                        $('.Ia').text(result.ia);
+                        $('.Ib').text(result.ib);
+                        $('.Ib1').text(result.ib1);
+                        $('.Ib2').text(result.ib2);
+                        $('.Ic').text(result.ic);
+                        $('.Ie').text(result.ie);
+                        $('.IIa').text(result.iia);
+                        $('.IIb').text(result.iib);
+                        $('.IIc').text(result.iic);
+                        $('.IId').text(result.iid);
 
-                $('.IIe').text(result.iie);
-                $('.IIIa').text(result.iiia);
-                $('.IIIb').text(result.iiib);
-                $('.IIIc').text(result.iiic);
-                $('.IIId').text(result.iiid);
-                $('.IIIe').text(result.iiie);
-                $('.IVa').text(result.iva);
-                $('.IVb').text(result.ivb);
-                $('.IVc').text(result.ivc);
-                $('.IVf').text(result.ivf);
+                        $('.IIe').text(result.iie);
+                        $('.IIIa').text(result.iiia);
+                        $('.IIIb').text(result.iiib);
+                        $('.IIIc').text(result.iiic);
+                        $('.IIId').text(result.iiid);
+                        $('.IIIe').text(result.iiie);
+                        $('.IVa').text(result.iva);
+                        $('.IVb').text(result.ivb);
+                        $('.IVc').text(result.ivc);
+                        $('.IVf').text(result.ivf);
 
-                $('.Vb').text(result.vb);
-                $('.Vb1').text(result.vb1);
-                $('.Vb2').text(result.vb2);
-                $('.Vb3').text(result.vb3);
-                $('.Vc').text(result.vc);
-                $('.Vd').text(result.vd);
-                $('.Vd1').text(result.vd1);
-                $('.Vd2').text(result.vd2);
-                $('.Vd3').text(result.vd3);
-                $('.Ve').text(result.ve);
+                        $('.Vb').text(result.vb);
+                        $('.Vb1').text(result.vb1);
+                        $('.Vb2').text(result.vb2);
+                        $('.Vb3').text(result.vb3);
+                        $('.Vc').text(result.vc);
+                        $('.Vd').text(result.vd);
+                        $('.Vd1').text(result.vd1);
+                        $('.Vd2').text(result.vd2);
+                        $('.Vd3').text(result.vd3);
+                        $('.Ve').text(result.ve);
 
-                $('.VIa').text(result.via);
-                $('.VIb').text(result.vib);
-                $('.VIc').text(result.vic);
-                $('.VId').text(result.vid);
-                $('.VIe').text(result.vie);
-            });
+                        $('.VIa').text(result.via);
+                        $('.VIb').text(result.vib);
+                        $('.VIc').text(result.vic);
+                        $('.VId').text(result.vid);
+                        $('.VIe').text(result.vie);
+                    });
+                    console.log("================")
 
+                })
+                console.log("================")
+
+            })
         } else {
             var officeId =  $.wms.urlParam('officeId')
 

@@ -1476,29 +1476,75 @@ $.wms.form51 = (function() {
 
             });
         }
-
+        var field =  $.wms.urlParam('field');
+        let firstWord = field.split(" ")[0]
+        console.log(firstWord);
         // var officeId;
         if (officeId === "ALL") {
-            var fi = [];
-            for (var x=0; x<=242; x++) {
-                fi.push(x);
-            }
-            var officeId = fi;
-
-            var payload = {
-                officeIdList  : officeId,
-                yearMonthList : [date]
-            }
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F51Caseload',JSON.stringify(payload)).done(function (result) {
-                console.log(result)
-                $('.ia').text(result.ia);
-                $('.ib').text(result.ib);
-                $('.ic').text(result.ic);
-                $('.id').text(result.id);
-                $('.ie').text(result.ie);
-                $('.if').text(result.if);
-                $('.ii').text(result.ii);
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getAllFieldOffices2',JSON.stringify(payload)).done(function (result) {
+                console.log("================")
+                var fi = [];
+                result.payload.forEach(function(data){
+                    // console.log(data.ID)
+                    fi.push(data.ID);
+                })
+                var officeId = fi;
+                var payload = {
+                    officeIdList  : officeId,
+                    yearMonthList : [date]
+                }
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F51Caseload',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                    $('.ia').text(result.ia);
+                    $('.ib').text(result.ib);
+                    $('.ic').text(result.ic);
+                    $('.id').text(result.id);
+                    $('.ie').text(result.ie);
+                    $('.if').text(result.if);
+                    $('.ii').text(result.ii);
+                });
             });
+        } else if (firstWord === "Regional") {
+            var officeId =  $.wms.urlParam('officeId')
+            var payload = {
+                field_id  : officeId,
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/getRegionByFieldOfficeID',JSON.stringify(payload)).done(function (result) {
+                console.log("================")
+                var payload2 = {
+                    REGION  : result.payload.REGION,
+                }
+                console.log(payload2)
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result) {
+                    console.log("================")
+                    console.log(result)
+                    var fi = [];
+                    result.payload.forEach(function(data){
+                        // console.log(data.ID)
+                        fi.push(data.ID);
+                    })
+                    var officeId = fi;
+                    var payload = {
+                        officeIdList  : officeId,
+                        yearMonthList : [date]
+                    }
+
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/F51Caseload',JSON.stringify(payload)).done(function (result) {
+                        console.log(result)
+                        $('.ia').text(result.ia);
+                        $('.ib').text(result.ib);
+                        $('.ic').text(result.ic);
+                        $('.id').text(result.id);
+                        $('.ie').text(result.ie);
+                        $('.if').text(result.if);
+                        $('.ii').text(result.ii);
+                    });
+                    console.log("================")
+
+                })
+                console.log("================")
+
+            })
 
         } else {
             var officeId =  $.wms.urlParam('officeId')
