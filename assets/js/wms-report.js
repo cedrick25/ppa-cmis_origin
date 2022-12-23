@@ -2105,18 +2105,124 @@ $.wms.report = (function() {
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+        const reg2 = $.wms.urlParam('reg2');
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        var payload2 = {
+            REGION  : reg2,
+        }
+        console.log(payload2)
+        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result) {
+            console.log("================")
+            // console.log(result)
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            result.payload.forEach(function(data){
+                // console.log(data.ID)
+                // console.log(data.NAME)
+
+                var payload = {
+                    officeIdList  : [data.ID],
+                    yearMonthList : quarter
+                }
+                // console.log(payload)
+
+                $.wms.executeExternalPost('http://192.168.1.184:8000/F51Caseload',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                    $("#divLoading").addClass("hidden");
+
+                    // var total1 = result.vd1 + result.vd2 + result.vd3;
+                    // var total2 = result.vb1 + result.vb2 + result.vb3;
+
+                    a += result.ia;
+                    b += result.ib;
+                    c += result.ic;
+                    d += result.id;
+                    e += result.ie;
+                    f += result.if;
+                    g += result.ii;
+                    data = "<tr>"+
+                                "<td class='b'>"+data.NAME+"</td>"+
+                                "<td class='center'>"+result.ia+"</td>"+
+                                "<td class='center'>"+result.ib+"</td>"+
+                                "<td class='center'>"+result.ic+"</td>"+
+                                "<td class='center'>"+result.id+"</td>"+
+                                "<td class='center'>"+result.ie+"</td>"+
+                                "<td class='center'>"+result.if+"</td>"+
+                                "<td class='center'>"+result.ii+"</td>"+
+                            "</tr>";
+
+                    $(".repbody").append(data);
+            
+                    $(".repfoot").html(
+                        "<tr>"+
+                            "<td class='b'>Total</td>"+
+                            "<td class='center b'>"+a+"</td>"+
+                            "<td class='center b'>"+b+"</td>"+
+                            "<td class='center b'>"+c+"</td>"+
+                            "<td class='center b'>"+d+"</td>"+
+                            "<td class='center b'>"+e+"</td>"+
+                            "<td class='center b'>"+f+"</td>"+
+                            "<td class='center b'>"+g+"</td>"+
+                        "</tr>"
+                    );
+                })
+            })
+        })
     }
     var f53_field_office_f1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
+        const reg2 = $.wms.urlParam('reg2');
         $("#divLoading").addClass("hidden");
     }
     var f53_field_office_f2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
+        const reg2 = $.wms.urlParam('reg2');
         $("#divLoading").addClass("hidden");
     }
 
@@ -2124,97 +2230,1995 @@ $.wms.report = (function() {
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.ib1 + result3.ib2;
+                            var total2 = result3.ia + result3.ib;
+                            var total3 = result3.id1a + result3.id1b + result3.id2;
+                            var total4 = total2 - total3;
+                            a += result3.ia;
+                            b += result3.ib1;
+                            c += result3.ib2;
+                            d += total1;
+                            e += total2;
+                            f += result3.id1a;
+                            g += result3.id1b;
+                            h += result3.id2;
+                            i += total3;
+                            j += total4;
+
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.ia+"</td>"+
+                                        "<td class='center'>"+result3.ib1+"</td>"+
+                                        "<td class='center'>"+result3.ib2+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+result3.id1a+"</td>"+
+                                        "<td class='center'>"+result3.id1b+"</td>"+
+                                        "<td class='center'>"+result3.id2+"</td>"+
+                                        "<td class='center'>"+total3+"</td>"+
+                                        "<td class='center'>"+total4+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                    "<td class='center b'>"+i+"</td>"+
+                                    "<td class='center b'>"+j+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f44_regional_ssi_r2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.iia + result3.iib;
+                            var total2 = result3.iid1 + result3.iid2;
+                            var total3 = total1 - total2;
+                            a += result3.iia;
+                            b += result3.iib;
+                            c += total1;
+                            d += result3.iid1;
+                            e += result3.iid2;
+                            f += total2;
+                            g += total3;
+                            console.log(a)
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.iia+"</td>"+
+                                        "<td class='center'>"+result3.iib+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.iid1+"</td>"+
+                                        "<td class='center'>"+result3.iid2+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+total3+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f44_regional_ssi_r3 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.iiia + result3.iiib;
+                            var total2 = total1 - result3.iiid;
+                            a += result3.iiia;
+                            b += result3.iiib;
+                            c += total1;
+                            d += result3.iiid;
+                            e += total2;
+                            console.log(a)
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.iiia+"</td>"+
+                                        "<td class='center'>"+result3.iiib+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.iiid+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f44_regional_sss_r1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.iva + result3.ivb;
+                            var total2 = result3.ivd2 + result3.ivd2 + result3.ivd3;
+                            var total3 = result3.ive1a + result3.ive1b + result3.ive1c;
+                            var total4 = total1 - total2;
+
+                            a += result3.iva;
+                            b += result3.ivb;
+                            c += total1;
+                            d += result3.ivd1;
+                            e += result3.ivd2;
+                            f += result3.ivd3;
+                            g += total2;
+                            h += result3.ive1a;
+                            i += result3.ive1b;
+                            j += result3.ive1c;
+                            k += total3;
+                            l += total4;
+                            console.log(a)
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.iva+"</td>"+
+                                        "<td class='center'>"+result3.ivb+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.ivd1+"</td>"+
+                                        "<td class='center'>"+result3.ivd2+"</td>"+
+                                        "<td class='center'>"+result3.ivd3+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+result3.ive1a+"</td>"+
+                                        "<td class='center'>"+result3.ive1b+"</td>"+
+                                        "<td class='center'>"+result3.ive1c+"</td>"+
+                                        "<td class='center'>"+total3+"</td>"+
+                                        "<td class='center'>"+total4+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                    "<td class='center b'>"+i+"</td>"+
+                                    "<td class='center b'>"+j+"</td>"+
+                                    "<td class='center b'>"+k+"</td>"+
+                                    "<td class='center b'>"+l+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f44_regional_sss_r2_p1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.va1 + result3.va2 + result3.va3;
+                            var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+                            var total3 = total1 + total2;
+
+                            a += result3.va1;
+                            b += result3.va2;
+                            c += result3.va3;
+                            d += total1;
+                            e += result3.vb1;
+                            f += result3.vb2;
+                            g += result3.vb3;
+                            h += total2;
+                            i += total3;
+                            console.log(a)
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.va1+"</td>"+
+                                        "<td class='center'>"+result3.va2+"</td>"+
+                                        "<td class='center'>"+result3.va3+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.vb1+"</td>"+
+                                        "<td class='center'>"+result3.vb2+"</td>"+
+                                        "<td class='center'>"+result3.vb3+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+total3+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                    "<td class='center b'>"+i+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f44_regional_sss_r2_p2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.va1 + result3.va2 + result3.va3;
+                            var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+                            var total3 = total1 + total2;
+                            var total4 = result3.vd1 + result3.vd2 + result3.vd3;
+                            var total5 = total3 - total4;
+
+                            a += total3;
+                            b += result3.vd1;
+                            c += result3.vd2;
+                            d += result3.vd3;
+                            e += total4;
+                            f += total5;
+                            console.log(a)
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+total3+"</td>"+
+                                        "<td class='center'>"+result3.vd1+"</td>"+
+                                        "<td class='center'>"+result3.vd2+"</td>"+
+                                        "<td class='center'>"+result3.vd3+"</td>"+
+                                        "<td class='center'>"+total4+"</td>"+
+                                        "<td class='center'>"+total5+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f44_regional_sss_r3 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+                            var total1 = result3.via + result3.vib;
+                            var total2 = total1 - result3.vid;
+
+                            a += result3.via;
+                            b += result3.vib;
+                            c += total1;
+                            d += result3.vid;
+                            e += total2;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.via+"</td>"+
+                                        "<td class='center'>"+result3.vib+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.vid+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_csi_r1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.ib1 + result3.ib2;
+                            var total2 = result3.id1a + result3.id1b + result3.id2;
+
+                            a += result3.ia;
+                            b += result3.ib1;
+                            c += result3.ib2;
+                            d += total1;
+                            e += result3.ic;
+                            f += result3.id1a;
+                            g += result3.id1b;
+                            h += result3.id2;
+                            i += total2;
+                            j += result3.ie;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.ia+"</td>"+
+                                        "<td class='center'>"+result3.ib1+"</td>"+
+                                        "<td class='center'>"+result3.ib2+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.ic+"</td>"+
+                                        "<td class='center'>"+result3.id1a+"</td>"+
+                                        "<td class='center'>"+result3.id1b+"</td>"+
+                                        "<td class='center'>"+result3.id2+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+result3.ie+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                    "<td class='center b'>"+i+"</td>"+
+                                    "<td class='center b'>"+j+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_csi_r2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.iid1 + result3.iid2;
+
+                            a += result3.iia;
+                            b += result3.iib;
+                            c += result3.iic;
+                            d += result3.iid1;
+                            e += result3.iid2;
+                            f += total1;
+                            g += result3.iie;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.iia+"</td>"+
+                                        "<td class='center'>"+result3.iib+"</td>"+
+                                        "<td class='center'>"+result3.iic+"</td>"+
+                                        "<td class='center'>"+result3.iid1+"</td>"+
+                                        "<td class='center'>"+result3.iid2+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.iie+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_csi_r3 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.iid1 + result3.iid2;
+
+                            a += result3.iiia;
+                            b += result3.iiib;
+                            c += result3.iiic;
+                            d += result3.iiid;
+                            e += result3.iiie;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.iiia+"</td>"+
+                                        "<td class='center'>"+result3.iiib+"</td>"+
+                                        "<td class='center'>"+result3.iiic+"</td>"+
+                                        "<td class='center'>"+result3.iiid+"</td>"+
+                                        "<td class='center'>"+result3.iiie+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_css_r1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.ivd1 + result3.ivd2 + result3.ivd3;
+                            var total2 = result3.ive1a + result3.ive1b + result3.ive1c;
+
+                            a += result3.iva;
+                            b += result3.ivb;
+                            c += result3.ivc;
+                            d += result3.ivd1;
+                            e += result3.ivd2;
+                            f += result3.ivd3;
+                            g += total1;
+                            h += result3.ive1a;
+                            i += result3.ive1b;
+                            j += result3.ive1c;
+                            k += total2;
+                            l += result3.ivf;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.iva+"</td>"+
+                                        "<td class='center'>"+result3.ivb+"</td>"+
+                                        "<td class='center'>"+result3.ivc+"</td>"+
+                                        "<td class='center'>"+result3.ivd1+"</td>"+
+                                        "<td class='center'>"+result3.ivd2+"</td>"+
+                                        "<td class='center'>"+result3.ivd3+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.ive1a+"</td>"+
+                                        "<td class='center'>"+result3.ive1b+"</td>"+
+                                        "<td class='center'>"+result3.ive1c+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+result3.ivf+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                    "<td class='center b'>"+i+"</td>"+
+                                    "<td class='center b'>"+j+"</td>"+
+                                    "<td class='center b'>"+k+"</td>"+
+                                    "<td class='center b'>"+l+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_css_r2_p1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.va1 + result3.va2 + result3.va3;
+                            var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+
+                            a += result3.va1;
+                            b += result3.va2;
+                            c += result3.va3;
+                            d += total1;
+                            e += result3.vb1;
+                            f += result3.vb2;
+                            g += result3.vb3;
+                            h += total2;
+                            i += result3.vc;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.va1+"</td>"+
+                                        "<td class='center'>"+result3.va2+"</td>"+
+                                        "<td class='center'>"+result3.va3+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.vb1+"</td>"+
+                                        "<td class='center'>"+result3.vb2+"</td>"+
+                                        "<td class='center'>"+result3.vb3+"</td>"+
+                                        "<td class='center'>"+total2+"</td>"+
+                                        "<td class='center'>"+result3.vc+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                    "<td class='center b'>"+i+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_css_r2_p2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.vd1 + result3.vd2 + result3.vd3;
+                            var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+
+                            a += result3.vc;
+                            b += result3.vd1;
+                            c += result3.vd2;
+                            d += result3.vd3;
+                            e += total1;
+                            f += result3.ve;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.vc+"</td>"+
+                                        "<td class='center'>"+result3.vd1+"</td>"+
+                                        "<td class='center'>"+result3.vd2+"</td>"+
+                                        "<td class='center'>"+result3.vd3+"</td>"+
+                                        "<td class='center'>"+total1+"</td>"+
+                                        "<td class='center'>"+result3.ve+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f45_regional_css_r3 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.vd1 + result3.vd2 + result3.vd3;
+                            var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+
+                            a += result3.via;
+                            b += result3.vib;
+                            c += result3.vic;
+                            d += result3.vid;
+                            e += result3.vie;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.via+"</td>"+
+                                        "<td class='center'>"+result3.vib+"</td>"+
+                                        "<td class='center'>"+result3.vic+"</td>"+
+                                        "<td class='center'>"+result3.vid+"</td>"+
+                                        "<td class='center'>"+result3.vie+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f50_regional_vc_r1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F50Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            var total1 = result3.vd1 + result3.vd2 + result3.vd3;
+                            var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+
+                            a += result3.a;
+                            b += result3.b;
+                            c += result3.c;
+                            d += result3.d;
+                            e += result3.e;
+                            f += result3.f;
+                            g += result3.g;
+                            h += result3.h;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.a+"</td>"+
+                                        "<td class='center'>"+result3.b+"</td>"+
+                                        "<td class='center'>"+result3.c+"</td>"+
+                                        "<td class='center'>"+result3.d+"</td>"+
+                                        "<td class='center'>"+result3.e+"</td>"+
+                                        "<td class='center'>"+result3.f+"</td>"+
+                                        "<td class='center'>"+result3.g+"</td>"+
+                                        "<td class='center'>"+result3.h+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                    "<td class='center b'>"+h+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f51_regional_ror_r1 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
         const Y_M = d.getFullYear()+'-01';
-        $("#divLoading").addClass("hidden");
+
+        let quarter;
+        switch (eym) {
+        case "2022-03":
+            quarter = ["2022-01", "2022-02", "2022-03"];
+            break;
+        case "2022-06":
+            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
+            break;
+        case "2022-09":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
+            break;
+        case "2022-12":
+            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
+            break;
+        case "2023-03":
+            quarter = ["2023-01", "2023-02", "2023-03"];
+            break;
+        case "2023-06":
+            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
+            break;
+        case "2023-09":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
+            break;
+        case "2023-12":
+            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
+            break;
+        default:
+            quarter = "";
+            console.log(quarter)
+            break;
+        };
+
+        $.wms.executeExternalGet('/ppa-cmis-api_origin/wsv1/Pis/fetchAllRegion2').done(function (result) {
+            console.log("================")
+            console.log(result)
+            $("#divLoading").addClass("hidden");
+
+            let a = 0;
+            let b = 0;
+            let c = 0;
+            let d = 0;
+            let e = 0;
+            let f = 0;
+            let g = 0;
+            let h = 0;
+            let i = 0;
+            let j = 0;
+            let k = 0;
+            let l = 0;
+            
+            result.payload.forEach(function(data){
+                // console.log(data.VALUE_)
+
+                var payload2 = {
+                    REGION  : data.ID,
+                }
+                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Pis/fetchFieldOfficeByRegion',JSON.stringify(payload2)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.status === "SUCCESS") {
+
+                        var list = [];
+                        result2.payload.forEach(function(data){
+                            list.push(data.ID)
+                        })
+
+                        var payload3 = {
+                            officeIdList  : list,
+                            yearMonthList : quarter
+                        }
+                        console.log(payload3)
+                        $.wms.executeExternalPost('http://192.168.1.184:8000/F51Caseload',JSON.stringify(payload3)).done(function (result3) {
+                            // console.log(result3)
+
+                            // var total1 = result3.vd1 + result3.vd2 + result3.vd3;
+                            // var total2 = result3.vb1 + result3.vb2 + result3.vb3;
+
+                            a += result3.ia;
+                            b += result3.ib;
+                            c += result3.ic;
+                            d += result3.id;
+                            e += result3.ie;
+                            f += result3.if;
+                            g += result3.ii;
+                            data = "<tr>"+
+                                        "<td class='b'>"+data.VALUE_+"</td>"+
+                                        "<td class='center'>"+result3.ia+"</td>"+
+                                        "<td class='center'>"+result3.ib+"</td>"+
+                                        "<td class='center'>"+result3.ic+"</td>"+
+                                        "<td class='center'>"+result3.id+"</td>"+
+                                        "<td class='center'>"+result3.ie+"</td>"+
+                                        "<td class='center'>"+result3.if+"</td>"+
+                                        "<td class='center'>"+result3.ii+"</td>"+
+                                    "</tr>";
+
+                            $(".repbody").append(data);
+                    
+                            $(".repfoot").html(
+                                "<tr>"+
+                                    "<td class='b'>Total</td>"+
+                                    "<td class='center b'>"+a+"</td>"+
+                                    "<td class='center b'>"+b+"</td>"+
+                                    "<td class='center b'>"+c+"</td>"+
+                                    "<td class='center b'>"+d+"</td>"+
+                                    "<td class='center b'>"+e+"</td>"+
+                                    "<td class='center b'>"+f+"</td>"+
+                                    "<td class='center b'>"+g+"</td>"+
+                                "</tr>"
+                            );
+                        })
+
+                    } else {
+
+                    }
+                })
+            })
+        })
     }
     var f53_regional_r1 = function(){
         const eym = $.wms.urlParam('date');
