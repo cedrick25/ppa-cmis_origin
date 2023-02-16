@@ -1,11 +1,11 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
     	<span class="pull-right" style="padding-right: 10px;">
-    		<button type="button" class="access_f5_write btn-add-rcv btn btn-sm btn-primary"  data-toggle="modal" data-target="#modal-add-rcv"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
+    		<button type="button" class="access_f5_write btn-add-rcv btn btn-sm btn-primary form_lock"  data-toggle="modal" data-target="#modal-add-rcv"><i class="fa fa-plus-circle"></i> Add New Referrals Received</button>
 
-    		<button type="button" class="access_f5_write btn-add-acted btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-acted"><i class="fa fa-plus-circle"></i> Add New Referrals Acted Upon</button>
+    		<button type="button" class="access_f5_write btn-add-acted btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-acted"><i class="fa fa-plus-circle"></i> Add New Referrals Acted Upon</button>
 
-    		<button type="button" class="access_f5_write btn-add-not btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-add-notacted"><i class="fa fa-plus-circle"></i> Add New Referrals Not Acted Upon</button>
+    		<button type="button" class="access_f5_write btn-add-not btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-add-notacted"><i class="fa fa-plus-circle"></i> Add New Referrals Not Acted Upon</button>
         
         <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button>
 

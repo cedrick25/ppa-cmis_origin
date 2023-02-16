@@ -805,22 +805,28 @@ $.wms.reports = (function() {
               "formTable"       : result[0],
               "analystRole"     : userRole
             }
-            const myTimeout = setTimeout(timeout, 1);
-            function timeout(){
-                $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
-                    console.log(result)
-                    if (result.response == false) {
-                        console.log('false')
-                        $(".form_lock").removeClass('hide')
-                        $(".cppoIsApproved").removeClass('hide')
-                    } else {
-                        console.log('true')
-                        $(".form_lock").addClass('hide')
-                        $(".cppoIsApproved").addClass('hide')
-                    }
-                    
-                })
-            }
+            function checkPendingRequest() {
+                if ($.active > 0) {
+                    console.log("waiting...")
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+                else {
+                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
+                        console.log(result)
+                        if (result.response == false) {
+                            console.log('false')
+                            $(".form_lock").removeClass('hide')
+                            $(".cppoIsApproved").removeClass('hide')
+                        } else {
+                            console.log('true')
+                            $(".form_lock").addClass('hide')
+                            $(".cppoIsApproved").addClass('hide')
+                        }
+                        
+                    })
+                }
+            };
+            window.setTimeout(checkPendingRequest, 100);
         }
         console.log("------------")
     }
@@ -917,6 +923,28 @@ $.wms.reports = (function() {
                         // location.reload();
 
                         switch(data_form_table){
+                            case "F5" : 
+                                var payload =  {
+                                    "field_office": field,
+                                    "Y_M": data_ym,
+                                }
+                                console.log(payload)
+
+                                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f5?submit=yes',JSON.stringify(payload)).done(function (result) {
+                                });
+                                location.reload();
+                            break;
+                            case "F21" : 
+                                var payload =  {
+                                    "field_office": field,
+                                    "Y_M": data_ym,
+                                }
+                                console.log(payload)
+
+                                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f21?submit=yes',JSON.stringify(payload)).done(function (result) {
+                                });
+                                location.reload();
+                            break;
                             case "F44" : 
                                 var form44list = ['F44t1', 'F44t3', 'F44t5', 'F44t7', 'F44t10', 'F44t12'];
                                 form44list.forEach(function(item) {
@@ -931,8 +959,8 @@ $.wms.reports = (function() {
 
                                     $.wms.executeExternalPost('http://192.168.1.184:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                     });
+                                        location.reload();
                                 });
-                                location.reload();
                             break;
                             case "F45" :  
                                 var form45list = ['F45t1', 'F45t3', 'F45t5', 'F45t7', 'F45t10', 'F45t12'];
@@ -948,8 +976,8 @@ $.wms.reports = (function() {
 
                                     $.wms.executeExternalPost('http://192.168.1.184:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                     });
+                                        location.reload();
                                 });
-                                location.reload();
                             break;
                             case "F51" :
                                 var payload =  {
@@ -961,11 +989,11 @@ $.wms.reports = (function() {
 
                                 $.wms.executeExternalPost('http://192.168.1.184:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
                                 });
-                                location.reload();
+                                    location.reload();
                             break;
                             case "F53" :
-                                var form45list = ['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'];
-                                form45list.forEach(function(item) {
+                                var form53list = ['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'];
+                                form53list.forEach(function(item) {
                                     console.log(item)
 
                                     var payload =  {
@@ -977,8 +1005,8 @@ $.wms.reports = (function() {
 
                                     $.wms.executeExternalPost('http://192.168.1.184:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                     });
+                                        location.reload();
                                 });
-                                location.reload();
                             break;
                         }
                     });
@@ -1023,12 +1051,10 @@ $.wms.reports = (function() {
     }
 
 
-
     return {
         attachF5PCS : __attachF5PCS,
         attachF21PCS : __attachF21PCS,
         form_lock : __form_lock,
-        form_review : __form_review
-       
+        form_review : __form_review,
     };
 }());

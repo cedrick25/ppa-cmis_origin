@@ -248,10 +248,8 @@ $.wms.form44 = (function() {
         var api;
         if (officeId === "ALL") {
             var api = 'http://192.168.1.184:8000/F44t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
-            // var api = 'http://192.168.1.184:8000/F44t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
             var api = 'http://192.168.1.184:8000/F44t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
-            // var api = 'http://192.168.1.184:8000/F44t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)

@@ -384,6 +384,8 @@
             <label for="" class="col-sm-2">Forms</label>
             <div class="col-sm-10 filter-modal">
               <select class="form-control select2" id="sel-modal-cppo-forms">
+                <option value="F5">F5</option>
+                <option value="F21">F21</option>
                 <option value="F44">F44</option>
                 <option value="F45">F45</option>
                 <option value="F51">F51</option>

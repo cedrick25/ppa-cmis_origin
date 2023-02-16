@@ -1,7 +1,7 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
     	<span class="pull-right" style="padding-right: 10px;">
-    		<button type="button" class="access_f5_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-rcv-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Received Record</button>
+    		<button type="button" class="access_f5_write btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-rcv-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Received Record</button>
 
         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-cmpltd-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Completed Record</button>
 

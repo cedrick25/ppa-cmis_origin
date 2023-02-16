@@ -1,9 +1,11 @@
  <div class="row">
     <div class="col-lg-12 col-sm-12 col-md-12">
     	<span class="pull-right" style="padding-right: 10px;">
-    		<button type="button" class="access_f5_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-rcv-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Received Record</button>
+        <button type="button" class="access_f5_write btn btn-sm btn-success btn-form-submit cppoIsApproved" data-toggle="modal" data-target="#modal-submit"><i class="fa fa-paper-plane"></i> Submit to CPPO Review</button>
 
-        <button type="button" class="access_f5_write btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-cmpltd-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Terminated Record</button>
+    		<button type="button" class="access_f5_write btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-rcv-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Received Record</button>
+
+        <button type="button" class="access_f5_write btn btn-sm btn-primary form_lock" data-toggle="modal" data-target="#modal-cmpltd-add"><i class="fa fa-plus-circle"></i> Add New Courtesy Referral Terminated Record</button>
 
         <button type="button" class="btn btn-sm btn-primary btn-download"><i class="fa fa-cloud-download"></i> Download</button>
     		<button type="button" class="btn btn-sm btn-primary btn-print"><i class="fa fa-print"></i> Print</button>
@@ -11,6 +13,31 @@
     </div>
   </div>
 
+
+  <div class="modal fade" id="modal-submit" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header tb-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><b><i class="fa fa-paper-plane"></i> Submit To CPPO</b></h4>
+        </div>
+        <div class="modal-body">
+          <p><b>Are you sure you want to submit this to CPPO?</b></p>
+          <span class="hidden sel-id"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success btnSubmitProceed" >Confirm  <span class="pull-right modal-loader hidden"><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span></button>
+
+
+        </div>
+        
+      </div>
+
+      
+    </div>
+  </div>
 
 <!--RCV-->
 <!-- Delete Modal -->

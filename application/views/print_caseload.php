@@ -110,13 +110,7 @@
 	            else {
 	                console.log("done...")
 	                $('#T_F44T1').DataTable().destroy();
-	                // $('#T_F44T2_a').DataTable().destroy();
-	                // $('#T_F44T2_b').DataTable().destroy();
-	                // $('#T_F44T1').DataTable().destroy();
-	                // $('#T_F44T1').DataTable().destroy();
-	                // $('#T_F44T1').DataTable().destroy();
-	                // $('#T_F44T1').DataTable().destroy();
-	                // $('#T_F44T1').DataTable().destroy();
+	                $('.table').DataTable().destroy();
 	                $(".isocode_").replaceWith($("<span />").text($(".isocode_").val()));
 	                $(".cert_").addClass("hide");
 	                $(".nav_list").addClass("hide");

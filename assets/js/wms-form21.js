@@ -245,8 +245,8 @@ $.wms.form21 = (function() {
                                                 "<td>"+data.investigating_officer+"</td>"+
                                                 "<td class='options'>"+data.field_office+"</td>"+
                                                 "<td class='options'>"+source+"</td>"+
-                                                "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
             }else{
                 console.log("NO FOUND")
@@ -255,6 +255,14 @@ $.wms.form21 = (function() {
                                                 "</tr>")
             }
 
+            $(document).ready(function () {
+                var table = $('#T_F21T1').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                } );
+                $('.dataTables_length').addClass('bs-select');
+            });
             //Table Control Events
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id = $(this).data("id");
@@ -379,7 +387,8 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T1").table2excel({
+            var table = $('#T_F21T1').DataTable();
+            $("#T_F21T1").append(table.$('tr').clone()).table2excel({
                 // exclude CSS class
                 exclude: ".options",
                 name: "Form21-Table1",
@@ -481,7 +490,120 @@ $.wms.form21 = (function() {
         var __maxTableSize = 0;
         var __counter = 0;
 
+        var __received = function(){
+            console.log("received events")
+            $('.F21T2_tbody_a').empty();
 
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll"
+
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_RCV',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T2_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.petitioner_name.toUpperCase()+"</td>"+
+                                    "<td>"+data.case_no+"</td>"+
+                                    "<td>"+data.prison_name+ " (" + data.prison_type + ")"+"</td>"+
+                                    "<td>"+data.offense+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.investigating_officer_name+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                                            "<button class='access_f21_write btn btn-danger btn-sm btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T2_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                            ___updateRCV_event();
+                            $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __received()
+
+        var __acted = function(){
+            console.log("received events")
+            $('.F21T2_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll"
+
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T2_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.petitioner_name.toUpperCase()+"</td>"+
+                                    "<td>"+data.psir_date+"</td>"+
+                                    "<td>"+data.ppo_recommendation+"</td>"+
+                                    "<td>"+data.transfer_date+"</td>"+
+                                    "<td>"+data.transfer_to+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                                            "<button class='access_f21_write btn btn-danger btn-sm btn-acted-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T2_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                            ___updateACTED_event();
+                            $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __acted()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -491,8 +613,7 @@ $.wms.form21 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_RCV',JSON.stringify(payload)).done(function (result) {
-            $(".form_loader").addClass("hidden")
-            $(".result_form").removeClass("hidden")
+            
             __counter += 1;
             if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -521,14 +642,11 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c7").html(data.investigating_officer_name);
                             $("#r"+r+"c8").html(data.field_office);
                             $("#r"+r+"c9").html(source);
-                            $("#r"+r+"c10").html("<td width='' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-rcv-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                            "<button class='access_f21_write btn btn-danger btn-sm btn-rcv-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>");
+                            $("#r"+r+"c10").html("");
 
                             r += 1;
                         });
 
-
-                        ___updateRCV_event();
                           $.wms.dashboard.formControlCheck()
                     }
                 };
@@ -545,8 +663,6 @@ $.wms.form21 = (function() {
             "method" : "fetchAll"
         }
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED',JSON.stringify(payload)).done(function (result) {
-            $(".form_loader").addClass("hidden")
-            $(".result_form").removeClass("hidden")
             __counter += 1;
             if(result.status != undefined && result.status == "SUCCESS"){
                 if(result.payload.length > __maxTableSize){
@@ -572,13 +688,11 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c15").html(data.transfer_to);
                             $("#r"+r+"c16").html(data.field_office);
                             $("#r"+r+"c17").html(source);
-                            $("#r"+r+"c18").html("<td width='' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-acted-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                            "<button class='access_f21_write btn btn-danger btn-sm btn-acted-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>");
+                            $("#r"+r+"c18").html("");
 
                             r += 1;
                         });
 
-                        ___updateACTED_event();
                     }
                 };
                 window.setTimeout(checkPendingRequest, 100);
@@ -1132,8 +1246,8 @@ $.wms.form21 = (function() {
                                                 "<td>"+data.investigating_officer+"</td>"+
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -1142,6 +1256,15 @@ $.wms.form21 = (function() {
                             "<td colspan='15' class='center b'>NONE</td>"+
                         "</tr>");
             }
+
+            $(document).ready(function () {
+                var table = $('#T_F21T3').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                } );
+                $('.dataTables_length').addClass('bs-select');
+            });
         });
 
 
@@ -1156,7 +1279,8 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T3").table2excel({
+            var table = $('#T_F21T3').DataTable();
+            $("#T_F21T3").append(table.$('tr').clone()).table2excel({
                 // exclude CSS class
                 exclude: ".options",
                 name: "Form21-Table3",
@@ -1425,8 +1549,8 @@ $.wms.form21 = (function() {
                                                 
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -1435,6 +1559,15 @@ $.wms.form21 = (function() {
                             "<td colspan='17' class='center b'>NONE</td>"+
                         "</tr>");
             }
+
+            $(document).ready(function () {
+                var table = $('#T_F21T4').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                } );
+                $('.dataTables_length').addClass('bs-select');
+            });
         });
 
 
@@ -1449,7 +1582,8 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T4").table2excel({
+            var table = $('#T_F21T4').DataTable();
+            $("#T_F21T4").append(table.$('tr').clone()).table2excel({
                 // exclude CSS class
                 exclude: ".options",
                 name: "Form21-Table4",
@@ -1691,8 +1825,8 @@ $.wms.form21 = (function() {
                                                 "<td class='center'>"+data.reasons+"</td>"+
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -1701,6 +1835,15 @@ $.wms.form21 = (function() {
                             "<td colspan='12' class='center b'>NONE</td>"+
                         "</tr>");
             }
+
+            $(document).ready(function () {
+                var table = $('#T_F21T5').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                } );
+                $('.dataTables_length').addClass('bs-select');
+            });
         });
 
 
@@ -1715,7 +1858,8 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T5").table2excel({
+            var table = $('#T_F21T5').DataTable();
+            $("#T_F21T5").append(table.$('tr').clone()).table2excel({
                 // exclude CSS class
                 exclude: ".options",
                 name: "Form21-Table5",
@@ -1943,6 +2087,120 @@ $.wms.form21 = (function() {
 
 
     var __attachF21T6PageEvent = function() {
+
+        var __received = function(){
+            console.log("received events")
+            $('.F21T6_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll"
+
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T6_RCV',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T6_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.petitioner.toUpperCase()+"</td>"+
+                                    "<td>"+data.referring_office+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.reasons+"</td>"+
+                                    "<td>"+data.investigating_officer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T6_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                            ___tableControlsRCV();
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __received()
+
+        var __car = function(){
+            console.log("received events")
+            $('.F21T6_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll"
+
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T6_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.petitioner.toUpperCase()+"</td>"+
+                                    "<td>"+data.referring_office+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.reasons+"</td>"+
+                                    "<td>"+data.investigating_officer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T6_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                            ___tableControlsCMPLTD();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __car()
+
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -1989,8 +2247,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c6").html(data.investigating_officer);
                             $("#r"+r+"c7").html(data.field_office).addClass("options");
                             $("#r"+r+"c8").html(source).addClass("options");
-                            $("#r"+r+"c9").html("<button class='access_f21_write btn btn-success btn-xs btn-rcv-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-rcv-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c9").html("").addClass("options");
                             r += 1;
                         });
 
@@ -2033,8 +2290,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c11").html(data.completed_date);
                             $("#r"+r+"c12").html(data.field_office).addClass("options");
                             $("#r"+r+"c13").html(source).addClass("options");
-                            $("#r"+r+"c14").html("<button class='access_f21_write btn btn-success btn-xs btn-cmpltd-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-cmpltd-delete'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c14").html("").addClass("options");
                             r += 1;
                         });
 
@@ -2516,6 +2772,120 @@ $.wms.form21 = (function() {
     };
 
     var __attachF21T7PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T7_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T7_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T7',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T7_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.probation_start+"</td>"+
+                                    "<td>"+data.probation_end+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T7_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T7_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T7_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T7_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T7_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T7',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T7_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.probation_start+"</td>"+
+                                    "<td>"+data.probation_end+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T7_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T7_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T7_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -2564,8 +2934,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c7").html(data.probation_end);
                             $("#r"+r+"c8").html(data.field_office).addClass("options");
                             $("#r"+r+"c9").html(source).addClass("options");
-                            $("#r"+r+"c10").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T7_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T7_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c10").html("").addClass("options");
                             r += 1;
                         });
 
@@ -2619,8 +2988,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c17").html(data.probation_end);
                             $("#r"+r+"c18").html(data.field_office).addClass("options");
                             $("#r"+r+"c19").html(source).addClass("options");
-                            $("#r"+r+"c20").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T7_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T7_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c20").html("").addClass("options");
                             r += 1;
                         });
 
@@ -2944,6 +3312,122 @@ $.wms.form21 = (function() {
    
 
     var __attachF21T8PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T8_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T8_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T8',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T8_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.referral_type+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.probation_start+"</td>"+
+                                    "<td>"+data.probation_end+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T8_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T87_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T8_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T8',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T8_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.referral_type+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.probation_start+"</td>"+
+                                    "<td>"+data.probation_end+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T8_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T8_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T8_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -2993,8 +3477,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c8").html(data.probation_end);
                             $("#r"+r+"c9").html(data.field_office).addClass("options");
                             $("#r"+r+"c10").html(source).addClass("options");
-                            $("#r"+r+"c11").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c11").html("").addClass("options");
                             r += 1;
                         });
 
@@ -3049,8 +3532,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c19").html(data.probation_end);
                             $("#r"+r+"c20").html(data.field_office).addClass("options");
                             $("#r"+r+"c21").html(source).addClass("options");
-                            $("#r"+r+"c22").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T8_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T8_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c22").html("").addClass("options");
                             r += 1;
                         });
 
@@ -3103,10 +3585,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T8_tbody").append(
-                            "<tr>"+
-                                "<td colspan='22' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T8_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='22' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -3375,6 +3857,130 @@ $.wms.form21 = (function() {
 
     };
     var __attachF21T9PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T9_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T9_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T9',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                SUMMARY = data.disposed_decision == "SUMMARY" ? data.disposed_date : "";
+                                INFRACTION = data.disposed_decision == "INFRACTION" ? data.disposed_date : "";
+                                DEATH = data.disposed_decision == "DEATH" ? data.disposed_date : "";
+                                OTHERS = data.disposed_decision == "OTHERS" ? data.disposed_date : "";
+                                $('.F21T9_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+SUMMARY+"</td>"+
+                                    "<td>"+INFRACTION+"</td>"+
+                                    "<td>"+DEATH+"</td>"+
+                                    "<td>"+OTHERS+"</td>"+
+                                    "<td>"+data.submitted_report+"</td>"+
+                                    "<td>"+data.transfer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T9_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T9_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T9_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T9',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                SUMMARY = data.disposed_decision == "SUMMARY" ? data.disposed_date : "";
+                                INFRACTION = data.disposed_decision == "INFRACTION" ? data.disposed_date : "";
+                                DEATH = data.disposed_decision == "DEATH" ? data.disposed_date : "";
+                                OTHERS = data.disposed_decision == "OTHERS" ? data.disposed_date : "";
+                                $('.F21T9_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+SUMMARY+"</td>"+
+                                    "<td>"+INFRACTION+"</td>"+
+                                    "<td>"+DEATH+"</td>"+
+                                    "<td>"+OTHERS+"</td>"+
+                                    "<td>"+data.submitted_report+"</td>"+
+                                    "<td>"+data.transfer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T9_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -3424,8 +4030,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c8").html(data.transfer);
                             $("#r"+r+"c9").html(data.field_office).addClass("options");
                             $("#r"+r+"c10").html(source).addClass("options");
-                            $("#r"+r+"c11").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c11").html("").addClass("options");
                             r += 1;
                         });
 
@@ -3795,6 +4400,124 @@ $.wms.form21 = (function() {
     };
     
     var __attachF21T10PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T10_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T10_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T10',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                SUMMARY = data.submitted_decision == "SUMMARY" ? data.submitted_date : "";
+                                INFRACTION = data.submitted_decision == "INFRACTION" ? data.submitted_date : "";
+                                DEATH = data.submitted_decision == "DEATH" ? data.submitted_date : "";
+                                $('.F21T10_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+SUMMARY+"</td>"+
+                                    "<td>"+INFRACTION+"</td>"+
+                                    "<td>"+DEATH+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T10_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T10_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T10_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T10_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T10_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T10',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                SUMMARY = data.submitted_decision == "SUMMARY" ? data.submitted_date : "";
+                                INFRACTION = data.submitted_decision == "INFRACTION" ? data.submitted_date : "";
+                                DEATH = data.submitted_decision == "DEATH" ? data.submitted_date : "";
+                                $('.F21T10_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+SUMMARY+"</td>"+
+                                    "<td>"+INFRACTION+"</td>"+
+                                    "<td>"+DEATH+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T10_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T10_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T10_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -3842,8 +4565,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c6").html(data.supervising_officer);
                             $("#r"+r+"c7").html(data.field_office).addClass("options");
                             $("#r"+r+"c8").html(source).addClass("options");
-                            $("#r"+r+"c9").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T10_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T10_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c9").html("").addClass("options");
                             r += 1;
                         });
 
@@ -3896,8 +4618,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c15").html(data.supervising_officer);
                             $("#r"+r+"c16").html(data.field_office).addClass("options");
                             $("#r"+r+"c17").html(source).addClass("options");
-                            $("#r"+r+"c18").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T10_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T10_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c18").html("").addClass("options");
                             r += 1;
                         });
 
@@ -4205,6 +4926,128 @@ $.wms.form21 = (function() {
     
     
     var __attachF21T11PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T11_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T11_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T11',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                FINAL = data.disposed_decision == "FINAL" ? data.disposed_date : "";
+                                ARREST = data.disposed_decision == "ARREST" ? data.disposed_date : "";
+                                DEATH = data.disposed_decision == "DEATH" ? data.disposed_date : "";
+                                OTHERS = data.disposed_decision == "OTHERS" ? data.disposed_date : "";
+                                $('.F21T11_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+FINAL+"</td>"+
+                                    "<td>"+ARREST+"</td>"+
+                                    "<td>"+DEATH+"</td>"+
+                                    "<td>"+OTHERS+"</td>"+
+                                    "<td>"+data.submitted_report+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T11_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T11_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T11_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T11',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                FINAL = data.disposed_decision == "FINAL" ? data.disposed_date : "";
+                                ARREST = data.disposed_decision == "ARREST" ? data.disposed_date : "";
+                                DEATH = data.disposed_decision == "DEATH" ? data.disposed_date : "";
+                                OTHERS = data.disposed_decision == "OTHERS" ? data.disposed_date : "";
+                                $('.F21T11_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+FINAL+"</td>"+
+                                    "<td>"+ARREST+"</td>"+
+                                    "<td>"+DEATH+"</td>"+
+                                    "<td>"+OTHERS+"</td>"+
+                                    "<td>"+data.submitted_report+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T11_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -4253,8 +5096,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c7").html(data.submitted_report);
                             $("#r"+r+"c8").html(data.field_office).addClass("options");
                             $("#r"+r+"c9").html(source).addClass("options");
-                            $("#r"+r+"c10").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c10").html("").addClass("options");
                             r += 1;
                         });
 
@@ -4613,6 +5455,114 @@ $.wms.form21 = (function() {
     };
 
     var __attachF21T12PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T12_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T12_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T12',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T12_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.submitted_date+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T12_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T12_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T12_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T12',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T12_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.submitted_date+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T12_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T12_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T12_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -4658,8 +5608,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c4").html(data.supervising_officer);
                             $("#r"+r+"c5").html(data.field_office).addClass("options");
                             $("#r"+r+"c6").html(source).addClass("options");
-                            $("#r"+r+"c7").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T12_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T12_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c7").html("").addClass("options");
                             r += 1;
                         });
 
@@ -4709,8 +5658,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c11").html(data.supervising_officer);
                             $("#r"+r+"c12").html(data.field_office).addClass("options");
                             $("#r"+r+"c13").html(source).addClass("options");
-                            $("#r"+r+"c14").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T12_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T12_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c14").html("").addClass("options");
                             r += 1;
                         });
 
@@ -4740,9 +5688,9 @@ $.wms.form21 = (function() {
                                 "<td id='r"+i+"c2' class=''>"+
                                 "<td id='r"+i+"c3' class=''>"+
                                 "<td id='r"+i+"c4' class=''>"+
-                                "<td id='r"+i+"c5' class=''>"+
-                                "<td id='r"+i+"c6' class=''>"+
-                                "<td id='r"+i+"c7' class=''>"+
+                                "<td id='r"+i+"c5' class='options'>"+
+                                "<td id='r"+i+"c6' class='options'>"+
+                                "<td id='r"+i+"c7' class='options'>"+
                                 "<td id='r"+i+"c8' class=''>"+
                                 "<td id='r"+i+"c9' class=''>"+
                                 "<td id='r"+i+"c10' class=''>"+
@@ -4754,10 +5702,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T12_tbody").append(
-                            "<tr>"+
-                                "<td colspan='18' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T12_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='18' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -5014,6 +5962,112 @@ $.wms.form21 = (function() {
     };
 
     var __attachF21T13PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T13_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T13_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T14',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T13_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.disposed_date+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T13_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __pardonees = function(){
+            console.log("received events")
+            $('.F21T13_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T13_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T13',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T14_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.disposed_date+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T13_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T13_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T14_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __pardonees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -5058,8 +6112,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c3").html(data.disposed_date);
                             $("#r"+r+"c4").html(data.field_office).addClass("options");
                             $("#r"+r+"c5").html(source).addClass("options");
-                            $("#r"+r+"c6").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c6").html("").addClass("options");
                             r += 1;
                         });
 
@@ -5108,8 +6161,7 @@ $.wms.form21 = (function() {
                             $("#r"+r+"c9").html(data.disposed_date);
                             $("#r"+r+"c10").html(data.field_office).addClass("options");
                             $("#r"+r+"c11").html(source).addClass("options");
-                            $("#r"+r+"c12").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T13_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T13_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c12").html("").addClass("options");
                             r += 1;
                         });
 
@@ -5396,6 +6448,120 @@ $.wms.form21 = (function() {
     };
 
     var __attachF21T14PageEvent = function() {
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T14_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T14_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T14',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T14_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.referral_office+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.reasons+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T14_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T14_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T14_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
+        var __parolees = function(){
+            console.log("received events")
+            $('.F21T14_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T14_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T14',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T14_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.referral_office+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.reasons+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T14_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T14_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T14_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __parolees()
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -5445,8 +6611,7 @@ $.wms.form21 = (function() {
 
                             $("#r"+r+"c8").html(data.field_office).addClass("options");
                             $("#r"+r+"c9").html(source).addClass("options");
-                            $("#r"+r+"c10").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T14_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T14_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c10").html("").addClass("options");
                             r += 1;
                         });
 
@@ -5826,7 +6991,230 @@ $.wms.form21 = (function() {
 
 
     var __attachF21T15PageEvent = function() {
+        var __a = function(){
+            console.log("received events")
+            $('.F21T15_tbody_a').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T15_RCV_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T15',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T15_tbody_a').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.referral_office+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.period+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T15_a').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __a()
         
+        var __b = function(){
+            console.log("received events")
+            $('.F21T15_tbody_b').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T15_TERM_PAROL"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T15',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T15_tbody_b').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.terminated_date+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-term-edit form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T15_b').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __b()
+        
+        var __c = function(){
+            console.log("received events")
+            $('.F21T15_tbody_c').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T15_RCV_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T15',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T15_tbody_c').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.referral_office+"</td>"+
+                                    "<td>"+data.supervising_officer+"</td>"+
+                                    "<td>"+data.period+"</td>"+
+                                    "<td>"+data.received_date+"</td>"+
+                                    "<td>"+data.case_classification+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T15_c').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __c()
+        
+        var __d = function(){
+            console.log("received events")
+            $('.F21T15_tbody_d').empty();
+
+            var payload = {
+                "Y_M" : $.wms.urlParam('date'),
+                "field_office" : $.wms.urlParam('field'),
+                "method" : "fetchAll",
+                "table" : "F21T15_TERM_PARDON"
+            }
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T15',JSON.stringify(payload)).done(function (result) {
+                $(".form_loader").addClass("hidden")
+                $(".result_form").removeClass("hidden")
+                if(result.status != undefined && result.status == "SUCCESS"){
+
+                    function checkPendingRequest() {
+                        if ($.active > 0) {
+                            console.log("waiting...")
+                            window.setTimeout(checkPendingRequest, 100);
+                        }
+                        else {
+                           
+                            result.payload.forEach(function(data){
+                                data = $.wms.upper($.wms.sanitize(data))
+                                source = ((data.source==1) ? 'PIS' : 'MANUAL');
+                                $('.F21T15_tbody_d').append("<tr>"+
+                                    "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                                    "<td>"+data.probationer.toUpperCase()+"</td>"+
+                                    "<td>"+data.terminated_date+"</td>"+
+                                    "<td class='options field'>"+data.field_office+"</td>"+
+                                    "<td class='options'>"+source+"</td>"+
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-term-edit form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+                            $(document).ready(function () {
+                                var table = $('#T_F21T15_d').DataTable({
+                                    "drawCallback": function( settings ) {
+                                            $.wms.reports.form_lock();
+                                    }
+                                } );
+                                $('.dataTables_length').addClass('bs-select');
+                            });
+
+
+                        ___tableControls();
+                          $.wms.dashboard.formControlCheck()
+                        }
+                    };
+                    window.setTimeout(checkPendingRequest, 100);
+                }
+            });
+        }
+        __d()
+
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
             "field_office" : $.wms.urlParam('field'),
@@ -5877,8 +7265,7 @@ $.wms.form21 = (function() {
 
                             $("#r"+r+"c8").html(data.field_office).addClass("options");
                             $("#r"+r+"c9").html(source).addClass("options");
-                            $("#r"+r+"c10").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c10").html("").addClass("options");
                             r += 1;
                         });
 
@@ -5932,8 +7319,7 @@ $.wms.form21 = (function() {
 
                             $("#r"+r+"c23").html(data.field_office).addClass("options");
                             $("#r"+r+"c24").html(source).addClass("options");
-                            $("#r"+r+"c25").html("<button class='access_f21_write btn btn-success btn-xs btn-edit' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c25").html("").addClass("options");
                             r += 1;
                         });
 
@@ -5984,8 +7370,7 @@ $.wms.form21 = (function() {
                             
                             $("#r"+r+"c13").html(data.field_office).addClass("options");
                             $("#r"+r+"c14").html(source).addClass("options");
-                            $("#r"+r+"c15").html("<button class='access_f21_write btn btn-success btn-xs btn-term-edit' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-delete' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options");
+                            $("#r"+r+"c15").html("").addClass("options");
                             r += 1;
                         });
 
@@ -6523,6 +7908,36 @@ $.wms.form21 = (function() {
                 });    
             })
         }
+
+
+        var __submitCPPO = function(){
+            var yearMonth   = $.wms.urlParam('date')
+            var officeId    = $.wms.urlParam('officeId')
+            var page        = $.wms.urlParam('page')
+            var size        = $.wms.urlParam('size')
+            var field       = $.wms.urlParam('field')
+            
+            $(".btnSubmitProceed").unbind("click").on('click', function (){
+                console.log("submit CPPO")
+
+                var payload = {
+                  "encodingMonth"   : yearMonth,
+                  "fieldOfficeId"   : officeId,
+                  "fieldOfficeName" : field,
+                  "formTable"       : 'F21',
+                  "requestorId"     : $.cookie("USER_ID"),
+                  "createdBy"       : $.cookie("USER_ID"),
+                }
+                    console.log(payload)
+
+                $.wms.executeExternalPost('http://192.168.1.184:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                        location.reload();
+                })
+            })
+        };
+
+        __submitCPPO();
     };
 
 
