@@ -206,8 +206,8 @@ $.wms.form44 = (function() {
                       "formTableName": "F44t1"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t1/carryover',JSON.stringify(payload)).done(function (result) {
-                // $.wms.executeExternalPost('http://192.168.1.184:8000/F44t1/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t1/carryover',JSON.stringify(payload)).done(function (result) {
+                // $.wms.executeExternalPost('http://192.168.1.33:8000/F44t1/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -247,9 +247,9 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = 'http://192.168.1.184:8000/F44t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = 'http://192.168.1.33:8000/F44t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = 'http://192.168.1.184:8000/F44t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = 'http://192.168.1.33:8000/F44t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -291,7 +291,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t1/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t1/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -321,8 +321,8 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t1/'+data_id).done(function (result2) {
-                // $.wms.executeExternalGet('http://192.168.1.184:8000/F44t1/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t1/'+data_id).done(function (result2) {
+                // $.wms.executeExternalGet('http://192.168.1.33:8000/F44t1/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -377,8 +377,8 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
-                                // $.wms.executeExternalPut('http://192.168.1.184:8000/F44t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                // $.wms.executeExternalPut('http://192.168.1.33:8000/F44t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -495,8 +495,8 @@ $.wms.form44 = (function() {
                 },
 
             }
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F44t1/create',JSON.stringify(payload)).done(function (result) {
-            // $.wms.executeExternalPost('http://192.168.1.184:8000/F44t1/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F44t1/create',JSON.stringify(payload)).done(function (result) {
+            // $.wms.executeExternalPost('http://192.168.1.33:8000/F44t1/create',JSON.stringify(payload)).done(function (result) {
 
                 if(result.status != undefined && result.status == "SUCCESS"){
                     $(".modal-loader").addClass("hidden")
@@ -552,11 +552,11 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                var api = 'http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
-                // var api = 'http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                var api = 'http://192.168.1.33:8000/F44t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                // var api = 'http://192.168.1.33:8000/F44t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                var api = 'http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
-                // var api = 'http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                var api = 'http://192.168.1.33:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                // var api = 'http://192.168.1.33:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -600,7 +600,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t2/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t2/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton").attr('disabled',false)
@@ -630,8 +630,8 @@ $.wms.form44 = (function() {
                     $("#modal-edit-rcv").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2/'+data_id).done(function (result2) {
-                    // $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://192.168.1.33:8000/F44t2/'+data_id).done(function (result2) {
+                    // $.wms.executeExternalGet('http://192.168.1.33:8000/F44t2/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -692,8 +692,8 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://192.168.1.184:8000/F44t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
-                                    // $.wms.executeExternalPut('http://192.168.1.184:8000/F44t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://192.168.1.33:8000/F44t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    // $.wms.executeExternalPut('http://192.168.1.33:8000/F44t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
 
                                             var form = "Update Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
@@ -793,8 +793,8 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
-                // $.wms.executeExternalPost('http://192.168.1.184:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
+                // $.wms.executeExternalPost('http://192.168.1.33:8000/F44t2/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -833,8 +833,8 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                var api = 'http://192.168.1.184:8000/F44t2Acted?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
-                // var api = 'http://192.168.1.184:8000/F44t2Acted?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                var api = 'http://192.168.1.33:8000/F44t2Acted?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                // var api = 'http://192.168.1.33:8000/F44t2Acted?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
 
                 $.wms.executeExternalGet(api).done(function (result) {
                     console.log(result.content)
@@ -866,8 +866,8 @@ $.wms.form44 = (function() {
                     });
                 });
             }else {
-                var api = 'http://192.168.1.184:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
-                // var api = 'http://192.168.1.184:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                var api = 'http://192.168.1.33:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                // var api = 'http://192.168.1.33:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
                 $.wms.executeExternalGet(api).done(function (result) {
                     console.log(result.content)
                     $(".form_loader").removeClass("hidden")
@@ -911,7 +911,7 @@ $.wms.form44 = (function() {
                             $(this).attr('disabled',true)
                             $(".modal-loader").removeClass("hidden")
 
-                            $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t2Acted/'+data_id+'?&user='+profid).done(function (result) {
+                            $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t2Acted/'+data_id+'?&user='+profid).done(function (result) {
                                 $("#modal-delete-acted").modal('toggle')
                                 $(".modal-loader").addClass("hidden")
                                 $(".deleteACTEDProceedButton").attr('disabled',false)
@@ -941,8 +941,8 @@ $.wms.form44 = (function() {
                         $("#modal-edit-acted").modal();
                         $(".modal-loader2").removeClass("hidden")
                         $(".modal-form").addClass("hidden")
-                        $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2Acted/'+data_id).done(function (result2) {
-                        // $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2Acted/'+data_id).done(function (result2) {
+                        $.wms.executeExternalGet('http://192.168.1.33:8000/F44t2Acted/'+data_id).done(function (result2) {
+                        // $.wms.executeExternalGet('http://192.168.1.33:8000/F44t2Acted/'+data_id).done(function (result2) {
                             console.log(result2);
                             $(".modal-form input").attr("disabled",false);
                             $(".modal-form select").attr("disabled",false);
@@ -1001,8 +1001,8 @@ $.wms.form44 = (function() {
 
                                         }
                                         console.log(payload_update)
-                                        $.wms.executeExternalPut('http://192.168.1.184:8000/F44t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
-                                        // $.wms.executeExternalPut('http://192.168.1.184:8000/F44t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                        $.wms.executeExternalPut('http://192.168.1.33:8000/F44t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                        // $.wms.executeExternalPut('http://192.168.1.33:8000/F44t2Acted/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                             if(result.status != undefined && result.status == "SUCCESS"){
 
                                                 var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
@@ -1046,8 +1046,8 @@ $.wms.form44 = (function() {
                 });
 
                 //Add acted
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2Acted/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
-                // $.wms.executeExternalGet('http://192.168.1.184:8000/F44t2Acted/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t2Acted/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                // $.wms.executeExternalGet('http://192.168.1.33:8000/F44t2Acted/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                     console.log(result.response)
 
                     result.response.forEach(function(docket){
@@ -1122,7 +1122,7 @@ $.wms.form44 = (function() {
 
                         }
                         console.log(payload)
-                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44t2Acted/create',JSON.stringify(payload)).done(function (result) {
+                        $.wms.executeExternalPost('http://192.168.1.33:8000/F44t2Acted/create',JSON.stringify(payload)).done(function (result) {
               
                             if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1164,9 +1164,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
 
             $.wms.executeExternalGet(api).done(function (result) {
@@ -1206,9 +1206,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t2Acted?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t2Acted?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t2Acted?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -1338,7 +1338,7 @@ $.wms.form44 = (function() {
                       "formTableName": "F44t3"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t3/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t3/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -1370,9 +1370,9 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t3?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t3?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -1416,7 +1416,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t3/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t3/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1446,7 +1446,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t3/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t3/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1503,7 +1503,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -1622,7 +1622,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F44t3/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F44t3/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1674,12 +1674,12 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t4?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t4?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
 
             //look up Add
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F44t4/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.33:8000/F44t4/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                 console.log(result.response)
 
                 result.response.forEach(function(docket){
@@ -1753,7 +1753,7 @@ $.wms.form44 = (function() {
 
                     }
                     console.log(payload)
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/F44t4/create',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/F44t4/create',JSON.stringify(payload)).done(function (result) {
           
                         if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1829,7 +1829,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t4/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t4/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1859,7 +1859,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t4/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t4/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1916,7 +1916,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2012,7 +2012,7 @@ $.wms.form44 = (function() {
                       "formTableName": "F44t5"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t5/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t5/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -2044,9 +2044,9 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t5?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t5?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -2090,7 +2090,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t5/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t5/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2120,7 +2120,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t5/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t5/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2179,7 +2179,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2299,7 +2299,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F44t5/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F44t5/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2349,9 +2349,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
 
             $.wms.executeExternalGet(api).done(function (result) {
@@ -2396,7 +2396,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t6/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t6/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton").attr('disabled',false)
@@ -2426,7 +2426,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://192.168.1.184:8000/F44t6/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://192.168.1.33:8000/F44t6/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -2485,7 +2485,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://192.168.1.184:8000/F44t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://192.168.1.33:8000/F44t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2605,7 +2605,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t6/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t6/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2653,11 +2653,11 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t6CAR?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6CAR?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
                 //Add
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t6CAR/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t6CAR/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                     console.log(result.response)
 
                     result.response.forEach(function(docket){
@@ -2730,7 +2730,7 @@ $.wms.form44 = (function() {
 
                         }
                         console.log(payload)
-                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44t6CAR/create',JSON.stringify(payload)).done(function (result) {
+                        $.wms.executeExternalPost('http://192.168.1.33:8000/F44t6CAR/create',JSON.stringify(payload)).done(function (result) {
               
                             if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2804,7 +2804,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t6CAR/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t6CAR/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton-acted").attr('disabled',false)
@@ -2834,7 +2834,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit-acted").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://192.168.1.184:8000/F44t6CAR/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://192.168.1.33:8000/F44t6CAR/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -2888,7 +2888,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://192.168.1.184:8000/F44t6CAR/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://192.168.1.33:8000/F44t6CAR/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2941,9 +2941,9 @@ $.wms.form44 = (function() {
             
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -2981,9 +2981,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t6CAR?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6CAR?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t6CAR?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -3095,7 +3095,7 @@ $.wms.form44 = (function() {
                       "formTableName": "F44t7"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t7/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t7/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -3127,9 +3127,9 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t7?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t7?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -3173,7 +3173,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t7/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t7/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3203,7 +3203,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t7/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t7/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3262,7 +3262,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -3380,7 +3380,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F44t7/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F44t7/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3431,9 +3431,9 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t8?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t8?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -3478,7 +3478,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t8/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t8/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3508,7 +3508,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t8/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t8/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3571,7 +3571,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -3691,7 +3691,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F44t8/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F44t8/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3756,11 +3756,11 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t9?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t9?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             //Add
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F44t9/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.33:8000/F44t9/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                 console.log(result.response)
 
                 result.response.forEach(function(docket){
@@ -3835,7 +3835,7 @@ $.wms.form44 = (function() {
 
                     }
                     console.log(payload)
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/F44t9/create',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/F44t9/create',JSON.stringify(payload)).done(function (result) {
           
                         if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3911,7 +3911,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t9/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t9/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3954,7 +3954,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t9/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t9/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4013,7 +4013,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -4122,7 +4122,7 @@ $.wms.form44 = (function() {
                       "formTableName": "F44t10"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t10/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t10/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -4154,12 +4154,12 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t10?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t10?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             
             //Add
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F44t10/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.33:8000/F44t10/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                 console.log(result.response)
 
                 result.response.forEach(function(docket){
@@ -4209,7 +4209,7 @@ $.wms.form44 = (function() {
 
                     }
                     console.log(payload)
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/F44t10/create',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/F44t10/create',JSON.stringify(payload)).done(function (result) {
           
                         if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -4285,7 +4285,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t10/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t10/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -4326,7 +4326,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t10/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t10/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4385,7 +4385,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -4506,12 +4506,12 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t11?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t11?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             
             //Add
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F44t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.33:8000/F44t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                 console.log(result.response)
 
                 result.response.forEach(function(docket){
@@ -4585,7 +4585,7 @@ $.wms.form44 = (function() {
 
                     }
                     console.log(payload)
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/F44t11/create',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/F44t11/create',JSON.stringify(payload)).done(function (result) {
           
                         if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -4661,7 +4661,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t11/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t11/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -4704,7 +4704,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t11/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t11/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -4761,7 +4761,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -4857,7 +4857,7 @@ $.wms.form44 = (function() {
                       "formTableName": "F44t12"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t12/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t12/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -4889,9 +4889,9 @@ $.wms.form44 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            api = 'http://192.168.1.184:8000/F44t12?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t12?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            api = 'http://192.168.1.184:8000/F44t12?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            api = 'http://192.168.1.33:8000/F44t12?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -4936,7 +4936,7 @@ $.wms.form44 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t12/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t12/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -4966,7 +4966,7 @@ $.wms.form44 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t12/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t12/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -5025,7 +5025,7 @@ $.wms.form44 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.184:8000/F44t12/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut('http://192.168.1.33:8000/F44t12/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -5143,7 +5143,7 @@ $.wms.form44 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost('http://192.168.1.184:8000/F44t12/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F44t12/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -5200,9 +5200,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t13?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -5249,7 +5249,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t13/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t13/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton").attr('disabled',false)
@@ -5279,7 +5279,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://192.168.1.184:8000/F44t13/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://192.168.1.33:8000/F44t13/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -5342,7 +5342,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://192.168.1.184:8000/F44t13/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://192.168.1.33:8000/F44t13/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -5462,7 +5462,7 @@ $.wms.form44 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44t13/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44t13/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -5512,12 +5512,12 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t13CRT?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13CRT?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
 
                 //Add
-                $.wms.executeExternalGet('http://192.168.1.184:8000/F44t13CRT/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+                $.wms.executeExternalGet('http://192.168.1.33:8000/F44t13CRT/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                     console.log(result.response)
 
                     result.response.forEach(function(docket){
@@ -5589,7 +5589,7 @@ $.wms.form44 = (function() {
 
                         }
                         console.log(payload)
-                        $.wms.executeExternalPost('http://192.168.1.184:8000/F44t13CRT/create',JSON.stringify(payload)).done(function (result) {
+                        $.wms.executeExternalPost('http://192.168.1.33:8000/F44t13CRT/create',JSON.stringify(payload)).done(function (result) {
               
                             if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -5663,7 +5663,7 @@ $.wms.form44 = (function() {
                         $(this).attr('disabled',true)
                         $(".modal-loader").removeClass("hidden")
 
-                        $.wms.executeExternalDelete('http://192.168.1.184:8000/F44t13CRT/'+data_id+'?&user='+profid).done(function (result) {
+                        $.wms.executeExternalDelete('http://192.168.1.33:8000/F44t13CRT/'+data_id+'?&user='+profid).done(function (result) {
                             $("#modal-delete-term").modal('toggle')
                             $(".modal-loader").addClass("hidden")
                             $(".deleteProceedButton-term").attr('disabled',false)
@@ -5693,7 +5693,7 @@ $.wms.form44 = (function() {
                     $("#modal-edit-term").modal();
                     $(".modal-loader2").removeClass("hidden")
                     $(".modal-form").addClass("hidden")
-                    $.wms.executeExternalGet('http://192.168.1.184:8000/F44t13CRT/'+data_id).done(function (result2) {
+                    $.wms.executeExternalGet('http://192.168.1.33:8000/F44t13CRT/'+data_id).done(function (result2) {
                         console.log(result2);
                         $(".modal-form input").attr("disabled",false);
                         $(".modal-form select").attr("disabled",false);
@@ -5746,7 +5746,7 @@ $.wms.form44 = (function() {
 
                                     }
                                     console.log(payload_update)
-                                    $.wms.executeExternalPut('http://192.168.1.184:8000/F44t13CRT/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                    $.wms.executeExternalPut('http://192.168.1.33:8000/F44t13CRT/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                         if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -5800,9 +5800,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t13?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
 
             $.wms.executeExternalGet(api).done(function (result) {
@@ -5843,9 +5843,9 @@ $.wms.form44 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = 'http://192.168.1.184:8000/F44t13CRT?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13CRT?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
             }else {
-                api = 'http://192.168.1.184:8000/F44t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+                api = 'http://192.168.1.33:8000/F44t13CRT?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -5945,7 +5945,7 @@ $.wms.form44 = (function() {
                   "createdBy"       : $.cookie("USER_ID"),
                 }
 
-                $.wms.executeExternalPost('http://192.168.1.184:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                         location.reload();
                 })
@@ -5980,7 +5980,7 @@ $.wms.form44 = (function() {
                 var formdata = new FormData();
                 formdata.append("files", fileupload.files[0], fileupload.files[0].name);
 
-                $.wms.executeFile('http://192.168.1.184:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f44',formdata).done(function (result) {
+                $.wms.executeFile('http://192.168.1.33:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f44',formdata).done(function (result) {
                     console.log(result)
                     if(result){
                         __cert_list_upload();
@@ -5998,7 +5998,7 @@ $.wms.form44 = (function() {
                 fieldOfficeId : officeId,
                 formTable : "f44"
             }
-            $.wms.executeExternalPost('http://192.168.1.184:8000/cert/list',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('http://192.168.1.33:8000/cert/list',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
 
                 if (result.response.length != 0) {
@@ -6012,7 +6012,7 @@ $.wms.form44 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+'http://192.168.1.184:8000/cert/view/'+data.id+"><button class='access_f44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+'http://192.168.1.33:8000/cert/view/'+data.id+"><button class='access_f44_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {
@@ -6039,7 +6039,7 @@ $.wms.form44 = (function() {
                     yearMonthList : [date]
                 }
 
-                $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
 
                     $('.Id').text(result.id);
@@ -6131,7 +6131,7 @@ $.wms.form44 = (function() {
                         yearMonthList : [date]
                     }
 
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                         console.log(result)
 
                         $('.Id').text(result.id);
@@ -6218,7 +6218,7 @@ $.wms.form44 = (function() {
             });
             __cert_list_upload();
 
-            $.wms.executeExternalGet('http://192.168.1.184:8000/F44Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+            $.wms.executeExternalGet('http://192.168.1.33:8000/F44Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
             console.log(result)
             $('.Id').text(result.id);
             $('.Id1').text(result.id1);

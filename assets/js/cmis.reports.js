@@ -776,7 +776,7 @@ $.wms.reports = (function() {
             userRole = true;
             const myTimeout2 = setTimeout(timeout2, 1);
             function timeout2(){
-                $.wms.executeExternalPost('http://192.168.1.184:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2)
                     if (result2.response == true) {
                         console.log('true')
@@ -811,7 +811,7 @@ $.wms.reports = (function() {
                     window.setTimeout(checkPendingRequest, 100);
                 }
                 else {
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
                         console.log(result)
                         if (result.response == false) {
                             console.log('false')
@@ -857,7 +857,7 @@ $.wms.reports = (function() {
               "fieldOffice"     : field
             }
         // $('.rlist_tbody').empty();
-        $.wms.executeExternalPost('http://192.168.1.184:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('http://192.168.1.33:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
             console.log(result)
 
             var data = [];
@@ -916,7 +916,7 @@ $.wms.reports = (function() {
                         remarks         : $("#remarks_a").val(),
                     }
 
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
                         $("#modal-approve").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".btnApprove").attr('disabled',false)
@@ -957,7 +957,7 @@ $.wms.reports = (function() {
                                     }
                                     console.log(payload)
 
-                                    $.wms.executeExternalPost('http://192.168.1.184:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                    $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                     });
                                         location.reload();
                                 });
@@ -974,7 +974,7 @@ $.wms.reports = (function() {
                                     }
                                     console.log(payload)
 
-                                    $.wms.executeExternalPost('http://192.168.1.184:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                    $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                     });
                                         location.reload();
                                 });
@@ -987,7 +987,7 @@ $.wms.reports = (function() {
                                 }
                                 console.log(payload)
 
-                                $.wms.executeExternalPost('http://192.168.1.184:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
+                                $.wms.executeExternalPost('http://192.168.1.33:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
                                 });
                                     location.reload();
                             break;
@@ -1003,7 +1003,7 @@ $.wms.reports = (function() {
                                     }
                                     console.log(payload)
 
-                                    $.wms.executeExternalPost('http://192.168.1.184:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                    $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                     });
                                         location.reload();
                                 });
@@ -1029,7 +1029,7 @@ $.wms.reports = (function() {
                         remarks         : $("#remarks_r").val(),
                     }
 
-                    $.wms.executeExternalPost('http://192.168.1.184:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('http://192.168.1.33:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
                         $("#modal-reject").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".btnReject").attr('disabled',false)
