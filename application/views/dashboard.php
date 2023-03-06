@@ -5,7 +5,7 @@
 <div class="container loggedBody" hidden>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="panel panel-default"">
+			<div class="panel panel-default">
 				 <div class="panel-body">
 				 	
 				 	<div class="row">
@@ -15,7 +15,7 @@
 
 				 			<center>
 				                <br>	
-				                	<h4>WELCOME <u><b class="loggedUserName"></b></u> TO THE CASE MANAGEMENT INFORMATION SYSTEM! </h4>
+				                	<h4>WELCOME <u><b class="loggedUserName"></b></u> TO THE EXPANSION CASE MANAGEMENT INFORMATION SYSTEM! </h4>
 			                </center>    
 							
 				            

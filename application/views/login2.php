@@ -15,7 +15,7 @@
 							<div class="col-md-6 ">
 								<div class="hidden-xs"><br/><br/></div><br/>
 								<div class="panel panel-default panel-primary">
-								  <div class="panel-heading ppa-f24">Logging in to Case Management Information System</div>
+								  <div class="panel-heading ppa-f24">Logging in to Expansion Case Management Information System</div>
 								  <div class="panel-body">
 									
 

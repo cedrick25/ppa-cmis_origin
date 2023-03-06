@@ -17,7 +17,7 @@
 
 				 			<center>
 				                <br>	
-				                	<h4>WELCOME <u><b class="loggedUserName"></b></u> TO THE CASE MANAGEMENT INFORMATION SYSTEM! </h4>
+				                	<h4>WELCOME <u><b class="loggedUserName"></b></u> TO THE EXPANSION CASE MANAGEMENT INFORMATION SYSTEM! </h4>
 			                </center>    
 							
 				            
