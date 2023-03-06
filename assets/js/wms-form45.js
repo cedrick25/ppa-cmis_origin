@@ -273,6 +273,14 @@ $.wms.form45 = (function() {
                     "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F45T1').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -575,6 +583,14 @@ $.wms.form45 = (function() {
                         "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
+            $(document).ready(function () {
+                var table = $('#T_F45T2_a').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 $(".btn-delete").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
@@ -973,6 +989,14 @@ $.wms.form45 = (function() {
                         "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit-acted' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f45_write btn btn-danger btn-sm btn-delete-acted' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
+            $(document).ready(function () {
+                var table = $('#T_F45T2_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 $(".btn-delete-acted").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
@@ -1342,6 +1366,14 @@ $.wms.form45 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F45T3').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1748,6 +1780,14 @@ $.wms.form45 = (function() {
                     "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F45T4').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -1998,6 +2038,14 @@ $.wms.form45 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F45T5').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2301,6 +2349,14 @@ $.wms.form45 = (function() {
                         "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
+            $(document).ready(function () {
+                var table = $('#T_F45T6').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 $(".btn-delete").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
@@ -2705,6 +2761,14 @@ $.wms.form45 = (function() {
                         "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit-acted form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
+            $(document).ready(function () {
+                var table = $('#T_F45T6_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 $(".btn-delete").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
@@ -2996,11 +3060,6 @@ $.wms.form45 = (function() {
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
 
-        $('.F45T5_tbody').empty();
-        $(".form_loader").removeClass("hidden")
-        $(".result_form").addClass("hidden")
-
-
         var __carryoverF45t7 = function(){
             $(".carryoverProceedButton").unbind("click").on("click", function(){
                 console.log("clicked")
@@ -3074,6 +3133,14 @@ $.wms.form45 = (function() {
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
+            $(document).ready(function () {
+                var table = $('#T_F45T7').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
                 var docket_no   = $(this).data("docket");
@@ -3376,6 +3443,14 @@ $.wms.form45 = (function() {
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
+            $(document).ready(function () {
+                var table = $('#T_F45T8').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
                 var docket_no   = $(this).data("docket");
@@ -3811,6 +3886,14 @@ $.wms.form45 = (function() {
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
+            $(document).ready(function () {
+                var table = $('#T_F45T9').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
                 var docket_no   = $(this).data("docket");
@@ -4203,6 +4286,14 @@ $.wms.form45 = (function() {
                     "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F45T10').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -4550,6 +4641,14 @@ $.wms.form45 = (function() {
                     "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F45T11').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -4820,6 +4919,14 @@ $.wms.form45 = (function() {
                     "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
 
+            $(document).ready(function () {
+                var table = $('#T_F45T12').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
                 var docket_no   = $(this).data("docket");
@@ -5127,6 +5234,14 @@ $.wms.form45 = (function() {
                         "<td align='center' class='options'> <button class='access_f45_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f45_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
+            $(document).ready(function () {
+                var table = $('#T_F45T13').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 $(".btn-delete").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
@@ -5456,6 +5571,14 @@ $.wms.form45 = (function() {
                         "<button class='access_f45_write btn btn-danger btn-sm btn-delete-term' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
 
+            $(document).ready(function () {
+                var table = $('#T_F45T13_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
                 $(".btn-delete-term").unbind("click").on("click",function(){
                     var data_id     = $(this).data("id");
                     var docket_no   = $(this).data("docket");

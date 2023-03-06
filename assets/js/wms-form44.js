@@ -273,7 +273,11 @@ $.wms.form44 = (function() {
                     "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
             $(document).ready(function () {
-                var table = $('#T_F44T1').DataTable();
+                var table = $('#T_F44T1').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
 
@@ -583,7 +587,11 @@ $.wms.form44 = (function() {
                         "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 $(document).ready(function () {
-                    var table = $('#T_F44T2_a').DataTable();
+                    var table = $('#T_F44T2_a').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                     $('.dataTables_length').addClass('bs-select');
                 });
                 $(".btn-delete").unbind("click").on("click",function(){
@@ -861,7 +869,11 @@ $.wms.form44 = (function() {
                     });
 
                     $(document).ready(function () {
-                        var table = $('#T_F44T2_b').DataTable();
+                        var table = $('#T_F44T2_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                         $('.dataTables_length').addClass('bs-select');
                     });
                 });
@@ -893,7 +905,11 @@ $.wms.form44 = (function() {
                     });
 
                     $(document).ready(function () {
-                        var table = $('#T_F44T2_b').DataTable();
+                        var table = $('#T_F44T2_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                         $('.dataTables_length').addClass('bs-select');
                     });
 
@@ -1399,7 +1415,11 @@ $.wms.form44 = (function() {
             });
 
             $(document).ready(function () {
-                var table = $('#T_F44T3').DataTable();
+                var table = $('#T_F44T3').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1811,7 +1831,11 @@ $.wms.form44 = (function() {
                     "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
             $(document).ready(function () {
-                var table = $('#T_F44T4').DataTable();
+                var table = $('#T_F44T4').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
 
@@ -2072,7 +2096,11 @@ $.wms.form44 = (function() {
                     "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
             $(document).ready(function () {
-                var table = $('#T_F44T5').DataTable();
+                var table = $('#T_F44T5').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
 
@@ -2378,7 +2406,11 @@ $.wms.form44 = (function() {
                         "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 $(document).ready(function () {
-                    var table = $('#T_F44T6').DataTable();
+                    var table = $('#T_F44T6').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                     $('.dataTables_length').addClass('bs-select');
                 });
 
@@ -2786,7 +2818,11 @@ $.wms.form44 = (function() {
                         "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 $(document).ready(function () {
-                    var table = $('#T_F44T6_b').DataTable();
+                    var table = $('#T_F44T6_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                     $('.dataTables_length').addClass('bs-select');
                 });
 
@@ -3156,7 +3192,11 @@ $.wms.form44 = (function() {
             });
 
             $(document).ready(function () {
-                var table = $('#T_F44T7').DataTable();
+                var table = $('#T_F44T7').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3461,7 +3501,11 @@ $.wms.form44 = (function() {
                     "<button class='access_f44_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
             $(document).ready(function () {
-                var table = $('#T_F44T8').DataTable();
+                var table = $('#T_F44T8').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3894,7 +3938,11 @@ $.wms.form44 = (function() {
             });
 
             $(document).ready(function () {
-                var table = $('#T_F44T9').DataTable();
+                var table = $('#T_F44T9').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
             $(".btn-delete").unbind("click").on("click",function(){
@@ -4268,7 +4316,11 @@ $.wms.form44 = (function() {
             });
 
             $(document).ready(function () {
-                var table = $('#T_F44T10').DataTable();
+                var table = $('#T_F44T10').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
             $(".btn-delete").unbind("click").on("click",function(){
@@ -4643,7 +4695,11 @@ $.wms.form44 = (function() {
             });
 
             $(document).ready(function () {
-                var table = $('#T_F44T11').DataTable();
+                var table = $('#T_F44T11').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
 
@@ -4918,7 +4974,11 @@ $.wms.form44 = (function() {
             });
 
             $(document).ready(function () {
-                var table = $('#T_F44T12').DataTable();
+                var table = $('#T_F44T12').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                 $('.dataTables_length').addClass('bs-select');
             });
 
@@ -5231,7 +5291,11 @@ $.wms.form44 = (function() {
                 });
 
                 $(document).ready(function () {
-                    var table = $('#T_F44T13').DataTable();
+                    var table = $('#T_F44T13').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                     $('.dataTables_length').addClass('bs-select');
                 });
 
@@ -5645,7 +5709,11 @@ $.wms.form44 = (function() {
                 });
 
                 $(document).ready(function () {
-                    var table = $('#T_F44T13_b').DataTable();
+                    var table = $('#T_F44T13_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
                     $('.dataTables_length').addClass('bs-select');
                 });
 

@@ -184,6 +184,14 @@ $.wms.form53 = (function() {
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F53T1').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -477,6 +485,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T2').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -815,6 +831,14 @@ $.wms.form53 = (function() {
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F53T3').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -1108,6 +1132,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T4').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -1446,6 +1478,14 @@ $.wms.form53 = (function() {
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F53T5').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -1746,6 +1786,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T6').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2104,6 +2152,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T7').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -2503,6 +2559,14 @@ $.wms.form53 = (function() {
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
             });
+            $(document).ready(function () {
+                var table = $('#T_F53T8').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
             $(".btn-delete").unbind("click").on("click",function(){
                 var data_id     = $(this).data("id");
@@ -2754,6 +2818,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T9').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3058,6 +3130,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T10').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){
@@ -3391,6 +3471,14 @@ $.wms.form53 = (function() {
                     "<td class='options'>"+source+"</td>"+
                     "<td align='center' class='options'> <button class='access_f53_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                     "<button class='access_f53_write btn btn-danger btn-sm btn-delete hidden form_lock' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+            });
+            $(document).ready(function () {
+                var table = $('#T_F53T11').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
             });
 
             $(".btn-delete").unbind("click").on("click",function(){

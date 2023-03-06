@@ -214,9 +214,9 @@ $.wms.form5 = (function() {
                         "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
             }else{
-                $('.F5T1_tbody').append("<tr>"+
-                    "<td colspan='7' class='center b'>NONE</td>"+
-                "</tr>")
+                // $('.F5T1_tbody').append("<tr>"+
+                //     "<td colspan='7' class='center b'>NONE</td>"+
+                // "</tr>")
             }
             $(document).ready(function () {
                 // var table = $('#T_F5T1').DataTable();
@@ -1151,7 +1151,7 @@ $.wms.form5 = (function() {
                 filename: "Form5-Table2.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
-              }); 
+            });
         });
 
 
@@ -1624,10 +1624,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T3_tbody").append(
-                        "<tr>"+
-                            "<td colspan='9' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T3_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='9' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -1899,10 +1899,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T4_tbody").append(
-                        "<tr>"+
-                            "<td colspan='12' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T4_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='12' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -2203,10 +2203,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T5_tbody").append(
-                        "<tr>"+
-                            "<td colspan='12' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T5_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='12' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -3178,10 +3178,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T7_tbody").append(
-                        "<tr>"+
-                            "<td colspan='12' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T7_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='12' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -3487,10 +3487,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T8_tbody").append(
-                        "<tr>"+
-                            "<td colspan='13' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T8_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='13' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -3980,10 +3980,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T9_tbody").append(
-                        "<tr>"+
-                            "<td colspan='14' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T9_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='14' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
             $(document).ready(function () {
                 var table = $('#T_F5T9').DataTable({
@@ -4318,10 +4318,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T10_tbody").append(
-                        "<tr>"+
-                            "<td colspan='14' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T10_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='14' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
             $(document).ready(function () {
                 var table = $('#T_F5T10').DataTable({
@@ -4638,10 +4638,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T11_tbody").append(
-                        "<tr>"+
-                            "<td colspan='16' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T11_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='16' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
             $(document).ready(function () {
                 var table = $('#T_F5T11').DataTable({
@@ -4959,10 +4959,10 @@ $.wms.form5 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F5T12_tbody").append(
-                        "<tr>"+
-                            "<td colspan='14' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F5T12_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='14' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
             $(document).ready(function () {
                 var table = $('#T_F5T12').DataTable({

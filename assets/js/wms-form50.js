@@ -165,6 +165,14 @@ $.wms.form50 = (function() {
                         "<td align='center' class='options'> <button class='access_f50_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
+            $(document).ready(function () {
+                var table = $('#T_F50T1_a').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
             
                 } else if (data.actionType == "VERIFIED_APPLICATION") {
                     $('.F50T1_tbody_b').append("<tr>"+
@@ -176,6 +184,14 @@ $.wms.form50 = (function() {
                         "<td align='center' class='options'> <button class='access_f50_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
+            $(document).ready(function () {
+                var table = $('#T_F50T1_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
                 
                 } else if (data.actionType == "TRANSFERRED_REFERRED") {
                     $('.F50T1_tbody_c').append("<tr>"+
@@ -188,6 +204,14 @@ $.wms.form50 = (function() {
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
                 
+            $(document).ready(function () {
+                var table = $('#T_F50T1_c').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
                 } else if (data.actionType == "REFERRED_FOR_DDEXAM") {
                     $('.F50T1_tbody_d').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
@@ -199,6 +223,14 @@ $.wms.form50 = (function() {
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
                 
+            $(document).ready(function () {
+                var table = $('#T_F50T1_d').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
                 } else if (data.actionType == "DDE_REPORTS_RECEIVED") {
                     $('.F50T1_tbody_e').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
@@ -210,6 +242,14 @@ $.wms.form50 = (function() {
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
                 
+            $(document).ready(function () {
+                var table = $('#T_F50T1_e').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
                 }
             });
 
@@ -788,6 +828,14 @@ $.wms.form50 = (function() {
                         "<td align='center' class='options'> <button class='access_f50_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
+            $(document).ready(function () {
+                var table = $('#T_F50T2_a').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
                 } else if (data.actionType == "HC") {
                     $('.F50T2_tbody_b').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docketNumber.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docketNumber.toUpperCase()+"</a></td>"+
@@ -799,6 +847,14 @@ $.wms.form50 = (function() {
                         "<td align='center' class='options'> <button class='access_f50_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
+            $(document).ready(function () {
+                var table = $('#T_F50T2_b').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 } else if (data.actionType == "PAUBC") {
                     $('.F50T2_tbody_c').append("<tr>"+
@@ -811,6 +867,14 @@ $.wms.form50 = (function() {
                         "<td align='center' class='options'> <button class='access_f50_write btn btn-success btn-sm btn-edit' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
                         "<button class='access_f50_write btn btn-danger btn-sm btn-delete hidden' data-docket='"+data.docketNumber.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>"
                     )
+            $(document).ready(function () {
+                var table = $('#T_F50T2_c').DataTable({
+                    "drawCallback": function( settings ) {
+                            $.wms.reports.form_lock();
+                    }
+                });
+                $('.dataTables_length').addClass('bs-select');
+            });
 
                 }
 

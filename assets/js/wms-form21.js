@@ -250,9 +250,9 @@ $.wms.form21 = (function() {
                 });
             }else{
                 console.log("NO FOUND")
-                $('.F21T1_tbody').append("<tr>"+
-                                                "<td colspan='7' class='center b'>NONE</td>"+
-                                                "</tr>")
+                // $('.F21T1_tbody').append("<tr>"+
+                //                                 "<td colspan='7' class='center b'>NONE</td>"+
+                //                                 "</tr>")
             }
 
             $(document).ready(function () {
@@ -1251,10 +1251,10 @@ $.wms.form21 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F21T3_tbody").append(
-                        "<tr>"+
-                            "<td colspan='15' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F21T3_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='15' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -1554,10 +1554,10 @@ $.wms.form21 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F21T4_tbody").append(
-                        "<tr>"+
-                            "<td colspan='17' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F21T4_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='17' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
@@ -1830,10 +1830,10 @@ $.wms.form21 = (function() {
                 });
                 ___tableControls();
             }else{
-                $(".F21T5_tbody").append(
-                        "<tr>"+
-                            "<td colspan='12' class='center b'>NONE</td>"+
-                        "</tr>");
+                // $(".F21T5_tbody").append(
+                //         "<tr>"+
+                //             "<td colspan='12' class='center b'>NONE</td>"+
+                //         "</tr>");
             }
 
             $(document).ready(function () {
