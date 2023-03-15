@@ -857,7 +857,8 @@ $.wms.reports = (function() {
               "fieldOffice"     : field
             }
         // $('.rlist_tbody').empty();
-        $.wms.executeExternalPost('http://192.168.1.33:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
+        // $.wms.executeExternalPost('http://192.168.1.33:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('http://192.168.1.184:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
             console.log(result)
 
             var data = [];
@@ -880,8 +881,8 @@ $.wms.reports = (function() {
                     "<button class='access_cppo_write btn btn-danger btn-sm btn-reject "+hide+"' data-id='"+data.id+"'><i class='fa fa-ban'></i> Reject</button> </td></tr>")
             });
             if ( $.fn.DataTable.isDataTable('#rlist_table') ) {
-              $('#rlist_table').DataTable().destroy();
-              $('#rlist_table tbody').empty();
+                $('#rlist_table').DataTable().destroy();
+                $('#rlist_table tbody').empty();
             }
 
             var dtSensorList = $("#rlist_table").DataTable({
@@ -896,146 +897,159 @@ $.wms.reports = (function() {
                     { "width": "10%" },
                     { "width": "20%" },
                     { "width": "20%" },
-                  ]
-            });
+                ],
+                "drawCallback": function( settings ) {
+                    $(".btn-approve").unbind("click").on("click",function(){
+                        var data_id = $(this).data("id");
+                        var data_ym = $(this).data("ym");
+                        var data_form_table = $(this).data("ft");
+                        console.log(data_id);
+                        $("#modal-approve").modal();
 
-            $(".btn-approve").unbind("click").on("click",function(){
-                var data_id = $(this).data("id");
-                var data_ym = $(this).data("ym");
-                var data_form_table = $(this).data("ft");
-                console.log(data_id);
-                $("#modal-approve").modal();
+                        $(".btnApprove").unbind("click").on("click",function(){
+                            $(this).attr('disabled',true)
+                            $(".modal-loader").removeClass("hidden")
 
-                $(".btnApprove").unbind("click").on("click",function(){
-                    $(this).attr('disabled',true)
-                    $(".modal-loader").removeClass("hidden")
+                            var payload = {
+                                approverId      : $.cookie("USER_ID"),
+                                updatedBy       : $.cookie("USER_ID"),
+                                remarks         : $("#remarks_a").val(),
+                            }
 
-                    var payload = {
-                        approverId      : $.cookie("USER_ID"),
-                        updatedBy       : $.cookie("USER_ID"),
-                        remarks         : $("#remarks_a").val(),
-                    }
+                            $.wms.executeExternalPost('http://192.168.1.184:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
+                                $("#modal-approve").modal('toggle')
+                                $(".modal-loader").addClass("hidden")
+                                $(".btnApprove").attr('disabled',false)
+                                // location.reload();
+                                $("#modal-carryover").modal();
 
-                    $.wms.executeExternalPost('http://192.168.1.33:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
-                        $("#modal-approve").modal('toggle')
-                        $(".modal-loader").addClass("hidden")
-                        $(".btnApprove").attr('disabled',false)
-                        // location.reload();
+                                switch(data_form_table){
+                                    case "F5" : 
+                                        var payload =  {
+                                            "field_office": field,
+                                            "Y_M": data_ym,
+                                        }
+                                        console.log(payload)
 
-                        switch(data_form_table){
-                            case "F5" : 
-                                var payload =  {
-                                    "field_office": field,
-                                    "Y_M": data_ym,
+                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f5?submit=yes',JSON.stringify(payload)).done(function (result) {
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 10000);
+                                        });
+                                    break;
+                                    case "F21" : 
+                                        var payload =  {
+                                            "field_office": field,
+                                            "Y_M": data_ym,
+                                        }
+                                        console.log(payload)
+
+                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f21?submit=yes',JSON.stringify(payload)).done(function (result) {
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 10000);
+                                        });
+                                    break;
+                                    case "F44" : 
+                                        var form44list = ['F44t1', 'F44t3', 'F44t5', 'F44t7', 'F44t10', 'F44t12'];
+                                        form44list.forEach(function(item) {
+                                            console.log(item)
+
+                                            var payload =  {
+                                                "officeIdList": [officeId],
+                                                "yearMonthList": [data_ym],
+                                                "formTableName": item
+                                            }
+                                            console.log(payload)
+
+                                            $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                                setTimeout(function() {
+                                                    location.reload();
+                                                }, 10000);
+                                            });
+                                        });
+                                    break;
+                                    case "F45" :  
+                                        var form45list = ['F45t1', 'F45t3', 'F45t5', 'F45t7', 'F45t10', 'F45t12'];
+                                        form45list.forEach(function(item) {
+                                            console.log(item)
+
+                                            var payload =  {
+                                                "officeIdList": [officeId],
+                                                "yearMonthList": [data_ym],
+                                                "formTableName": item
+                                            }
+                                            console.log(payload)
+
+                                            $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                                setTimeout(function() {
+                                                    location.reload();
+                                                }, 10000);
+                                            });
+                                        });
+                                    break;
+                                    case "F51" :
+                                        var payload =  {
+                                            "officeIdList": [officeId],
+                                            "yearMonthList": [data_ym],
+                                            "formTableName": 'F51t1'
+                                        }
+                                        console.log(payload)
+
+                                        $.wms.executeExternalPost('http://192.168.1.33:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 10000);
+                                        });
+                                    break;
+                                    case "F53" :
+                                        var form53list = ['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'];
+                                        form53list.forEach(function(item) {
+                                            console.log(item)
+
+                                            var payload =  {
+                                                "officeIdList": [officeId],
+                                                "yearMonthList": [data_ym],
+                                                "formTableName": item
+                                            }
+                                            console.log(payload)
+
+                                            $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                                setTimeout(function() {
+                                                    location.reload();
+                                                }, 10000);
+                                            });
+                                        });
+                                    break;
                                 }
-                                console.log(payload)
-
-                                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f5?submit=yes',JSON.stringify(payload)).done(function (result) {
-                                });
-                                location.reload();
-                            break;
-                            case "F21" : 
-                                var payload =  {
-                                    "field_office": field,
-                                    "Y_M": data_ym,
-                                }
-                                console.log(payload)
-
-                                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f21?submit=yes',JSON.stringify(payload)).done(function (result) {
-                                });
-                                location.reload();
-                            break;
-                            case "F44" : 
-                                var form44list = ['F44t1', 'F44t3', 'F44t5', 'F44t7', 'F44t10', 'F44t12'];
-                                form44list.forEach(function(item) {
-                                    console.log(item)
-
-                                    var payload =  {
-                                        "officeIdList": [officeId],
-                                        "yearMonthList": [data_ym],
-                                        "formTableName": item
-                                    }
-                                    console.log(payload)
-
-                                    $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
-                                    });
-                                        location.reload();
-                                });
-                            break;
-                            case "F45" :  
-                                var form45list = ['F45t1', 'F45t3', 'F45t5', 'F45t7', 'F45t10', 'F45t12'];
-                                form45list.forEach(function(item) {
-                                    console.log(item)
-
-                                    var payload =  {
-                                        "officeIdList": [officeId],
-                                        "yearMonthList": [data_ym],
-                                        "formTableName": item
-                                    }
-                                    console.log(payload)
-
-                                    $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
-                                    });
-                                        location.reload();
-                                });
-                            break;
-                            case "F51" :
-                                var payload =  {
-                                    "officeIdList": [officeId],
-                                    "yearMonthList": [data_ym],
-                                    "formTableName": 'F51t1'
-                                }
-                                console.log(payload)
-
-                                $.wms.executeExternalPost('http://192.168.1.33:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
-                                });
-                                    location.reload();
-                            break;
-                            case "F53" :
-                                var form53list = ['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'];
-                                form53list.forEach(function(item) {
-                                    console.log(item)
-
-                                    var payload =  {
-                                        "officeIdList": [officeId],
-                                        "yearMonthList": [data_ym],
-                                        "formTableName": item
-                                    }
-                                    console.log(payload)
-
-                                    $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
-                                    });
-                                        location.reload();
-                                });
-                            break;
-                        }
+                            });
+                        })
                     });
-                })
-            });
 
+                    $(".btn-reject").unbind("click").on("click",function(){
+                        var data_id     = $(this).data("id");
+                        console.log(data_id);
+                        $("#modal-reject").modal();
 
-            $(".btn-reject").unbind("click").on("click",function(){
-                var data_id     = $(this).data("id");
-                console.log(data_id);
-                $("#modal-reject").modal();
+                        $(".btnReject").unbind("click").on("click",function(){
+                            $(this).attr('disabled',true)
+                            $(".modal-loader").removeClass("hidden")
 
-                $(".btnReject").unbind("click").on("click",function(){
-                    $(this).attr('disabled',true)
-                    $(".modal-loader").removeClass("hidden")
+                            var payload = {
+                                approverId      : $.cookie("USER_ID"),
+                                updatedBy       : $.cookie("USER_ID"),
+                                remarks         : $("#remarks_r").val(),
+                            }
 
-                    var payload = {
-                        approverId      : $.cookie("USER_ID"),
-                        updatedBy       : $.cookie("USER_ID"),
-                        remarks         : $("#remarks_r").val(),
-                    }
-
-                    $.wms.executeExternalPost('http://192.168.1.33:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
-                        $("#modal-reject").modal('toggle')
-                        $(".modal-loader").addClass("hidden")
-                        $(".btnReject").attr('disabled',false)
-                        location.reload();
+                            $.wms.executeExternalPost('http://192.168.1.33:8000/form/update/'+data_id+'?actionStatus=REJECTED',JSON.stringify(payload)).done(function (result) {
+                                $("#modal-reject").modal('toggle')
+                                $(".modal-loader").addClass("hidden")
+                                $(".btnReject").attr('disabled',false)
+                                location.reload();
+                            });
+                        })
                     });
-                })
+                }
             });
         console.log("------------")
         })        

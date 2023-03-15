@@ -34,6 +34,23 @@
     </div>
   </div>
 
+  <div class="modal" id="modal-carryover" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header tb-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><b><i class="fa fa-share"></i> Carry Over </b></h4>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-success">
+              <strong>Processing!</strong> Please wait.<i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="modal-reject" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
     
