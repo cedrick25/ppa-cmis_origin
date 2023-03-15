@@ -22,6 +22,87 @@
             		<br/>
     				<button type="button" class="btn btn-primary btn-migrate">Migrate</button>  
 				</div>
+
+            	<div class="form-group">
+		          	<table class="table table-bordered table-darker text-nowrap" style="width:70%">
+			            <thead class="small tb-header">
+			              <tr>
+			                <th style="text-align: center;">FORM 5</th>
+			                <th style="text-align: center;">FORM 21</th>
+			                <th style="text-align: center;">FORM 44</th>
+			                <th style="text-align: center;">FORM 45</th>
+			                <th style="text-align: center;">FORM 50</th>
+			                <th style="text-align: center;">FORM 51</th>
+			                <th style="text-align: center;">FORM 53</th>
+			              </tr>
+			            </thead>
+			            <tbody class="tbody-sm">
+			            	<tr>
+			            		<td><button type="button" class="btn btn-primary btn-F5T1">Migrate F5T1</button></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T1">Migrate F21T1</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            	<tr>
+			            		<td><button type="button" class="btn btn-primary btn-F5T3">Migrate F5T3</button></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T3">Migrate F21T3</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            	<tr>
+			            		<td><button type="button" class="btn btn-primary btn-F5T5">Migrate F5T5</button></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T5">Migrate F21T5</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            	<tr>
+			            		<td><button type="button" class="btn btn-primary btn-F5T7">Migrate F5T7</button></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T7_PAROL">Migrate F21T7_PAROL</button> <button type="button" class="btn btn-primary btn-F21T7_PARDON">Migrate F21T7_PARDON</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            	<tr>
+			            		<td><button type="button" class="btn btn-primary btn-F5T10">Migrate F5T10</button></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T10_PAROL">Migrate F21T10_PAROL</button> <button type="button" class="btn btn-primary btn-F21T10_PARDON">Migrate F21T10_PARDON</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            	<tr>
+			            		<td><button type="button" class="btn btn-primary btn-F5T12">Migrate F5T12</button></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T12_PAROL">Migrate F21T12_PAROL</button> <button type="button" class="btn btn-primary btn-F21T12_PARDON">Migrate F21T12_PARDON</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            	<tr>
+			            		<td></td>
+			            		<td><button type="button" class="btn btn-primary btn-F21T14_PAROL">Migrate F21T14_PAROL</button> <button type="button" class="btn btn-primary btn-F21T14_PARDON">Migrate F21T14_PARDON</button></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            		<td></td>
+			            	</tr>
+			            </tbody>
+		          	</table>
+				</div>
 			</div>
 		</div>
 

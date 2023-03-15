@@ -115,9 +115,4 @@ class Portal extends CI_Controller {
 		$this->load->view('form_review');
 	}
 
-	
-
-	
-
-
 }

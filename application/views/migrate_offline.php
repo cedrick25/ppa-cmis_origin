@@ -123,6 +123,178 @@
 				a.click();
     		});
 
+    		$(".btn-F5T1").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f5t1?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F5T3").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f5t3?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F5T5").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f5t5?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F5T7").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f5t7?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F5T10").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f5t10?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F5T12").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f5t12?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		
+    		// f21 start
+    		$(".btn-F21T1").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t1?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T3").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t3?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T5").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t5?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T7_PAROL").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t7_parol?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T7_PARDON").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t7_pardon?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T10_PAROL").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t10_parol?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T10_PARDON").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t10_pardon?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T12_PAROL").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t12_parol?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T12_PARDON").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t12_pardon?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T14_PAROL").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t14_parol?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
+    		$(".btn-F21T14_PARDON").unbind("click").on("click",function(){
+    			console.log("Trigger");
+
+	            var date = $("#filter_date").val();
+	            var field = $("#filter_office").val();
+	            let a= document.createElement('a');
+				a.target= '_blank';
+				a.href= "/ppa-cmis-api_origin/wsv1/api/migrate_f21t14_pardon?submit=yes&field="+field+"&date="+date;
+				a.click();
+    		});
         }, 200);
    });
 </script>
