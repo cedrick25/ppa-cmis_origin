@@ -857,8 +857,7 @@ $.wms.reports = (function() {
               "fieldOffice"     : field
             }
         // $('.rlist_tbody').empty();
-        // $.wms.executeExternalPost('http://192.168.1.33:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
-        $.wms.executeExternalPost('http://192.168.1.184:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
+        $.wms.executeExternalPost('http://192.168.1.33:8000/form/approval-list',JSON.stringify(payload)).done(function (result) {
             console.log(result)
 
             var data = [];
@@ -916,7 +915,7 @@ $.wms.reports = (function() {
                                 remarks         : $("#remarks_a").val(),
                             }
 
-                            $.wms.executeExternalPost('http://192.168.1.184:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
+                            $.wms.executeExternalPost('http://192.168.1.33:8000/form/update/'+data_id+'?actionStatus=APPROVED',JSON.stringify(payload)).done(function (result) {
                                 $("#modal-approve").modal('toggle')
                                 $(".modal-loader").addClass("hidden")
                                 $(".btnApprove").attr('disabled',false)
