@@ -2172,10 +2172,7 @@ $.wms.form21 = (function() {
                                 $('.F21T6_tbody_b').append("<tr>"+
                                     "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
                                     "<td>"+data.petitioner.toUpperCase()+"</td>"+
-                                    "<td>"+data.referring_office+"</td>"+
-                                    "<td>"+data.received_date+"</td>"+
-                                    "<td>"+data.reasons+"</td>"+
-                                    "<td>"+data.investigating_officer+"</td>"+
+                                    "<td>"+data.completed_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
