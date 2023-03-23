@@ -1225,7 +1225,7 @@ $.wms.widget = (function() {
             case 'F21T12': $.wms.form21.attachF21T12PageEvent(); break;
             case 'F21T13': $.wms.form21.attachF21T13PageEvent(); break;
             case 'F21T14': $.wms.form21.attachF21T14PageEvent(); break;
-            case 'F21T15': $.wms.form21.attachF21T15PageEvent(); break;
+            case 'F21T15': $.wms.form21.attachF21T15PageEvent(); $.wms.reports.form_lock(); break;
             break;
         }
 
