@@ -2199,7 +2199,7 @@ $.wms.form5 = (function() {
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
                                                 "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -2510,7 +2510,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'> <button class='access_f5_write tn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                        "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_a').DataTable({
@@ -2561,7 +2561,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options")
+                                        "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_b').DataTable({
@@ -3174,7 +3174,7 @@ $.wms.form5 = (function() {
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
                                                 "<td width='15%' align='center' class='options'> <button class='btn btn-success btn-sm btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -3976,7 +3976,7 @@ $.wms.form5 = (function() {
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
                                                 "<td width='15%' align='center' class='options'> <button class='btn btn-success btn-sm btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -4314,7 +4314,7 @@ $.wms.form5 = (function() {
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
                                                 "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -4634,7 +4634,7 @@ $.wms.form5 = (function() {
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
                                                 "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='btn btn-danger access_f5_write btn-sm btn-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<button class='btn btn-danger access_f5_write btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -4955,7 +4955,7 @@ $.wms.form5 = (function() {
                                                 "<td class='options center'>"+data.field_office+"</td>"+
                                                 "<td class='options center'>"+source+"</td>"+
                                                 "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -5262,7 +5262,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                        "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_a').DataTable({
@@ -5316,7 +5316,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete hidden form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                        "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_b').DataTable({
