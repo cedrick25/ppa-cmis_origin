@@ -5220,7 +5220,7 @@ $.wms.form5 = (function() {
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
-
+        $.wms.reports.form_lock();
         var __maxTableSize = 0;
         var __counter = 0;
 
