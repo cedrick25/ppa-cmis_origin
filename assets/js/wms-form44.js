@@ -6004,6 +6004,7 @@ $.wms.form44 = (function() {
             $(".btnSubmitProceed").unbind("click").on('click', function (){
                 console.log("submit CPPO")
 
+                $('.btnSubmitProceed').prop('disabled', true);
                 var payload = {
                   "encodingMonth"   : yearMonth,
                   "fieldOfficeId"   : officeId,
