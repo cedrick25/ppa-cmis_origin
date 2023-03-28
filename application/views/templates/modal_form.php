@@ -388,6 +388,7 @@
                 <option value="F21">F21</option>
                 <option value="F44">F44</option>
                 <option value="F45">F45</option>
+                <option value="F50">F50</option>
                 <option value="F51">F51</option>
                 <option value="F53">F53</option>
               </select>
