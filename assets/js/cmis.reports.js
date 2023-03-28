@@ -989,6 +989,11 @@ $.wms.reports = (function() {
                                             });
                                         });
                                     break;
+                                    case "F50" :
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 1000);
+                                    break;
                                     case "F51" :
                                         var payload =  {
                                             "officeIdList": [officeId],
