@@ -774,6 +774,7 @@ $.wms.reports = (function() {
         var userRole;
         if (carryoverOverride != "false") {
             userRole = true;
+            console.log("user role is true")
             const myTimeout2 = setTimeout(timeout2, 1);
             function timeout2(){
                 $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
@@ -790,6 +791,7 @@ $.wms.reports = (function() {
 
         } else {
             userRole = false;
+            console.log("user role is false")
             $(".btn-carryover").addClass('hide')
         }
         if (officeId === "ALL") {
