@@ -1282,6 +1282,35 @@ $.wms.form50 = (function() {
                 });
             };
         };
+
+        var __submitCPPO = function(){
+            var yearMonth   = $.wms.urlParam('date')
+            var officeId    = $.wms.urlParam('officeId')
+            var page        = $.wms.urlParam('page')
+            var size        = $.wms.urlParam('size')
+            var field       = $.wms.urlParam('field')
+            
+            $(".btnSubmitProceed").unbind("click").on('click', function (){
+                console.log("submit CPPO")
+
+                $('.btnSubmitProceed').prop('disabled', true);
+                var payload = {
+                  "encodingMonth"   : yearMonth,
+                  "fieldOfficeId"   : officeId,
+                  "fieldOfficeName" : field,
+                  "formTable"       : 'F50',
+                  "requestorId"     : $.cookie("USER_ID"),
+                  "createdBy"       : $.cookie("USER_ID"),
+                }
+
+                $.wms.executeExternalPost('http://192.168.1.33:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                    console.log(result)
+                        location.reload();
+                })
+            })
+        };
+
+        __submitCPPO();
         __download_print();
     };
 
