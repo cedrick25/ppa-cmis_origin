@@ -816,11 +816,11 @@ $.wms.reports = (function() {
                     $.wms.executeExternalPost('http://192.168.1.33:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
                         console.log(result)
                         if (result.response == false) {
-                            console.log('false')
+                            console.log('false lock')
                             $(".form_lock").removeClass('hide')
                             $(".cppoIsApproved").removeClass('hide')
                         } else {
-                            console.log('true')
+                            console.log('true locked')
                             $(".form_lock").addClass('hide')
                             $(".cppoIsApproved").addClass('hide')
                         }
