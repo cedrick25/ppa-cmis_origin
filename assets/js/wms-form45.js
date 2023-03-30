@@ -6044,7 +6044,7 @@ $.wms.form45 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+'http://192.168.1.33:8000/cert/view/'+data.id+"><button class='access_f45_write btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+'http://192.168.1.33:8000/cert/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {
