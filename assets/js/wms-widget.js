@@ -1282,7 +1282,7 @@ $.wms.widget = (function() {
 
         $(".btn-print").unbind("click").on("click",function(){
             var isocode     = $(".isocode_").val()
-            window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field+"&officeId="+officeId+"&page="+0+"&size="+"50"+"&isocode="+isocode, '_blank'); 
+            window.open('print_caseload?form='+selForm+'&date='+date+'&field='+field+"&officeId="+officeId+"&page="+0+"&size="+"500"+"&isocode="+isocode, '_blank'); 
         });
         
 
@@ -1385,7 +1385,7 @@ $.wms.widget = (function() {
             var field = $("#filter_office").val();
             var officeId   = $("#filter_office").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+300
         });
 
         $(".btn-regional-filter").unbind("click").on("click",function(){
