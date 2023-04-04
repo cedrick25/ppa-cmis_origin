@@ -899,6 +899,7 @@ $.wms.reports = (function() {
                     { "width": "10%" },
                     { "width": "20%" },
                     { "width": "20%" },
+                    { "width": "20%" },
                 ],
                 "drawCallback": function( settings ) {
                     $(".btn-approve").unbind("click").on("click",function(){
