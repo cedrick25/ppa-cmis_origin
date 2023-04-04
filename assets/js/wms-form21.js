@@ -7930,7 +7930,18 @@ $.wms.form21 = (function() {
 
                 $.wms.executeExternalPost('http://192.168.1.33:8000/form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
+                    // location.reload();
+
+                    var form = "Submitted form : "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". ";
+                    var payload_audit = {
+                        "created_by" : $.cookie("USER_ID"),
+                        "module" : "CASELOAD",
+                        "action" : form
+                        
+                    }
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
                         location.reload();
+                    });
                 })
             })
         };
