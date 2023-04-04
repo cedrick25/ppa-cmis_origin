@@ -106,6 +106,7 @@
                                                 <th>FORM</th>
                                                 <th>FIELD</th>
                                                 <th>ENCODING MONTH</th>
+                                                <th>SUBMITTED DATE</th>
                                                 <th>APPROVAL DATE</th>
                                                 <th>APPROVAL STATUS</th>
                                                 <th>REMARKS</th>
