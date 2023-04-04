@@ -897,7 +897,7 @@ $.wms.reports = (function() {
                     { "width": "10%" },
                     { "width": "10%" },
                     { "width": "10%" },
-                    { "width": "20%" },
+                    { "width": "10%" },
                     { "width": "20%" },
                     { "width": "20%" },
                 ],
