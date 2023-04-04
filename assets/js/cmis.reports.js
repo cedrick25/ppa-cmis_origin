@@ -874,8 +874,8 @@ $.wms.reports = (function() {
                 $('#rlist_table').append("<tr>"+
                     "<td>"+data.formTable+"</td>"+
                     "<td>"+data.fieldOfficeName+"</td>"+
-                    "<td>"+data.createdDate+"</td>"+
                     "<td>"+data.encodingMonth+"</td>"+
+                    "<td>"+data.createdDate+"</td>"+
                     "<td>"+data.approvalDate+"</td>"+
                     "<td>"+data.approvalStatus+"</td>"+
                     "<td>"+data.remarks+"</td>"+
