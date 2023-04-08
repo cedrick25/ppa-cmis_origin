@@ -684,10 +684,10 @@
                           <td width="50%">Form 45 Community Service Investigation</td>
                           <td align="center" class="b">Number</td>
                         </tr>
-                        <!-- <tr>
-                          <td class="b">Cases Handled for Suspended Sentence</td>
+                        <tr>
+                          <td class="b">Cases Handled for Service Sentence</td>
                           <td align="center" class=""></td>
-                        </tr> -->
+                        </tr>
                         <tr>
                           <td class="b">&nbsp;&nbsp; Carry Over</td>
                           <td align="center" class="csi1">0</td>
