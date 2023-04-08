@@ -812,10 +812,10 @@
                           <td class="b">Court Resolution on the Application for Community Service</td>
                           <td align="center" class="csiph5">0</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <td class="b">&nbsp;&nbsp; Total Cases Handled</td>
                           <td align="center" class=""></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                           <td class="b">&nbsp;&nbsp; Total Application to be Acted Upon by the Court</td>
                           <td align="center" class="csiph6">0</td>
