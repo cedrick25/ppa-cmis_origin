@@ -222,6 +222,10 @@ $.wms.form5 = (function() {
                 // var table = $('#T_F5T1').DataTable();
                 $('.dataTables_length').addClass('bs-select');
                 $('#T_F5T1').dataTable( {
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -565,6 +569,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_b').DataTable( {
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -615,6 +623,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c1').DataTable( {
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -665,6 +677,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c2').DataTable( {
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -1636,6 +1652,10 @@ $.wms.form5 = (function() {
 
             $(document).ready(function () {
                 var table = $('#T_F5T3').DataTable( {
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -1911,6 +1931,10 @@ $.wms.form5 = (function() {
 
             $(document).ready(function () {
                 var table = $('#T_F5T4').DataTable( {
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -2215,6 +2239,10 @@ $.wms.form5 = (function() {
 
             $(document).ready(function () {
                 var table = $('#T_F5T5').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -2518,6 +2546,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_a').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -2569,6 +2601,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_b').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -3190,6 +3226,10 @@ $.wms.form5 = (function() {
 
             $(document).ready(function () {
                 var table = $('#T_F5T7').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -3499,6 +3539,10 @@ $.wms.form5 = (function() {
 
             $(document).ready(function () {
                 var table = $('#T_F5T8').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -3991,6 +4035,10 @@ $.wms.form5 = (function() {
             }
             $(document).ready(function () {
                 var table = $('#T_F5T9').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -4329,6 +4377,10 @@ $.wms.form5 = (function() {
             }
             $(document).ready(function () {
                 var table = $('#T_F5T10').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -4649,6 +4701,10 @@ $.wms.form5 = (function() {
             }
             $(document).ready(function () {
                 var table = $('#T_F5T11').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -4970,6 +5026,10 @@ $.wms.form5 = (function() {
             }
             $(document).ready(function () {
                 var table = $('#T_F5T12').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
@@ -5270,6 +5330,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_a').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -5324,6 +5388,10 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_b').DataTable({
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                                    "language": {
+                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                                    },
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
