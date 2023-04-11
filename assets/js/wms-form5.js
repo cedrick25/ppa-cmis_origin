@@ -505,7 +505,7 @@ $.wms.form5 = (function() {
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_a').DataTable( {
-                                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
                                     "language": {
                                         "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
                                     },
