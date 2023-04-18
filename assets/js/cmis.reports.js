@@ -769,10 +769,10 @@ $.wms.reports = (function() {
         var officeId    = $.wms.urlParam('officeId')
         var form        = $.wms.urlParam('form')
         var result      = form.split('T');
-        var carryoverOverride = $.cookie('carryoverOverride')
-        // console.log(carryoverOverride)
+        var analyst = $.cookie('analyst')
+        // console.log(analyst)
         var userRole;
-        if (carryoverOverride != "false") {
+        if (analyst != "false") {
             userRole = true;
             console.log("user role analyst is true")
             const myTimeout2 = setTimeout(timeout2, 1);
@@ -792,6 +792,29 @@ $.wms.reports = (function() {
         } else {
             userRole = false;
             console.log("user role analyst is false")
+            $(".btn-carryover").addClass('hide')
+        }
+        var carryoverOverride = $.cookie('carryoverOverride')
+        if (carryoverOverride != "false") {
+            userRole = true;
+            console.log("user role override is true")
+            const myTimeout2 = setTimeout(timeout2, 1);
+            function timeout2(){
+                $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                    console.log(result2)
+                    if (result2.response == true) {
+                        console.log('true')
+                        $(".btn-carryover").removeClass('hide')
+                    } else {
+                        console.log('false')
+                        $(".btn-carryover").addClass('hide')
+                    }
+                })
+            }
+
+        } else {
+            userRole = false;
+            console.log("user role override is false")
             $(".btn-carryover").addClass('hide')
         }
         if (officeId === "ALL") {
