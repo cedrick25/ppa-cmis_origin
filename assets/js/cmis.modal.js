@@ -15,7 +15,7 @@ $.wms.modal = (function() {
     		var date      = $("#modal-probation-date").val();
     		var field     = $("#sel-modal-probation-field").val();
             var officeId  = $("#sel-modal-probation-field").select2().find(":selected").data("id");
-    		window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+    		window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
     	});
 
         $(".btn-modal-parole").unbind("click").on("click",function(){
@@ -24,7 +24,7 @@ $.wms.modal = (function() {
             var date    = $("#modal-parole-date").val();
             var field   = $("#sel-modal-parole-field").val();
             var officeId= $("#sel-modal-parole-field").select2().find(":selected").data("id");
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
         $(".btn-modal-44").unbind("click").on("click",function(){
@@ -34,7 +34,7 @@ $.wms.modal = (function() {
             var field   = $("#sel-modal-44-field").val();
             var officeId= $("#sel-modal-44-field").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
         $(".btn-modal-45").unbind("click").on("click",function(){
@@ -44,7 +44,7 @@ $.wms.modal = (function() {
             var field   = $("#sel-modal-45-field").val();
             var officeId= $("#sel-modal-45-field").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
         $(".btn-modal-50").unbind("click").on("click",function(){
@@ -54,7 +54,7 @@ $.wms.modal = (function() {
             var field   = $("#sel-modal-50-field").val();
             var officeId= $("#sel-modal-50-field").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
         $(".btn-modal-51").unbind("click").on("click",function(){
@@ -64,7 +64,7 @@ $.wms.modal = (function() {
             var field   = $("#sel-modal-51-field").val();
             var officeId= $("#sel-modal-51-field").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
         $(".btn-modal-53").unbind("click").on("click",function(){
@@ -74,7 +74,7 @@ $.wms.modal = (function() {
             var field   = $("#sel-modal-53-field").val();
             var officeId= $("#sel-modal-53-field").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
         $(".btn-modal-cppo").unbind("click").on("click",function(){
@@ -84,7 +84,7 @@ $.wms.modal = (function() {
             var field   = $("#sel-modal-cppo-field").val();
             var officeId= $("#sel-modal-cppo-field").select2().find(":selected").data("id");
 
-            window.location.href="form_review?form="+sel+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+200
+            window.location.href="form_review?form="+sel+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+500
         });
 
 
