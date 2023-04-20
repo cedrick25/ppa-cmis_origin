@@ -734,10 +734,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T2_tbody").append(
-                            "<tr>"+
-                                "<td colspan='18' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T2_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='18' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
