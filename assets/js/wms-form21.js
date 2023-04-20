@@ -3036,10 +3036,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T7_tbody").append(
-                            "<tr>"+
-                                "<td colspan='20' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T7_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='20' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
