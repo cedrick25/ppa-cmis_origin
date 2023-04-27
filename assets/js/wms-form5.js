@@ -1504,7 +1504,8 @@ $.wms.form5 = (function() {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
-                    "method" : "update"
+                    "method" : "update",
+                    "created_by" : $.cookie("USER_ID"),
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/updateF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
                     $("#modal-notacted-delete").modal('toggle')
