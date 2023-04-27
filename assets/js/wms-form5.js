@@ -618,8 +618,8 @@ $.wms.form5 = (function() {
                                     "<td>"+data.received_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-acted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c1').DataTable( {
@@ -672,8 +672,8 @@ $.wms.form5 = (function() {
                                     "<td>"+data.received_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-acted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c2').DataTable( {
@@ -2541,7 +2541,7 @@ $.wms.form5 = (function() {
                                     "<td>"+data.investigating_officer+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write tn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                         "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
