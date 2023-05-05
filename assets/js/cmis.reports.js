@@ -782,6 +782,7 @@ $.wms.reports = (function() {
                     if (result2.response == true) {
                         console.log('true')
                         $(".btn-carryover").removeClass('hide')
+                        console.log("button will show because anylyst role is true")
                     } else {
                         console.log('false')
                         $(".btn-carryover").addClass('hide')
@@ -805,6 +806,7 @@ $.wms.reports = (function() {
                     if (result2.response == true) {
                         console.log('true')
                         $(".btn-carryover").removeClass('hide')
+                        console.log("button will show because carryoverOverride role is true")
                     } else {
                         console.log('false')
                         $(".btn-carryover").addClass('hide')
