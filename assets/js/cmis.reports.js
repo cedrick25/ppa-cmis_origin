@@ -777,12 +777,13 @@ $.wms.reports = (function() {
             console.log("user role analyst is true")
             const myTimeout2 = setTimeout(timeout2, 1);
             function timeout2(){
+                // $.wms.executeExternalPost('http://192.168.100.3:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
                 $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2)
                     if (result2.response == true) {
                         console.log('true')
                         $(".btn-carryover").removeClass('hide')
-                        console.log("button will show because anylyst role is true")
+                        console.log("button will show because analyst role is true")
                     } else {
                         console.log('false')
                         $(".btn-carryover").addClass('hide')
@@ -801,7 +802,8 @@ $.wms.reports = (function() {
             console.log("user role override is true")
             const myTimeout2 = setTimeout(timeout2, 1);
             function timeout2(){
-                $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                // $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('http://192.168.100.3:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2)
                     if (result2.response == true) {
                         console.log('true')
@@ -838,6 +840,7 @@ $.wms.reports = (function() {
                     window.setTimeout(checkPendingRequest, 100);
                 }
                 else {
+                    // $.wms.executeExternalPost('http://192.168.100.3:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
                     $.wms.executeExternalPost('http://192.168.1.33:8000/form/islocked',JSON.stringify(payload)).done(function (result) {
                         console.log(result)
                         if (result.response == false) {
