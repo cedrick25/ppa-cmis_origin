@@ -802,8 +802,8 @@ $.wms.reports = (function() {
             console.log("user role override is true")
             const myTimeout2 = setTimeout(timeout2, 1);
             function timeout2(){
-                // $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
-                $.wms.executeExternalPost('http://192.168.100.3:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                $.wms.executeExternalPost('http://192.168.1.33:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
+                // $.wms.executeExternalPost('http://192.168.100.3:8000/form/isApproved',JSON.stringify(payload)).done(function (result2) {
                     console.log(result2)
                     if (result2.response == true) {
                         console.log('true')
