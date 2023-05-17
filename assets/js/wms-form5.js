@@ -2279,10 +2279,15 @@ $.wms.form5 = (function() {
             // Get the table headers
             var tableHeaders = table.columns().header().toArray();
 
+            // Columns to exclude from the header (0-based index)
+            var excludedColumns = [2, 4]; // Example: excluding columns 2 and 4
+
             // Create the header row HTML string
             var headerRowHtml = '<tr>';
-            tableHeaders.forEach(function(header) {
-              headerRowHtml += '<th>' + $(header).text() + '</th>';
+            tableHeaders.forEach(function(header, index) {
+              if (!excludedColumns.includes(index)) {
+                headerRowHtml += '<th>' + $(header).text() + '</th>';
+              }
             });
             headerRowHtml += '</tr>';
 
