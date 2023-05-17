@@ -4107,7 +4107,7 @@ $.wms.form5 = (function() {
             var tableHeaders = table.columns().header().toArray();
 
             // Columns to exclude from the header (0-based index)
-            var excludedColumns = [11, 12, 13]; // Example: excluding columns 6,7 and 8
+            var excludedColumns = [15, 16, 17]; // Example: excluding columns 6,7 and 8
 
             // Create the header row HTML string
             var headerRowHtml = '<tr>';
