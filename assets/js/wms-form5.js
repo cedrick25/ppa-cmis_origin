@@ -2264,15 +2264,26 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F5T5').DataTable();
+            // $("#T_F5T5").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table5",
+            //     filename: "Form5-Table5.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F5T5').DataTable();
-            $("#T_F5T5").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form5-Table5",
-                filename: "Form5-Table5.xls", //do not include extension
-                fileext: ".xls",
-                preserveColors: true
-              }); 
+            var clonedRows = table.$('tr').clone(); // Clone the rows
+
+            // Export the cloned rows
+            $(clonedRows).table2excel({
+              exclude: ".options",
+              name: "Form5-Table5",
+              filename: "Form5-Table5", // File name without extension
+              fileext: ".xls",
+              preserveColors: true
+            });
         });
 
         //Add
