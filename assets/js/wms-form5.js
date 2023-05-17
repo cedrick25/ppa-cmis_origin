@@ -2274,10 +2274,12 @@ $.wms.form5 = (function() {
             //     preserveColors: true
             //   }); 
             var table = $('#T_F5T5').DataTable();
-            var clonedRows = table.$('tr').clone(); // Clone the rows
+            var clonedHeader = table.table().header().clone(); // Clone the header row
+            var clonedRows = table.$('tr').clone(); // Clone the data rows
 
-            // Create a temporary table element and append the cloned rows
+            // Create a temporary table element and append the cloned header and rows
             var tempTable = $('<table></table>');
+            tempTable.append(clonedHeader);
             tempTable.append(clonedRows);
 
             // Export the temporary table
