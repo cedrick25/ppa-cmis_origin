@@ -2280,7 +2280,7 @@ $.wms.form5 = (function() {
             clonedRows.table2excel({
               exclude: ".options",
               name: "Form5-Table5",
-              filename: "Form5-Table5", // File name without extension
+              filename: "Form5-Table5.xls", // File name without extension
               fileext: ".xls",
               preserveColors: true
             });
