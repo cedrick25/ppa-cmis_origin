@@ -2274,12 +2274,21 @@ $.wms.form5 = (function() {
             //     preserveColors: true
             //   }); 
             var table = $('#T_F5T5').DataTable();
-            var clonedHeader = table.table().header().clone(); // Clone the header row
             var clonedRows = table.$('tr').clone(); // Clone the data rows
 
-            // Create a temporary table element and append the cloned header and rows
+            // Get the table headers
+            var tableHeaders = table.columns().header().toArray();
+
+            // Create the header row HTML string
+            var headerRowHtml = '<tr>';
+            tableHeaders.forEach(function(header) {
+              headerRowHtml += '<th>' + $(header).text() + '</th>';
+            });
+            headerRowHtml += '</tr>';
+
+            // Create a temporary table element and append the header row and cloned rows
             var tempTable = $('<table></table>');
-            tempTable.append(clonedHeader);
+            tempTable.append(headerRowHtml);
             tempTable.append(clonedRows);
 
             // Export the temporary table
