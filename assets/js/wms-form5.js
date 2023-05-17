@@ -2277,7 +2277,7 @@ $.wms.form5 = (function() {
             var clonedRows = table.$('tr').clone(); // Clone the rows
 
             // Export the cloned rows
-            $(clonedRows).table2excel({
+            clonedRows.table2excel({
               exclude: ".options",
               name: "Form5-Table5",
               filename: "Form5-Table5", // File name without extension
