@@ -907,8 +907,8 @@ $.wms.reports = (function() {
                     "<td>"+data.approvalDate+"</td>"+
                     "<td>"+data.approvalStatus+"</td>"+
                     "<td>"+data.remarks+"</td>"+
-                    "<td align='center' class='options'> <button class='access_cppo_write btn btn-success btn-sm btn-approve "+hide+"' data-id='"+data.id+"' data-ym='"+data.encodingMonth+"' data-ft='"+data.formTable+"'><i class='fa fa-check'></i> Approve</button> "+
-                    "<button class='access_cppo_write btn btn-danger btn-sm btn-reject "+hide+"' data-id='"+data.id+"'><i class='fa fa-ban'></i> Reject</button> </td></tr>")
+                    "<td align='center' class='options'> <button class='access_cppo_write btn btn-success btn-sm btn-approve "+hide+"' data-id='"+data.id+"' data-ym='"+data.encodingMonth+"' data-ft='"+data.formTable+"' data-fo='"+data.fieldOfficeName+"'><i class='fa fa-check'></i> Approve</button> "+
+                    "<button class='access_cppo_write btn btn-danger btn-sm btn-reject "+hide+"' data-id='"+data.id+"' data-ym='"+data.encodingMonth+"' data-ft='"+data.formTable+"' data-fo='"+data.fieldOfficeName+"'><i class='fa fa-ban'></i> Reject</button> </td></tr>")
             });
             if ( $.fn.DataTable.isDataTable('#rlist_table') ) {
                 $('#rlist_table').DataTable().destroy();
@@ -934,6 +934,7 @@ $.wms.reports = (function() {
                         var data_id = $(this).data("id");
                         var data_ym = $(this).data("ym");
                         var data_form_table = $(this).data("ft");
+                        var data_form_field_office = $(this).data("fo");
                         console.log(data_id);
                         $("#modal-approve").modal();
 
@@ -953,6 +954,18 @@ $.wms.reports = (function() {
                                 $(".btnApprove").attr('disabled',false)
                                 // location.reload();
                                 $("#modal-carryover").modal();
+
+
+                                var form = "Approved: Form: "+data_form_table+", Field: "+data_form_field_office+""
+                                var payload = {
+                                    "created_by" : approverId,
+                                    "module" : "CASELOAD",
+                                    "action" : form
+                                    
+                                }
+                                $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                                    
+                                });
 
                                 switch(data_form_table){
                                     case "F5" : 
@@ -1063,7 +1076,10 @@ $.wms.reports = (function() {
                     });
 
                     $(".btn-reject").unbind("click").on("click",function(){
-                        var data_id     = $(this).data("id");
+                        var data_id = $(this).data("id");
+                        var data_ym = $(this).data("ym");
+                        var data_form_table = $(this).data("ft");
+                        var data_form_field_office = $(this).data("fo");
                         console.log(data_id);
                         $("#modal-reject").modal();
 
@@ -1082,6 +1098,17 @@ $.wms.reports = (function() {
                                 $(".modal-loader").addClass("hidden")
                                 $(".btnReject").attr('disabled',false)
                                 location.reload();
+                            });
+
+                            var form = "Reject: Form: "+data_form_table+", Field: "+data_form_field_office+""
+                            var payload = {
+                                "created_by" : approverId,
+                                "module" : "CASELOAD",
+                                "action" : form
+                                
+                            }
+                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+
                             });
                         })
                     });
