@@ -359,15 +359,47 @@ $.wms.form5 = (function() {
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
+            // var table = $('#T_F5T1').DataTable();
+            // $("#T_F5T1").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table1",
+            //     filename: "Form5-Table1.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+
             var table = $('#T_F5T1').DataTable();
-            $("#T_F5T1").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form5-Table1",
-                filename: "Form5-Table1.xls", //do not include extension
-                fileext: ".xls",
-                preserveColors: true
-              }); 
+            var clonedRows = table.$('tr').clone(); // Clone the data rows
+
+            // Get the table headers
+            var tableHeaders = table.columns().header().toArray();
+
+            // Columns to exclude from the header (0-based index)
+            var excludedColumns = [4, 5, 6]; // Example: excluding columns 6,7 and 8
+
+            // Create the header row HTML string
+            var headerRowHtml = '<tr>';
+            tableHeaders.forEach(function(header, index) {
+              if (!excludedColumns.includes(index)) {
+                headerRowHtml += '<th>' + $(header).text() + '</th>';
+              }
+            });
+            headerRowHtml += '</tr>';
+
+            // Create a temporary table element and append the header row and cloned rows
+            var tempTable = $('<table></table>');
+            tempTable.append(headerRowHtml);
+            tempTable.append(clonedRows);
+
+            // Export the temporary table
+            tempTable.table2excel({
+              exclude: ".options",
+              name: "Form5-Table1",
+              filename: "Form5-Table1", // File name without extension
+              fileext: ".xls",
+              preserveColors: true
+            });
         });
 
         //Add
