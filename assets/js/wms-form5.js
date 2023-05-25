@@ -967,10 +967,10 @@ $.wms.form5 = (function() {
                             )
                     }
                 }else{
-                    $(".F5T2_tbody").append(
-                            "<tr>"+
-                                "<td colspan='20' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F5T2_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='20' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -2809,10 +2809,10 @@ $.wms.form5 = (function() {
                     }
                     $.wms.dashboard.formControlCheck()
                 }else{
-                    $(".F5T6_tbody").append(
-                            "<tr>"+
-                                "<td colspan='14' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F5T6_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='14' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -5634,10 +5634,10 @@ $.wms.form5 = (function() {
                     }
 
                 }else{
-                    $(".F5T13_tbody").append(
-                            "<tr>"+
-                                "<td colspan='17' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F5T13_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='17' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
 
             }
