@@ -2332,10 +2332,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T6_tbody").append(
-                            "<tr>"+
-                                "<td colspan='14' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T6_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='14' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -4665,10 +4665,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T10_tbody").append(
-                            "<tr>"+
-                                "<td colspan='18' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T10_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='18' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -5200,10 +5200,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T11_tbody").append(
-                            "<tr>"+
-                                "<td colspan='18' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T11_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='18' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -6711,10 +6711,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T14_tbody").append(
-                            "<tr>"+
-                                "<td colspan='18' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T14_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='18' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
@@ -7476,10 +7476,10 @@ $.wms.form21 = (function() {
                             )
                     }
                 }else{
-                    $(".F21T15_tbody").append(
-                            "<tr>"+
-                                "<td colspan='30' class='center b'>NONE</td>"+
-                            "</tr>");
+                    // $(".F21T15_tbody").append(
+                    //         "<tr>"+
+                    //             "<td colspan='30' class='center b'>NONE</td>"+
+                    //         "</tr>");
                 }
             }
         }
