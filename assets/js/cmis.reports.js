@@ -975,10 +975,13 @@ $.wms.reports = (function() {
                                         }
                                         console.log(payload)
 
-                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f5?submit=yes',JSON.stringify(payload)).done(function (result) {
-                                        setTimeout(function() {
-                                                location.reload();
-                                            }, 10000);
+                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_trigger?submit=yes',JSON.stringify(payload)).done(function (result) {
+
+                                            if(result.status != undefined && result.status == "SUCCESS"){
+                                                setTimeout(function() {
+                                                        location.reload();
+                                                    }, 1000);
+                                            }
                                         });
                                     break;
                                     case "F21" : 
