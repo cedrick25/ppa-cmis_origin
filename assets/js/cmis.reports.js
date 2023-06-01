@@ -958,7 +958,7 @@ $.wms.reports = (function() {
 
                                 var form = "Approved: Form: "+data_form_table+", Field: "+data_form_field_office+""
                                 var payload = {
-                                    "created_by" : approverId,
+                                    "created_by" : $.cookie("USER_ID"),
                                     "module" : "CASELOAD",
                                     "action" : form
                                     
