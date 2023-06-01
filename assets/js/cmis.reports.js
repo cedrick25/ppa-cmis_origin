@@ -980,7 +980,7 @@ $.wms.reports = (function() {
                                             if(result.status != undefined && result.status == "SUCCESS"){
                                                 setTimeout(function() {
                                                         location.reload();
-                                                    }, 1000);
+                                                    }, 5000);
                                             }
                                         });
                                     break;
