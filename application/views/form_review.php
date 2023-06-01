@@ -44,7 +44,8 @@
         </div>
         <div class="modal-body">
             <div class="alert alert-success">
-              <strong>Processing!</strong> "Thank you for your patience. We are currently processing your carryover request. Please note that this may take some time due to high demand. We apologize for the delay and appreciate your understanding. If you have any urgent concerns, please feel free to reach out to our customer support team."<i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span>
+              <strong>Processing!</strong> "Thank you for your patience. We are currently processing your carryover request. Please note that this may take some time due to high demand. We apologize for the delay and appreciate your understanding. If you have any urgent concerns, please feel free to reach out to our customer support team."</span><br><br>
+              <strong></strong> "When waiting for processing carryover, please be patient as it may take up to 1 hour to complete, but it could be completed in as little as 5 minutes.. Thank you for your understanding and patience."<i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span>
             </div>
         </div>
       </div>
