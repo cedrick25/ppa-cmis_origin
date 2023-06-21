@@ -991,10 +991,13 @@ $.wms.reports = (function() {
                                         }
                                         console.log(payload)
 
-                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_f21?submit=yes',JSON.stringify(payload)).done(function (result) {
-                                        setTimeout(function() {
-                                                location.reload();
-                                            }, 10000);
+                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_trigger_f21?submit=yes',JSON.stringify(payload)).done(function (result) {
+                                        
+                                            if(result.status != undefined && result.status == "SUCCESS"){
+                                                setTimeout(function() {
+                                                        location.reload();
+                                                    }, 5000);
+                                            }
                                         });
                                     break;
                                     case "F44" : 
@@ -1012,7 +1015,7 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                 setTimeout(function() {
                                                     location.reload();
-                                                }, 10000);
+                                                }, 600000);
                                             });
                                         });
                                     break;
@@ -1031,14 +1034,14 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                 setTimeout(function() {
                                                     location.reload();
-                                                }, 10000);
+                                                }, 600000);
                                             });
                                         });
                                     break;
                                     case "F50" :
                                         setTimeout(function() {
                                                 location.reload();
-                                            }, 1000);
+                                            }, 600000);
                                     break;
                                     case "F51" :
                                         var payload =  {
@@ -1051,7 +1054,7 @@ $.wms.reports = (function() {
                                         $.wms.executeExternalPost('http://192.168.1.33:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
                                         setTimeout(function() {
                                                 location.reload();
-                                            }, 10000);
+                                            }, 600000);
                                         });
                                     break;
                                     case "F53" :
@@ -1069,7 +1072,7 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                 setTimeout(function() {
                                                     location.reload();
-                                                }, 10000);
+                                                }, 600000);
                                             });
                                         });
                                     break;
