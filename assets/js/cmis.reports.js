@@ -1015,7 +1015,7 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                 setTimeout(function() {
                                                     location.reload();
-                                                }, 600000);
+                                                }, 300000);
                                             });
                                         });
                                     break;
@@ -1034,14 +1034,14 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                 setTimeout(function() {
                                                     location.reload();
-                                                }, 600000);
+                                                }, 300000);
                                             });
                                         });
                                     break;
                                     case "F50" :
                                         setTimeout(function() {
                                                 location.reload();
-                                            }, 600000);
+                                            }, 300000);
                                     break;
                                     case "F51" :
                                         var payload =  {
@@ -1054,7 +1054,7 @@ $.wms.reports = (function() {
                                         $.wms.executeExternalPost('http://192.168.1.33:8000/F51t1/carryover',JSON.stringify(payload)).done(function (result) {
                                         setTimeout(function() {
                                                 location.reload();
-                                            }, 600000);
+                                            }, 300000);
                                         });
                                     break;
                                     case "F53" :
