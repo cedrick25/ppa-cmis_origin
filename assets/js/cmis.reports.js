@@ -1015,12 +1015,13 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                 
                                                 if(result.status != undefined && result.status == "SUCCESS"){
-                                                    setTimeout(function() {
-                                                            location.reload();
-                                                        }, 5000);
                                                 }
                                             });
                                         });
+                                        
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 300000);
                                     break;
                                     case "F45" :  
                                         var form45list = ['F45t1', 'F45t3', 'F45t5', 'F45t7', 'F45t10', 'F45t12'];
@@ -1037,12 +1038,13 @@ $.wms.reports = (function() {
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
                                                
                                                 if(result.status != undefined && result.status == "SUCCESS"){
-                                                    setTimeout(function() {
-                                                            location.reload();
-                                                        }, 5000);
                                                 }
                                             });
                                         });
+                                        
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 300000);
                                     break;
                                     case "F50" :
                                         setTimeout(function() {
@@ -1062,7 +1064,7 @@ $.wms.reports = (function() {
                                             if(result.status != undefined && result.status == "SUCCESS"){
                                                 setTimeout(function() {
                                                         location.reload();
-                                                    }, 5000);
+                                                    }, 300000);
                                             }
                                         });
                                     break;
@@ -1079,13 +1081,15 @@ $.wms.reports = (function() {
                                             console.log(payload)
 
                                             $.wms.executeExternalPost('http://192.168.1.33:8000/'+item+'/carryover',JSON.stringify(payload)).done(function (result) {
+                                                
                                                 if(result.status != undefined && result.status == "SUCCESS"){
-                                                    setTimeout(function() {
-                                                            location.reload();
-                                                        }, 5000);
                                                 }
                                             });
                                         });
+                                        
+                                        setTimeout(function() {
+                                                location.reload();
+                                            }, 300000);
                                     break;
                                 }
                             });
