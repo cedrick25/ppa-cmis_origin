@@ -3290,38 +3290,39 @@ $.wms.form5 = (function() {
 
             $(document).ready(function () {
                 var table = $('#T_F5T7').DataTable({
-                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                                    "language": {
-                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
-                                    },
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "language": {
+                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                    },
                     "drawCallback": function( settings ) {
-                            $.wms.reports.form_lock();
+                        $.wms.reports.form_lock();
                     }
-                } );
-            });
-        });
+                });
 
+                // Event handler for the btn-download button
+                $(".btn-download").unbind("click").on("click", function () {
+                    var form = "Download Caseload Form: " + $.wms.urlParam('form') + ", Field: " + $.wms.urlParam('field') + ", Date:" + $.wms.urlParam('date');
+                    var payload = {
+                        "created_by": $.cookie("USER_ID"),
+                        "module": "CASELOAD",
+                        "action": form
+                    };
 
-        //Download
-        $(".btn-download").unbind("click").on("click",function(){
-            var form = "Download Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
-            var payload = {
-                "created_by" : $.cookie("USER_ID"),
-                "module" : "CASELOAD",
-                "action" : form
-                
-            }
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert', JSON.stringify(payload)).done(function (result) {
+                        // Handle the result of the API call, if needed
+                    });
+
+                    var table = $('#T_F5T7').DataTable();
+                    $("#T_F5T7").append(table.$('tr').clone()).table2excel({
+                        // exclude CSS class
+                        exclude: ".options",
+                        name: "Form5-Table7",
+                        filename: "Form5-Table7.xls", //do not include extension
+                        fileext: ".xls",
+                        preserveColors: true
+                    });
+                });
             });
-            var table = $('#T_F5T7').DataTable();
-            $("#T_F5T7").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form5-Table7",
-                filename: "Form5-Table7.xls", //do not include extension
-                fileext: ".xls",
-                preserveColors: true
-              }); 
         });
 
         //Add
