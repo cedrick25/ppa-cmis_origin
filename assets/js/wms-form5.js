@@ -4404,6 +4404,7 @@ $.wms.form5 = (function() {
             "method" : "fetchAll"
         }
         $('.F5T10_tbody').empty();
+        $('.Download_F5T10').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
@@ -4449,20 +4450,34 @@ $.wms.form5 = (function() {
                         case "Transfer to Other Courts/PPO": transfer = data.submitted_date; break;
                         case "Others": Others = data.submitted_date; break;
                     }
-                    $('.F5T10_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.probationer.toUpperCase()+"</td>"+
-                                                "<td class='center'>"+termination+"</td>"+
-                                                "<td class='center'>"+revocation+"</td>"+
+                    $('.Download_F5T10').append("<tr>"+
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.probationer.toUpperCase()+"</td>"+
+                        "<td class='center'>"+termination+"</td>"+
+                        "<td class='center'>"+revocation+"</td>"+
 
-                                                "<td class='center'>"+ext+"</td>"+
-                                                "<td class='center'>"+transfer+"</td>"+
-                                                "<td class='center'>"+Others+"</td>"+
-                                                "<td class='center'>"+data.supervising_officer+"</td>"+
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td class='center'>"+ext+"</td>"+
+                        "<td class='center'>"+transfer+"</td>"+
+                        "<td class='center'>"+Others+"</td>"+
+                        "<td class='center'>"+data.supervising_officer+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                    $('.F5T10_tbody').append("<tr>"+
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.probationer.toUpperCase()+"</td>"+
+                        "<td class='center'>"+termination+"</td>"+
+                        "<td class='center'>"+revocation+"</td>"+
+
+                        "<td class='center'>"+ext+"</td>"+
+                        "<td class='center'>"+transfer+"</td>"+
+                        "<td class='center'>"+Others+"</td>"+
+                        "<td class='center'>"+data.supervising_officer+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -4497,15 +4512,15 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            var table = $('#T_F5T10').DataTable();
-            $("#T_F5T10").append(table.$('tr').clone()).table2excel({
+            
+            $("#Download_F5T10").table2excel({
                 // exclude CSS class
                 exclude: ".options",
                 name: "Form5-Table10",
                 filename: "Form5-Table10.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
-              }); 
+            }); 
         });
 
         //Add
