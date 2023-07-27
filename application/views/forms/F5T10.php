@@ -60,7 +60,7 @@
             <th style="text-align: center;">SUPERVISING OFFICER</th>
           </tr>
         </thead>
-        <tbody class="F5T10_tbody tbody-sm">
+        <tbody class="Download_F5T10_tbody tbody-sm">
         </tbody>
       </table>
     </div>

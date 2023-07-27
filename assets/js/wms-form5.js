@@ -4404,7 +4404,7 @@ $.wms.form5 = (function() {
             "method" : "fetchAll"
         }
         $('.F5T10_tbody').empty();
-        $('.Download_F5T10').empty();
+        $('.Download_F5T10_tbody').empty();
         $(".form_loader").removeClass("hidden")
         $(".result_form").addClass("hidden")
         $(".sel_field_office2").select2({
@@ -4450,7 +4450,7 @@ $.wms.form5 = (function() {
                         case "Transfer to Other Courts/PPO": transfer = data.submitted_date; break;
                         case "Others": Others = data.submitted_date; break;
                     }
-                    $('.Download_F5T10').append("<tr>"+
+                    $('.Download_F5T10_tbody').append("<tr>"+
                         "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
                         "<td>"+data.probationer.toUpperCase()+"</td>"+
                         "<td class='center'>"+termination+"</td>"+
