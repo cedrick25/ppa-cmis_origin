@@ -4171,7 +4171,13 @@ $.wms.form21 = (function() {
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
-            var requiredField= [ 'add_table','add_acted_petitioner','add_probationer', 'add_findings'];
+            var requiredField;
+            var findingsInputValue = $("#add_findings").val();
+            if (findingsInputValue === "") {
+                requiredField= [ 'add_table','add_acted_petitioner','add_probationer', 'add_findings'];
+            } else {
+                requiredField= [ 'add_table','add_acted_petitioner','add_probationer'];
+            }
             var check = true
             var checkTable = ['F21T9_PARDON','F21T9_PAROL','F21T10_PARDON','F21T10_PAROL']
 
