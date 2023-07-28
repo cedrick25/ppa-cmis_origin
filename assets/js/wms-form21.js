@@ -4172,7 +4172,7 @@ $.wms.form21 = (function() {
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
             var requiredField;
-            var findingsInputValue = $("#add_submitted_report").val();
+            var findingsInputValue = $("#add_transfer").val();
             if (findingsInputValue === "") {
                 requiredField= [ 'add_table','add_acted_petitioner','add_probationer', 'add_findings'];
             } else {
