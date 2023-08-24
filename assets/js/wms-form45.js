@@ -884,7 +884,8 @@ $.wms.form45 = (function() {
 
                     $(".addSubmitButton_acted").unbind("click").on("click",function(){
                         var allowedDocket= [ 'CSI', 'RCSI', 'TCSI' ];
-                        var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date','add_acted_transfer_to'];
+                        var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation'];
+                        // var requiredField= [ 'add_acted_offenders_fname', 'add_acted_offenders_lname', 'add_acted_report_submitted', 'add_acted_recommendation','add_acted_transfer_date','add_acted_transfer_to'];
                         var check = true
                         var checkTable = ['F45T1', 'F45T2']
 
