@@ -6,9 +6,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div><span class="" style="font-size:18px">PPA FORM 53</span>
         <div class="col-sm-3 pull-right">
-          <input type="text" class="form-control pull-right isocode_" value="PPA-FO-FR-053">
-        </div>
-        <div class="col-sm-3 pull-right">
+          <input type="text" class="form-control pull-right isocode_" value="PPA-FO-FR-053"><br>
           <span class="" style="font-size:18px">Revision No. 001</span>
         </div>
       </div>
