@@ -200,7 +200,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<span class="font_20"><i class="fa fa-users"></i> <b>Request MasterList</b></span>
+				<span class="font_20"><i class="fa fa-users"></i> <b>List of clients to be integrated in the Masterlist</b></span>
 			</div>
 			<div class="panel-body">
 				<div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>

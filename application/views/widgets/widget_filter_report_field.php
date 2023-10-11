@@ -63,18 +63,22 @@
 	            <div class="form-group col-md-2">
             	 	<b>As-of</b><br/>
 		            <select class="select2 form-control" id="report-field-date">
+		                <option value="2023-12">2023 4th Quarter</option>
+		                <option value="2023-09">2023 3rd Quarter</option>
+		                <option value="2023-06">2023 2nd Quarter</option>
+		                <option value="2023-03">2023 1st Quarter</option>
 		                <option value="2022-12">2022 4th Quarter</option>
 		                <option value="2022-09">2022 3rd Quarter</option>
 		                <option value="2022-06">2022 2nd Quarter</option>
 		                <option value="2022-03">2022 1st Quarter</option>
 		                <option value="2021-12">2021 4th Quarter</option>
-		            	<option value="2021-09">2021 3rd Quarter</option>
+		                <option value="2021-09">2021 3rd Quarter</option>
 		                <option value="2021-06">2021 2nd Quarter</option>
 		                <option value="2021-03">2021 1st Quarter</option>
 		                <option value="2020-12">2020 4th Quarter</option>
 		                <option value="2020-09">2020 3rd Quarter</option>
 		                <option value="2020-06">2020 2nd Quarter</option>
-		            	<option value="2020-03">2020 1st Quarter</option>
+		                <option value="2020-03">2020 1st Quarter</option>
 		                <option value="2019-12">2019 4th Quarter</option>
 		                <option value="2019-09">2019 3rd Quarter</option>
 		                <option value="2019-06">2019 2nd Quarter</option>

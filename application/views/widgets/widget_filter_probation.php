@@ -76,7 +76,7 @@
 
 	              	<select class="form-control  hidden" id="sel-45-forms">
 	              		<optgroup label="Forms 45">
-			                <option value="F45CSCS">COMMUNITY SERVICE CASELOAD SUMMARY</option>
+			                <option value="F45CSCS">COMMUNITY SERVICE FOR A FIRST-TIME MINOR DRUG OFFENDER IN LIEU OF IMPRISONMENT CASELOAD SUMMARY</option>
 			                <option value="F45T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
 			                <option value="F45T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
 			                <option value="F45T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE COURT</option>
@@ -113,7 +113,7 @@
 
 	              	<select class="form-control  hidden" id="sel-53-forms">
 	              		<optgroup label="Forms 53">
-			                <option value="F53CSAIPCS">COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY</option>
+			                <option value="F53CSAIPCS">COMMUNITY SERVICE IN LIEU OF  IMPRISONMENT FOR THE PENALTIES ARRESTO MENOR AND ARESTO MAYOR CASELOAD SUMMARY</option>
 			                <option value="F53T1">Table 1 - CARRY OVER FOR APPLICATION FOR COMMUNITY SERVICE CASELOAD</option>
 			                <option value="F53T2">Table 2 - NEW APPLICATION FOR COMMUNITY SERVICE RECEIVED</option>
 			                <option value="F53T3">Table 3 - CARRY OVER NOTICE OF HEARING RECEIVED</option>

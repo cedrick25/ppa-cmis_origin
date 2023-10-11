@@ -176,7 +176,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-           <h4 class="modal-title" id="exampleModalLabel">COMMUNITY SERVICE CASELOAD SUMMARY (FORM 45)</h4>
+           <h4 class="modal-title" id="exampleModalLabel">COMMUNITY SERVICE FOR A FIRST-TIME MINOR DRUG OFFENDER IN LIEU OF IMPRISONMENT CASELOAD SUMMARY (FORM 45)</h4>
         </div>
         <div class="modal-body">
           <div class="form-group row">
@@ -190,7 +190,7 @@
             <label for="" class="col-sm-2">Forms</label>
             <div class="col-sm-10 filter-modal">
               <select class="form-control select2" id="sel-modal-45-forms">
-                <option value="F45CSCS">COMMUNITY SERVICE CASELOAD SUMMARY</option>
+                <option value="F45CSCS">COMMUNITY SERVICE FOR A FIRST-TIME MINOR DRUG OFFENDER IN LIEU OF IMPRISONMENT CASELOAD SUMMARY</option>
                 <option value="F45T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
                 <option value="F45T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
                 <option value="F45T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE COURT</option>
@@ -318,7 +318,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-           <h4 class="modal-title" id="exampleModalLabel">COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY (FORM 53)</h4>
+           <h4 class="modal-title" id="exampleModalLabel">COMMUNITY SERVICE IN LIEU OF  IMPRISONMENT FOR THE PENALTIES ARRESTO MENOR AND ARESTO MAYOR CASELOAD SUMMARY (FORM 53)</h4>
         </div>
         <div class="modal-body">
           <div class="form-group row">
@@ -332,7 +332,7 @@
             <label for="" class="col-sm-2">Forms</label>
             <div class="col-sm-10 filter-modal">
               <select class="form-control select2" id="sel-modal-53-forms">
-                <option value="F53CSAIPCS">COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY</option>
+                <option value="F53CSAIPCS">COMMUNITY SERVICE IN LIEU OF  IMPRISONMENT FOR THE PENALTIES ARRESTO MENOR AND ARESTO MAYOR CASELOAD SUMMARY</option>
                 <option value="F53T1">Table 1 - CARRY OVER FOR APPLICATION FOR COMMUNITY SERVICE CASELOAD</option>
                 <option value="F53T2">Table 2 - NEW APPLICATION FOR COMMUNITY SERVICE RECEIVED</option>
                 <option value="F53T3">Table 3 - CARRY OVER NOTICE OF HEARING RECEIVED</option>
@@ -476,6 +476,10 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-regional-quarter">
+                <option value="2023-12">2023 4th Quarter</option>
+                <option value="2023-09">2023 3rd Quarter</option>
+                <option value="2023-06">2023 2nd Quarter</option>
+                <option value="2023-03">2023 1st Quarter</option>
                 <option value="2022-12">2022 4th Quarter</option>
                 <option value="2022-09">2022 3rd Quarter</option>
                 <option value="2022-06">2022 2nd Quarter</option>
@@ -578,6 +582,10 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-field-quarter">
+                <option value="2023-12">2023 4th Quarter</option>
+                <option value="2023-09">2023 3rd Quarter</option>
+                <option value="2023-06">2023 2nd Quarter</option>
+                <option value="2023-03">2023 1st Quarter</option>
                 <option value="2022-12">2022 4th Quarter</option>
                 <option value="2022-09">2022 3rd Quarter</option>
                 <option value="2022-06">2022 2nd Quarter</option>
@@ -641,6 +649,10 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-quarterly-quarter">
+                <option value="2023-12">2023 4th Quarter</option>
+                <option value="2023-09">2023 3rd Quarter</option>
+                <option value="2023-06">2023 2nd Quarter</option>
+                <option value="2023-03">2023 1st Quarter</option>
                 <option value="2022-12">2022 4th Quarter</option>
                 <option value="2022-09">2022 3rd Quarter</option>
                 <option value="2022-06">2022 2nd Quarter</option>

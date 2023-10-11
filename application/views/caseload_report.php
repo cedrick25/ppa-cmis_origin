@@ -223,7 +223,7 @@
 	<li data-id="F44T12" class="ui-state-default">F44 Table 12 - CARRY OVER COURTESY SUPERVISION REFERRALS RECEIVED</li>
 	<li data-id="F44T13" class="ui-state-default">F44 Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND TERMINATED</li>
 
-	<li data-id="F45CSCS" class="ui-state-default">F45 COMMUNITY SERVICE CASELOAD SUMMARY</li>
+	<li data-id="F45CSCS" class="ui-state-default">F45 COMMUNITY SERVICE FOR A FIRST-TIME MINOR DRUG OFFENDER IN LIEU OF IMPRISONMENT CASELOAD SUMMARY</li>
 	<li data-id="F45T1" class="ui-state-default">F45 Table 1 - CARRY OVER INVESTIGATION CASELOAD</li>
 	<li data-id="F45T2" class="ui-state-default">F45 Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</li>
 	<li data-id="F45T3" class="ui-state-default">F45 Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE COURT</li>
@@ -248,7 +248,7 @@
 	<li data-id="F51T3" class="ui-state-default">F51 Table 3 - MONITORING REPORT SUBMITTED TO COURT</li>
 	<li data-id="F51T4" class="ui-state-default">F51 Table 4 - COURT DISPOSITION OF RELEASE ON RECOGNIZANCE</li>
 
-	<li data-id="F53CSAIPCS" class="ui-state-default">F53 COMMUNITY SERVICE AS IMPRISONMENT PENALTY CASELOAD SUMMARY</li>
+	<li data-id="F53CSAIPCS" class="ui-state-default">F53 COMMUNITY SERVICE IN LIEU OF  IMPRISONMENT FOR THE PENALTIES ARRESTO MENOR AND ARESTO MAYOR CASELOAD SUMMARY</li>
 	<li data-id="F53T1" class="ui-state-default">F53 Table 1 - CARRY OVER FOR APPLICATION FOR COMMUNITY SERVICE CASELOAD</li>
 	<li data-id="F53T2" class="ui-state-default">F53 Table 2 - NEW APPLICATION FOR COMMUNITY SERVICE RECEIVED</li>
 	<li data-id="F53T3" class="ui-state-default">F53 Table 3 - CARRY OVER NOTICE OF HEARING RECEIVED</li>
