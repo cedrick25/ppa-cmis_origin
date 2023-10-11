@@ -9,7 +9,9 @@
 
         <div class="col-sm-3 pull-right">
           <input type="text" class="form-control pull-right isocode_" value="PPA-FO-FR-045">
-          <span type="text" class="isocode_" style="font-size:18px">Revision No. 001</span>
+        </div>
+        <div class="col-sm-3 pull-right">
+          <span class="" style="font-size:18px">Revision No. 001</span>
         </div>
       </div>
     </div>
