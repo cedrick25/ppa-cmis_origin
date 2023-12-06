@@ -21,7 +21,7 @@
 								<div class="panel-body">
 							    	Export: <button class="btn btn-primary btnCSV">CSV</button> <button class="btn btn-primary btnPDF">PDF</button> <button class="btn btn-primary btnXLS">EXCEL</button>
 
-							    	<span class="pull-right "><button class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Add User</button></span>
+							    	<!-- <span class="pull-right "><button class="btn btn-primary" data-toggle="modal" data-target="#modalAdd">Add User</button></span> -->
 
 						 		<br/><br/>
 						 			<table id="tableSensorList" class="display " cellspacing="0" width="100%">
