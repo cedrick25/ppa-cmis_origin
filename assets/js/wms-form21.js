@@ -3688,6 +3688,7 @@ $.wms.form21 = (function() {
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 var table = $(this).data("table");
+                var data_table = $(this).data("table");
                 console.log(docket_no)
                 //console.log(data);
                 $(".sel-docket").html(docket_no)
@@ -4245,6 +4246,7 @@ $.wms.form21 = (function() {
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 var table = $(this).data("table");
+                var data_table = $(this).data("table");
                 console.log(docket_no)
                 //console.log(data);
                 $(".sel-docket").html(docket_no)
@@ -4770,6 +4772,7 @@ $.wms.form21 = (function() {
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 var table = $(this).data("table");
+                var data_table = $(this).data("table");
                 console.log(docket_no)
                 //console.log(data);
                 $(".sel-docket").html(docket_no)
@@ -6827,6 +6830,7 @@ $.wms.form21 = (function() {
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 var table = $(this).data("table");
+                var data_table = $(this).data("table");
                 console.log(docket_no)
                 //console.log(data);
                 $(".sel-docket").html(docket_no)
