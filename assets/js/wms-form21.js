@@ -5877,6 +5877,7 @@ $.wms.form21 = (function() {
                 var docket_no = $(this).data("docket");
                 var table = $(this).data("table");
                 console.log(docket_no)
+                console.log(table)
                 //console.log(data);
                 $(".sel-docket").html(docket_no)
                 $(".sel-id").html(data_id)
