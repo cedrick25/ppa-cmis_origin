@@ -5490,8 +5490,8 @@ $.wms.form21 = (function() {
                                     "<td>"+data.supervising_officer+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T12_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T12_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F21T12_a').DataTable({
@@ -5728,8 +5728,8 @@ $.wms.form21 = (function() {
             $("#T_F21T12").table2excel({
                 // exclude CSS class
                 exclude: ".options",
-                name: "Form21-Table11",
-                filename: "Form21-Table11.xls", //do not include extension
+                name: "Form21-Table12",
+                filename: "Form21-Table12.xls", //do not include extension
                 fileext: ".xls",
                 preserveColors: true
               }); 
@@ -5808,6 +5808,7 @@ $.wms.form21 = (function() {
                 var data_id = $(this).data("id");
                 var docket_no = $(this).data("docket");
                 var table = $(this).data("table");
+                var data_table = $(this).data("table");
                 console.log(docket_no)
                 //console.log(data);
                 $(".sel-docket").html(docket_no)
