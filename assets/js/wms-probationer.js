@@ -80,113 +80,92 @@ $.wms.probationer = (function() {
 	        }
 				$("#probationerRequest_table").DataTable({
 					"lengthChange": false,
-				"data": arr,
-				"columns": [
-	                {"data": "id"},
-	                {"data": "FORM_TABLE"},
-	                {"data": "LASTNAME"},
-	                {"data": "FIRSTNAME"},
-	                {"data": "MIDDLENAME"},
-	                {"data": "ALIAS"},
-	                {"data": "SUPVOFFICE"},
-	                {"data": "REMARKS"},
-	                {"data": "SDOCKETNO"},
-	                {"data": "REGION"},
-	                {"data": "YEAR"},
-	                {"data": "START_DATE"},
-	                {"data": "END_DATE"},
-	                {"data": "FIELD_OFFICE"},
-	                {"data": "ACTION"}
-	            ],
-	            "fnDrawCallback": function(){
-	        //     	$(".btn-rejectRequest").unbind('click').on('click', function(){
-	    				// var id 		= $(this).data("id");
-	        //     		console.log(id);
-	    				// $("#modalReject").modal('toggle')
-	        //     		$(".saveReject").unbind('click').on('click', function(){
-	        //             	var payloadReject = {
-							  //   "method" : "update",
-							  //   "id" : id,
-							  //   "REQUEST_STATUS" : "0"
-	        //             	}
-	        //             	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadReject)).done(function (result) {
-		       //                  if(result.status == "SUCCESS"){
-		       //                      $(".saveRequest").attr('disabled',false)
-		       //                      $("#modalReject").modal('toggle')
-		       //                      location.reload();
-		       //                  }else{
-		       //                      alert("Failed")
-		       //                  }
-		       //              }); 
-	        //             }); 
-		                    
-	        //     	})
-	            	$(".btn-migrateRequest").unbind('click').on('click', function(){
-	    				console.log($(this).data("lastname"))
-	    				var id 		= $(this).data("id");
-	    				var lname 	= $(this).data("lastname");
-	    				var fname 	= $(this).data("fistname");
-	    				var mname 	= $(this).data("middlename");
-	    				var alias 	= $(this).data("alias");
-	    				var superv 	= $(this).data("super");
-	    				var remarks = $(this).data("remarks");
-	    				var docket 	= $(this).data("docket");
-	    				var region 	= $(this).data("region");
-	    				var year 	= $(this).data("year");
-	    				var startyy = $(this).data("startyy");
-	    				var startmm = $(this).data("startmm");
-	    				var startdd = $(this).data("startdd");
-	    				var endyy 	= $(this).data("endyy");
-	    				var endmm 	= $(this).data("endmm");
-	    				var enddd 	= $(this).data("enddd");
-	    				$("#modalRequest").modal('toggle')
+					"data": arr,
+					"scrollX": true,
+					"columns": [
+		                {"data": "id"},
+		                {"data": "FORM_TABLE"},
+		                {"data": "LASTNAME"},
+		                {"data": "FIRSTNAME"},
+		                {"data": "MIDDLENAME"},
+		                {"data": "ALIAS"},
+		                {"data": "SUPVOFFICE"},
+		                {"data": "REMARKS"},
+		                {"data": "SDOCKETNO"},
+		                {"data": "REGION"},
+		                {"data": "YEAR"},
+		                {"data": "START_DATE"},
+		                {"data": "END_DATE"},
+		                {"data": "FIELD_OFFICE"},
+		                {"data": "ACTION"}
+		            ],
+		            "fnDrawCallback": function(){
+		            	$(".btn-migrateRequest").unbind('click').on('click', function(){
+		    				console.log($(this).data("lastname"))
+		    				var id 		= $(this).data("id");
+		    				var lname 	= $(this).data("lastname");
+		    				var fname 	= $(this).data("fistname");
+		    				var mname 	= $(this).data("middlename");
+		    				var alias 	= $(this).data("alias");
+		    				var superv 	= $(this).data("super");
+		    				var remarks = $(this).data("remarks");
+		    				var docket 	= $(this).data("docket");
+		    				var region 	= $(this).data("region");
+		    				var year 	= $(this).data("year");
+		    				var startyy = $(this).data("startyy");
+		    				var startmm = $(this).data("startmm");
+		    				var startdd = $(this).data("startdd");
+		    				var endyy 	= $(this).data("endyy");
+		    				var endmm 	= $(this).data("endmm");
+		    				var enddd 	= $(this).data("enddd");
+		    				$("#modalRequest").modal('toggle')
 
-		            	$(".saveRequest").unbind('click').on('click', function(){
-                            $(".saveRequest").attr('disabled',true)
-	    					console.log(lname)
+			            	$(".saveRequest").unbind('click').on('click', function(){
+	                            $(".saveRequest").attr('disabled',true)
+		    					console.log(lname)
 
-		                    var payload_request = {
-		                        "method"        :"insert",
-		                        "REGION"        :region,
-		                        "YEAR"          :startyy+"-"+endyy,
-		                        "SDOCKETNO"     :docket,
-		                        "FIRSTNAME"     :fname,
-		                        "MIDDLENAME"    :mname,
-		                        "LASTNAME"      :lname,
-		                        "ALIAS"         :alias,
-		                        "SUPVOFFICE"    :superv,
-		                        "REMARKS"       :remarks,
-		                        "STARTMM"       :startmm,
-		                        "STARTDD"       :startdd,
-		                        "STARTYY"       :startyy,
-		                        "ENDMM"         :endmm,
-		                        "ENDDD"         :enddd,
-		                        "ENDYY"         :endyy,
-		                    }
-		                    console.log(payload_request)
-		                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload_request)).done(function (result) {
-		                        if(result.status == "SUCCESS"){
-		                        	var payloadStatus = {
-									    "method" : "update",
-									    "id" : id,
-									    "REQUEST_STATUS" : "2"
-		                        	}
-		                        	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadStatus)).done(function (result) {
-				                        if(result.status == "SUCCESS"){
-				                            $(".saveRequest").attr('disabled',false)
-				                            $("#modalRequest").modal('toggle')
-				                            location.reload();
-				                        }else{
-				                            alert("Failed")
-				                        }
-				                    }); 
-		                        }else{
-		                            alert("Failed")
-		                        }
-		                    }); 
+			                    var payload_request = {
+			                        "method"        :"insert",
+			                        "REGION"        :region,
+			                        "YEAR"          :startyy+"-"+endyy,
+			                        "SDOCKETNO"     :docket,
+			                        "FIRSTNAME"     :fname,
+			                        "MIDDLENAME"    :mname,
+			                        "LASTNAME"      :lname,
+			                        "ALIAS"         :alias,
+			                        "SUPVOFFICE"    :superv,
+			                        "REMARKS"       :remarks,
+			                        "STARTMM"       :startmm,
+			                        "STARTDD"       :startdd,
+			                        "STARTYY"       :startyy,
+			                        "ENDMM"         :endmm,
+			                        "ENDDD"         :enddd,
+			                        "ENDYY"         :endyy,
+			                    }
+			                    console.log(payload_request)
+			                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload_request)).done(function (result) {
+			                        if(result.status == "SUCCESS"){
+			                        	var payloadStatus = {
+										    "method" : "update",
+										    "id" : id,
+										    "REQUEST_STATUS" : "2"
+			                        	}
+			                        	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadStatus)).done(function (result) {
+					                        if(result.status == "SUCCESS"){
+					                            $(".saveRequest").attr('disabled',false)
+					                            $("#modalRequest").modal('toggle')
+					                            location.reload();
+					                        }else{
+					                            alert("Failed")
+					                        }
+					                    }); 
+			                        }else{
+			                            alert("Failed")
+			                        }
+			                    }); 
+			            	})
 		            	})
-	            	})
-	            }
+		            }
 				});
 			});
 		})
