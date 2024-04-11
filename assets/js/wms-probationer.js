@@ -9,7 +9,6 @@ $.wms.probationer = (typeof $.wms.probationer !== 'undefined') ? $.wms : {};
 $.wms.probationer = (function() {
 
     var __attachProbationerRequestEvent = function() {
-    	console.log('testttt');
     	var payload = {
     		'method' : 'fetchAll'
     	};

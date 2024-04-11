@@ -340,7 +340,7 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-sm btn-primary saveBtn adminTools" id="">Save</button>
+	        <button type="button" class="btn btn-sm btn-primary saveBtn" id="">Save</button>
 	        <button type="button" class="btn btn-sm btn-primary hidden proceedBtn" id="">Proceed</button>
 	      </div>
 	    </div>
@@ -360,7 +360,7 @@
 		  		</div>
 		      	<div class="modal-footer">
 			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-sm btn-primary saveRequest adminTools" id="">Confirm</button>
+			        <button type="button" class="btn btn-sm btn-primary saveRequest" id="">Confirm</button>
 		      	</div>
 		  	</div>
 		</div>
@@ -378,7 +378,7 @@
 		  		</div>
 		      	<div class="modal-footer">
 			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-sm btn-primary saveReject adminTools" id="">Confirm</button>
+			        <button type="button" class="btn btn-sm btn-primary saveReject " id="">Confirm</button>
 		      	</div>
 		  	</div>
 		</div>
