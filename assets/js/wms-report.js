@@ -2108,36 +2108,28 @@ $.wms.report = (function() {
         const reg2 = $.wms.urlParam('reg2');
 
         let quarter;
-        switch (eym) {
-        case "2022-03":
-            quarter = ["2022-01", "2022-02", "2022-03"];
-            break;
-        case "2022-06":
-            quarter = ["2022-01", "2022-02", "2022-03", "2022-04", "2022-05", "2022-06"];
-            break;
-        case "2022-09":
-            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09"];
-            break;
-        case "2022-12":
-            quarter = ["2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-010","2022-11","2022-12"];
-            break;
-        case "2023-03":
-            quarter = ["2023-01", "2023-02", "2023-03"];
-            break;
-        case "2023-06":
-            quarter = ["2023-01", "2023-02", "2023-03", "2023-04", "2023-05", "2023-06"];
-            break;
-        case "2023-09":
-            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09"];
-            break;
-        case "2023-12":
-            quarter = ["2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-010","2023-11","2023-12"];
-            break;
-        default:
-            quarter = "";
-            console.log(quarter)
-            break;
+
+        const quartersByYear = {
+            "2022": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+            "2023": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
+            "2024": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
         };
+
+        const [year, month] = eym.split("-");
+
+        if (quartersByYear.hasOwnProperty(year)) {
+            quarter = quartersByYear[year];
+
+            if (month < "03") {
+                quarter = quarter.slice(0, 3);
+            }
+            else if (month < "06") {
+                quarter = quarter.slice(0, 6);
+            }
+            else if (month < "09") {
+                quarter = quarter.slice(0, 9);
+            }
+        }
 
         var payload2 = {
             REGION  : reg2,
@@ -2169,7 +2161,7 @@ $.wms.report = (function() {
                 // console.log(payload)
 
                 $.wms.executeExternalPost('http://192.168.1.33:8000/F51Caseload',JSON.stringify(payload)).done(function (result) {
-                    console.log(result)
+                    // console.log(result)
                     $("#divLoading").addClass("hidden");
 
                     // var total1 = result.vd1 + result.vd2 + result.vd3;
