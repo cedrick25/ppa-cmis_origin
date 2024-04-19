@@ -476,6 +476,10 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-regional-quarter">
+                <option value="2024-12">2024 4th Quarter</option>
+                <option value="2024-09">2024 3rd Quarter</option>
+                <option value="2024-06">2024 2nd Quarter</option>
+                <option value="2024-03">2024 1st Quarter</option>
                 <option value="2023-12">2023 4th Quarter</option>
                 <option value="2023-09">2023 3rd Quarter</option>
                 <option value="2023-06">2023 2nd Quarter</option>
@@ -582,6 +586,10 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-field-quarter">
+                <option value="2024-12">2024 4th Quarter</option>
+                <option value="2024-09">2024 3rd Quarter</option>
+                <option value="2024-06">2024 2nd Quarter</option>
+                <option value="2024-03">2024 1st Quarter</option>
                 <option value="2023-12">2023 4th Quarter</option>
                 <option value="2023-09">2023 3rd Quarter</option>
                 <option value="2023-06">2023 2nd Quarter</option>
@@ -649,6 +657,10 @@
             <label for="" class="col-sm-2">As of:</label>
             <div class="col-sm-10 filter-modal">    
               <select class="select2" id="sel-modal-quarterly-quarter">
+                <option value="2024-12">2024 4th Quarter</option>
+                <option value="2024-09">2024 3rd Quarter</option>
+                <option value="2024-06">2024 2nd Quarter</option>
+                <option value="2024-03">2024 1st Quarter</option>
                 <option value="2023-12">2023 4th Quarter</option>
                 <option value="2023-09">2023 3rd Quarter</option>
                 <option value="2023-06">2023 2nd Quarter</option>
