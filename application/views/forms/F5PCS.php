@@ -682,13 +682,13 @@
            E. Total Investigation Cases wherein the court issued
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-print-5">
-         <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedInvestigationJICLTotal center b" style="border:1px solid black">
+         <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 total_JICL center b" style="border:1px solid black">
             &nbsp;
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedInvestigationAdultTotal center b" style="border:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 total_adult center b" style="border:1px solid black">
             &nbsp;
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedInvestigationTotal center b" style="border:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 total_adult_JICL center b" style="border:1px solid black">
             &nbsp;
           </div>
         </div>
@@ -701,13 +701,13 @@
             1. Recall Order
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-print-5">
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedJICLInvestigationRecalled center" style="border-bottom:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 ii_e_1_JICL center" style="border-bottom:1px solid black">
             0
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedAdultInvestigationRecalled center" style="border-bottom:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 ii_e_1_adult center" style="border-bottom:1px solid black">
             0
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedTotalInvestigationRecalled center" style="border-bottom:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 ii_e_1_total center" style="border-bottom:1px solid black">
             0
           </div>
         </div>
@@ -720,13 +720,13 @@
             2. Warrant of Arrest  
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-print-5">
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedJICLInvestigationWarrant center" style="border-bottom:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 ii_e_2_JICL center" style="border-bottom:1px solid black">
             0
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedAdultInvestigationWarrant center" style="border-bottom:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 ii_e_2_adult center" style="border-bottom:1px solid black">
             0
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 notactedTotalInvestigationWarrant center" style="border-bottom:1px solid black">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-print-4 ii_e_2_total center" style="border-bottom:1px solid black">
             0
           </div>
         </div>

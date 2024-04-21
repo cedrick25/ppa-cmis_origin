@@ -7366,18 +7366,22 @@ $.wms.report = (function() {
                 $("#divLoading").addClass("hidden");
                 var carryOver = 0;
                 var totalRcv = 0;
+                var totalJPRIRPI = 0;
+                var total = 0;
                 var totalInvestigation = 0;
                 result.payload.forEach(function(data){
                     carryOver += data.carryOver;
                     totalRcv += data.totalRcv;
+                    totalJPRIRPI += data.totalJPRIRPI;
+                    total += data.total;
                     totalInvestigation += data.totalInvestigation;
                     data = "<tr>"+
                                 "<td class='b'>"+data.FIELD+"</td>"+
                                 "<td class='center'>"+data.carryOver+"</td>"+
                                 "<td class='center'>"+data.totalRcv+"</td>"+
                                 "<td class='center'>0</td>"+
-                                "<td class='center'>0</td>"+
-                                "<td class='center'>"+data.totalRcv+"</td>"+
+                                "<td class='center'>"+data.totalJPRIRPI+"</td>"+
+                                "<td class='center'>"+data.total+"</td>"+
                                 "<td class='center b'>"+data.totalInvestigation+"</td>"+
                             "</tr>";
 
@@ -7390,8 +7394,8 @@ $.wms.report = (function() {
                         "<td class='center'>"+carryOver+"</td>"+
                         "<td class='center'>"+totalRcv+"</td>"+
                         "<td class='center'>"+0+"</td>"+
-                        "<td class='center'>"+0+"</td>"+
-                        "<td class='center'>"+totalRcv+"</td>"+
+                        "<td class='center'>"+totalJPRIRPI+"</td>"+
+                        "<td class='center'>"+total+"</td>"+
                         "<td class='center b'>"+totalInvestigation+"</td>"+
                     "</tr>"
 
@@ -7427,9 +7431,10 @@ $.wms.report = (function() {
                 var totalWarrant = 0;
                 var totalNotActed = 0;
                 var totalActiveCase = 0;
+                var totalActive = 0;
 
                 result.payload.forEach(function(data){
-                    //console.log(field.NAME)
+                    // console.log(data)
 
                     totalGrant += data.totalGrant;
                     totalDenial += data.totalDenial;
@@ -7440,6 +7445,7 @@ $.wms.report = (function() {
                     totalWarrant += data.totalWarrant;
                     totalNotActed += data.totalNotActed;
                     totalActiveCase += data.totalActiveCase;
+                    totalActive += data.totalActive;
 
                     data = "<tr>"+
                                 "<td class='b'>"+data.FIELD+"</td>"+
@@ -7457,7 +7463,7 @@ $.wms.report = (function() {
                                 "<td class='center b'>"+data.totalRecall+"</td>"+
                                 "<td class='center b'>"+data.totalWarrant+"</td>"+
                                 "<td class='center b'>"+data.totalNotActed+"</td>"+
-                                "<td class='center b'>"+data.totalActiveCase+"</td>"+
+                                "<td class='center b'>"+data.totalActive+"</td>"+
                             "</tr>";
 
                     $(".repbody").append(data);
@@ -7553,8 +7559,8 @@ $.wms.report = (function() {
                                 "<td class='center'>"+data.totalReinv+"</td>"+
                                 "<td class='center'>"+data.totalOther+"</td>"+
                                 "<td class='center b'>"+data.totalDisposed+"</td>"+
-                                "<td class='center'>"+data.totalWarrant+"</td>"+
                                 "<td class='center'>"+data.totalRecall+"</td>"+
+                                "<td class='center'>"+data.totalWarrant+"</td>"+
                                 "<td class='center'>"+data.totalNotActed+"</td>"+
                                 "<td class='center b'>"+data.totalPending+"</td>"+
                             "</tr>";
@@ -7605,14 +7611,18 @@ $.wms.report = (function() {
                 var carryOver = 0;
                 var totalRcv = 0;
                 var totalInvestigation = 0;
-                var totalCmpltd = 0;
+                var totalPartial = 0;
+                var totalFullBlown = 0;
+                var totalD = 0;
                 var totalActive = 0;
 
                 result.payload.forEach(function(data){
                     carryOver += data.carryOver;
                     totalRcv += data.totalRcv;
                     totalInvestigation += data.totalInvestigation;
-                    totalCmpltd += data.totalCmpltd;
+                    totalPartial += data.totalPartial;
+                    totalFullBlown += data.totalFullBlown;
+                    totalD += data.totalD;
                     totalActive += data.totalActive;
 
                     data = "<tr>"+
@@ -7620,13 +7630,13 @@ $.wms.report = (function() {
                                 "<td class='center b'>"+data.carryOver+"</td>"+
                                 "<td class='center b'>"+data.totalRcv+"</td>"+
                                 "<td class='center b'>"+data.totalInvestigation+"</td>"+
-                                "<td class='center b'>"+data.totalCmpltd+"</td>"+
+                                "<td class='center b'>"+data.totalPartial+"</td>"+
                                 "<td class='center b'>0</td>"+
                                 "<td class='center b'>0</td>"+
+                                "<td class='center b'>"+data.totalFullBlown+"</td>"+
                                 "<td class='center b'>0</td>"+
                                 "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>"+data.totalCmpltd+"</td>"+
+                                "<td class='center b'>"+data.totalD+"</td>"+
                                 "<td class='center b'>"+data.totalActive+"</td>"+
                             "</tr>";
                     $(".repbody").append(data);
@@ -7637,13 +7647,13 @@ $.wms.report = (function() {
                         "<td class='center b'>"+carryOver+"</td>"+
                         "<td class='center b'>"+totalRcv+"</td>"+
                         "<td class='center b'>"+totalInvestigation+"</td>"+
-                        "<td class='center b'>"+totalCmpltd+"</td>"+
+                        "<td class='center b'>"+totalPartial+"</td>"+
                         "<td class='center b'>0</td>"+
                         "<td class='center b'>0</td>"+
+                        "<td class='center b'>"+totalFullBlown+"</td>"+
                         "<td class='center b'>0</td>"+
                         "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>"+totalCmpltd+"</td>"+
+                        "<td class='center b'>"+totalD+"</td>"+
                         "<td class='center b'>"+totalActive+"</td>"+
                    "</tr>"
                 );

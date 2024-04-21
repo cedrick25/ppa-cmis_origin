@@ -347,6 +347,20 @@ $.wms.reports = (function() {
                 $(".notactedJICLInvestigationWarrant").html(payload.notactedJICLInvestigationWarrant);
                 $(".notactedAdultInvestigationWarrant").html(payload.notactedAdultInvestigationWarrant);
                 $(".notactedTotalInvestigationWarrant").html(payload.notactedTotalInvestigationWarrant);
+
+
+                $(".total_JICL").html(payload.total_JICL);
+                $(".total_adult").html(payload.total_adult);
+                $(".total_adult_JICL").html(payload.total_adult_JICL);
+
+                $(".ii_e_1_JICL").html(payload.ii_e_1_JICL);
+                $(".ii_e_1_adult").html(payload.ii_e_1_adult);
+                $(".ii_e_1_total").html(payload.ii_e_1_total);
+
+                $(".ii_e_2_JICL").html(payload.ii_e_2_JICL);
+                $(".ii_e_2_adult").html(payload.ii_e_2_adult);
+                $(".ii_e_2_total").html(payload.ii_e_2_total);
+                
                 
                 $(".activeInvestigationTotalJICL").html(payload.activeInvestigationTotalJICL);
                 $(".activeInvestigationTotalADULT").html(payload.activeInvestigationTotalADULT);
