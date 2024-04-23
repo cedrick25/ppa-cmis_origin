@@ -7369,7 +7369,10 @@ $.wms.report = (function() {
                 var totalJPRIRPI = 0;
                 var total = 0;
                 var totalInvestigation = 0;
-                result.payload.forEach(function(data){
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !data.FIELD.startsWith("Regional Office");
+                });
+                filteredPayload.forEach(function(data){
                     carryOver += data.carryOver;
                     totalRcv += data.totalRcv;
                     totalJPRIRPI += data.totalJPRIRPI;
