@@ -7365,25 +7365,28 @@ $.wms.report = (function() {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
                 var carryOver = 0;
-                var totalRcv = 0;
-                var totalJPRIRPI = 0;
+                var civil_total = 0;
+                var military_total = 0;
+                var reInvRef = 0;
                 var total = 0;
                 var totalInvestigation = 0;
+
                 const filteredPayload = result.payload.filter(function(data) {
                     return !data.FIELD.startsWith("Regional Office");
                 });
                 filteredPayload.forEach(function(data){
                     carryOver += data.carryOver;
-                    totalRcv += data.totalRcv;
-                    totalJPRIRPI += data.totalJPRIRPI;
+                    civil_total += data.civil_total;
+                    military_total += data.military_total;
+                    reInvRef += data.reInvRef;
                     total += data.total;
                     totalInvestigation += data.totalInvestigation;
                     data = "<tr>"+
                                 "<td class='b'>"+data.FIELD+"</td>"+
                                 "<td class='center'>"+data.carryOver+"</td>"+
-                                "<td class='center'>"+data.totalRcv+"</td>"+
-                                "<td class='center'>0</td>"+
-                                "<td class='center'>"+data.totalJPRIRPI+"</td>"+
+                                "<td class='center'>"+data.civil_total+"</td>"+
+                                "<td class='center'>"+data.military_total+"</td>"+
+                                "<td class='center'>"+data.reInvRef+"</td>"+
                                 "<td class='center'>"+data.total+"</td>"+
                                 "<td class='center b'>"+data.totalInvestigation+"</td>"+
                             "</tr>";
@@ -7395,9 +7398,9 @@ $.wms.report = (function() {
                     "<tr>"+
                         "<td class='b'>Total</td>"+
                         "<td class='center'>"+carryOver+"</td>"+
-                        "<td class='center'>"+totalRcv+"</td>"+
-                        "<td class='center'>"+0+"</td>"+
-                        "<td class='center'>"+totalJPRIRPI+"</td>"+
+                        "<td class='center'>"+civil_total+"</td>"+
+                        "<td class='center'>"+military_total+"</td>"+
+                        "<td class='center'>"+reInvRef+"</td>"+
                         "<td class='center'>"+total+"</td>"+
                         "<td class='center b'>"+totalInvestigation+"</td>"+
                     "</tr>"
@@ -7436,7 +7439,10 @@ $.wms.report = (function() {
                 var totalActiveCase = 0;
                 var totalActive = 0;
 
-                result.payload.forEach(function(data){
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !data.FIELD.startsWith("Regional Office");
+                });
+                filteredPayload.forEach(function(data){
                     // console.log(data)
 
                     totalGrant += data.totalGrant;
