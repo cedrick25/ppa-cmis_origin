@@ -7411,9 +7411,6 @@ $.wms.report = (function() {
         });
     }
 
-    
-
-
     var f5_field_office_pi_f1_p2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
@@ -7502,7 +7499,6 @@ $.wms.report = (function() {
         });
     }
 
-
     var f5_field_office_pi_f2 = function(){
         const eym = $.wms.urlParam('date');
         const d = new Date(eym);
@@ -7534,7 +7530,10 @@ $.wms.report = (function() {
                 var totalNotActed = 0;
                 var totalPending = 0;
 
-                result.payload.forEach(function(data){
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !data.FIELD.startsWith("Regional Office");
+                });
+                filteredPayload.forEach(function(data){
                     //console.log(field.NAME)
 
                     totalCarryOver += data.totalCarryOver;
@@ -7620,16 +7619,19 @@ $.wms.report = (function() {
                 var carryOver = 0;
                 var totalRcv = 0;
                 var totalInvestigation = 0;
-                var totalPartial = 0;
+                var totalCmpltdPartial = 0;
                 var totalFullBlown = 0;
                 var totalD = 0;
                 var totalActive = 0;
 
-                result.payload.forEach(function(data){
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !data.FIELD.startsWith("Regional Office");
+                });
+                filteredPayload.forEach(function(data){
                     carryOver += data.carryOver;
                     totalRcv += data.totalRcv;
                     totalInvestigation += data.totalInvestigation;
-                    totalPartial += data.totalPartial;
+                    totalCmpltdPartial += data.totalCmpltdPartial;
                     totalFullBlown += data.totalFullBlown;
                     totalD += data.totalD;
                     totalActive += data.totalActive;
@@ -7639,7 +7641,7 @@ $.wms.report = (function() {
                                 "<td class='center b'>"+data.carryOver+"</td>"+
                                 "<td class='center b'>"+data.totalRcv+"</td>"+
                                 "<td class='center b'>"+data.totalInvestigation+"</td>"+
-                                "<td class='center b'>"+data.totalPartial+"</td>"+
+                                "<td class='center b'>"+data.totalCmpltdPartial+"</td>"+
                                 "<td class='center b'>0</td>"+
                                 "<td class='center b'>0</td>"+
                                 "<td class='center b'>"+data.totalFullBlown+"</td>"+
@@ -7656,7 +7658,7 @@ $.wms.report = (function() {
                         "<td class='center b'>"+carryOver+"</td>"+
                         "<td class='center b'>"+totalRcv+"</td>"+
                         "<td class='center b'>"+totalInvestigation+"</td>"+
-                        "<td class='center b'>"+totalPartial+"</td>"+
+                        "<td class='center b'>"+totalCmpltdPartial+"</td>"+
                         "<td class='center b'>0</td>"+
                         "<td class='center b'>0</td>"+
                         "<td class='center b'>"+totalFullBlown+"</td>"+
@@ -7926,7 +7928,10 @@ $.wms.report = (function() {
                 var total = 0;
                 var disRateTotal = 0;
 
-                result.payload.forEach(function(data){
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !data.FIELD.startsWith("Regional Office");
+                });
+                filteredPayload.forEach(function(data){
 
                     carryOverInvestigationTotal += data.carryOverInvestigationTotal;
                     rcvInvestigationTotal += data.rcvInvestigationTotal;
