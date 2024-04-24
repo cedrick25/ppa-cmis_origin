@@ -7370,11 +7370,36 @@ $.wms.report = (function() {
                 var reInvRef = 0;
                 var total = 0;
                 var totalInvestigation = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
                 const filteredPayload = result.payload.filter(function(data) {
-                    return !data.FIELD.startsWith("Regional Office");
+                    return !fieldsToRemove.includes(data.FIELD);
                 });
-                filteredPayload.forEach(function(data){
+
+                filteredPayload.forEach(function(data) {
                     carryOver += data.carryOver;
                     civil_total += data.civil_total;
                     military_total += data.military_total;
@@ -7435,11 +7460,36 @@ $.wms.report = (function() {
                 var totalNotActed = 0;
                 var totalActiveCase = 0;
                 var totalActive = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
                 const filteredPayload = result.payload.filter(function(data) {
-                    return !data.FIELD.startsWith("Regional Office");
+                    return !fieldsToRemove.includes(data.FIELD);
                 });
-                filteredPayload.forEach(function(data){
+
+                filteredPayload.forEach(function(data) {
                     // console.log(data)
 
                     totalGrant += data.totalGrant;
@@ -7529,11 +7579,36 @@ $.wms.report = (function() {
                 var totalRecall = 0;
                 var totalNotActed = 0;
                 var totalPending = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
                 const filteredPayload = result.payload.filter(function(data) {
-                    return !data.FIELD.startsWith("Regional Office");
+                    return !fieldsToRemove.includes(data.FIELD);
                 });
-                filteredPayload.forEach(function(data){
+
+                filteredPayload.forEach(function(data) {
                     //console.log(field.NAME)
 
                     totalCarryOver += data.totalCarryOver;
@@ -7623,11 +7698,36 @@ $.wms.report = (function() {
                 var totalFullBlown = 0;
                 var totalD = 0;
                 var totalActive = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
                 const filteredPayload = result.payload.filter(function(data) {
-                    return !data.FIELD.startsWith("Regional Office");
+                    return !fieldsToRemove.includes(data.FIELD);
                 });
-                filteredPayload.forEach(function(data){
+
+                filteredPayload.forEach(function(data) {
                     carryOver += data.carryOver;
                     totalRcv += data.totalRcv;
                     totalInvestigation += data.totalInvestigation;
@@ -7927,11 +8027,36 @@ $.wms.report = (function() {
                 var totalRef = 0;
                 var total = 0;
                 var disRateTotal = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
                 const filteredPayload = result.payload.filter(function(data) {
-                    return !data.FIELD.startsWith("Regional Office");
+                    return !fieldsToRemove.includes(data.FIELD);
                 });
-                filteredPayload.forEach(function(data){
+
+                filteredPayload.forEach(function(data) {
 
                     carryOverInvestigationTotal += data.carryOverInvestigationTotal;
                     rcvInvestigationTotal += data.rcvInvestigationTotal;
