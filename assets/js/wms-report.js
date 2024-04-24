@@ -7786,26 +7786,62 @@ $.wms.report = (function() {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
-                var carryOver = 0;
-                var totalRcv = 0;
-                var totalRcv2 = 0;
+                var totalCarryOver = 0;
+                var b1 = 0;
+                var b2 = 0;
+                var b3 = 0;
+                var b4 = 0;
+                var b5 = 0;
+                var totalb = 0;
                 var totalInvestigation = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
-                result.payload.forEach(function(data){
-                    carryOver += data.carryOver;
-                    totalRcv += data.totalRcv;
-                    totalRcv2 += data.totalRcv2;
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !fieldsToRemove.includes(data.FIELD);
+                });
+
+                filteredPayload.forEach(function(data) {
+                    totalCarryOver += data.totalCarryOver;
+                    b1 += data.b1;
+                    b2 += data.b2;
+                    b3 += data.b3;
+                    b4 += data.b4;
+                    b5 += data.b5;
+                    totalb += data.totalb;
                     totalInvestigation += data.totalInvestigation;
 
                     data = "<tr>"+
                                 "<td class='b'>"+data.FIELD+"</td>"+
-                                "<td class='center b'>"+data.carryOver+"</td>"+
-                                "<td class='center b'>"+data.totalRcv+"</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>"+data.totalRcv2+"</td>"+
+                                "<td class='center b'>"+data.totalCarryOver+"</td>"+
+                                "<td class='center b'>"+data.b1+"</td>"+
+                                "<td class='center b'>"+data.b2+"</td>"+
+                                "<td class='center b'>"+data.b3+"</td>"+
+                                "<td class='center b'>"+data.b4+"</td>"+
+                                "<td class='center b'>"+data.b5+"</td>"+
+                                "<td class='center b'>"+data.totalb+"</td>"+
                                 "<td class='center b'>"+data.totalInvestigation+"</td>"+
                             "</tr>";
 
@@ -7815,13 +7851,13 @@ $.wms.report = (function() {
                 $(".repfoot").append(
                     "<tr>"+
                         "<td class='b'>Total</td>"+
-                        "<td class='center b'>"+carryOver+"</td>"+
-                        "<td class='center b'>"+totalRcv+"</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>"+totalRcv2+"</td>"+
+                        "<td class='center b'>"+totalCarryOver+"</td>"+
+                        "<td class='center b'>"+b1+"</td>"+
+                        "<td class='center b'>"+b2+"</td>"+
+                        "<td class='center b'>"+b3+"</td>"+
+                        "<td class='center b'>"+b4+"</td>"+
+                        "<td class='center b'>"+b5+"</td>"+
+                        "<td class='center b'>"+totalb+"</td>"+
                         "<td class='center b'>"+totalInvestigation+"</td>"+
                    "</tr>"
                 );
@@ -7857,8 +7893,36 @@ $.wms.report = (function() {
                 var totalOthers = 0;
                 var totalDropped = 0;
                 var totalActive = 0;
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
 
-                result.payload.forEach(function(data){
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !fieldsToRemove.includes(data.FIELD);
+                });
+
+                filteredPayload.forEach(function(data) {
                     totalInvestigation += data.totalInvestigation;
                     totalFullTerm += data.totalFullTerm;
                     totalEarlyTerm += data.totalEarlyTerm;
@@ -7944,7 +8008,36 @@ $.wms.report = (function() {
                 var totalTransfer = 0;
                 var totalOthers = 0;
                 var totalDropped = 0;
-                result.payload.forEach(function(data){
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
+
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !fieldsToRemove.includes(data.FIELD);
+                });
+
+                filteredPayload.forEach(function(data) {
                     totalFullTerm += data.totalFullTerm;
                     totalEarlyTerm += data.totalEarlyTerm;
                     totalDiedTerm += data.totalDiedTerm;
@@ -8165,7 +8258,36 @@ $.wms.report = (function() {
                 var totalTrans = 0;
                 var totalSubmitted = 0;
                 var totalCasesBeActed = 0;
-                result.payload.forEach(function(data){
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
+
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !fieldsToRemove.includes(data.FIELD);
+                });
+
+                filteredPayload.forEach(function(data) {
                     totalCarryTerm += data.totalCarryTerm;
                     totalCarryRevoc += data.totalCarryRevoc;
                     totalCarryExt += data.totalCarryExt;
