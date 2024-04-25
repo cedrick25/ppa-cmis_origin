@@ -8313,8 +8313,8 @@ $.wms.report = (function() {
                                 "<td class='center b'>"+data.totalTerm+"</td>"+
                                 "<td class='center b'>"+data.totalRevoc+"</td>"+
                                 "<td class='center b'>"+data.totalExt+"</td>"+
-                                "<td class='center b'>"+data.totalOther+"</td>"+
                                 "<td class='center b'>"+data.totalTrans+"</td>"+
+                                "<td class='center b'>"+data.totalOther+"</td>"+
                                 "<td class='center b'>"+data.totalSubmitted+"</td>"+
                                 "<td class='center b'>"+data.totalCasesBeActed+"</td>"+
                             "</tr>";
@@ -8332,8 +8332,8 @@ $.wms.report = (function() {
                         "<td class='center b'>"+totalTerm+"</td>"+
                         "<td class='center b'>"+totalRevoc+"</td>"+
                         "<td class='center b'>"+totalExt+"</td>"+
-                        "<td class='center b'>"+totalOther+"</td>"+
                         "<td class='center b'>"+totalTrans+"</td>"+
+                        "<td class='center b'>"+totalOther+"</td>"+
                         "<td class='center b'>"+totalSubmitted+"</td>"+
                         "<td class='center b'>"+totalCasesBeActed+"</td>"+
                     "</tr>"
@@ -8371,7 +8371,36 @@ $.wms.report = (function() {
                 var totalOthers = 0;
                 var totalDisposed = 0;
                 var totalPending = 0;
-                result.payload.forEach(function(data){
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
+
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !fieldsToRemove.includes(data.FIELD);
+                });
+
+                filteredPayload.forEach(function(data) {
                     totalCasesBeActed += data.totalCasesBeActed;
                     totalFullTerm += data.totalFullTerm;
                     totalEarlyTerm += data.totalEarlyTerm;
