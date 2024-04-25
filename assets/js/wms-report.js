@@ -8481,7 +8481,36 @@ $.wms.report = (function() {
                 var totalCasesHandled = 0;
                 var totalCompltd = 0;
                 var totalCourtesy = 0;
-                result.payload.forEach(function(data){
+                
+                const fieldsToRemove = [
+                    "Central Office HQ",
+                    "Technical Services Division",
+                    "Office of the Administrator",
+                    "Office of the Deputy Administrator",
+                    "Case Management and Records Division(CMRD)",
+                    "Regional Office - Region I",
+                    "Regional Office - Region II",
+                    "Regional Office - Region III",
+                    "Regional Office - Region IV-A",
+                    "Regional Office - Region IV-B",
+                    "Regional Office - Region V",
+                    "Regional Office - Region VI",
+                    "Regional Office - Region VII",
+                    "Regional Office - Region VIII",
+                    "Regional Office - Region IX",
+                    "Regional Office - Region X",
+                    "Regional Office - Region XI",
+                    "Regional Office - Region XII",
+                    "Regional Office - Region XIII",
+                    "Regional Office - CAR",
+                    "Regional Office - NCR",
+                ];
+
+                const filteredPayload = result.payload.filter(function(data) {
+                    return !fieldsToRemove.includes(data.FIELD);
+                });
+
+                filteredPayload.forEach(function(data) {
                     totalCarryOver += data.totalCarryOver;
                     totalRcv += data.totalRcv;
                     totalCasesHandled += data.totalCasesHandled;
