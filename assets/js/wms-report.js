@@ -7450,8 +7450,17 @@ $.wms.report = (function() {
             if(result.status != undefined && result.status == "SUCCESS"){
                 $("#divLoading").addClass("hidden");
 
+                var grant30 = 0;
+                var grant3160 = 0;
+                var grant60 = 0;
                 var totalGrant = 0;
+                var denial30 = 0;
+                var denial3160 = 0;
+                var denial60 = 0;
                 var totalDenial = 0;
+                var manifest30 = 0;
+                var manifest3160 = 0;
+                var manifest60 = 0;
                 var totalManifest = 0;
                 var totalTransfer = 0;
                 var totalActed = 0;
@@ -7492,8 +7501,17 @@ $.wms.report = (function() {
                 filteredPayload.forEach(function(data) {
                     // console.log(data)
 
+                    grant30 += data.grant30;
+                    grant3160 += data.grant3160;
+                    grant60 += data.grant60;
                     totalGrant += data.totalGrant;
+                    denial30 += data.denial30;
+                    denial3160 += data.denial3160;
+                    denial60 += data.denial60;
                     totalDenial += data.totalDenial;
+                    manifest30 += data.manifest30;
+                    manifest3160 += data.manifest3160;
+                    manifest60 += data.manifest60;
                     totalManifest += data.totalManifest;
                     totalTransfer += data.totalTransfer;
                     totalActed += data.totalActed;
@@ -7502,18 +7520,17 @@ $.wms.report = (function() {
                     totalNotActed += data.totalNotActed;
                     totalActiveCase += data.totalActiveCase;
                     totalActive += data.totalActive;
-
                     data = "<tr>"+
                                 "<td class='b'>"+data.FIELD+"</td>"+
-                                "<td class='center b'>"+data.totalGrant+"</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>"+data.totalDenial+"</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>"+data.totalManifest+"</td>"+
-                                "<td class='center b'>0</td>"+
-                                "<td class='center b'>0</td>"+
+                                "<td class='center b'>"+data.grant30+"</td>"+
+                                "<td class='center b'>"+data.grant3160+"</td>"+
+                                "<td class='center b'>"+data.grant60+"</td>"+
+                                "<td class='center b'>"+data.denial30+"</td>"+
+                                "<td class='center b'>"+data.denial3160+"</td>"+
+                                "<td class='center b'>"+data.denial60+"</td>"+
+                                "<td class='center b'>"+data.manifest30+"</td>"+
+                                "<td class='center b'>"+data.manifest3160+"</td>"+
+                                "<td class='center b'>"+data.manifest60+"</td>"+
                                 "<td class='center b'>"+data.totalTransfer+"</td>"+
                                 "<td class='center b'>"+data.totalActed+"</td>"+
                                 "<td class='center b'>"+data.totalRecall+"</td>"+
@@ -7528,15 +7545,15 @@ $.wms.report = (function() {
                 $(".repfoot").append(
                     "<tr>"+
                         "<td class='b'>Total</td>"+
-                        "<td class='center b'>"+totalGrant+"</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>"+totalDenial+"</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>"+totalManifest+"</td>"+
-                        "<td class='center b'>0</td>"+
-                        "<td class='center b'>0</td>"+
+                        "<td class='center b'>"+grant30+"</td>"+
+                        "<td class='center b'>"+grant3160+"</td>"+
+                        "<td class='center b'>"+grant60+"</td>"+
+                        "<td class='center b'>"+denial30+"</td>"+
+                        "<td class='center b'>"+denial3160+"</td>"+
+                        "<td class='center b'>"+denial60+"</td>"+
+                        "<td class='center b'>"+manifest30+"</td>"+
+                        "<td class='center b'>"+manifest3160+"</td>"+
+                        "<td class='center b'>"+manifest60+"</td>"+
                         "<td class='center b'>"+totalTransfer+"</td>"+
                         "<td class='center b'>"+totalActed+"</td>"+
                         "<td class='center b'>"+totalRecall+"</td>"+
