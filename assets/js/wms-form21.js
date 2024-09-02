@@ -387,15 +387,37 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F21T1').DataTable();
+            // $("#T_F21T1").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table1",
+            //     filename: "Form21-Table1.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F21T1').DataTable();
-            $("#T_F21T1").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T1").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T1 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form21-Table1",
-                filename: "Form21-Table1.xls", //do not include extension
+                filename: "Form21-Table1.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-Table1" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -897,14 +919,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T2").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table2",
-                filename: "Form21-Table2.xls", //do not include extension
+            // $("#T_F21T2").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table2",
+            //     filename: "Form21-Table2.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T2').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T2").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T2 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T2",
+                filename: "Form21-T_F21T2.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T2" // Custom sheet name
+            }); 
         });
 
         var ___updateRCV_event = function(){
@@ -1279,15 +1323,37 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F21T3').DataTable();
+            // $("#T_F21T3").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table3",
+            //     filename: "Form21-Table3.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F21T3').DataTable();
-            $("#T_F21T3").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table3",
-                filename: "Form21-Table3.xls", //do not include extension
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T3").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T3 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T3",
+                filename: "Form21-T_F21T3.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T3" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -1582,15 +1648,37 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F21T4').DataTable();
+            // $("#T_F21T4").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table4",
+            //     filename: "Form21-Table4.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F21T4').DataTable();
-            $("#T_F21T4").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table4",
-                filename: "Form21-Table4.xls", //do not include extension
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T4").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T4 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T4",
+                filename: "Form21-T_F21T4.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T4" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -1858,15 +1946,37 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F21T5').DataTable();
+            // $("#T_F21T5").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table5",
+            //     filename: "Form21-Table5.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F21T5').DataTable();
-            $("#T_F21T5").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table5",
-                filename: "Form21-Table5.xls", //do not include extension
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T5").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T5 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T5",
+                filename: "Form21-T_F21T5.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T5" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -2352,14 +2462,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T6").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table6",
-                filename: "Form21-Table6.xls", //do not include extension
+            // $("#T_F21T6").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table6",
+            //     filename: "Form21-Table6.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T6').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T6").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T6 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T6",
+                filename: "Form21-T_F21T6.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T6" // Custom sheet name
+            }); 
         });
 
         //ADD
@@ -3056,14 +3188,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T7").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table7",
-                filename: "Form21-Table7.xls", //do not include extension
+            // $("#T_F21T7").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table7",
+            //     filename: "Form21-Table7.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T7').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T7").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T7 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T7",
+                filename: "Form21-T_F21T7.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T7" // Custom sheet name
+            }); 
         });
 
         //ADD
@@ -3602,14 +3756,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T8").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table8",
-                filename: "Form21-Table8.xls", //do not include extension
+            // $("#T_F21T8").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table8",
+            //     filename: "Form21-Table8.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T8').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T8").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T8 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T8",
+                filename: "Form21-T_F21T8.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T8" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -4159,14 +4335,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T9").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table9",
-                filename: "Form21-Table9.xls", //do not include extension
+            // $("#T_F21T9").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table9",
+            //     filename: "Form21-Table9.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T9').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T9").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T9 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T9",
+                filename: "Form21-T_F21T9.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T9" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -4692,14 +4890,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T10").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table10",
-                filename: "Form21-Table10.xls", //do not include extension
+            // $("#T_F21T10").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table10",
+            //     filename: "Form21-Table10.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T10').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T10").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T10 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T10",
+                filename: "Form21-T_F21T10.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T10" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -5229,14 +5449,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T11").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table11",
-                filename: "Form21-Table11.xls", //do not include extension
+            // $("#T_F21T11").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table11",
+            //     filename: "Form21-Table11.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T11').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T11").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T11 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T11",
+                filename: "Form21-T_F21T11.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T11" // Custom sheet name
+            }); 
         });
 
         //Add
@@ -5728,14 +5970,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T12").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table12",
-                filename: "Form21-Table12.xls", //do not include extension
+            // $("#T_F21T12").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table12",
+            //     filename: "Form21-Table12.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T12').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T12").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T12 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T12",
+                filename: "Form21-T_F21T12.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T12" // Custom sheet name
+            });
         });
 
         //Add
@@ -6231,14 +6495,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T13").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table11",
-                filename: "Form21-Table11.xls", //do not include extension
+            // $("#T_F21T13").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table11",
+            //     filename: "Form21-Table11.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T13').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T13").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T13 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T13",
+                filename: "Form21-T_F21T13.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T13" // Custom sheet name
+            });
         });
 
         //Add
@@ -6742,14 +7028,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T14").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table11",
-                filename: "Form21-Table11.xls", //do not include extension
+            // $("#T_F21T14").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table11",
+            //     filename: "Form21-Table11.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T14').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T14").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T14 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T14",
+                filename: "Form21-T_F21T14.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T14" // Custom sheet name
+            });
         });
 
         //Add
@@ -7508,14 +7816,36 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            $("#T_F21T15").table2excel({
-                // exclude CSS class
-                exclude: ".options",
-                name: "Form21-Table11",
-                filename: "Form21-Table11.xls", //do not include extension
+            // $("#T_F21T15").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form21-Table11",
+            //     filename: "Form21-Table11.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
+            var table = $('#T_F21T15').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F21T15").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F21T15 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form21-T_F21T15",
+                filename: "Form21-T_F21T15.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form21-T_F21T15" // Custom sheet name
+            });
         });
 
         //RCV
