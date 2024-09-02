@@ -109,7 +109,8 @@
                                 <li><a href="#"  class="access_f51" data-toggle="modal" data-target="#form51modal">Release on Recognizance Caseload Summary (Form 51)</a></li> 
                                 <li><a href="#"  class="access_f53" data-toggle="modal" data-target="#form53modal">Community Service in Lieu of Imprisonment for the Penalties Arresto Menor and Aresto Mayor Caseload Summary (Form 53)</a></li> 
                                 <li><a href="caseload_report"  class="">Caseload Report</a></li> 
-                                <li><a href="#"  class="access_cppo" data-toggle="modal" data-target="#formCPPOmodal">CPPO FORM REVIEW</a></li>
+                                <li><a href="#"  class="access_cppo" data-toggle="modal" data-target="#formCPPOmodal">CPPO Form Review</a></li>
+                                <li><a href="records_check"  class="">Records Check</a></li> 
                             </ul>
                         </li>
 

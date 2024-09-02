@@ -60,11 +60,11 @@ $route['audit'] = "portal/audit";
 $route['report_print'] = "portal/report_print";
 
 
-
 $route['user_list'] = "portal/user_list";
 $route['user_level'] = "portal/user_level";
 $route['user_add'] = "portal/user_add";
 $route['caseload_report'] = "portal/caseload_report";
+$route['records_check'] = "portal/records_check";
 $route['report_caseload'] = "portal/report_caseload";
 $route['view_caseload'] = "portal/view_caseload";
 $route['login2'] = "portal/login2";

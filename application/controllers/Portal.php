@@ -114,5 +114,9 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('form_review');
 	}
+	public function records_check()
+	{
+		$this->load->view('records_check');
+	}
 
 }

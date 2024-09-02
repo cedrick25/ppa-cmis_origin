@@ -975,9 +975,6 @@ $.wms.form5 = (function() {
             }
         }
 
-       
-
-
         var ___modalReset = function(){
             $(".modal-form input").attr("disabled",false);
             $(".modal-form select").attr("disabled",false);
@@ -1012,17 +1009,11 @@ $.wms.form5 = (function() {
 
                 }
             });
-
-           
         });
-
         $(".addCancelRCVButton").unbind("click").on("click",function(){
             ___modalReset();
-
             $(".addSubmitRCVButton").removeClass("hidden")
             $(".addProceedRCVButton").addClass("hidden")
-            
-
         });
 
         $(".addProceedRCVButton").unbind("click").on("click",function(){
@@ -1061,8 +1052,6 @@ $.wms.form5 = (function() {
                 }
             });    
         })
-
-
 
         //Add ACTED
         $(".addSubmitACTEDButton").unbind("click").on("click",function(){
@@ -1126,7 +1115,6 @@ $.wms.form5 = (function() {
             });    
         });
 
-
          //Add NOT ACTED
         $(".addSubmitNOTACTEDButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
@@ -1183,7 +1171,6 @@ $.wms.form5 = (function() {
             });    
         });
 
-
         //Download
         $(".btn-download").unbind("click").on("click",function(){
             var form = "Download Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date')
@@ -1195,14 +1182,17 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            var table = $('#T_F5T2').DataTable();
-            $("#T_F5T2").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
+            $("#T_F5T2").clone().table2excel({
+                // Exclude CSS class
                 exclude: ".options",
                 name: "Form5-Table2",
                 filename: "Form5-Table2.xls", //do not include extension
                 fileext: ".xls",
-                preserveColors: true
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table2" // Custom sheet name
             });
         });
 
@@ -1710,14 +1700,27 @@ $.wms.form5 = (function() {
             });
 
             var table = $('#T_F5T3').DataTable();
-            $("#T_F5T3").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T3").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T3 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table3",
-                filename: "Form5-Table3.xls", //do not include extension
+                filename: "Form5-Table3.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table3" // Custom sheet name
+            });
         });
 
         //Add
@@ -1987,15 +1990,29 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            
             var table = $('#T_F5T4').DataTable();
-            $("#T_F5T4").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T4").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T4 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table4",
-                filename: "Form5-Table4.xls", //do not include extension
+                filename: "Form5-Table4.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table4" // Custom sheet name
+            });
         });
 
         //Add
@@ -2306,35 +2323,26 @@ $.wms.form5 = (function() {
             //     preserveColors: true
             //   }); 
             var table = $('#T_F5T5').DataTable();
-            var clonedRows = table.$('tr').clone(); // Clone the data rows
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T5").clone(); // Clone the table
 
-            // Get the table headers
-            var tableHeaders = table.columns().header().toArray();
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T5 thead").clone());
 
-            // Columns to exclude from the header (0-based index)
-            var excludedColumns = [6, 7, 8]; // Example: excluding columns 6,7 and 8
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
 
-            // Create the header row HTML string
-            var headerRowHtml = '<tr>';
-            tableHeaders.forEach(function(header, index) {
-              if (!excludedColumns.includes(index)) {
-                headerRowHtml += '<th>' + $(header).text() + '</th>';
-              }
-            });
-            headerRowHtml += '</tr>';
-
-            // Create a temporary table element and append the header row and cloned rows
-            var tempTable = $('<table></table>');
-            tempTable.append(headerRowHtml);
-            tempTable.append(clonedRows);
-
-            // Export the temporary table
-            tempTable.table2excel({
-              exclude: ".options",
-              name: "Form5-Table5",
-              filename: "Form5-Table5", // File name without extension
-              fileext: ".xls",
-              preserveColors: true
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form5-Table5",
+                filename: "Form5-Table5.xls", // Do not include the extension
+                fileext: ".xls",
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table5" // Custom sheet name
             });
         });
 
@@ -2829,15 +2837,37 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F5T6').DataTable();
+            // $("#T_F5T6").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table6",
+            //     filename: "Form5-Table6.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   });
             var table = $('#T_F5T6').DataTable();
-            $("#T_F5T6").table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T6").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T6 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table6",
-                filename: "Form5-Table6.xls", //do not include extension
+                filename: "Form5-Table6.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table6" // Custom sheet name
+            }); 
         });
 
         //ADD
@@ -3312,14 +3342,36 @@ $.wms.form5 = (function() {
                         // Handle the result of the API call, if needed
                     });
 
+                    // var table = $('#T_F5T7').DataTable();
+                    // $("#T_F5T7").append(table.$('tr').clone()).table2excel({
+                    //     // exclude CSS class
+                    //     exclude: ".options",
+                    //     name: "Form5-Table7",
+                    //     filename: "Form5-Table7.xls", //do not include extension
+                    //     fileext: ".xls",
+                    //     preserveColors: true
+                    // });
                     var table = $('#T_F5T7').DataTable();
-                    $("#T_F5T7").append(table.$('tr').clone()).table2excel({
-                        // exclude CSS class
-                        exclude: ".options",
+                    var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+                    var cloneTable = $("#T_F5T7").clone(); // Clone the table
+
+                    // Append the original table's thead (header) to the cloned table
+                    cloneTable.empty().append($("#T_F5T7 thead").clone());
+
+                    // Append all rows to the cloned table
+                    cloneTable.append($(allData).clone());
+
+                    // Export the cloned table to Excel
+                    cloneTable.table2excel({
+                        exclude: ".options", // Exclude CSS class
                         name: "Form5-Table7",
-                        filename: "Form5-Table7.xls", //do not include extension
+                        filename: "Form5-Table7.xls", // Do not include the extension
                         fileext: ".xls",
-                        preserveColors: true
+                        preserveColors: true,
+                        exclude_img: true, // Option to exclude images if present
+                        exclude_links: true, // Option to exclude links if present
+                        exclude_inputs: true, // Option to exclude input fields if present
+                        sheetName: "Form5-Table7" // Custom sheet name
                     });
                 });
             });
@@ -3627,15 +3679,37 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F5T8').DataTable();
+            // $("#T_F5T8").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table8",
+            //     filename: "Form5-Table8.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F5T8').DataTable();
-            $("#T_F5T8").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T8").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T8 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table8",
-                filename: "Form5-Table8.xls", //do not include extension
+                filename: "Form5-Table8.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table8" // Custom sheet name
+            });
         });
 
         //Add
@@ -4124,45 +4198,27 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
-            // var table = $('#T_F5T9').DataTable();
-            // $("#T_F5T9").append(table.$('tr').clone()).table2excel({
-            //     // exclude CSS class
-            //     exclude: ".options",
-            //     name: "Form5-Table9",
-            //     filename: "Form5-Table9.xls", //do not include extension
-            //     fileext: ".xls",
-            //     preserveColors: true
-            //   }); 
             var table = $('#T_F5T9').DataTable();
-            var clonedRows = table.$('tr').clone(); // Clone the data rows
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T9").clone(); // Clone the table
 
-            // Get the table headers
-            var tableHeaders = table.columns().header().toArray();
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T9 thead").clone());
 
-            // Columns to exclude from the header (0-based index)
-            var excludedColumns = [14, 15, 16]; // Example: excluding columns 6,7 and 8
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
 
-            // Create the header row HTML string
-            var headerRowHtml = '<tr>';
-            tableHeaders.forEach(function(header, index) {
-              if (!excludedColumns.includes(index)) {
-                headerRowHtml += '<th>' + $(header).text() + '</th>';
-              }
-            });
-            headerRowHtml += '</tr>';
-
-            // Create a temporary table element and append the header row and cloned rows
-            var tempTable = $('<table></table>');
-            tempTable.append(headerRowHtml);
-            tempTable.append(clonedRows);
-
-            // Export the temporary table
-            tempTable.table2excel({
-              exclude: ".options",
-              name: "Form5-Table9",
-              filename: "Form5-Table9", // File name without extension
-              fileext: ".xls",
-              preserveColors: true
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
+                name: "Form5-Table9",
+                filename: "Form5-Table9.xls", // Do not include the extension
+                fileext: ".xls",
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table9" // Custom sheet name
             });
         });
 
@@ -4513,14 +4569,36 @@ $.wms.form5 = (function() {
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
             
-            $("#Download_F5T10").table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            // $("#Download_F5T10").table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table10",
+            //     filename: "Form5-Table10.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            // }); 
+            var table = $('#T_F5T10').DataTable();
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T10").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T10 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table10",
-                filename: "Form5-Table10.xls", //do not include extension
+                filename: "Form5-Table10.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-            }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table10" // Custom sheet name
+            });
         });
 
         //Add
@@ -4836,15 +4914,37 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F5T11').DataTable();
+            // $("#T_F5T11").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table11",
+            //     filename: "Form5-Table11.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F5T11').DataTable();
-            $("#T_F5T11").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T11").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T11 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table11",
-                filename: "Form5-Table11.xls", //do not include extension
+                filename: "Form5-Table11.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table11" // Custom sheet name
+            });
         });
 
         // console.log("------------");
@@ -5161,15 +5261,37 @@ $.wms.form5 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
+            // var table = $('#T_F5T12').DataTable();
+            // $("#T_F5T12").append(table.$('tr').clone()).table2excel({
+            //     // exclude CSS class
+            //     exclude: ".options",
+            //     name: "Form5-Table12",
+            //     filename: "Form5-Table12.xls", //do not include extension
+            //     fileext: ".xls",
+            //     preserveColors: true
+            //   }); 
             var table = $('#T_F5T12').DataTable();
-            $("#T_F5T12").append(table.$('tr').clone()).table2excel({
-                // exclude CSS class
-                exclude: ".options",
+            var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+            var cloneTable = $("#T_F5T12").clone(); // Clone the table
+
+            // Append the original table's thead (header) to the cloned table
+            cloneTable.empty().append($("#T_F5T12 thead").clone());
+
+            // Append all rows to the cloned table
+            cloneTable.append($(allData).clone());
+
+            // Export the cloned table to Excel
+            cloneTable.table2excel({
+                exclude: ".options", // Exclude CSS class
                 name: "Form5-Table12",
-                filename: "Form5-Table12.xls", //do not include extension
+                filename: "Form5-Table12.xls", // Do not include the extension
                 fileext: ".xls",
-                preserveColors: true
-              }); 
+                preserveColors: true,
+                exclude_img: true, // Option to exclude images if present
+                exclude_links: true, // Option to exclude links if present
+                exclude_inputs: true, // Option to exclude input fields if present
+                sheetName: "Form5-Table12" // Custom sheet name
+            });
         });
 
         //Add
@@ -5668,15 +5790,37 @@ $.wms.form5 = (function() {
                 }
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
                 });
+                // var table = $('#T_F5T13').DataTable();
+                // $("#T_F5T13").table2excel({
+                //     // exclude CSS class
+                //     exclude: ".options",
+                //     name: "Form5-Table13",
+                //     filename: "Form5-Table13.xls", //do not include extension
+                //     fileext: ".xls",
+                //     preserveColors: true
+                //   }); 
                 var table = $('#T_F5T13').DataTable();
-                $("#T_F5T13").table2excel({
-                    // exclude CSS class
-                    exclude: ".options",
+                var allData = table.rows({ search: 'applied' }).nodes(); // Get all rows, considering the current search/filter
+                var cloneTable = $("#T_F5T13").clone(); // Clone the table
+
+                // Append the original table's thead (header) to the cloned table
+                cloneTable.empty().append($("#T_F5T13 thead").clone());
+
+                // Append all rows to the cloned table
+                cloneTable.append($(allData).clone());
+
+                // Export the cloned table to Excel
+                cloneTable.table2excel({
+                    exclude: ".options", // Exclude CSS class
                     name: "Form5-Table13",
-                    filename: "Form5-Table13.xls", //do not include extension
+                    filename: "Form5-Table13.xls", // Do not include the extension
                     fileext: ".xls",
-                    preserveColors: true
-                  }); 
+                    preserveColors: true,
+                    exclude_img: true, // Option to exclude images if present
+                    exclude_links: true, // Option to exclude links if present
+                    exclude_inputs: true, // Option to exclude input fields if present
+                    sheetName: "Form5-Table13" // Custom sheet name
+                });
             });
         }
 

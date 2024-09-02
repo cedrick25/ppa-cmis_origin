@@ -55,7 +55,7 @@ $.wms.dashboard = (function() {
                 "USER_ID" : $.cookie("USER_ID"),        
         }
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Api/isActive',JSON.stringify(payload)).done(function (result) {
-            console.log(result)
+            // console.log(result)
             if(result.status == "FAILED"){
                 var cookies = $.cookie();
                 for(var cookie in cookies) {
@@ -148,7 +148,7 @@ $.wms.dashboard = (function() {
             if(typeof($.cookie("PERMISSIONS")) != "undefined"){
                 var ACCESS_RIGHTS = JSON.parse($.cookie("PERMISSIONS"))
                 for(i=0;i<ACCESS_RIGHTS.length;i++){
-                    console.log(ACCESS_RIGHTS)
+                    // console.log(ACCESS_RIGHTS)
                     if(ACCESS_RIGHTS[i].ACCESS_RIGHTS == "0"){
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){
                             case LEVEL_ID :  window.location.href="dashboard";
@@ -166,7 +166,7 @@ $.wms.dashboard = (function() {
         }
 
     var ___formControlCheck = function(){
-        console.log("FORM CONTROL CHECK!!!")
+        // console.log("FORM CONTROL CHECK!!!")
         /*if($.cookie('USER_LEVEL_ID') != "undefined" && ($.cookie('USER_LEVEL_ID') == 1 || $.cookie('USER_LEVEL_ID') == 2)){
             $(".adminTools").show();
         }else{
@@ -239,7 +239,6 @@ $.wms.dashboard = (function() {
             }
             else {
                check()
-               console.log("done3")
             }
         };
         check()
