@@ -2804,9 +2804,9 @@ $.wms.form5 = (function() {
                                 "<td id='r"+i+"c4' class=''>"+
                                 "<td id='r"+i+"c5' class=''>"+
                                 "<td id='r"+i+"c6' class=''>"+
-                                "<td id='r"+i+"c7' class=''>"+
-                                "<td id='r"+i+"c8' class=''>"+
-                                "<td id='r"+i+"c9' class=''>"+
+                                "<td id='r"+i+"c7' class='options'>"+
+                                "<td id='r"+i+"c8' class='options'>"+
+                                "<td id='r"+i+"c9' class='options'>"+
                                 "<td id='r"+i+"c10' class=''>"+
                                 "<td id='r"+i+"c11' class=''>"+
                                 "<td id='r"+i+"c12' class='options'>"+

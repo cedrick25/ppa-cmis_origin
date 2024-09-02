@@ -1385,7 +1385,7 @@ $.wms.widget = (function() {
             var field = $("#filter_office").val();
             var officeId   = $("#filter_office").select2().find(":selected").data("id");
 
-            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+300
+            window.location.href="caseload?form="+sel+"&date="+date+"&field="+field+"&officeId="+officeId+"&page="+0+"&size="+700
         });
 
         $(".btn-regional-filter").unbind("click").on("click",function(){
