@@ -173,14 +173,63 @@
 			          </div>
 			        </div>
 			        <div class="col-lg-6">
+							  <div class="form-group row">
+							    <div class="col-sm-1"></div>
+							    <!-- Year Field -->
+							    <label for="year" class="col-sm-3">Year</label>
+							    <div class="col-sm-8">
+							      <select name="Year" id="RC_year" class="form-control">
+							        <option value="">Select Year</option>
+							        <!-- Example years, you can adjust this as needed -->
+							        <option value="2024">2024</option>
+							        <option value="2023">2023</option>
+							        <option value="2022">2022</option>
+							        <option value="2021">2021</option>
+							        <option value="2020">2020</option>
+							        <option value="2019">2019</option>
+							        <option value="2018">2018</option>
+							      </select>
+							    </div>
+							  </div>
+							</div>
+			      </div>
+			    </div>
+			    <div class="col-lg-12">
+			      <div class="row">
+			        <div class="col-lg-6">
 			          <div class="form-group row">
 			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Year-Month</label>
+			            <label for="" class="col-sm-3">Docket No.</label>
 			            <div class="col-sm-8">
-			              <input name="Date" id="RC_date" class="sel_date date-picker form-control" >
+			              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="RC_docket" placeholder="">
 			            </div>
 			          </div>
 			        </div>
+			        <div class="col-lg-6">
+							  <div class="form-group row">
+							    <div class="col-sm-1"></div>
+							    <!-- Month Field -->
+							    <label for="month" class="col-sm-3">Month</label>
+							    <div class="col-sm-8">
+							      <select name="Month" id="RC_month" class="form-control">
+							        <option value="">Select Month</option>
+							        <!-- Month options -->
+							        <option value="01">January</option>
+							        <option value="02">February</option>
+							        <option value="03">March</option>
+							        <option value="04">April</option>
+							        <option value="05">May</option>
+							        <option value="06">June</option>
+							        <option value="07">July</option>
+							        <option value="08">August</option>
+							        <option value="09">September</option>
+							        <option value="10">October</option>
+							        <option value="11">November</option>
+							        <option value="12">December</option>
+							      </select>
+							    </div>
+							  </div>
+							</div>
 			      </div>
 			    </div>
 			    <div class="col-lg-12">
@@ -191,15 +240,6 @@
 			            <label for="" class="col-sm-3">Name</label>
 			            <div class="col-sm-8">
 			              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="RC_name" placeholder="">
-			            </div>
-			          </div>
-			        </div>
-			        <div class="col-lg-6">
-			          <div class="form-group row">
-			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Docket No.</label>
-			            <div class="col-sm-8">
-			              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="RC_docket" placeholder="">
 			            </div>
 			          </div>
 			        </div>

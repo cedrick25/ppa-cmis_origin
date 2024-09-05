@@ -166,10 +166,9 @@
 				</span>
 			</div>
 			<div class="panel-body">
-				<div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
+				<!-- <div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div> -->
 
-				Export: <button class="btn btn-primary btnCSV">CSV</button> <button class="btn btn-primary btnXLS">EXCEL</button>
-
+				<!-- Export: <button class="btn btn-primary btnCSV">CSV</button> <button class="btn btn-primary btnXLS">EXCEL</button> -->
 				
 				<div id="result_table" class="">
 					<table id="probationer_table" class="display table-bordered table-condensed nowrap" style="width:100%">
@@ -197,47 +196,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-12">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<span class="font_20"><i class="fa fa-users"></i> <b>List of clients to be integrated in the Masterlist</b></span>
-			</div>
-			<div class="panel-body">
-				<div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
-				
-				<div id="result_table" class="">
-					<table id="probationerRequest_table" class="display table-bordered table-condensed nowrap" style="width:100%">
-				        <thead class="tb-header small">
-				          <tr>
-				            <th style="text-align: center;">ID</th>
-				            <th style="text-align: center;">Form Table</th>
-				            <th style="text-align: center;">Last Name</th>
-				            <th style="text-align: center;">First Name</th>
-				            <th style="text-align: center;">Middle Name</th>
-				            <th style="text-align: center;">Alias</th>
-				            <th style="text-align: center;">Supervising Office</th>
-				            <th style="text-align: center;">Remarks</th>
-				            <th style="text-align: center;">Docket No</th>
-				            <th style="text-align: center;">Region</th>
-				            <th style="text-align: center;">Year</th>
-				            <th style="text-align: center;">Start Date</th>
-				            <th style="text-align: center;">End Date</th>
-				            <th style="text-align: center;">Field Office</th>
-				            <th class="access_ml_write" style="text-align: center;" id="migrateRequest">Action</th>
-				          </tr>
-				        </thead>
-				        <tbody class="small">
-				        </tbody>
-			      	</table>
-		      	</div>
-			</div>
-		</div>
-	</div>
 </div>
-
-
-
-
 	<div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -537,7 +496,7 @@
 
 	          $.wms.widget.attachWidgetEvent();
 	          $.wms.probationer.attachProbationerEvent();
-	          $.wms.probationer.attachProbationerRequestEvent();
+	          // $.wms.probationer.attachProbationerRequestEvent();
       		}
         }, 200);
 

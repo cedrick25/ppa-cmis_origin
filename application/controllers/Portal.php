@@ -118,5 +118,9 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('records_check');
 	}
+	public function probationer_approval()
+	{
+		$this->load->view('probationer_approval');
+	}
 
 }

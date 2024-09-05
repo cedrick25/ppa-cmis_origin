@@ -58,8 +58,6 @@
                               
                         </li>
 
-                        
-
                         <li class="dropdown adminTools" id="navMT1" style="display: none">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Maintenance <b class="caret"></b></a>
                               <ul class="dropdown-menu">
@@ -68,17 +66,14 @@
                             </ul>
                         </li>
 
-
                         <li class="loggedin" id="btnLogout" style="display: none"><a href="#"><i class="fa fa-sign-out"></i>  Logout</a></li>   
                     </ul>
-
               </div>
        </nav>
     </div>
     <div class="col-md-12 col-lg-8 col-xs-4 ">
       <div style="padding-top:20px" class="hidden-xs"></div>
       <nav class="navbar navbar-default navbar-static-top hidden-xs" role="navigation" style="float:left;">
-
 
           <div class="navbar-header">
             <span class="loggedin" style="display: none">
@@ -110,7 +105,7 @@
                                 <li><a href="#"  class="access_f53" data-toggle="modal" data-target="#form53modal">Community Service in Lieu of Imprisonment for the Penalties Arresto Menor and Aresto Mayor Caseload Summary (Form 53)</a></li> 
                                 <li><a href="caseload_report"  class="">Caseload Report</a></li> 
                                 <li><a href="#"  class="access_cppo" data-toggle="modal" data-target="#formCPPOmodal">CPPO Form Review</a></li>
-                                <li><a href="records_check"  class="">Records Check</a></li> 
+                                <li><a href="records_check" class="hidden">Records Check</a></li> 
                             </ul>
                         </li>
 
@@ -124,12 +119,19 @@
                             </ul>
                         </li>
 
-                         <li class="dropdown loggedin access_ml" id="navML" style="display: none">
-                              <a href="probationer" ><i class="fa fa-users"></i> Master List  </a>
-                              
+                        <li class="dropdown loggedin access_ml" id="navML" style="display: none">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i> Master List  <b class="caret"></b></a>
+                              <ul class="dropdown-menu">
+                               
+                                <li><a href="probationer" class="">Probation Masterlist</a></li>
+                                <li><a href="probationer_approval" class="">Probation For Approval</a></li> 
+                                <li><a href="#" class="hidden">Community Service Masterlist</a></li> 
+                            </ul>
                         </li>
 
-                        
+                         <!-- <li class="dropdown loggedin access_ml" id="navML" style="display: none">
+                              <a href="probationer" ><i class="fa fa-users"></i> Master List  </a>
+                        </li> -->
 
                         <li class="dropdown adminTools access_maintenance" id="navMT" style="display: none">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Maintenance <b class="caret"></b></a>
@@ -142,7 +144,6 @@
                                 <li><a href="migrate_offline">Migration</a></li>
                             </ul>
                         </li>
-
 
                         <li class="loggedin" id="btnChangepassword" style="display: none"><a href="#"><i class="fa fa-gear"></i>  Change Password</a></li>   
                         <li class="loggedin" id="btnLogout" style="display: none"><a href="#"><i class="fa fa-sign-out"></i>  Logout</a></li>   

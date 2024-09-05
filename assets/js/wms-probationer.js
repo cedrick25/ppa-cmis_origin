@@ -7,7 +7,7 @@ $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms.probationer = (typeof $.wms.probationer !== 'undefined') ? $.wms : {};
 
 $.wms.probationer = (function() {
-
+	// Old
     var __attachProbationerRequestEvent = function() {
     	var payload = {
     		'method' : 'fetchAll'
@@ -153,7 +153,7 @@ $.wms.probationer = (function() {
 					                        if(result.status == "SUCCESS"){
 					                            $(".saveRequest").attr('disabled',false)
 					                            $("#modalRequest").modal('toggle')
-					                            location.reload();
+					                            // location.reload();
 					                        }else{
 					                            alert("Failed")
 					                        }
@@ -169,6 +169,249 @@ $.wms.probationer = (function() {
 			});
 		})
     }
+
+    // New Fetch SSP Request
+    var __attachProbationerEventRequest = function() {
+        
+        $(".sshow").unbind("click").on("click",function(){
+        	$(".sshow").addClass("hidden")
+        	$(".shide").removeClass("hidden")
+        	$(".p1").fadeIn();
+        })
+
+        $(".shide").unbind("click").on("click",function(){
+        	$(".shide").addClass("hidden")	
+        	$(".sshow").removeClass("hidden")
+        	$(".p1").fadeOut();
+        })
+        
+        $(".btn-search").unbind("click").on("click",function(){
+
+	        $('#probationer_table').DataTable().destroy();
+	        $('#probationer_table tbody').empty();
+	        $(".form_loader").removeClass("hidden")
+	        var origin   = window.location.origin+"/"
+	        $('#probationer_table').DataTable({
+
+	        	"scrollX": true,
+	            'retrieve': true,
+	            'serverSide': true,
+	            'bFilter': true,
+	            //'dom': '<"toolbar">frtip',
+	            'dom': 'Bfrtip',
+	            'buttons': [
+                    {   extend: 'csv',
+                        exportOptions: {
+                           
+                        }, title: "Probationers", download: 'open'
+                    },
+                    {   extend: 'pdfHtml5',
+                        exportOptions: {
+                         
+                        }, title: "Probationers", download: 'open'
+                    },
+                    {   extend: 'excelHtml5',
+                        exportOptions: {
+                        
+                        }, title: "Probationers", download: 'open'
+                    },
+                ],
+	            'bStateSave': true,
+	            'searchDelay': 50,
+	            'ajax': {
+	                'url': origin+'ppa-cmis-api_origin/wsv1/Cmis/masterlistRequestSSP',
+	                'dataType': 'json',
+	                'type': 'GET',
+	                "data": {
+	                    "REGION" : $("#search_region").val(),
+						"FIRSTNAME" : $("#search_fname").val(),
+						"MIDDLENAME": $("#search_mname").val(),
+						"LASTNAME": $("#search_lname").val(),
+						"ALIAS": $("#search_alias").val(),
+						"YEAR": $("#search_year").val(),
+						"SDOCKETNO": $("#search_docket").val(),
+						"SUPERVOFFICE": $("#search_supervoffice").val(),
+						"REMARKS": $("#search_remarks").val(),
+						"START_DD": $("#search_start_dd").val(),
+						"START_YY": $("#search_start_yy").val(),
+						"START_MM": $("#search_start_mm").val(),
+						"END_DD": $("#search_end_dd").val(),
+						"END_YY" : $("#search_end_yy").val(),
+						"END_MM": $("#search_end_mm").val()
+	                }
+
+	            },
+	            rowCallback: function (row, data) {
+	            },
+	            'aaSorting': [
+	                    [0, 'ASC']
+	                ] // start to sort data in second column
+	                ,
+	            "initComplete": function(settings, json) {
+	            	console.log(json);
+	            	$(".pp1").focus();
+	            	if(json.recordsTotal == 0){
+	            		$("#modal-search").modal();
+	            		
+	            		//$(".btnSearchYes").focus();
+	            		shortcuts.add('y',function() {
+	            			$(".btnSearchYes").trigger("click")
+							
+	            		});
+
+	            		shortcuts.add('n',function() {
+	            			$(".btnSearchNo").trigger("click")
+	            		});
+	            	}
+	            	
+
+	            	$(".dataTables_filter").addClass("hidden")
+	            	$(".form_loader").addClass("hidden")
+                },
+	            "fnDrawCallback": function(){
+			        $("#probationer_table").unbind("click").on("click",".btn-migrateRequest",function(){
+			        	$(".form_loader").removeClass("hidden")
+			    		var data_id = $(this).data("id");
+			    		var payload = {
+			                "id" : data_id,
+			                "method" : "fetchByID"
+			            }
+			            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payload)).done(function (result) {
+		                    $(".form_loader").addClass("hidden")
+		                    console.log(result);
+
+		    				var id 		= result.payload.id;
+		    				var lname 	= result.payload.LASTNAME;
+		    				var fname 	= result.payload.FIRSTNAME;
+		    				var mname 	= result.payload.MIDDLENAME;
+		    				var alias 	= result.payload.ALIAS;
+		    				var superv 	= result.payload.SUPVOFFICE;
+		    				var remarks = result.payload.REMARKS;
+		    				var docket 	= result.payload.SDOCKETNO;
+		    				var region 	= "";
+		    				var year 	= result.payload.YEAR;
+		    				var startyy = result.payload.STARTYY;
+		    				var startmm = result.payload.STARTMM;
+		    				var startdd = result.payload.STARTDD;
+		    				var endyy 	= result.payload.ENDYY;
+		    				var endmm 	= result.payload.ENDMM;
+		    				var enddd 	= result.payload.ENDDD;
+		    				$("#modalRequest").modal('show')
+
+			            	$(".saveRequest").unbind('click').on('click', function(){
+			                    $(".saveRequest").attr('disabled',true)
+								console.log(lname)
+
+			                    var payload_request = {
+			                        "method"        :"insert",
+			                        "REGION"        :region,
+			                        "YEAR"          :startyy+"-"+endyy,
+			                        "SDOCKETNO"     :docket,
+			                        "FIRSTNAME"     :fname,
+			                        "MIDDLENAME"    :mname,
+			                        "LASTNAME"      :lname,
+			                        "ALIAS"         :alias,
+			                        "SUPVOFFICE"    :superv,
+			                        "REMARKS"       :remarks,
+			                        "STARTMM"       :startmm,
+			                        "STARTDD"       :startdd,
+			                        "STARTYY"       :startyy,
+			                        "ENDMM"         :endmm,
+			                        "ENDDD"         :enddd,
+			                        "ENDYY"         :endyy,
+			                    }
+			                    console.log(payload_request)
+			                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist',JSON.stringify(payload_request)).done(function (result) {
+			                        if(result.status == "SUCCESS"){
+			                        	var payloadStatus = {
+										    "method" : "update",
+										    "id" : id,
+										    "REQUEST_STATUS" : "2"
+			                        	}
+			                        	$.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payloadStatus)).done(function (result) {
+					                        if(result.status == "SUCCESS"){
+					                            $(".saveRequest").attr('disabled',false)
+					                            $("#modalRequest").modal('toggle')
+					                            // location.reload();
+					                            __attachProbationerEventRequest();
+					                        }else{
+					                            alert("Failed")
+					                        }
+					                    }); 
+			                        }else{
+			                            alert("Failed")
+			                        }
+			                    }); 
+			            	})
+			            });
+			    	})
+	            }
+
+        	})
+
+        	$(".dt-buttons").addClass("hidden")
+            $(".btnCSV").unbind('click').on("click",function(){ $(".buttons-csv").click(); })
+            $(".btnPDF").unbind('click').on("click",function(){ $(".buttons-pdf").click(); })
+            $(".btnXLS").unbind('click').on("click",function(){ $(".buttons-excel").click(); })
+
+    	});
+        
+
+    	$(".btn-reset").unbind("click").on("click",function(){
+    		$("input").val('');
+    		$(".btn-search").trigger("click")
+    	})
+    	$(".btn-search").trigger("click")
+
+    	$("input").keyup(function(e){
+    		if(e.keyCode == 13)
+		    {
+		    	$(".btn-search").focus();
+
+		        $(".btn-search").trigger("click");
+
+		    }
+    	})
+
+    	$(".btnSearchYes").unbind("click").on("click",function(){
+    		$("#modal-search").modal("toggle");
+    		 setTimeout(function () {
+    		$("#search_lname").focus();
+    		})
+
+    		shortcuts.remove('y',function() {
+    		});
+
+    		shortcuts.remove('n',function() {
+    		});
+    	});
+
+    	$(".btnSearchNo").unbind("click").on("click",function(){
+    		$("#modal-search").modal("toggle");
+    		//$("#search_lname").focus();
+    		shortcuts.remove('y',function() {
+    		});
+
+    		shortcuts.remove('n',function() {
+    		});
+    	});
+
+
+
+    	$(".saveAddBtn").unbind("click").on("click",function(){
+			$(".saveAddBtn").addClass("hidden")
+			$(".confirm").removeClass("hidden")
+			$(".proceedAddBtn").removeClass("hidden")
+			$("#modalAdd input").attr("disabled",true)
+		})
+
+		$(".btn-add-cancel").unbind("click").on("click",function(){
+			$("#modalAdd input").val('')
+    		$("#modalAdd input").attr("disabled",false)
+		})
+
+	}
+
     var __attachProbationerEvent = function() {
         
         $(".sshow").unbind("click").on("click",function(){
@@ -445,6 +688,7 @@ $.wms.probationer = (function() {
 
     
     return {
+        attachProbationerEventRequest : __attachProbationerEventRequest,
         attachProbationerEvent : __attachProbationerEvent,
         attachProbationerRequestEvent: __attachProbationerRequestEvent
     };
