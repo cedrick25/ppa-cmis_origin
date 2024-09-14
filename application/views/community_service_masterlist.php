@@ -2,42 +2,6 @@
 <body style="background-color: #f1f1f1;">
 <?php $this->load->view('templates/nav.php'); ?> 
 <br/>
-	<div class="modal fade" id="modalRequest" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
-	  	<div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      	<div class="modal-header">
-		        	<h4 class="modal-title" id="exampleModalLabel"> Migrate data to masterlist</h4>
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		        	</button>
-		      	</div>
-		      	<div class="modal-body">
-		      		Are you sure you want to approve?
-		  		</div>
-		      	<div class="modal-footer">
-			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-sm btn-primary saveRequest" id="">Confirm</button>
-		      	</div>
-		  	</div>
-		</div>
-	</div>
-	<div class="modal fade" id="modalReject" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
-	  	<div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      	<div class="modal-header">
-		        	<h4 class="modal-title" id="exampleModalLabel"> Reject</h4>
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		        	</button>
-		      	</div>
-		      	<div class="modal-body">
-		      		Are you sure you want to reject?
-		  		</div>
-		      	<div class="modal-footer">
-			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-sm btn-primary saveReject " id="">Confirm</button>
-		      	</div>
-		  	</div>
-		</div>
-	</div>
  	<div class="modal fade" id="modal-search" role="dialog" data-backdrop="static" data-keyboard="false">
 	    <div class="modal-dialog">
 	    
@@ -52,13 +16,8 @@
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-primary btnSearchNo"><u>N</u>o</button>
 	          <button type="button" class="btn btn-danger btnSearchYes" ><u>Y</u>es </button>
-
-
 	        </div>
-	        
 	      </div>
-
-	      
 	    </div>
   	</div>
 <div class="row">
@@ -78,11 +37,11 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">DOCKET NO</label>
 				            <div class="col-sm-3">
-				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="docket_no" placeholder="">
+				              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="docket_number" placeholder="">
 				            </div>
 				            <label for="" class="col-sm-2">YEAR</label>
 				            <div class="col-sm-3">
-				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="search_year" placeholder="">
+				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="year" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -91,7 +50,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">CC NO</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="cc_no" placeholder="">
+				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="cc_number" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -104,7 +63,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">FIRST NAME</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="2" class="form-control input-sm upperCase" id="search_fname" placeholder="">
+				              <input type="text" tabindex="2" class="form-control input-sm upperCase" id="first_name" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -113,7 +72,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">COURT OF ORIGIN</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="court_origin" placeholder="">
+				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="court_of_origin" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -126,7 +85,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">MIDDLE NAME</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="3" class="form-control input-sm upperCase" id="search_mname" placeholder="">
+				              <input type="text" tabindex="3" class="form-control input-sm upperCase" id="middle_name" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -135,7 +94,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">ASSIGNED OFFICER</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="search_remarks" placeholder="">
+				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="assigned_officer" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -148,7 +107,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">LAST NAME</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="search_lname" placeholder="">
+				              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="last_name" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -157,17 +116,8 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">START DATE</label>
 				            <div class="col-sm-8">
-				              <input type="date" tabindex="3" class="form-control input-sm upperCase" id="start" placeholder="">
+				              <input type="date" tabindex="3" class="form-control input-sm upperCase" id="start_date" placeholder="">
 				            </div>
-				            <!-- <div class="col-sm-2 b">MM
-				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_start_mm" placeholder="01">
-				            </div>
-				            <div class="col-sm-2 b">DD
-				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_start_dd" placeholder="25">
-				            </div>
-				            <div class="col-sm-2 b">YYYY
-				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_start_yy" placeholder="2024">
-				            </div> -->
 				          </div>
 				        </div>
 				      </div>
@@ -179,7 +129,7 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">FIELD OFFICE</label>
 				            <div class="col-sm-8">
-			             		<select class="form-control select2 sel_field_office" id="RC_FO">
+			             		<select class="form-control select2 sel_field_office" id="field_office">
 			              		</select>
 				            </div>
 				          </div>
@@ -189,17 +139,8 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">END DATE</label>
 				            <div class="col-sm-8">
-		              			<input type="date" tabindex="3" class="form-control input-sm upperCase" id="end" placeholder="">
+		              			<input type="date" tabindex="3" class="form-control input-sm upperCase" id="end_date" placeholder="">
 				            </div>
-							<!-- <div class="col-sm-2 b">MM
-				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_end_mm" placeholder="01">
-				            </div>
-				            <div class="col-sm-2 b">DD
-				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_end_dd" placeholder="25">
-				            </div>
-				            <div class="col-sm-2 b">YYYY
-				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_end_yy" placeholder="2024">
-				            </div> -->
 				          </div>
 				        </div>
 				      </div>
@@ -248,10 +189,10 @@
 				            <th style="text-align: center;">COURT OF ORIGIN</th>
 				            <th style="text-align: center;">ASSIGNED OFFICER</th>
 				            <th style="text-align: center;">DATE ORDER RECEIVED BY THE PPO</th>
-				            <th style="text-align: center;">COMMUNITY SERVICE PERIOD - START</th>
-				            <th style="text-align: center;">COMMUNITY SERVICE PERIOD - END</th>
+				            <th style="text-align: center;">YEAR</th>
+				            <th style="text-align: center;">PERIOD - START</th>
+				            <th style="text-align: center;">PERIOD - END</th>
 				            <th style="text-align: center;">FIELD OFFICE</th>
-				            <th class="access_ml_write" style="text-align: center;">OPTION</th>
 				          </tr>
 				        </thead>
 				        <tbody class="small">
