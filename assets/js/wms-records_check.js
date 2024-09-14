@@ -33,9 +33,9 @@ $.wms.records = (function() {
 		        'retrieve': true,
 		        'serverSide': true,
 		        'bFilter': false,
-		        'pageLength': 20,
-		        'lengthMenu': true,
-		        'dom': 'Bfrtip',
+		        'pageLength': 10,
+		        'lengthMenu': [ [10, 25, 50, 100], [10, 25, 50, 100] ],
+		        // 'dom': 'Bfrtip',
 		        'buttons': [
 		            {
 		                extend: 'csv',
