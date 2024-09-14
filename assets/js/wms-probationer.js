@@ -457,7 +457,7 @@ $.wms.probationer = (function() {
                         }, title: "Probationers", download: 'open'
                     },
                 ],
-	            'bStateSave': true,
+	            'bStateSave': false,
 	            'searchDelay': 50,
 	            'ajax': {
 	                // 'url': 'http://192.168.1.184/cmt-api/index.php/Search/sspSearch',
