@@ -58,7 +58,6 @@
 										<div id="RC-21-forms-container" class="hidden">
 			              	<select class="form-control select2" id="RC-21-forms">
 			              		<optgroup label="Forms 21">
-					                <option value="F21PCS">PRE-PAROLE/EXECUTIVE CLEMENCY CASELOAD SUMMARY</option>
 					                <option value="F21T1">Table 1 - CARRY OVER PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASELOAD</option>
 					                <option value="F21T2">Table 2 - PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
 					                <option value="F21T3">Table 3 - CARRY OVER PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASES PENDING RESOLUTION BY THE BOARD</option>
@@ -80,7 +79,6 @@
 										<div id="RC-44-forms-container" class="hidden">
 			              	<select class="form-control select2" id="RC-44-forms">
 			              		<optgroup label="Forms 44">
-					                <option value="F44SSCS">SUSPENDED SENTENCE CASELOAD SUMMARY</option>
 					                <option value="F44T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
 					                <option value="F44T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
 					                <option value="F44T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</option>
@@ -100,7 +98,6 @@
 										<div id="RC-45-forms-container" class="hidden">
 			              	<select class="form-control select2" id="RC-45-forms">
 			              		<optgroup label="Forms 45">
-					                <option value="F45CSCS">COMMUNITY SERVICE FOR A FIRST-TIME MINOR DRUG OFFENDER IN LIEU OF IMPRISONMENT CASELOAD SUMMARY</option>
 					                <option value="F45T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
 					                <option value="F45T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
 					                <option value="F45T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE COURT</option>
@@ -129,7 +126,6 @@
 										<div id="RC-51-forms-container" class="hidden">
 			              	<select class="form-control select2" id="RC-51-forms">
 			              		<optgroup label="Forms 51">
-					                <option value="F51RORCS">RELEASE ON RECOGNIZANCE CASELOAD SUMMARY</option>
 					                <option value="F51T1">Table 1 - CARRY OVER SUPERVISION CASELOAD</option>
 					                <option value="F51T2">Table 2 - SUPERVISION REFERRALS RECEIVED</option>
 					                <option value="F51T3">Table 3 - MONITORING REPORT SUBMITTED TO COURT</option>
@@ -140,7 +136,6 @@
 										<div id="RC-53-forms-container" class="hidden">
 			              	<select class="form-control select2" id="RC-53-forms">
 			              		<optgroup label="Forms 53">
-					                <option value="F53CSAIPCS">COMMUNITY SERVICE IN LIEU OF  IMPRISONMENT FOR THE PENALTIES ARRESTO MENOR AND ARESTO MAYOR CASELOAD SUMMARY</option>
 					                <option value="F53T1">Table 1 - CARRY OVER FOR APPLICATION FOR COMMUNITY SERVICE CASELOAD</option>
 					                <option value="F53T2">Table 2 - NEW APPLICATION FOR COMMUNITY SERVICE RECEIVED</option>
 					                <option value="F53T3">Table 3 - CARRY OVER NOTICE OF HEARING RECEIVED</option>
@@ -167,7 +162,7 @@
 			            <div class="col-sm-1"></div>
 			            <label for="" class="col-sm-3">Field Office</label>
 			            <div class="col-sm-8">
-			             	<select class="form-control select2 sel_field_office" id="RC_FO">
+			             	<select class="form-control select2 sel_field_office" id="field_office">
 			              </select>
 			            </div>
 			          </div>
@@ -178,16 +173,22 @@
 							    <!-- Year Field -->
 							    <label for="year" class="col-sm-3">Year</label>
 							    <div class="col-sm-8">
-							      <select name="Year" id="RC_year" class="form-control">
-							        <option value="">Select Year</option>
+							      <select name="Year" id="year" class="form-control select2">
 							        <!-- Example years, you can adjust this as needed -->
+							        <option value="">Select Year</option>
+							        <option value="2027">2027</option>
+							        <option value="2026">2026</option>
+							        <option value="2025">2025</option>
 							        <option value="2024">2024</option>
 							        <option value="2023">2023</option>
 							        <option value="2022">2022</option>
 							        <option value="2021">2021</option>
 							        <option value="2020">2020</option>
 							        <option value="2019">2019</option>
-							        <option value="2018">2018</option>
+							        <option value="2017">2017</option>
+							        <option value="2016">2016</option>
+							        <option value="2015">2015</option>
+							        <option value="2014">2014</option>
 							      </select>
 							    </div>
 							  </div>
@@ -201,7 +202,7 @@
 			            <div class="col-sm-1"></div>
 			            <label for="" class="col-sm-3">Docket No.</label>
 			            <div class="col-sm-8">
-			              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="RC_docket" placeholder="">
+			              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="docket_no" placeholder="">
 			            </div>
 			          </div>
 			        </div>
@@ -211,7 +212,7 @@
 							    <!-- Month Field -->
 							    <label for="month" class="col-sm-3">Month</label>
 							    <div class="col-sm-8">
-							      <select name="Month" id="RC_month" class="form-control">
+							      <select name="Month" id="month" class="form-control select2">
 							        <option value="">Select Month</option>
 							        <!-- Month options -->
 							        <option value="01">January</option>
@@ -239,10 +240,26 @@
 			            <div class="col-sm-1"></div>
 			            <label for="" class="col-sm-3">Name</label>
 			            <div class="col-sm-8">
-			              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="RC_name" placeholder="">
+			              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="petitioner" placeholder="">
 			            </div>
 			          </div>
 			        </div>
+			        <div class="col-lg-6">
+							  <div class="form-group row">
+							    <div class="col-sm-1"></div>
+							    <!-- Quarter Field -->
+							    <label for="quarter" class="col-sm-3">Quarter</label>
+							    <div class="col-sm-8">
+							      <select name="quarter" id="quarter" class="form-control select2">
+							        <option value="">Select Quarter</option>
+							        <option value="1">1st Quarter (Jan - Mar)</option>
+							        <option value="2">2nd Quarter (Apr - Jun)</option>
+							        <option value="3">3rd Quarter (Jul - Sep)</option>
+							        <option value="4">4th Quarter (Oct - Dec)</option>
+							      </select>
+							    </div>
+							  </div>
+							</div>
 			      </div>
 			    </div>
 				</div>
@@ -265,48 +282,25 @@
 
 	<div class="col-md-12">
 		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<span class="" style="font-size: 16px;"><b>TABLE 1 - CARRY OVER PROBATION INVESTIGATION CASELOAD</b></span>
-			</div>
 			<div class="panel-body">
 				<div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
-				
 				<div id="result_table" class="">
-					<table id="probationerRequest_table" class="display table-bordered table-condensed nowrap" style="width:100%">
-				        <thead class="tb-header small">
-				          <tr>
-				            <th style="text-align: center;">DOCKET NO.</th>
-				            <th style="text-align: center;">PETITIONER'S NAME</th>
-				            <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
-				            <th style="text-align: center;">INVESTIGATION OFFICER</th>
-				            <th style="text-align: center;">FIELD OFFICE</th>
-				          </tr>
-				        </thead>
-				        <tbody class="small">
-				        	<tr>
-				        		<td class="sorting_1">PI-2024-07-00068</td>
-				        		<td>RAYMUND STA. IGLESIA Y DEGAMON</td>
-				        		<td>2024-07-26</td>
-				        		<td>SPPO ARIANDNE L. SIOSANA</td>
-				        		<td class="options field">BAYBAY CITY PAROLE AND PROBATION OFFICE</td>
-				        	</tr>
-				        	<tr>
-				        		<td class="sorting_1">PI-2024-07-00067</td>
-				        		<td>JOEL ABENOJA Y MARTE</td>
-				        		<td>2024-07-12</td>
-				        		<td>SPPO ARIANDNE L. SIOSANA</td>
-				        		<td class="options field">BAYBAY CITY PAROLE AND PROBATION OFFICE</td>
-				        	</tr>
-				        	<tr>
-				        		<td class="sorting_1">PI-2024-07-00066</td>
-				        		<td>ARMANDO NGOHO Y AGUSTIN</td>
-				        		<td>2024-07-26</td>
-				        		<td>SPPO ARIANDNE L. SIOSANA</td>
-				        		<td class="options field">BAYBAY CITY PAROLE AND PROBATION OFFICE</td>
-				        	</tr>
-				        </tbody>
-			      	</table>
-		      	</div>
+					<table id="f5t1" class="display table-bordered table-condensed nowrap" style="width:100%">
+		        <thead class="tb-header small">
+		          <tr>
+		            <th style="text-align: center;">ID</th>
+		            <th style="text-align: center;">DOCKET NO.</th>
+		            <th style="text-align: center;">PETITIONER'S NAME</th>
+		            <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
+		            <th style="text-align: center;">INVESTIGATION OFFICER</th>
+		            <th style="text-align: center;">FIELD OFFICE</th>
+		            <th style="text-align: center;">YEAR-MONTH</th>
+		          </tr>
+		        </thead>
+		        <tbody class="small">
+		        </tbody>
+	      	</table>
+      	</div>
 			</div>
 		</div>
 	</div>
@@ -351,7 +345,6 @@
 	    	$(document).ready(function() {
 				    // Initialize Select2 for the RC_forms dropdown (main selection)
 				    $(".select2").select2({
-				        placeholder: "Select a form",
 				        width: '100%'
 				    });
 
@@ -422,8 +415,7 @@
 				});
 
         $.wms.widget.attachWidgetEvent();
-        // $.wms.probationer.attachProbationerEvent();
-        // $.wms.probationer.attachProbationerRequestEvent();
+        $.wms.records.attachRecordsEvent();
   		}
     }, 200);
 

@@ -216,7 +216,7 @@ $.wms.probationer = (function() {
                         }, title: "Probationers", download: 'open'
                     },
                 ],
-	            'bStateSave': true,
+	            'bStateSave': false,
 	            'searchDelay': 50,
 	            'ajax': {
 	                'url': origin+'ppa-cmis-api_origin/wsv1/Cmis/masterlistRequestSSP',
@@ -713,21 +713,18 @@ $.wms.probationer = (function() {
 	            'buttons': [
                     {   extend: 'csv',
                         exportOptions: {
-                           
                         }, title: "Probationers", download: 'open'
                     },
                     {   extend: 'pdfHtml5',
                         exportOptions: {
-                         
                         }, title: "Probationers", download: 'open'
                     },
                     {   extend: 'excelHtml5',
                         exportOptions: {
-                        
                         }, title: "Probationers", download: 'open'
                     },
                 ],
-	            'bStateSave': true,
+	            'bStateSave': false,
 	            'searchDelay': 50,
 	            'ajax': {
 	                'url': origin+'ppa-cmis-api_origin/wsv1/Expansion/communitySSP',
