@@ -56,6 +56,7 @@ $route['caseload'] = "portal/caseload";
 $route['print_caseload'] = "portal/print_caseload";
 $route['probationer'] = "portal/probationer";
 $route['probationer_approval'] = "portal/probationer_approval";
+$route['community_service_masterlist'] = "portal/community_service_masterlist";
 $route['report'] = "portal/report";
 $route['audit'] = "portal/audit";
 $route['report_print'] = "portal/report_print";

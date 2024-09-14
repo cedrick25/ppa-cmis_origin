@@ -167,17 +167,17 @@ $.wms.dashboard = (function() {
 
     var ___formControlCheck = function(){
         // console.log("FORM CONTROL CHECK!!!")
-        /*if($.cookie('USER_LEVEL_ID') != "undefined" && ($.cookie('USER_LEVEL_ID') == 1 || $.cookie('USER_LEVEL_ID') == 2)){
-            $(".adminTools").show();
+        if($.cookie('USER_ID') != "undefined" && ($.cookie('USER_ID') == 1 || $.cookie('USER_ID') == 10 || $.cookie('USER_ID') == 595)){
+            $(".demo_purpose").removeClass('hidden');
         }else{
-            $(".adminTools").remove();
+            $(".demo_purpose").addClass('hidden');
         }
 
-        if($.cookie('USER_LEVEL_ID') != "undefined" && ($.cookie('USER_LEVEL_ID') == 1 || $.cookie('USER_LEVEL_ID') == 2 || $.cookie('USER_LEVEL_ID') == 5 )){
-            $(".clerkTools").show();
-        }else{
-            $(".clerkTools").remove();
-        }*/
+        // if($.cookie('USER_LEVEL_ID') != "undefined" && ($.cookie('USER_LEVEL_ID') == 1 || $.cookie('USER_LEVEL_ID') == 2 || $.cookie('USER_LEVEL_ID') == 5 )){
+        //     $(".clerkTools").show();
+        // }else{
+        //     $(".clerkTools").remove();
+        // }
         function check(){
             if(typeof($.cookie("PERMISSIONS")) != "undefined"){
                 var ACCESS_RIGHTS = JSON.parse($.cookie("PERMISSIONS"))

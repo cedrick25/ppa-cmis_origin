@@ -122,5 +122,9 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('probationer_approval');
 	}
+	public function community_service_masterlist()
+	{
+		$this->load->view('community_service_masterlist');
+	}
 
 }

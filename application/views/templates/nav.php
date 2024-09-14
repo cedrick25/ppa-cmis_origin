@@ -105,7 +105,7 @@
                                 <li><a href="#"  class="access_f53" data-toggle="modal" data-target="#form53modal">Community Service in Lieu of Imprisonment for the Penalties Arresto Menor and Aresto Mayor Caseload Summary (Form 53)</a></li> 
                                 <li><a href="caseload_report"  class="">Caseload Report</a></li> 
                                 <li><a href="#"  class="access_cppo" data-toggle="modal" data-target="#formCPPOmodal">CPPO Form Review</a></li>
-                                <li><a href="records_check" class="hidden">Records Check</a></li> 
+                                <li><a href="records_check" class="demo_purpose hidden">Records Check</a></li>
                             </ul>
                         </li>
 
@@ -125,7 +125,7 @@
                                
                                 <li><a href="probationer" class="">Probation Masterlist</a></li>
                                 <li><a href="probationer_approval" class="">Probation For Approval</a></li> 
-                                <li><a href="#" class="hidden">Community Service Masterlist</a></li> 
+                                <li><a href="community_service_masterlist" class="demo_purpose hidden">Community Service Masterlist</a></li> 
                             </ul>
                         </li>
 

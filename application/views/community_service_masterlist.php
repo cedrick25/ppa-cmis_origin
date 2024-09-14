@@ -1,0 +1,309 @@
+<?php $this->load->view('templates/header.php'); ?> 
+<body style="background-color: #f1f1f1;">
+<?php $this->load->view('templates/nav.php'); ?> 
+<br/>
+	<div class="modal fade" id="modalRequest" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+		        	<h4 class="modal-title" id="exampleModalLabel"> Migrate data to masterlist</h4>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        	</button>
+		      	</div>
+		      	<div class="modal-body">
+		      		Are you sure you want to approve?
+		  		</div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-sm btn-primary saveRequest" id="">Confirm</button>
+		      	</div>
+		  	</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalReject" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+		        	<h4 class="modal-title" id="exampleModalLabel"> Reject</h4>
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        	</button>
+		      	</div>
+		      	<div class="modal-body">
+		      		Are you sure you want to reject?
+		  		</div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-sm btn-primary saveReject " id="">Confirm</button>
+		      	</div>
+		  	</div>
+		</div>
+	</div>
+ 	<div class="modal fade" id="modal-search" role="dialog" data-backdrop="static" data-keyboard="false">
+	    <div class="modal-dialog">
+	    
+	      <div class="modal-content">
+	        <div class="modal-header tb-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title ppa-f24"><b><i class="fa fa-search"></i> No Record Found</b></h4>
+	        </div>
+	        <div class="modal-body ppa-f24">
+	          <p><b>Search Another?</b></p>
+	        </div>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-primary btnSearchNo"><u>N</u>o</button>
+	          <button type="button" class="btn btn-danger btnSearchYes" ><u>Y</u>es </button>
+
+
+	        </div>
+	        
+	      </div>
+
+	      
+	    </div>
+  	</div>
+<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span class="font_20"><i class="fa fa-search"></i> Search Community Service</b></span>
+					<span class="font_20 pull-right sshow" style="cursor: pointer;"><i class="fa fa-caret-square-o-down"></i> <u>S</u>how</span>
+
+					<span class="font_20 pull-right shide hidden" style="cursor: pointer;"><i class="fa fa-caret-square-o-up"></i> <u>H</u>ide</span>
+				</div>
+				<div class="panel-body p1 pp1" style="display:none"><br/>
+				    <div class="col-lg-12">
+				      <div class="row">
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">DOCKET NO</label>
+				            <div class="col-sm-3">
+				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="docket_no" placeholder="">
+				            </div>
+				            <label for="" class="col-sm-2">YEAR</label>
+				            <div class="col-sm-3">
+				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="search_year" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">CC NO</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="cc_no" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				    <div class="col-lg-12">
+				      <div class="row">
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">FIRST NAME</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="2" class="form-control input-sm upperCase" id="search_fname" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">COURT OF ORIGIN</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="court_origin" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				    <div class="col-lg-12">
+				      <div class="row">
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">MIDDLE NAME</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="3" class="form-control input-sm upperCase" id="search_mname" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">ASSIGNED OFFICER</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="-1" class="form-control input-sm upperCase" id="search_remarks" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				    <div class="col-lg-12">
+				      <div class="row">
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">LAST NAME</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="search_lname" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">START DATE</label>
+				            <div class="col-sm-8">
+				              <input type="date" tabindex="3" class="form-control input-sm upperCase" id="start" placeholder="">
+				            </div>
+				            <!-- <div class="col-sm-2 b">MM
+				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_start_mm" placeholder="01">
+				            </div>
+				            <div class="col-sm-2 b">DD
+				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_start_dd" placeholder="25">
+				            </div>
+				            <div class="col-sm-2 b">YYYY
+				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_start_yy" placeholder="2024">
+				            </div> -->
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				    <div class="col-lg-12">
+				      <div class="row">
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">FIELD OFFICE</label>
+				            <div class="col-sm-8">
+			             		<select class="form-control select2 sel_field_office" id="RC_FO">
+			              		</select>
+				            </div>
+				          </div>
+				        </div>
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">END DATE</label>
+				            <div class="col-sm-8">
+		              			<input type="date" tabindex="3" class="form-control input-sm upperCase" id="end" placeholder="">
+				            </div>
+							<!-- <div class="col-sm-2 b">MM
+				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_end_mm" placeholder="01">
+				            </div>
+				            <div class="col-sm-2 b">DD
+				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_end_dd" placeholder="25">
+				            </div>
+				            <div class="col-sm-2 b">YYYY
+				              <input type="text"  tabindex="-1" class="form-control input-sm " id="search_end_yy" placeholder="2024">
+				            </div> -->
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+	  				
+				</div>
+				<div class="panel-footer p1" style="display:none">
+					
+			     	<div class="row">
+			     		<div class="col-lg-9">
+		     			</div>
+		     			<div class="col-lg-3">
+		     				<span class="pull-right">
+								<button type="button" class="btn btn btn-reset btn-danger">Reset</button>
+			    				<button  tabindex="4" type="button" class="btn btn btn-primary btn-search"><i class="fa fa-search"></i> Search</button>
+		    				</span>
+    					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<div class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<span class="font_20"><i class="fa fa-users"></i> <b>Community Service Masterlist</b></span>
+
+				<span class="pull-right">
+					  <!-- <button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button> -->
+				</span>
+			</div>
+			<div class="panel-body">
+				<!-- <div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div> -->
+
+				<!-- Export: <button class="btn btn-primary btnCSV">CSV</button> <button class="btn btn-primary btnXLS">EXCEL</button> -->
+
+				
+				<div id="result_table" class="">
+					<table id="probationer_table" class="display table-bordered table-condensed nowrap" style="width:100%">
+				        <thead class="tb-header small">
+				          <tr>
+				            <th style="text-align: center;">ID</th>
+				            <th style="text-align: center;">DOCKET NO.</th>
+				            <th style="text-align: center;">CLIENT NAME</th>
+				            <th style="text-align: center;">CC NO.</th>
+				            <th style="text-align: center;">COURT OF ORIGIN</th>
+				            <th style="text-align: center;">ASSIGNED OFFICER</th>
+				            <th style="text-align: center;">DATE ORDER RECEIVED BY THE PPO</th>
+				            <th style="text-align: center;">COMMUNITY SERVICE PERIOD - START</th>
+				            <th style="text-align: center;">COMMUNITY SERVICE PERIOD - END</th>
+				            <th style="text-align: center;">FIELD OFFICE</th>
+				            <th class="access_ml_write" style="text-align: center;">OPTION</th>
+				          </tr>
+				        </thead>
+				        <tbody class="small">
+				        </tbody>
+			      	</table>
+		      	</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<?php $this->load->view('templates/footer.php'); ?> 
+<?php $this->load->view('templates/admin_footer.php'); ?> 
+<script type="text/javascript">
+	$( window ).ready(function() {
+        setTimeout(function () {
+        	if($.wms.dashboard.checkPermission("7")){
+	      		$.wms.dashboard.attachPageEvent();
+	         	$.wms.modal.attachModalEvent();
+	      		
+	      		$(".loading-data").fadeOut();
+	      		$('.filter-modal select').css('width', '100%')
+	      		$(".select2").select2({
+				        placeholder: "Select a form",
+				        width: '100%'
+				    });
+	      		//$(".sel-date2").datepicker()
+
+	          $.wms.widget.attachWidgetEvent();
+	          $.wms.probationer.attachCommunityMasterlist();
+      		}
+        }, 200);
+
+        shortcuts.add('alt+r',function() {
+        	$(".btn-reset").focus();
+        	 setTimeout(function () {
+		    $(".btn-reset").trigger("click")
+			    $("input").val('');
+			    $("#search_lname").focus();
+			});
+
+		})
+
+		shortcuts.add('alt+s',function() {
+		    $(".sshow").trigger("click")
+		    setTimeout(function () {
+		    $("#search_lname").focus();
+			},10)
+		})
+
+		shortcuts.add('alt+h',function() {
+		    $(".shide").trigger("click")
+		})
+   });
+</script>
