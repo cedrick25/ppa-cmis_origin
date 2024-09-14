@@ -6,7 +6,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<span class="font_20"><b><i class="fa fa-search"></i> Search Caseload</b></span>
+					<span class="font_20"><b><i class="fa fa-search"></i> Search Records</b></span>
 					<span class="font_20 pull-right sshow hidden" style="cursor: pointer;"><i class="fa fa-caret-square-o-down"></i> <u>S</u>how</span>
 
 					<span class="font_20 pull-right shide " style="cursor: pointer;"><i class="fa fa-caret-square-o-up"></i> <u>H</u>ide</span>
