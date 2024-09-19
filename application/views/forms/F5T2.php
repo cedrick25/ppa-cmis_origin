@@ -156,7 +156,7 @@
       </div>
     </div>
   </div>
-  <div class="row  print_list">
+  <div class="row hide print_list">
     <div class="col-lg-12 col-sm-12 col-md-12 div-table">
       <table id="T_F5T2" class="table table-bordered table-darker table-condensed text-nowrap" style="width:100%">
         <thead class="small tb-header">

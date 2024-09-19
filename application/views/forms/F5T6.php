@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <div class="row  print_list">
+  <div class="row hide print_list">
     <div class="col-lg-12 col-sm-12 col-md-12 div-table">
       <table class="table table-bordered table-darker text-nowrap" style="width:100%" id="T_F5T6">
         <thead class="tb-header small">
