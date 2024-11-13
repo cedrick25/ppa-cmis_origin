@@ -161,13 +161,12 @@ $.wms.dashboard = (function() {
                 return true;
                 
             }
-
             
         }
 
     var ___formControlCheck = function(){
         // console.log("FORM CONTROL CHECK!!!")
-        if($.cookie('USER_ID') != "undefined" && ($.cookie('USER_ID') == 1 || $.cookie('USER_ID') == 10 || $.cookie('USER_ID') == 595)){
+        if($.cookie('USER_ID') != "undefined" && ($.cookie('USER_ID') == 1 || $.cookie('USER_ID') == 10 || $.cookie('USER_ID') == 595 || $.cookie('USER_ID') == 775 || $.cookie('USER_ID') == 1527)){
             $(".demo_purpose").removeClass('hidden');
         }else{
             $(".demo_purpose").addClass('hidden');
