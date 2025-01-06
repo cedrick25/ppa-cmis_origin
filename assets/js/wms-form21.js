@@ -454,6 +454,7 @@ $.wms.form21 = (function() {
                 "petitioner": $("#add_petitioner").val(),
                 "date_rcv": $("#add_date_rcv").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "investigating_officer": $("#add_investigating_officer").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
@@ -815,6 +816,7 @@ $.wms.form21 = (function() {
                 "date_of_court_order": $("#add_rcv_date_of_court_order").val(),*/
                 "received_date": $("#add_rcv_date_rcv").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "investigating_officer_name": $("#add_rcv_investigating_officer").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
@@ -1393,6 +1395,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -1725,6 +1728,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -2018,6 +2022,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -2535,6 +2540,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -2749,6 +2755,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -3263,6 +3270,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -3832,6 +3840,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -4412,6 +4421,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -4960,6 +4970,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -5535,6 +5546,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -6040,6 +6052,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -6576,6 +6589,7 @@ $.wms.form21 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert",
                 "table" : $("#add_table").val()
@@ -7096,6 +7110,7 @@ $.wms.form21 = (function() {
                 "probationer" : $("#add_probationer").val(),
                 "received_date" : $("#add_date_rcv").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "Y_M": $.wms.urlParam('date'),
                 "method" : "update",
                 "table" : $("#add_table").val(),
@@ -7885,6 +7900,7 @@ $.wms.form21 = (function() {
                 "probationer" : $("#add_rcv_probationer").val(),
                 "received_date" : $("#add_rcv_date_rcv").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "Y_M": $.wms.urlParam('date'),
                 "method" : "update",
                 "table" : $("#add_rcv_table").val(),
@@ -7954,6 +7970,7 @@ $.wms.form21 = (function() {
                 "probationer" : $("#add_term_probationer").val(),
                 "terminated_date" : $("#add_term_date_terminated").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                
                 "method" : "update",
                 "table" : $("#add_term_table").val(),

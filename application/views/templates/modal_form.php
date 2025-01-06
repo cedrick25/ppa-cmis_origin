@@ -692,9 +692,97 @@
       </div>
     </div>
   </div>
+<div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header tb-header">
+        <h4 class="modal-title" id=""><i class="fa fa-upload"></i> Upload Attachment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body modal-loader2 hidden">
+        <div class="row text-center">
+          <div>
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i> Loading Data...
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <label for="type" class="col-md-3 col-form-label">Docket no.</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="docket_no" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type" class="col-md-3 col-form-label">Petitioner's Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="petitioner_name" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type" class="col-md-3 col-form-label">Type</label>
+              <div class="col-md-9">
+                <select class="form-control type" id="type" name="type" required>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row remarks-row" style="display: none;">
+                <label for="remarks" class="col-md-3 col-form-label">Remarks</label>
+                <div class="col-md-9">
+                    <textarea class="form-control remarks" id="remarks" name="remarks" rows="2" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="fileupload" class="col-md-3 col-form-label">Upload File</label>
+              <div class="col-md-9">
+                <input type="file" class="form-control-file" id="fileupload" accept=".jpg, .png, .pdf, .docx" required>
+              </div>
+            </div>
+            <input type="hidden" id="FOId" name="FOId">
 
+            <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="tab-content tab_list" style="margin-top: 10px;">
+                  <div class="tab-pane fade in active" id="Investigation">
+                    <table id="inv_table" class="table table-bordered table_head" width="100%">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>File Name</th>
+                          <th>Version</th>
+                          <th>Remarks</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table_body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-
+          </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer d-flex align-items-center">
+        <div class="row w-100">
+          <div class="col-sm-6">
+              <span>Powered by PPIS</span>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+              <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
   <!-- Modal -->

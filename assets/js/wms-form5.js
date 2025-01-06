@@ -210,13 +210,12 @@ $.wms.form5 = (function() {
                         "<td>"+data.investigating_officer+"</td>"+
                         "<td class='options field'>"+data.field_office+"</td>"+
                         "<td class='options'>"+source+"</td>"+
-                        "<td align='center' class='options'> <button class='access_f5_write btn btn-success form_lock btn-sm btn-edit' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td align='center' class='options'>" + 
+                        "<button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "'><i class='fa fa-pencil'></i> Update</button> " +
+                        "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "'><i class='fa fa-trash'></i> Delete</button> " +
+                    "</td></tr>");
                 });
             }else{
-                // $('.F5T1_tbody').append("<tr>"+
-                //     "<td colspan='7' class='center b'>NONE</td>"+
-                // "</tr>")
             }
             $(document).ready(function () {
                 // var table = $('#T_F5T1').DataTable();
@@ -436,6 +435,7 @@ $.wms.form5 = (function() {
                 "petitioner": $("#add_petitioner").val(),
                 "date_rcv": $("#add_date_rcv").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "investigating_officer": $("#add_investigating_officer").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
@@ -453,12 +453,8 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
         })
-
-
-        
-
 
         //Delete
         $(".deleteProceedButton").unbind("click").on("click",function(){
@@ -536,8 +532,261 @@ $.wms.form5 = (function() {
                                     "<td>"+data.investigating_officer_name+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                            });
+
+                            $(document).on('click', '.btn-attachment-rcv', function() {
+                                var docketNo = $(this).data('docket');
+                                var recordId = $(this).data('id');
+                                var petitioner = $(this).data('petitioner');
+                                var field_office_id = $(this).data('field_office_id');
+                                console.log(petitioner)
+                                console.log(field_office_id)
+
+                                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                                $('#docket_no').val(docketNo);
+                                $('#petitioner_name').val(petitioner);
+                                $('#FOId').val(field_office_id);
+
+                                // Populate the type select dropdown
+                                $('#type').empty().append(`
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option value="Order to Conduct PSI">Order to Conduct PSI</option>
+                                    <option value="Other Document/s">Other Document/s</option>
+                                `);
+                                
+                                // Remove any previous 'change' event and bind a new one to handle the select change
+                                $(document).off('change', '#type').on('change', '#type', function() {
+                                    var selectedValue = $(this).val();
+                                    
+                                    if (selectedValue === 'Other Document/s') {
+                                        $('.remarks-row').show(); // Show the remarks field
+                                    } else {
+                                        $('.remarks-row').hide(); // Hide the remarks field
+                                    }
+                                });
+
+                                // Open the Bootstrap modal
+                                $('#attachmentModal').modal('show');
+
+                                // Call load_table function
+                                load_table("investigation", docketNo, field_office_id, "F5T2RR");
+                            });
+
+                            function tableColumns() {
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'version' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                            const latestVersion = Math.max(...rows.map(r => r.version));
+                                            
+                                            let actions = `
+                                                <a href=http://192.168.1.147:8080/file/view/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-eye'></i> View
+                                                    </button>
+                                                </a>
+                                                <a href=http://192.168.1.147:8080/file/download/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-download'></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (rows.length > 1 && data.version === latestVersion) {
+                                                actions += `
+                                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                            function hideDuplicateRows() {
+                                let fileGroups = {};
+                                
+                                $('.table_head tbody tr').each(function () {
+                                    const fileName = $(this).find('td:eq(1)').text().trim();
+                                    if (!fileGroups[fileName]) {
+                                        fileGroups[fileName] = [];
+                                    }
+                                    fileGroups[fileName].push($(this));
+                                });
+
+                                for (let fileName in fileGroups) {
+                                    const rows = fileGroups[fileName];
+                                    rows.sort((a, b) => {
+                                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                        return versionB - versionA;
+                                    });
+
+                                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                                }
+                            }
+                            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                            function load_table(type, uuid, officeId, kind) {
+                                // Destroy the existing DataTable instance if it exists
+                                if (dataTable) {
+                                    dataTable.destroy();
+                                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                                }
+
+                                // Reinitialize the DataTable
+                                dataTable = $('.table_head').DataTable({
+                                    "processing": false,
+                                    "serverSide": true,
+                                    "scrollX": true,
+                                    "searching": false,
+                                    "autoWidth": false,
+                                    "lengthMenu": [10, 25, 50, 100],
+                                    "pageLength": 10,
+                                    "ordering": false,
+                                    "columnDefs": [
+                                        { "width": "5%", "targets": [0] },
+                                        { "width": "20%", "targets": [1] },
+                                        { "width": "15%", "targets": [2] },
+                                        { "width": "25%", "targets": [3] },
+                                        { "width": "35%", "targets": [4] },
+                                    ],
+                                    ajax: {
+                                        url: `http://192.168.1.147:8080/file/page/${type}/${uuid}/${officeId}`,
+                                        type: 'GET',
+                                        cache: true,
+                                        data: function (d) {
+                                            return { 
+                                                page: d.start / d.length, // Pagination logic
+                                                size: d.length           // Page size 
+                                            };
+                                        },
+                                        dataFilter: function (data) {
+                                            var json = jQuery.parseJSON(data);
+                                            // Sort content by fileName and version
+                                            json.content.sort((a, b) => 
+                                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                            );
+                                            json.recordsTotal = json.totalElements;
+                                            json.recordsFiltered = json.totalElements;
+                                            json.data = json.content;
+                                            return JSON.stringify(json);
+                                        }
+                                    },
+                                    columns: tableColumns() // Call your function to get table columns
+                                });
+
+                                // Handle the table redraw event
+                                $('.table_head').on('draw.dt', function () {
+                                    hideDuplicateRows();
+                                });
+                            }
+                            $('.table_head').on('click', '.btn-showVersions', function () {
+                                const fileName = $(this).data('file_name');
+                                let rows = [];
+                                $('.table_head tbody tr').each(function () {
+                                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                                        rows.push($(this));
+                                    }
+                                });
+
+                                rows.sort((a, b) => {
+                                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                    return versionB - versionA;
+                                });
+
+                                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                                $(this).html(isHidden 
+                                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                            });
+                            $('#uploadButton').on('click', function(e) {
+                                e.preventDefault(); // Prevent default form submission
+                                $(this).prop('disabled', true).text('Uploading...');
+                                // Create FormData object
+                                var formData = new FormData();
+                                formData.append('uuid', $('#docket_no').val());
+                                formData.append('createdby', $('#petitioner_name').val());
+                                formData.append('type', "investigation");
+                                var type = $('#type').val();
+                                var remarks = $('#remarks').val();
+                                if (remarks) {
+                                    formData.append('remarks', type + " - " + remarks);
+                                } else {
+                                    formData.append('remarks', type);
+                                }
+                                formData.append('officeId', $('#FOId').val());
+                                formData.append('version', "0");
+                                var file = $('#fileupload')[0].files[0];
+                                if (!file) {
+                                    alert('Please select a file to upload.');
+                                    $('#uploadButton').prop('disabled', false).text('Upload');
+                                    return; // Exit if no file is selected
+                                }
+                                formData.append('file', file);
+                                var fileInput = $('#fileupload')[0];
+                                if (fileInput.files.length > 0) {
+                                    var fileName = fileInput.files[0].name;  // Get the file name
+                                    formData.append('kind', "F5T2RR");  // Append file name to formData
+                                }
+
+                                // **Console log all form data**
+                                console.log('File name:', fileName); // Log the file name to console
+                                console.log('--- Form Data ---');
+                                for (var pair of formData.entries()) {
+                                    if (pair[1] instanceof File) {
+                                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                                    } else {
+                                        console.log(`${pair[0]}: ${pair[1]}`);
+                                    }
+                                }
+
+                                var url = 'http://192.168.1.147:8080/file/upload';
+                                // Send AJAX request
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        console.log('Response:', response);
+                                        if ("true") {
+                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T2RR");
+                                             // Clear the remarks textarea
+                                            $('#remarks').val(''); 
+                                            
+                                            // Clear the file input (reset file input)
+                                            $('#fileupload').val('');
+                                        } else {
+                                            alert('Error: ' + "Failed to upload");
+                                        }
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Upload failed: ', error);
+                                        alert('An error occurred during the upload.');
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    }
+                                });
                             });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_a').DataTable( {
@@ -550,7 +799,6 @@ $.wms.form5 = (function() {
                                     }
                                 } );
                             });
-
 
                             ___updateRCV_event();
                         }
@@ -664,7 +912,32 @@ $.wms.form5 = (function() {
                                     }
                                 } );
                             });
-
+                            var PPISPayload = {
+                                    "clientType"            : "PROBATIONER",
+                                    "docketNumber"          : $("#add_docket_no").val(),
+                                    "fullName"              : $("#add_petitioner").val(),
+                                    "receivedDateByPPO"     : $("#add_date_rcv").val(),
+                                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                                    "investigatingOfficer"  : $("#add_investigating_officer").val(),
+                                    "firstName"             : "",
+                                    "middleName"            : "",
+                                    "lastName"              : "",
+                                    "suffixName"            : "",
+                                    "manualDocket"          : false,
+                                    "type"                  : "PIS_INV",
+                                }
+                            $.ajax({
+                                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                                type: 'POST',
+                                data: JSON.stringify(PPISPayload), // Pass your payload here
+                                contentType: 'application/json',   // Specify content type for JSON data
+                                success: function (PPISResult) {
+                                    console.log(PPISResult);       // Handle success response
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error:', status, error); // Handle error response
+                                }
+                            });
                             ___updateNOTACTED_event();
                         }
                     };
@@ -1030,6 +1303,7 @@ $.wms.form5 = (function() {
                 "date_of_court_order": $("#add_rcv_date_of_court_order").val(),
                 "received_date": $("#add_rcv_date_rcv").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "investigating_officer_name": $("#add_rcv_investigating_officer").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
@@ -1050,7 +1324,41 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+
+            var PPISPayload = {
+                    "clientType"            : "PROBATIONER",
+                    "docketNumber"          : $("#add_rcv_docket_no").val(),
+                    "fullName"              : $("#add_rcv_petitioner").val(),
+                    "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
+                    "firstName"             : "",
+                    "middleName"            : "",
+                    "lastName"              : "",
+                    "suffixName"            : "",
+                    "manualDocket"          : false,
+                    "criminalCaseNo"        : $("#add_rcv_case_no").val(),
+                    "criminalCaseNumber"    : $("#add_rcv_case_no").val(),
+                    "pleaBargain"           : $("#add_rcv_plea_bargain").val(), // string to sa cmis
+                    "courtOfOrigin"         : $("#add_rcv_court_origin").val(),
+                    "offense"               : $("#add_rcv_offense").val(),
+                    "sentence"              : $("#add_rcv_sentence").val(),
+                    "courtOrderDate"        : $("#add_rcv_date_of_court_order").val(),
+                    "type"                  : "PIS_INV",
+                }
+            $.ajax({
+                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         //Add ACTED
@@ -1087,11 +1395,11 @@ $.wms.form5 = (function() {
                 "petitioner_name": $("#add_acted_petitioner").val(),
                 "psir_date": $("#add_acted_psir").val(),
                 "manifest_date": $("#add_acted_manifest").val(),
-               
                 "received_date": $("#add_acted_date_rcv").val(),
                 "transfer_date": $("#add_acted_transfer_date").val(),
                 "transfer_to": $("#add_acted_transfer_to").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "ppo_recommendation" : $("#add_acted_recommendation").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
@@ -1113,6 +1421,38 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });    
+
+            var PPISPayload = {
+                    "clientType"            : "Petitioner",
+                    "docketNumber"          : $("#add_acted_docket_no").val(),
+                    "fullName"              : $("#add_acted_petitioner").val(),
+                    "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "firstName"             : "",
+                    "middleName"            : "",
+                    "lastName"              : "",
+                    "suffixName"            : "",
+                    "manualDocket"          : false,
+                    "criminalCaseNo"        : $("#add_rcv_case_no").val(),
+                    "criminalCaseNumber"    : $("#add_rcv_case_no").val(),
+                    "pleaBargain"           : $("#add_rcv_plea_bargain").val(), // string to sa cmis
+                    "courtOfOrigin"         : $("#add_rcv_court_origin").val(),
+                    "offense"               : $("#add_rcv_offense").val(),
+                    "sentence"              : $("#add_rcv_sentence").val(),
+                    "courtOrderDate"        : $("#add_rcv_date_of_court_order").val(),
+                }
+            $.ajax({
+                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         });
 
          //Add NOT ACTED
@@ -1150,6 +1490,7 @@ $.wms.form5 = (function() {
                 "received_date": $("#add_notacted_date").val(),
                 "disposed_decision" : $("#add_notacted_decision").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "created_by" : $.cookie("USER_ID")
@@ -1169,6 +1510,31 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });    
+            var PPISPayload = {
+                    "clientType"            : "Petitioner",
+                    "docketNumber"          : $("#add_notacted_docket_no").val(),
+                    "fullName"              : $("#add_notacted_petitioner").val(),
+                    "receivedDateByPPO"     : $("#add_notacted_date").val(),
+                    "type"                  : $("#add_notacted_decision").val(),
+                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                    "firstName"             : "",
+                    "middleName"            : "",
+                    "lastName"              : "",
+                    "suffixName"            : "",
+                    "manualDocket"          : false,
+                }
+            $.ajax({
+                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         });
 
         //Download
@@ -1195,7 +1561,6 @@ $.wms.form5 = (function() {
                 sheetName: "Form5-Table2" // Custom sheet name
             });
         });
-
 
             $("#sel_please").unbind("change").on("change",function(){
               console.log($(this).val())
@@ -1629,8 +1994,6 @@ $.wms.form5 = (function() {
             })
         }
 
-
-
     };
 
     var __attachF5T3PageEvent = function() {
@@ -1654,16 +2017,16 @@ $.wms.form5 = (function() {
                     data = $.wms.sanitize(data);
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
                     $('.F5T3_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.petitioner.toUpperCase()+"</td>"+
-                                                "<td>"+(data.psir_rec == "PSIR - For Granted" ? data.psir_date : "")+"</td>"+
-                                                "<td>"+(data.psir_rec == "PSIR - For Denial" ? data.psir_date : "")+"</td>"+
-                                                "<td>"+data.manifest+"</td>"+
-                                                "<td>"+data.investigating_officer.toUpperCase()+"</td>"+
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f5_write tn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.petitioner.toUpperCase()+"</td>"+
+                        "<td>"+(data.psir_rec == "PSIR - For Granted" ? data.psir_date : "")+"</td>"+
+                        "<td>"+(data.psir_rec == "PSIR - For Denial" ? data.psir_date : "")+"</td>"+
+                        "<td>"+data.manifest+"</td>"+
+                        "<td>"+data.investigating_officer.toUpperCase()+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+ 
+                        "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -1760,6 +2123,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -2385,6 +2749,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -2910,6 +3275,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -3124,6 +3490,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -3418,6 +3785,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -4279,6 +4647,7 @@ $.wms.form5 = (function() {
                 "transfer" : $("#add_transfer").val(),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -4640,6 +5009,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -5007,6 +5377,7 @@ $.wms.form5 = (function() {
                 "reason_other" : $("#add_reason_other").val(),
                 "transfer" : $("#add_transfer").val(),
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -5334,6 +5705,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -5869,6 +6241,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -6089,6 +6462,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" : $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
