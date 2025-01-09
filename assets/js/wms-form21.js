@@ -548,9 +548,263 @@ $.wms.form21 = (function() {
                                     "<td>"+data.investigating_officer_name+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                            "<button class='access_f21_write btn btn-danger btn-sm btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                             });
+
+                            $(document).on('click', '.btn-attachment-rcv', function() {
+                                var docketNo = $(this).data('docket');
+                                var recordId = $(this).data('id');
+                                var petitioner = $(this).data('petitioner');
+                                var field_office_id = $(this).data('field_office_id');
+                                console.log(petitioner)
+                                console.log(field_office_id)
+
+                                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                                $('#docket_no').val(docketNo);
+                                $('#petitioner_name').val(petitioner);
+                                $('#FOId').val(field_office_id);
+
+                                // Populate the type select dropdown
+                                $('#type').empty().append(`
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option value="Pre-Parole Referral">Pre-Parole Referral</option>
+                                    <option value="Other Document/s">Other Document/s</option>
+                                `);
+                                
+                                // Remove any previous 'change' event and bind a new one to handle the select change
+                                $(document).off('change', '#type').on('change', '#type', function() {
+                                    var selectedValue = $(this).val();
+                                    
+                                    if (selectedValue === 'Other Document/s') {
+                                        $('.remarks-row').show(); // Show the remarks field
+                                    } else {
+                                        $('.remarks-row').hide(); // Hide the remarks field
+                                    }
+                                });
+
+                                // Open the Bootstrap modal
+                                $('#attachmentModal').modal('show');
+
+                                // Call load_table function
+                                load_table("investigation", docketNo, field_office_id, "F21T2RR");
+                            });
+
+                            function tableColumns() {
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'version' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                            const latestVersion = Math.max(...rows.map(r => r.version));
+                                            
+                                            let actions = `
+                                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-eye'></i> View
+                                                    </button>
+                                                </a>
+                                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-download'></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (rows.length > 1 && data.version === latestVersion) {
+                                                actions += `
+                                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                            function hideDuplicateRows() {
+                                let fileGroups = {};
+                                
+                                $('.table_head tbody tr').each(function () {
+                                    const fileName = $(this).find('td:eq(1)').text().trim();
+                                    if (!fileGroups[fileName]) {
+                                        fileGroups[fileName] = [];
+                                    }
+                                    fileGroups[fileName].push($(this));
+                                });
+
+                                for (let fileName in fileGroups) {
+                                    const rows = fileGroups[fileName];
+                                    rows.sort((a, b) => {
+                                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                        return versionB - versionA;
+                                    });
+
+                                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                                }
+                            }
+                            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                            function load_table(type, uuid, officeId, kind) {
+                                // Destroy the existing DataTable instance if it exists
+                                if (dataTable) {
+                                    dataTable.destroy();
+                                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                                }
+
+                                // Reinitialize the DataTable
+                                dataTable = $('.table_head').DataTable({
+                                    "processing": false,
+                                    "serverSide": true,
+                                    "scrollX": true,
+                                    "searching": false,
+                                    "autoWidth": false,
+                                    "lengthMenu": [10, 25, 50, 100],
+                                    "pageLength": 10,
+                                    "ordering": false,
+                                    "columnDefs": [
+                                        { "width": "5%", "targets": [0] },
+                                        { "width": "20%", "targets": [1] },
+                                        { "width": "15%", "targets": [2] },
+                                        { "width": "25%", "targets": [3] },
+                                        { "width": "35%", "targets": [4] },
+                                    ],
+                                    ajax: {
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        type: 'GET',
+                                        cache: true,
+                                        data: function (d) {
+                                            return { 
+                                                page: d.start / d.length, // Pagination logic
+                                                size: d.length           // Page size 
+                                            };
+                                        },
+                                        dataFilter: function (data) {
+                                            var json = jQuery.parseJSON(data);
+                                            // Sort content by fileName and version
+                                            json.content.sort((a, b) => 
+                                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                            );
+                                            json.recordsTotal = json.totalElements;
+                                            json.recordsFiltered = json.totalElements;
+                                            json.data = json.content;
+                                            return JSON.stringify(json);
+                                        }
+                                    },
+                                    columns: tableColumns() // Call your function to get table columns
+                                });
+
+                                // Handle the table redraw event
+                                $('.table_head').on('draw.dt', function () {
+                                    hideDuplicateRows();
+                                });
+                            }
+                            $('.table_head').on('click', '.btn-showVersions', function () {
+                                const fileName = $(this).data('file_name');
+                                let rows = [];
+                                $('.table_head tbody tr').each(function () {
+                                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                                        rows.push($(this));
+                                    }
+                                });
+
+                                rows.sort((a, b) => {
+                                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                    return versionB - versionA;
+                                });
+
+                                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                                $(this).html(isHidden 
+                                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                            });
+                            $('#uploadButton').on('click', function(e) {
+                                e.preventDefault(); // Prevent default form submission
+                                $(this).prop('disabled', true).text('Uploading...');
+                                // Create FormData object
+                                var formData = new FormData();
+                                formData.append('uuid', $('#docket_no').val());
+                                formData.append('createdby', $('#petitioner_name').val());
+                                formData.append('type', "investigation");
+                                var type = $('#type').val();
+                                var remarks = $('#remarks').val();
+                                if (remarks) {
+                                    formData.append('remarks', type + " - " + remarks);
+                                } else {
+                                    formData.append('remarks', type);
+                                }
+                                formData.append('officeId', $('#FOId').val());
+                                formData.append('version', "0");
+                                var file = $('#fileupload')[0].files[0];
+                                if (!file) {
+                                    alert('Please select a file to upload.');
+                                    $('#uploadButton').prop('disabled', false).text('Upload');
+                                    return; // Exit if no file is selected
+                                }
+                                formData.append('file', file);
+                                var fileInput = $('#fileupload')[0];
+                                if (fileInput.files.length > 0) {
+                                    var fileName = fileInput.files[0].name;  // Get the file name
+                                    formData.append('kind', "F21T2RR");  // Append file name to formData
+                                }
+
+                                // **Console log all form data**
+                                console.log('File name:', fileName); // Log the file name to console
+                                console.log('--- Form Data ---');
+                                for (var pair of formData.entries()) {
+                                    if (pair[1] instanceof File) {
+                                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                                    } else {
+                                        console.log(`${pair[0]}: ${pair[1]}`);
+                                    }
+                                }
+
+                                var url = `${PPIS_path_upload}/file/upload`;
+                                // Send AJAX request
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        console.log('Response:', response);
+                                        if ("true") {
+                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T2RR");
+                                             // Clear the remarks textarea
+                                            $('#remarks').val(''); 
+                                            
+                                            // Clear the file input (reset file input)
+                                            $('#fileupload').val('');
+                                        } else {
+                                            alert('Error: ' + "Failed to upload");
+                                        }
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Upload failed: ', error);
+                                        alert('An error occurred during the upload.');
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    }
+                                });
+                            });
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T2_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -579,7 +833,6 @@ $.wms.form21 = (function() {
                 "Y_M" : $.wms.urlParam('date'),
                 "field_office" : $.wms.urlParam('field'),
                 "method" : "fetchAll"
-
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED',JSON.stringify(payload)).done(function (result) {
                 $(".form_loader").addClass("hidden")
@@ -605,9 +858,240 @@ $.wms.form21 = (function() {
                                     "<td>"+data.transfer_to+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                            "<button class='access_f21_write btn btn-danger btn-sm btn-acted-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-acted-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                             });
+
+                $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                    $('#docket_no2').val(docketNo);
+                    $('#petitioner_name2').val(petitioner);
+                    $('#FOId2').val(field_office_id);
+
+                    // Populate the type select dropdown for modal2
+                    $('#type2').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Pre-Parole/Executive Clemency Investigation Report">Pre-Parole/Executive Clemency Investigation Report</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                    $(document).off('change', '#type2').on('change', '#type2', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row2').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row2').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal2
+                    $('#attachmentModal2').modal('show');
+
+                    // Call load_table function specific to modal2
+                    load_table2("investigation", docketNo, field_office_id, "F21T2_RAU");
+                });
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+                                
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+                function hideDuplicateRows2() {
+                    let fileGroups = {};
+
+                    $('.table_head2 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+                var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                function load_table2(type, uuid, officeId, kind) {
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    }
+
+                    // Reinitialize the DataTable for modal2
+                    dataTable = $('.table_head2').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    });
+
+                    $('.table_head2').on('draw.dt', function () {
+                        hideDuplicateRows2(); // Call function specific to modal2
+                    });
+                }
+                $('.table_head2').on('click', '.btn-showVersions2', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head2 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton2').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal2
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no2').val());
+                    formData.append('createdby', $('#petitioner_name2').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type2').val();
+                    var remarks = $('#remarks2').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId2').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload2')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload2')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F21T2_RAU");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T2_RAU");
+                                $('#remarks2').val(''); // Clear the remarks textarea
+                                $('#fileupload2').val(''); // Clear the file input
+                            
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
                             $(document).ready(function () {
                                 var table = $('#T_F21T2_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -838,7 +1322,32 @@ $.wms.form21 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PAROLEE",
+                "docketNumber"          : $("#add_rcv_docket_no").val(),
+                "fullName"              : $("#add_rcv_petitioner").val(),
+                "criminalCaseNo"        : $("#add_rcv_case_no").val(),
+                "prisonName"            : $("#add_rcv_court_origin").val(),
+                "offense"               : $("#add_rcv_offense").val(),
+                "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
 
@@ -874,7 +1383,7 @@ $.wms.form21 = (function() {
          $(".addProceedACTEDButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
-            var payload = { 
+            var payload = {
                 "docket_no" : $("#add_acted_docket_no").val(),
                 "petitioner_name": $("#add_acted_petitioner").val(),
                 "psir_date": $("#add_acted_psir").val(),
@@ -884,6 +1393,7 @@ $.wms.form21 = (function() {
                 "field_office":$.wms.urlParam('field'),
                 "ppo_recommendation" : $("#add_acted_recommendation").val(),
                 "Y_M": $.wms.urlParam('date'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "source" : "2",
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
@@ -903,7 +1413,31 @@ $.wms.form21 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PAROLEE",
+                "docketNumber"          : $("#add_acted_docket_no").val(),
+                "fullName"              : $("#add_acted_petitioner").val(),
+                "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "dateOfTransfer"        : $("#add_acted_transfer_date").val(),
+                "transferredOfficeId"   : $("#add_acted_transfer_to").val(),
+                "ppoRecommendation"     : $("#add_acted_recommendation").val(),
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });  
         });
 
 
@@ -1593,42 +2127,293 @@ $.wms.form21 = (function() {
                     data = $.wms.sanitize(data);
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
                     $('.F21T4_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.petitioner.toUpperCase()+"</td>"+
-                                                "<td>"+(data.disposed_decision == "PAROLE - Granted" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "COMMUTATION - Granted" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "CONDITIONAL - Granted" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "ABSOLUTE - Granted" ? data.disposed_date : "")+"</td>"+
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.petitioner.toUpperCase()+"</td>"+
+                        "<td>"+(data.disposed_decision == "PAROLE - Granted" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "COMMUTATION - Granted" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "CONDITIONAL - Granted" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "ABSOLUTE - Granted" ? data.disposed_date : "")+"</td>"+
 
-                                                
-                                                "<td>"+(data.disposed_decision == "PAROLE - Denial" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "COMMUTATION - Denial" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "CONDITIONAL - Denial" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "ABSOLUTE - Denial" ? data.disposed_date : "")+"</td>"+
-                                                
+                        
+                        "<td>"+(data.disposed_decision == "PAROLE - Denial" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "COMMUTATION - Denial" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "CONDITIONAL - Denial" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "ABSOLUTE - Denial" ? data.disposed_date : "")+"</td>"+
+                        
 
-                                                "<td>"+(data.disposed_decision == "PAROLE - Cancelled" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "COMMUTATION - Cancelled" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "CONDITIONAL - Cancelled" ? data.disposed_date : "")+"</td>"+
-                                                /*"<td>"+(data.disposed_decision == "ABSOLUTE - Cancelled" ? data.disposed_date : "")+"</td>"+*/
+                        "<td>"+(data.disposed_decision == "PAROLE - Cancelled" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "COMMUTATION - Cancelled" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "CONDITIONAL - Cancelled" ? data.disposed_date : "")+"</td>"+
+                        /*"<td>"+(data.disposed_decision == "ABSOLUTE - Cancelled" ? data.disposed_date : "")+"</td>"+*/
 
-                                                "<td>"+(data.disposed_decision == "Died" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
-                                                
-                                                
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f21_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td>"+(data.disposed_decision == "Died" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
+                        
+                        
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td align='center' class='options'>" + 
+                        "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
+                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
                 ___tableControls();
             }else{
-                // $(".F21T4_tbody").append(
-                //         "<tr>"+
-                //             "<td colspan='17' class='center b'>NONE</td>"+
-                //         "</tr>");
             }
 
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Discharge on Parole">Discharge on Parole</option>
+                    <option value="Arrival Report">Arrival Report</option>
+                    <option value="Briefing Report">Briefing Report</option>
+                    <option value="Certificate of Undertaking">Certificate of Undertaking</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F21T4");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F21T4");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T4");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
             $(document).ready(function () {
                 var table = $('#T_F21T4').DataTable({
                     "drawCallback": function( settings ) {
@@ -1744,6 +2529,27 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var PPISPayload = {
+                "clientType"            : "PAROLEE",
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_petitioner").val(),
+                "receivedDateByPPO"     : $("#add_date_rcv").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -2196,10 +3002,7 @@ $.wms.form21 = (function() {
             })
         }
         
-
     };
-
-
 
     var __attachF21T6PageEvent = function() {
 
@@ -2237,9 +3040,266 @@ $.wms.form21 = (function() {
                                     "<td>"+data.investigating_officer+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                            $(document).on('click', '.btn-attachment-rcv', function() {
+                                var docketNo = $(this).data('docket');
+                                var recordId = $(this).data('id');
+                                var petitioner = $(this).data('petitioner');
+                                var field_office_id = $(this).data('field_office_id');
+                                console.log(petitioner)
+                                console.log(field_office_id)
+
+                                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                                $('#docket_no').val(docketNo);
+                                $('#petitioner_name').val(petitioner);
+                                $('#FOId').val(field_office_id);
+
+                                // Populate the type select dropdown
+                                $('#type').empty().append(`
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option value="Request for Community Interview">Request for Community Interview</option>
+                                    <option value="Indorsement">Indorsement</option>
+                                    <option value="General Inter-Office Referral">General Inter-Office Referral</option>
+                                    <option value="Other Document/s">Other Document/s</option>
+                                `);
+                                
+                                // Remove any previous 'change' event and bind a new one to handle the select change
+                                $(document).off('change', '#type').on('change', '#type', function() {
+                                    var selectedValue = $(this).val();
+                                    
+                                    if (selectedValue === 'Other Document/s') {
+                                        $('.remarks-row').show(); // Show the remarks field
+                                    } else {
+                                        $('.remarks-row').hide(); // Hide the remarks field
+                                    }
+                                });
+
+                                // Open the Bootstrap modal
+                                $('#attachmentModal').modal('show');
+
+                                // Call load_table function
+                                load_table("investigation", docketNo, field_office_id, "F21T6RR");
+                            });
+
+                            function tableColumns() {
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'version' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                            const latestVersion = Math.max(...rows.map(r => r.version));
+                                            
+                                            let actions = `
+                                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-eye'></i> View
+                                                    </button>
+                                                </a>
+                                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-download'></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (rows.length > 1 && data.version === latestVersion) {
+                                                actions += `
+                                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                            function hideDuplicateRows() {
+                                let fileGroups = {};
+                                
+                                $('.table_head tbody tr').each(function () {
+                                    const fileName = $(this).find('td:eq(1)').text().trim();
+                                    if (!fileGroups[fileName]) {
+                                        fileGroups[fileName] = [];
+                                    }
+                                    fileGroups[fileName].push($(this));
+                                });
+
+                                for (let fileName in fileGroups) {
+                                    const rows = fileGroups[fileName];
+                                    rows.sort((a, b) => {
+                                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                        return versionB - versionA;
+                                    });
+
+                                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                                }
+                            }
+                            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                            function load_table(type, uuid, officeId, kind) {
+                                // Destroy the existing DataTable instance if it exists
+                                if (dataTable) {
+                                    dataTable.destroy();
+                                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                                }
+
+                                // Reinitialize the DataTable
+                                dataTable = $('.table_head').DataTable({
+                                    "processing": false,
+                                    "serverSide": true,
+                                    "scrollX": true,
+                                    "searching": false,
+                                    "autoWidth": false,
+                                    "lengthMenu": [10, 25, 50, 100],
+                                    "pageLength": 10,
+                                    "ordering": false,
+                                    "columnDefs": [
+                                        { "width": "5%", "targets": [0] },
+                                        { "width": "20%", "targets": [1] },
+                                        { "width": "15%", "targets": [2] },
+                                        { "width": "25%", "targets": [3] },
+                                        { "width": "35%", "targets": [4] },
+                                    ],
+                                    ajax: {
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        type: 'GET',
+                                        cache: true,
+                                        data: function (d) {
+                                            return { 
+                                                page: d.start / d.length, // Pagination logic
+                                                size: d.length           // Page size 
+                                            };
+                                        },
+                                        dataFilter: function (data) {
+                                            var json = jQuery.parseJSON(data);
+                                            // Sort content by fileName and version
+                                            json.content.sort((a, b) => 
+                                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                            );
+                                            json.recordsTotal = json.totalElements;
+                                            json.recordsFiltered = json.totalElements;
+                                            json.data = json.content;
+                                            return JSON.stringify(json);
+                                        }
+                                    },
+                                    columns: tableColumns() // Call your function to get table columns
+                                });
+
+                                // Handle the table redraw event
+                                $('.table_head').on('draw.dt', function () {
+                                    hideDuplicateRows();
+                                });
+                            }
+                            $('.table_head').on('click', '.btn-showVersions', function () {
+                                const fileName = $(this).data('file_name');
+                                let rows = [];
+                                $('.table_head tbody tr').each(function () {
+                                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                                        rows.push($(this));
+                                    }
+                                });
+
+                                rows.sort((a, b) => {
+                                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                    return versionB - versionA;
+                                });
+
+                                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                                $(this).html(isHidden 
+                                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                            });
+                            $('#uploadButton').on('click', function(e) {
+                                e.preventDefault(); // Prevent default form submission
+                                $(this).prop('disabled', true).text('Uploading...');
+                                // Create FormData object
+                                var formData = new FormData();
+                                formData.append('uuid', $('#docket_no').val());
+                                formData.append('createdby', $('#petitioner_name').val());
+                                formData.append('type', "investigation");
+                                var type = $('#type').val();
+                                var remarks = $('#remarks').val();
+                                if (remarks) {
+                                    formData.append('remarks', type + " - " + remarks);
+                                } else {
+                                    formData.append('remarks', type);
+                                }
+                                formData.append('officeId', $('#FOId').val());
+                                formData.append('version', "0");
+                                var file = $('#fileupload')[0].files[0];
+                                if (!file) {
+                                    alert('Please select a file to upload.');
+                                    $('#uploadButton').prop('disabled', false).text('Upload');
+                                    return; // Exit if no file is selected
+                                }
+                                formData.append('file', file);
+                                var fileInput = $('#fileupload')[0];
+                                if (fileInput.files.length > 0) {
+                                    var fileName = fileInput.files[0].name;  // Get the file name
+                                    formData.append('kind', "F21T6RR");  // Append file name to formData
+                                }
+
+                                // **Console log all form data**
+                                console.log('File name:', fileName); // Log the file name to console
+                                console.log('--- Form Data ---');
+                                for (var pair of formData.entries()) {
+                                    if (pair[1] instanceof File) {
+                                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                                    } else {
+                                        console.log(`${pair[0]}: ${pair[1]}`);
+                                    }
+                                }
+
+                                var url = `${PPIS_path_upload}/file/upload`;
+                                // Send AJAX request
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        console.log('Response:', response);
+                                        if ("true") {
+                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T6RR");
+                                             // Clear the remarks textarea
+                                            $('#remarks').val(''); 
+                                            
+                                            // Clear the file input (reset file input)
+                                            $('#fileupload').val('');
+                                        } else {
+                                            alert('Error: ' + "Failed to upload");
+                                        }
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Upload failed: ', error);
+                                        alert('An error occurred during the upload.');
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    }
+                                });
+                            });
+
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T6_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -2290,9 +3350,239 @@ $.wms.form21 = (function() {
                                     "<td>"+data.completed_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                                "<button class='access_f21_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                $('#docket_no2').val(docketNo);
+                $('#petitioner_name2').val(petitioner);
+                $('#FOId2').val(field_office_id);
+
+                // Populate the type select dropdown for modal2
+                $('#type2').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Community Interview Report">Community Interview Report</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                $(document).off('change', '#type2').on('change', '#type2', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row2').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row2').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal2
+                $('#attachmentModal2').modal('show');
+
+                // Call load_table function specific to modal2
+                load_table2("investigation", docketNo, field_office_id, "F21T6CAR");
+            });
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows2() {
+                let fileGroups = {};
+
+                $('.table_head2 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table2(type, uuid, officeId, kind) {
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                }
+
+                // Reinitialize the DataTable for modal2
+                dataTable = $('.table_head2').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                });
+
+                $('.table_head2').on('draw.dt', function () {
+                    hideDuplicateRows2(); // Call function specific to modal2
+                });
+            }
+            $('.table_head2').on('click', '.btn-showVersions2', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head2 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton2').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal2
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no2').val());
+                formData.append('createdby', $('#petitioner_name2').val());
+                formData.append('type', "investigation");
+                var type = $('#type2').val();
+                var remarks = $('#remarks2').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId2').val());
+                formData.append('version', "0");
+                var file = $('#fileupload2')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload2')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F21T6CAR");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T6CAR");
+                            $('#remarks2').val(''); // Clear the remarks textarea
+                            $('#fileupload2').val(''); // Clear the file input
+                        
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F21T6_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -2530,7 +3820,7 @@ $.wms.form21 = (function() {
         $(".addRCVProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
-            var payload = { 
+            var payload = {
                 "docket_no" : $("#add_rcv_docket_no").val(),
                 "petitioner": $("#add_rcv_petitioner").val(),
                 "referring_office" : $("#add_rcv_referring_office").val(),
@@ -2555,7 +3845,30 @@ $.wms.form21 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PAROLEE",
+                "docketNumber"          : $("#add_rcv_docket_no").val(),
+                "fullName"              : $("#add_rcv_petitioner").val(),
+                "referringOfficeId"     : $("#add_rcv_referring_office").val(),
+                "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
+                "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });  
         })
         //ADD
 
@@ -2771,6 +4084,27 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var PPISPayload = {
+                "clientType"            : "PAROLEE",
+                "docketNumber"          : $("#add_cmpltd_docket_no").val(),
+                "fullName"              : $("#add_cmpltd_petitioner").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
+
         })
         //ADD
         //ADD_CMPLTD
@@ -3507,9 +4841,266 @@ $.wms.form21 = (function() {
                                     "<td>"+data.probation_end+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T8_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                            $(document).on('click', '.btn-attachment-rcv', function() {
+                                var docketNo = $(this).data('docket');
+                                var recordId = $(this).data('id');
+                                var petitioner = $(this).data('petitioner');
+                                var field_office_id = $(this).data('field_office_id');
+                                console.log(petitioner)
+                                console.log(field_office_id)
+
+                                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                                $('#docket_no').val(docketNo);
+                                $('#petitioner_name').val(petitioner);
+                                $('#FOId').val(field_office_id);
+
+                                // Populate the type select dropdown
+                                $('#type').empty().append(`
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option value="Discharge in Parole">Discharge in Parole</option>
+                                    <option value="Arrival Report">Arrival Report</option>
+                                    <option value="Briefing Report">Briefing Report</option>
+                                    <option value="Certificate of Undertaking">Certificate of Undertaking</option>
+                                    <option value="Other Document/s">Other Document/s</option>
+                                `);
+                                
+                                // Remove any previous 'change' event and bind a new one to handle the select change
+                                $(document).off('change', '#type').on('change', '#type', function() {
+                                    var selectedValue = $(this).val();
+                                    
+                                    if (selectedValue === 'Other Document/s') {
+                                        $('.remarks-row').show(); // Show the remarks field
+                                    } else {
+                                        $('.remarks-row').hide(); // Hide the remarks field
+                                    }
+                                });
+
+                                // Open the Bootstrap modal
+                                $('#attachmentModal').modal('show');
+
+                                // Call load_table function
+                                load_table("investigation", docketNo, field_office_id, "F21T8_parolee");
+                            });
+
+                            function tableColumns() {
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'version' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                            const latestVersion = Math.max(...rows.map(r => r.version));
+                                            
+                                            let actions = `
+                                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-eye'></i> View
+                                                    </button>
+                                                </a>
+                                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-download'></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (rows.length > 1 && data.version === latestVersion) {
+                                                actions += `
+                                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                            function hideDuplicateRows() {
+                                let fileGroups = {};
+                                
+                                $('.table_head tbody tr').each(function () {
+                                    const fileName = $(this).find('td:eq(1)').text().trim();
+                                    if (!fileGroups[fileName]) {
+                                        fileGroups[fileName] = [];
+                                    }
+                                    fileGroups[fileName].push($(this));
+                                });
+
+                                for (let fileName in fileGroups) {
+                                    const rows = fileGroups[fileName];
+                                    rows.sort((a, b) => {
+                                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                        return versionB - versionA;
+                                    });
+
+                                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                                }
+                            }
+                            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                            function load_table(type, uuid, officeId, kind) {
+                                // Destroy the existing DataTable instance if it exists
+                                if (dataTable) {
+                                    dataTable.destroy();
+                                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                                }
+
+                                // Reinitialize the DataTable
+                                dataTable = $('.table_head').DataTable({
+                                    "processing": false,
+                                    "serverSide": true,
+                                    "scrollX": true,
+                                    "searching": false,
+                                    "autoWidth": false,
+                                    "lengthMenu": [10, 25, 50, 100],
+                                    "pageLength": 10,
+                                    "ordering": false,
+                                    "columnDefs": [
+                                        { "width": "5%", "targets": [0] },
+                                        { "width": "20%", "targets": [1] },
+                                        { "width": "15%", "targets": [2] },
+                                        { "width": "25%", "targets": [3] },
+                                        { "width": "35%", "targets": [4] },
+                                    ],
+                                    ajax: {
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        type: 'GET',
+                                        cache: true,
+                                        data: function (d) {
+                                            return { 
+                                                page: d.start / d.length, // Pagination logic
+                                                size: d.length           // Page size 
+                                            };
+                                        },
+                                        dataFilter: function (data) {
+                                            var json = jQuery.parseJSON(data);
+                                            // Sort content by fileName and version
+                                            json.content.sort((a, b) => 
+                                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                            );
+                                            json.recordsTotal = json.totalElements;
+                                            json.recordsFiltered = json.totalElements;
+                                            json.data = json.content;
+                                            return JSON.stringify(json);
+                                        }
+                                    },
+                                    columns: tableColumns() // Call your function to get table columns
+                                });
+
+                                // Handle the table redraw event
+                                $('.table_head').on('draw.dt', function () {
+                                    hideDuplicateRows();
+                                });
+                            }
+                            $('.table_head').on('click', '.btn-showVersions', function () {
+                                const fileName = $(this).data('file_name');
+                                let rows = [];
+                                $('.table_head tbody tr').each(function () {
+                                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                                        rows.push($(this));
+                                    }
+                                });
+
+                                rows.sort((a, b) => {
+                                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                    return versionB - versionA;
+                                });
+
+                                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                                $(this).html(isHidden 
+                                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                            });
+                            $('#uploadButton').on('click', function(e) {
+                                e.preventDefault(); // Prevent default form submission
+                                $(this).prop('disabled', true).text('Uploading...');
+                                // Create FormData object
+                                var formData = new FormData();
+                                formData.append('uuid', $('#docket_no').val());
+                                formData.append('createdby', $('#petitioner_name').val());
+                                formData.append('type', "investigation");
+                                var type = $('#type').val();
+                                var remarks = $('#remarks').val();
+                                if (remarks) {
+                                    formData.append('remarks', type + " - " + remarks);
+                                } else {
+                                    formData.append('remarks', type);
+                                }
+                                formData.append('officeId', $('#FOId').val());
+                                formData.append('version', "0");
+                                var file = $('#fileupload')[0].files[0];
+                                if (!file) {
+                                    alert('Please select a file to upload.');
+                                    $('#uploadButton').prop('disabled', false).text('Upload');
+                                    return; // Exit if no file is selected
+                                }
+                                formData.append('file', file);
+                                var fileInput = $('#fileupload')[0];
+                                if (fileInput.files.length > 0) {
+                                    var fileName = fileInput.files[0].name;  // Get the file name
+                                    formData.append('kind', "F21T8_parolee");  // Append file name to formData
+                                }
+
+                                // **Console log all form data**
+                                console.log('File name:', fileName); // Log the file name to console
+                                console.log('--- Form Data ---');
+                                for (var pair of formData.entries()) {
+                                    if (pair[1] instanceof File) {
+                                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                                    } else {
+                                        console.log(`${pair[0]}: ${pair[1]}`);
+                                    }
+                                }
+
+                                var url = `${PPIS_path_upload}/file/upload`;
+                                // Send AJAX request
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        console.log('Response:', response);
+                                        if ("true") {
+                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T8_parolee");
+                                             // Clear the remarks textarea
+                                            $('#remarks').val(''); 
+                                            
+                                            // Clear the file input (reset file input)
+                                            $('#fileupload').val('');
+                                        } else {
+                                            alert('Error: ' + "Failed to upload");
+                                        }
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Upload failed: ', error);
+                                        alert('An error occurred during the upload.');
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    }
+                                });
+                            });
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T8_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -3565,9 +5156,242 @@ $.wms.form21 = (function() {
                                     "<td>"+data.probation_end+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T8_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T8_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T8_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T8_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                $('#docket_no2').val(docketNo);
+                $('#petitioner_name2').val(petitioner);
+                $('#FOId2').val(field_office_id);
+
+                // Populate the type select dropdown for modal2
+                $('#type2').empty().append(`
+                    <option value="Discharge in Parole">Discharge in Parole</option>
+                    <option value="Arrival Report">Arrival Report</option>
+                    <option value="Briefing Report">Briefing Report</option>
+                    <option value="Certificate of Undertaking">Certificate of Undertaking</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                $(document).off('change', '#type2').on('change', '#type2', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row2').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row2').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal2
+                $('#attachmentModal2').modal('show');
+
+                // Call load_table function specific to modal2
+                load_table2("investigation", docketNo, field_office_id, "F21T8_pardonee");
+            });
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows2() {
+                let fileGroups = {};
+
+                $('.table_head2 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table2(type, uuid, officeId, kind) {
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                }
+
+                // Reinitialize the DataTable for modal2
+                dataTable = $('.table_head2').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                });
+
+                $('.table_head2').on('draw.dt', function () {
+                    hideDuplicateRows2(); // Call function specific to modal2
+                });
+            }
+            $('.table_head2').on('click', '.btn-showVersions2', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head2 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton2').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal2
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no2').val());
+                formData.append('createdby', $('#petitioner_name2').val());
+                formData.append('type', "investigation");
+                var type = $('#type2').val();
+                var remarks = $('#remarks2').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId2').val());
+                formData.append('version', "0");
+                var file = $('#fileupload2')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload2')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F21T8_pardonee");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T8_pardonee");
+                            $('#remarks2').val(''); // Clear the remarks textarea
+                            $('#fileupload2').val(''); // Clear the file input
+                        
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T8_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -3833,7 +5657,6 @@ $.wms.form21 = (function() {
                 "referral_type": "SUPERVISION",
                 "case_classification": $("#add_case_classification").val(),
                 "received_date" : $("#add_date_rcv").val(),
-                "case_classification" : $("#add_case_classification").val(),
                 "supervising_officer" : $("#add_supervising").val(),
                 "probation_start" : $("#add_start").val(),
                 "probation_end" : $("#add_end").val(),
@@ -3856,7 +5679,46 @@ $.wms.form21 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var addTableValue = $("#add_table").val(); // Get the value of #add_table
+            var clientType;
+
+            if (addTableValue === "F21T8_PAROL") {
+                clientType = "PAROLEE";
+            } else if (addTableValue === "F21T8_PARDON") {
+                clientType = "PARDONEE";
+            } else {
+                clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+            }
+            console.log(clientType);
+            var PPISPayload = {
+                "clientType"            : clientType,
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_probationer").val(),
+                "criminalCaseNo"        : $("#add_cc_no").val(),
+                "courtOfOrigin"         : $("#add_court_origin").val(),
+                "caseClassification"    : $("#add_case_classification").val(),
+                "receivedDateByPPO"     : $("#add_date_rcv").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "supervisingOfficer"    : $("#add_supervising").val(),
+                "manualDocket"          : false,
+                "referralType"          : $("#add_type_referrals").val(),
+                "probationStartDate"    : $("#add_start").val(),
+                "probationEndDate"      : $("#add_end").val(),
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -3978,7 +5840,6 @@ $.wms.form21 = (function() {
                         $("#edit_end").val(payload.probation_end)
                         $("#edit_field_office").val(payload.field_office).trigger("change");
                         $("#edit_Y_M").val(payload.Y_M)
-                       
                     }else{
                         alert("[Error] Please try again...")
                     }
@@ -4018,8 +5879,8 @@ $.wms.form21 = (function() {
                     "field_office": $.wms.urlParam('field'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update",
-                    "table" : $("#edit_table").val()
-
+                    "table" : $("#edit_table").val(),
+                    "created_by" : $.cookie("USER_ID"),
                 }
                 console.log(payload)
                 $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T8',JSON.stringify(payload)).done(function (result) {
@@ -4080,9 +5941,265 @@ $.wms.form21 = (function() {
                                     "<td>"+data.transfer+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                $(document).on('click', '.btn-attachment-rcv', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+                    console.log(petitioner)
+                    console.log(field_office_id)
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                    $('#docket_no').val(docketNo);
+                    $('#petitioner_name').val(petitioner);
+                    $('#FOId').val(field_office_id);
+
+                    // Populate the type select dropdown
+                    $('#type').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Summary Report">Summary Report</option>
+                        <option value="Infraction Report">Infraction Report</option>
+                        <option value="Death Report">Death Report</option>
+                        <option value="Report for Transfer to Other PPO's">Report for Transfer to Other PPO's</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+                    
+                    // Remove any previous 'change' event and bind a new one to handle the select change
+                    $(document).off('change', '#type').on('change', '#type', function() {
+                        var selectedValue = $(this).val();
+                        
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal
+                    $('#attachmentModal').modal('show');
+
+                    // Call load_table function
+                    load_table("investigation", docketNo, field_office_id, "F21T9_parolee");
+                });
+
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+                                
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+                function hideDuplicateRows() {
+                    let fileGroups = {};
+                    
+                    $('.table_head tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+                var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                function load_table(type, uuid, officeId, kind) {
+                    // Destroy the existing DataTable instance if it exists
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                    }
+
+                    // Reinitialize the DataTable
+                    dataTable = $('.table_head').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                // Sort content by fileName and version
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Call your function to get table columns
+                    });
+
+                    // Handle the table redraw event
+                    $('.table_head').on('draw.dt', function () {
+                        hideDuplicateRows();
+                    });
+                }
+                $('.table_head').on('click', '.btn-showVersions', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+                $('#uploadButton').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission
+                    $(this).prop('disabled', true).text('Uploading...');
+                    // Create FormData object
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no').val());
+                    formData.append('createdby', $('#petitioner_name').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type').val();
+                    var remarks = $('#remarks').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+                    var fileInput = $('#fileupload')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;  // Get the file name
+                        formData.append('kind', "F21T9_parolee");  // Append file name to formData
+                    }
+
+                    // **Console log all form data**
+                    console.log('File name:', fileName); // Log the file name to console
+                    console.log('--- Form Data ---');
+                    for (var pair of formData.entries()) {
+                        if (pair[1] instanceof File) {
+                            console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                        } else {
+                            console.log(`${pair[0]}: ${pair[1]}`);
+                        }
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    // Send AJAX request
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+                            if ("true") {
+                                load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
+                                 // Clear the remarks textarea
+                                $('#remarks').val(''); 
+                                
+                                // Clear the file input (reset file input)
+                                $('#fileupload').val('');
+                            } else {
+                                alert('Error: ' + "Failed to upload");
+                            }
+                            $('#uploadButton').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+                            $('#uploadButton').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
                             $(document).ready(function () {
                                 var table = $('#T_F21T9_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -4142,9 +6259,242 @@ $.wms.form21 = (function() {
                                     "<td>"+data.transfer+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                $('#docket_no2').val(docketNo);
+                $('#petitioner_name2').val(petitioner);
+                $('#FOId2').val(field_office_id);
+
+                // Populate the type select dropdown for modal2
+                $('#type2').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Summary Report">Summary Report</option>
+                    <option value="Infraction Report">Infraction Report</option>
+                    <option value="Death Report">Death Report</option>
+                    <option value="Report for Transfer to Other PPO's">Report for Transfer to Other PPO's</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                $(document).off('change', '#type2').on('change', '#type2', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row2').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row2').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal2
+                $('#attachmentModal2').modal('show');
+
+                // Call load_table function specific to modal2
+                load_table2("investigation", docketNo, field_office_id, "F21T9_pardonee");
+            });
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows2() {
+                let fileGroups = {};
+
+                $('.table_head2 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table2(type, uuid, officeId, kind) {
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                }
+
+                // Reinitialize the DataTable for modal2
+                dataTable = $('.table_head2').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                });
+
+                $('.table_head2').on('draw.dt', function () {
+                    hideDuplicateRows2(); // Call function specific to modal2
+                });
+            }
+            $('.table_head2').on('click', '.btn-showVersions2', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head2 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton2').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal2
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no2').val());
+                formData.append('createdby', $('#petitioner_name2').val());
+                formData.append('type', "investigation");
+                var type = $('#type2').val();
+                var remarks = $('#remarks2').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId2').val());
+                formData.append('version', "0");
+                var file = $('#fileupload2')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload2')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F21T9_pardonee");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
+                            $('#remarks2').val(''); // Clear the remarks textarea
+                            $('#fileupload2').val(''); // Clear the file input
+                        
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F21T9_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -4438,6 +6788,39 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var addTableValue = $("#add_table").val(); // Get the value of #add_table
+            var clientType;
+
+            if (addTableValue === "F21T9_PAROL") {
+                clientType = "PAROLEE";
+            } else if (addTableValue === "F21T9_PARDON") {
+                clientType = "PARDONEE";
+            } else {
+                clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+            }
+            console.log(clientType);
+            var PPISPayload = {
+                "clientType"            : clientType,
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_probationer").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "dateReportSubmittedToTheBoard"                 : $("#add_submitted").val(),
+                "dateReportSubmittedToRDForTransferToOtherPPO"  : $("#add_transfer").val(),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -5202,9 +7585,263 @@ $.wms.form21 = (function() {
                                     "<td>"+data.submitted_report+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                         "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Final Release and Discharge">Final Release and Discharge</option>
+                    <option value="Arrest/Recommitment">Arrest/Recommitment</option>
+                    <option value="Death">Death</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F21T11_parolee");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F21T11_parolee");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F21T11_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -5263,9 +7900,241 @@ $.wms.form21 = (function() {
                                     "<td>"+data.submitted_report+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T11_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                $('#docket_no2').val(docketNo);
+                $('#petitioner_name2').val(petitioner);
+                $('#FOId2').val(field_office_id);
+
+                // Populate the type select dropdown for modal2
+                $('#type2').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Final Release and Discharge">Final Release and Discharge</option>
+                    <option value="Arrest/Recommitment">Arrest/Recommitment</option>
+                    <option value="Death">Death</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                $(document).off('change', '#type2').on('change', '#type2', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row2').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row2').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal2
+                $('#attachmentModal2').modal('show');
+
+                // Call load_table function specific to modal2
+                load_table2("investigation", docketNo, field_office_id, "F21T11_pardonee");
+            });
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows2() {
+                let fileGroups = {};
+
+                $('.table_head2 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table2(type, uuid, officeId, kind) {
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                }
+
+                // Reinitialize the DataTable for modal2
+                dataTable = $('.table_head2').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                });
+
+                $('.table_head2').on('draw.dt', function () {
+                    hideDuplicateRows2(); // Call function specific to modal2
+                });
+            }
+            $('.table_head2').on('click', '.btn-showVersions2', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head2 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton2').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal2
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no2').val());
+                formData.append('createdby', $('#petitioner_name2').val());
+                formData.append('type', "investigation");
+                var type = $('#type2').val();
+                var remarks = $('#remarks2').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId2').val());
+                formData.append('version', "0");
+                var file = $('#fileupload2')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload2')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F21T11_pardonee");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T11_pardonee");
+                            $('#remarks2').val(''); // Clear the remarks textarea
+                            $('#fileupload2').val(''); // Clear the file input
+                        
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F21T11_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -5543,6 +8412,7 @@ $.wms.form21 = (function() {
                 "probationer": $("#add_probationer").val(),
                 "disposed_decision": $("#add_findings").val(),
                 "disposed_date" : $("#add_submitted").val(),
+                "submitted_report" : $("#add_submitted_report").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
@@ -5564,7 +8434,40 @@ $.wms.form21 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });  
+            var addTableValue = $("#add_table").val(); // Get the value of #add_table
+            var clientType;
+
+            if (addTableValue === "F21T11_PAROL") {
+                clientType = "PAROLEE";
+            } else if (addTableValue === "F21T11_PARDON") {
+                clientType = "PARDONEE";
+            } else {
+                clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+            }
+            console.log(clientType);
+            var PPISPayload = {
+                "clientType"            : clientType,
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_probationer").val(),
+                "resolutionType":       $("#add_findings").val(),
+                "dateReportSubmittedToTheBoard": $("#add_submitted").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -6278,9 +9181,261 @@ $.wms.form21 = (function() {
                                     "<td>"+data.disposed_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T13_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Approved Transfer of Residence">Approved Transfer of Residence</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F21T13_parolee");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F21T13_parolee");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F21T13_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -6331,9 +9486,241 @@ $.wms.form21 = (function() {
                                     "<td>"+data.disposed_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T13_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T13_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T13_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T13_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                $('#docket_no2').val(docketNo);
+                $('#petitioner_name2').val(petitioner);
+                $('#FOId2').val(field_office_id);
+
+                // Populate the type select dropdown for modal2
+                $('#type2').empty().append(`
+                    <option value="Discharge in Parole">Discharge in Parole</option>
+                    <option value="Arrival Report">Arrival Report</option>
+                    <option value="Briefing Report">Briefing Report</option>
+                    <option value="Certificate of Undertaking">Certificate of Undertaking</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                $(document).off('change', '#type2').on('change', '#type2', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row2').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row2').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal2
+                $('#attachmentModal2').modal('show');
+
+                // Call load_table function specific to modal2
+                load_table2("investigation", docketNo, field_office_id, "F21T13_pardonee");
+            });
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows2() {
+                let fileGroups = {};
+
+                $('.table_head2 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table2(type, uuid, officeId, kind) {
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                }
+
+                // Reinitialize the DataTable for modal2
+                dataTable = $('.table_head2').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                });
+
+                $('.table_head2').on('draw.dt', function () {
+                    hideDuplicateRows2(); // Call function specific to modal2
+                });
+            }
+            $('.table_head2').on('click', '.btn-showVersions2', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head2 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton2').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal2
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no2').val());
+                formData.append('createdby', $('#petitioner_name2').val());
+                formData.append('type', "investigation");
+                var type = $('#type2').val();
+                var remarks = $('#remarks2').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId2').val());
+                formData.append('version', "0");
+                var file = $('#fileupload2')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload2')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F21T13_pardonee");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T13_pardonee");
+                            $('#remarks2').val(''); // Clear the remarks textarea
+                            $('#fileupload2').val(''); // Clear the file input
+                        
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F21T14_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -6609,6 +9996,38 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var addTableValue = $("#add_table").val(); // Get the value of #add_table
+            var clientType;
+
+            if (addTableValue === "F21T13_PAROL") {
+                clientType = "PAROLEE";
+            } else if (addTableValue === "F21T13_PARDON") {
+                clientType = "PARDONEE";
+            } else {
+                clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+            }
+            console.log(clientType);
+            var PPISPayload = {
+                "clientType"            : clientType,
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_probationer").val(),
+                "dateOrderReceivedFromTheBoard": $("#add_submitted").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -7358,9 +10777,263 @@ $.wms.form21 = (function() {
                                     "<td>"+data.case_classification+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_RCV_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                            $(document).on('click', '.btn-attachment-rcv', function() {
+                                var docketNo = $(this).data('docket');
+                                var recordId = $(this).data('id');
+                                var petitioner = $(this).data('petitioner');
+                                var field_office_id = $(this).data('field_office_id');
+                                console.log(petitioner)
+                                console.log(field_office_id)
+
+                                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                                $('#docket_no').val(docketNo);
+                                $('#petitioner_name').val(petitioner);
+                                $('#FOId').val(field_office_id);
+
+                                // Populate the type select dropdown
+                                $('#type').empty().append(`
+                                    <option value="" disabled selected>Select Type</option>
+                                    <option value="Letter re Courtesy Supervision">Letter re Courtesy Supervision</option>
+                                    <option value="Other Document/s">Other Document/s</option>
+                                `);
+                                
+                                // Remove any previous 'change' event and bind a new one to handle the select change
+                                $(document).off('change', '#type').on('change', '#type', function() {
+                                    var selectedValue = $(this).val();
+                                    
+                                    if (selectedValue === 'Other Document/s') {
+                                        $('.remarks-row').show(); // Show the remarks field
+                                    } else {
+                                        $('.remarks-row').hide(); // Hide the remarks field
+                                    }
+                                });
+
+                                // Open the Bootstrap modal
+                                $('#attachmentModal').modal('show');
+
+                                // Call load_table function
+                                load_table("investigation", docketNo, field_office_id, "F21T15RR_parolee");
+                            });
+
+                            function tableColumns() {
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'version' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                            const latestVersion = Math.max(...rows.map(r => r.version));
+                                            
+                                            let actions = `
+                                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-eye'></i> View
+                                                    </button>
+                                                </a>
+                                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-download'></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (rows.length > 1 && data.version === latestVersion) {
+                                                actions += `
+                                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                            function hideDuplicateRows() {
+                                let fileGroups = {};
+                                
+                                $('.table_head tbody tr').each(function () {
+                                    const fileName = $(this).find('td:eq(1)').text().trim();
+                                    if (!fileGroups[fileName]) {
+                                        fileGroups[fileName] = [];
+                                    }
+                                    fileGroups[fileName].push($(this));
+                                });
+
+                                for (let fileName in fileGroups) {
+                                    const rows = fileGroups[fileName];
+                                    rows.sort((a, b) => {
+                                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                        return versionB - versionA;
+                                    });
+
+                                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                                }
+                            }
+                            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                            function load_table(type, uuid, officeId, kind) {
+                                // Destroy the existing DataTable instance if it exists
+                                if (dataTable) {
+                                    dataTable.destroy();
+                                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                                }
+
+                                // Reinitialize the DataTable
+                                dataTable = $('.table_head').DataTable({
+                                    "processing": false,
+                                    "serverSide": true,
+                                    "scrollX": true,
+                                    "searching": false,
+                                    "autoWidth": false,
+                                    "lengthMenu": [10, 25, 50, 100],
+                                    "pageLength": 10,
+                                    "ordering": false,
+                                    "columnDefs": [
+                                        { "width": "5%", "targets": [0] },
+                                        { "width": "20%", "targets": [1] },
+                                        { "width": "15%", "targets": [2] },
+                                        { "width": "25%", "targets": [3] },
+                                        { "width": "35%", "targets": [4] },
+                                    ],
+                                    ajax: {
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        type: 'GET',
+                                        cache: true,
+                                        data: function (d) {
+                                            return { 
+                                                page: d.start / d.length, // Pagination logic
+                                                size: d.length           // Page size 
+                                            };
+                                        },
+                                        dataFilter: function (data) {
+                                            var json = jQuery.parseJSON(data);
+                                            // Sort content by fileName and version
+                                            json.content.sort((a, b) => 
+                                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                            );
+                                            json.recordsTotal = json.totalElements;
+                                            json.recordsFiltered = json.totalElements;
+                                            json.data = json.content;
+                                            return JSON.stringify(json);
+                                        }
+                                    },
+                                    columns: tableColumns() // Call your function to get table columns
+                                });
+
+                                // Handle the table redraw event
+                                $('.table_head').on('draw.dt', function () {
+                                    hideDuplicateRows();
+                                });
+                            }
+                            $('.table_head').on('click', '.btn-showVersions', function () {
+                                const fileName = $(this).data('file_name');
+                                let rows = [];
+                                $('.table_head tbody tr').each(function () {
+                                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                                        rows.push($(this));
+                                    }
+                                });
+
+                                rows.sort((a, b) => {
+                                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                                    return versionB - versionA;
+                                });
+
+                                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                                $(this).html(isHidden 
+                                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                            });
+                            $('#uploadButton').on('click', function(e) {
+                                e.preventDefault(); // Prevent default form submission
+                                $(this).prop('disabled', true).text('Uploading...');
+                                // Create FormData object
+                                var formData = new FormData();
+                                formData.append('uuid', $('#docket_no').val());
+                                formData.append('createdby', $('#petitioner_name').val());
+                                formData.append('type', "investigation");
+                                var type = $('#type').val();
+                                var remarks = $('#remarks').val();
+                                if (remarks) {
+                                    formData.append('remarks', type + " - " + remarks);
+                                } else {
+                                    formData.append('remarks', type);
+                                }
+                                formData.append('officeId', $('#FOId').val());
+                                formData.append('version', "0");
+                                var file = $('#fileupload')[0].files[0];
+                                if (!file) {
+                                    alert('Please select a file to upload.');
+                                    $('#uploadButton').prop('disabled', false).text('Upload');
+                                    return; // Exit if no file is selected
+                                }
+                                formData.append('file', file);
+                                var fileInput = $('#fileupload')[0];
+                                if (fileInput.files.length > 0) {
+                                    var fileName = fileInput.files[0].name;  // Get the file name
+                                    formData.append('kind', "F21T15RR_parolee");  // Append file name to formData
+                                }
+
+                                // **Console log all form data**
+                                console.log('File name:', fileName); // Log the file name to console
+                                console.log('--- Form Data ---');
+                                for (var pair of formData.entries()) {
+                                    if (pair[1] instanceof File) {
+                                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                                    } else {
+                                        console.log(`${pair[0]}: ${pair[1]}`);
+                                    }
+                                }
+
+                                var url = `${PPIS_path_upload}/file/upload`;
+                                // Send AJAX request
+                                $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(response) {
+                                        console.log('Response:', response);
+                                        if ("true") {
+                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T15RR_parolee");
+                                             // Clear the remarks textarea
+                                            $('#remarks').val(''); 
+                                            
+                                            // Clear the file input (reset file input)
+                                            $('#fileupload').val('');
+                                        } else {
+                                            alert('Error: ' + "Failed to upload");
+                                        }
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Upload failed: ', error);
+                                        alert('An error occurred during the upload.');
+                                        $('#uploadButton').prop('disabled', false).text('Upload');
+                                    }
+                                });
+                            });
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T15_a').DataTable({
                                     "drawCallback": function( settings ) {
@@ -7412,9 +11085,242 @@ $.wms.form21 = (function() {
                                     "<td>"+data.terminated_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-term-edit form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-term-edit form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                    $('#docket_no2').val(docketNo);
+                    $('#petitioner_name2').val(petitioner);
+                    $('#FOId2').val(field_office_id);
+
+                    // Populate the type select dropdown for modal2
+                    $('#type2').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Both Parolees and Pardonees">Both Parolees and Pardonees</option>
+                        <option value="Referrals Received">Referrals Received</option>
+                        <option value="Referrals Terminated">Referrals Terminated</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                    $(document).off('change', '#type2').on('change', '#type2', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row2').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row2').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal2
+                    $('#attachmentModal2').modal('show');
+
+                    // Call load_table function specific to modal2
+                    load_table2("investigation", docketNo, field_office_id, "F21T15TERM_parolee");
+                });
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+                                
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+                function hideDuplicateRows2() {
+                    let fileGroups = {};
+
+                    $('.table_head2 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+                var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                function load_table2(type, uuid, officeId, kind) {
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    }
+
+                    // Reinitialize the DataTable for modal2
+                    dataTable = $('.table_head2').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    });
+
+                    $('.table_head2').on('draw.dt', function () {
+                        hideDuplicateRows2(); // Call function specific to modal2
+                    });
+                }
+                $('.table_head2').on('click', '.btn-showVersions2', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head2 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton2').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal2
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no2').val());
+                    formData.append('createdby', $('#petitioner_name2').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type2').val();
+                    var remarks = $('#remarks2').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId2').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload2')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload2')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F21T15TERM_parolee");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T15TERM_parolee");
+                                $('#remarks2').val(''); // Clear the remarks textarea
+                                $('#fileupload2').val(''); // Clear the file input
+                            
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
                             $(document).ready(function () {
                                 var table = $('#T_F21T15_b').DataTable({
                                     "drawCallback": function( settings ) {
@@ -7470,9 +11376,244 @@ $.wms.form21 = (function() {
                                     "<td>"+data.case_classification+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal3 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_RCV_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal3', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal3
+                $('#docket_no3').val(docketNo);
+                $('#petitioner_name3').val(petitioner);
+                $('#FOId3').val(field_office_id);
+
+                // Populate the type select dropdown for modal3
+                $('#type3').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Letter re Courtesy Supervision" selected>Letter re Courtesy Supervision</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal3
+                $(document).off('change', '#type3').on('change', '#type3', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row3').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row3').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal3
+                $('#attachmentModal3').modal('show');
+
+                // Call load_table function specific to modal3
+                load_table3("investigation", docketNo, field_office_id, "F21T15_pardonee_rcv");
+            });
+
+            function tableColumns3() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions3' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+
+            function hideDuplicateRows3() {
+                let fileGroups = {};
+
+                $('.table_head3 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+
+            var dataTable3 = null; // Initialize the variable globally to store the DataTable instance
+            function load_table3(type, uuid, officeId, kind) {
+                if (dataTable3) {
+                    dataTable3.destroy();
+                    $('.table_head3 tbody').empty(); // Clear table body for modal3
+                }
+
+                // Reinitialize the DataTable for modal3
+                dataTable3 = $('.table_head3').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns3() // Reuse tableColumns3 function if structure is identical
+                });
+
+                $('.table_head3').on('draw.dt', function () {
+                    hideDuplicateRows3(); // Call function specific to modal3
+                });
+            }
+
+            $('.table_head3').on('click', '.btn-showVersions3', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head3 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton3').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal3
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no3').val());
+                formData.append('createdby', $('#petitioner_name3').val());
+                formData.append('type', "investigation");
+                var type = $('#type3').val();
+                var remarks = $('#remarks3').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId3').val());
+                formData.append('version', "0");
+                var file = $('#fileupload3')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton3').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload3')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F21T15_pardonee_rcv");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table3('investigation', $('#docket_no3').val(), $('#FOId3').val(), "F21T15_pardonee_rcv");
+                            $('#remarks3').val(''); // Clear the remarks textarea
+                            $('#fileupload3').val(''); // Clear the file input
+                        
+                        $('#uploadButton3').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton3').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T15_c').DataTable({
                                     "drawCallback": function( settings ) {
@@ -7481,7 +11622,6 @@ $.wms.form21 = (function() {
                                 } );
                                 $('.dataTables_length').addClass('bs-select');
                             });
-
 
                         ___tableControls();
                           $.wms.dashboard.formControlCheck()
@@ -7524,9 +11664,253 @@ $.wms.form21 = (function() {
                                     "<td>"+data.terminated_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f21_write btn btn-success btn-xs btn-term-edit form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal4 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-term-edit form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T15_TERM_PAROL'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+                $(document).on('click', '.btn-attachment-rcv-modal4', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal4
+                    $('#docket_no4').val(docketNo);
+                    $('#petitioner_name4').val(petitioner);
+                    $('#FOId4').val(field_office_id);
+
+                    // Populate the type select dropdown for modal4
+                    $('#type4').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Both Parolees and Pardonees">Both Parolees and Pardonees</option>
+                        <option value="Referrals Received">Referrals Received</option>
+                        <option value="Referrals Terminated">Referrals Terminated</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal4
+                    $(document).off('change', '#type4').on('change', '#type4', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row4').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row4').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal4
+                    $('#attachmentModal4').modal('show');
+
+                    // Call load_table function specific to modal4
+                    load_table4("investigation", docketNo, field_office_id, "F21T15_pardonee_term");
+                });
+
+                function tableColumns4() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions4' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+
+                function hideDuplicateRows4() {
+                    let fileGroups = {};
+
+                    $('.table_head4 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+
+                var dataTable4 = null; // Initialize the variable globally to store the DataTable instance
+                function load_table4(type, uuid, officeId, kind) {
+                    if (dataTable4) {
+                        dataTable4.destroy();
+                        $('.table_head4 tbody').empty(); // Clear table body for modal4
+                    }
+
+                    // Reinitialize the DataTable for modal4
+                    dataTable4 = $('.table_head4').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns4() // Reuse tableColumns4 function if structure is identical
+                    });
+
+                    $('.table_head4').on('draw.dt', function () {
+                        hideDuplicateRows4(); // Call function specific to modal4
+                    });
+                }
+
+                $('.table_head4').on('click', '.btn-showVersions4', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head4 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton4').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal4
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no4').val());
+                    formData.append('createdby', $('#petitioner_name4').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type4').val();
+                    var remarks = $('#remarks4').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId4').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload4')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton4').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload4')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F21T15_pardonee_term");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+
+                            // Reload the table for modal4 after successful upload
+                            load_table4('investigation', $('#docket_no4').val(), $('#FOId4').val(), "F21T15_pardonee_term");
+
+                            // Clear the form fields after upload
+                            $('#remarks4').val(''); // Clear the remarks textarea
+                            $('#fileupload4').val(''); // Clear the file input
+
+                            // Reset the button state
+                            $('#uploadButton4').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+
+                            // Reset the button state
+                            $('#uploadButton4').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
+
                             $(document).ready(function () {
                                 var table = $('#T_F21T15_d').DataTable({
                                     "drawCallback": function( settings ) {
@@ -7927,6 +12311,42 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var addTableValue = $("#add_rcv_table").val(); // Get the value of #add_table
+            var clientType;
+
+            if (addTableValue === "F21T15_RCV_PAROL") {
+                clientType = "PAROLEE";
+            } else if (addTableValue === "F21T15_RCV_PARDON") {
+                clientType = "PARDONEE";
+            } else {
+                clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+            }
+            console.log(clientType);
+            var PPISPayload = {
+                "clientType"            : clientType,
+                "docketNumber"          : $("#add_rcv_docket_no").val(),
+                "fullName"              : $("#add_rcv_probationer").val(),
+                "caseClassification"    : $("#add_rcv_case_classification").val(),
+                "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
+                "referralData"          : $("#add_rcv_referring_office").val(),
+                "supervisionStartDate"  : $("#add_rcv_period").val(),
+                "supervisingOfficer"    : $("#add_rcv_supervising").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         //ADD TERM
@@ -7994,6 +12414,37 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var addTableValue = $("#add_term_table").val(); // Get the value of #add_table
+            var clientType;
+
+            if (addTableValue === "F21T15_TERM_PAROL") {
+                clientType = "PAROLEE";
+            } else if (addTableValue === "F21T15_TERM_PARDON") {
+                clientType = "PARDONEE";
+            } else {
+                clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+            }
+            console.log(clientType);
+            var PPISPayload = {
+                "clientType"            : clientType,
+                "docketNumber"          : $("#add_term_docket_no").val(),
+                "fullName"              : $("#add_term_probationer").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){

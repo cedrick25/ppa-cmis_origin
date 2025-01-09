@@ -8,7 +8,6 @@ $.wms.form5 = (typeof $.wms.form5 !== 'undefined') ? $.wms : {};
 
 $.wms.form5 = (function() {
 
-
     var ___validateSave = function(allowedDocket,docket,requiredField,check,checkTable){
         $(".err_msg").remove()
         docket.removeClass("error_field")
@@ -23,8 +22,6 @@ $.wms.form5 = (function() {
             docket.addClass("error_field")
             $("<p class='err_msg color-red font_12 i'>*Invalid Docket No.</p>").insertAfter(docket)
         }
-
-        
 
         if(check != undefined){
             var payload = {
@@ -62,8 +59,6 @@ $.wms.form5 = (function() {
                 
             });
             return d.promise();
-            
-            
            
         }else{
             requiredField.forEach(function(data){
@@ -81,14 +76,7 @@ $.wms.form5 = (function() {
             }else{
                 return true;    
             }
-
-            
         }
-            
-       
-        
-        
-
     }
 
     var ___validateSaveCarryOver = function(allowedDocket,docket,requiredField,check,checkTable){
@@ -105,8 +93,6 @@ $.wms.form5 = (function() {
             docket.addClass("error_field")
             $("<p class='err_msg color-red font_12 i'>*Invalid Docket No.</p>").insertAfter(docket)
         }
-
-        
 
         if(check != undefined){
             var payload = {
@@ -157,8 +143,6 @@ $.wms.form5 = (function() {
             });
             return d.promise();
             
-            
-           
         }else{
             requiredField.forEach(function(data){
             if($("#"+data).val() == ""){
@@ -175,14 +159,9 @@ $.wms.form5 = (function() {
             }else{
                 return true;    
             }
-
-            
         }
 
     }
-
-
-
 
     var __attachF5T1PageEvent = function() {
         var payload = {
@@ -594,12 +573,12 @@ $.wms.form5 = (function() {
                                             const latestVersion = Math.max(...rows.map(r => r.version));
                                             
                                             let actions = `
-                                                <a href=http://192.168.1.147:8080/file/view/${data.id} target='_blank'>
+                                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
                                                     <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                                         <i class='fa fa-eye'></i> View
                                                     </button>
                                                 </a>
-                                                <a href=http://192.168.1.147:8080/file/download/${data.id} target='_blank'>
+                                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
                                                     <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                                         <i class='fa fa-download'></i> Download
                                                     </button>
@@ -667,7 +646,7 @@ $.wms.form5 = (function() {
                                         { "width": "35%", "targets": [4] },
                                     ],
                                     ajax: {
-                                        url: `http://192.168.1.147:8080/file/page/${type}/${uuid}/${officeId}`,
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
                                         type: 'GET',
                                         cache: true,
                                         data: function (d) {
@@ -759,7 +738,7 @@ $.wms.form5 = (function() {
                                     }
                                 }
 
-                                var url = 'http://192.168.1.147:8080/file/upload';
+                                var url = `${PPIS_path_upload}/file/upload`;
                                 // Send AJAX request
                                 $.ajax({
                                     url: url,
@@ -797,9 +776,8 @@ $.wms.form5 = (function() {
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
-                                } );
+                                });
                             });
-
                             ___updateRCV_event();
                         }
                     };
@@ -844,9 +822,241 @@ $.wms.form5 = (function() {
                                     "<td>"+data.transfer_to+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-acted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f5_write btn btn-danger btn-xs btn-acted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                    $('#docket_no2').val(docketNo);
+                    $('#petitioner_name2').val(petitioner);
+                    $('#FOId2').val(field_office_id);
+
+                    // Populate the type select dropdown for modal2
+                    $('#type2').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Post-Sentence Investigation Report">Post-Sentence Investigation Report</option>
+                        <option value="Manifestation">Manifestation</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                    $(document).off('change', '#type2').on('change', '#type2', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row2').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row2').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal2
+                    $('#attachmentModal2').modal('show');
+
+                    // Call load_table function specific to modal2
+                    load_table2("investigation", docketNo, field_office_id, "F5T2_RAU");
+                });
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+                                
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+                function hideDuplicateRows2() {
+                    let fileGroups = {};
+
+                    $('.table_head2 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+                var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                function load_table2(type, uuid, officeId, kind) {
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    }
+
+                    // Reinitialize the DataTable for modal2
+                    dataTable = $('.table_head2').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    });
+
+                    $('.table_head2').on('draw.dt', function () {
+                        hideDuplicateRows2(); // Call function specific to modal2
+                    });
+                }
+                $('.table_head2').on('click', '.btn-showVersions2', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head2 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton2').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal2
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no2').val());
+                    formData.append('createdby', $('#petitioner_name2').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type2').val();
+                    var remarks = $('#remarks2').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId2').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload2')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload2')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F5T2_RAU");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F5T2_RAU");
+                                $('#remarks2').val(''); // Clear the remarks textarea
+                                $('#fileupload2').val(''); // Clear the file input
+                            
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_b').DataTable( {
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -898,9 +1108,243 @@ $.wms.form5 = (function() {
                                     "<td>"+data.received_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv-modal3 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+            $(document).on('click', '.btn-attachment-rcv-modal3', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal3
+                $('#docket_no3').val(docketNo);
+                $('#petitioner_name3').val(petitioner);
+                $('#FOId3').val(field_office_id);
+
+                // Populate the type select dropdown for modal3
+                $('#type3').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Recall" selected>Recall</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+
+                // Remove any previous 'change' event and bind a new one to handle the select change for modal3
+                $(document).off('change', '#type3').on('change', '#type3', function() {
+                    var selectedValue = $(this).val();
+
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row3').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row3').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal for modal3
+                $('#attachmentModal3').modal('show');
+
+                // Call load_table function specific to modal3
+                load_table3("investigation", docketNo, field_office_id, "F5T2_recall");
+            });
+
+            function tableColumns3() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions3' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+
+            function hideDuplicateRows3() {
+                let fileGroups = {};
+
+                $('.table_head3 tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+
+            var dataTable3 = null; // Initialize the variable globally to store the DataTable instance
+            function load_table3(type, uuid, officeId, kind) {
+                if (dataTable3) {
+                    dataTable3.destroy();
+                    $('.table_head3 tbody').empty(); // Clear table body for modal3
+                }
+
+                // Reinitialize the DataTable for modal3
+                dataTable3 = $('.table_head3').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns3() // Reuse tableColumns3 function if structure is identical
+                });
+
+                $('.table_head3').on('draw.dt', function () {
+                    hideDuplicateRows3(); // Call function specific to modal3
+                });
+            }
+
+            $('.table_head3').on('click', '.btn-showVersions3', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head3 tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+
+            $('#uploadButton3').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission for modal3
+                $(this).prop('disabled', true).text('Uploading...');
+
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no3').val());
+                formData.append('createdby', $('#petitioner_name3').val());
+                formData.append('type', "investigation");
+                var type = $('#type3').val();
+                var remarks = $('#remarks3').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId3').val());
+                formData.append('version', "0");
+                var file = $('#fileupload3')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton3').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+
+                var fileInput = $('#fileupload3')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;
+                    formData.append('kind', "F5T2_recall");
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                            load_table3('investigation', $('#docket_no3').val(), $('#FOId3').val(), "F5T2_recall");
+                            $('#remarks3').val(''); // Clear the remarks textarea
+                            $('#fileupload3').val(''); // Clear the file input
+                        
+                        $('#uploadButton3').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton3').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c1').DataTable( {
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -912,32 +1356,7 @@ $.wms.form5 = (function() {
                                     }
                                 } );
                             });
-                            var PPISPayload = {
-                                    "clientType"            : "PROBATIONER",
-                                    "docketNumber"          : $("#add_docket_no").val(),
-                                    "fullName"              : $("#add_petitioner").val(),
-                                    "receivedDateByPPO"     : $("#add_date_rcv").val(),
-                                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                                    "investigatingOfficer"  : $("#add_investigating_officer").val(),
-                                    "firstName"             : "",
-                                    "middleName"            : "",
-                                    "lastName"              : "",
-                                    "suffixName"            : "",
-                                    "manualDocket"          : false,
-                                    "type"                  : "PIS_INV",
-                                }
-                            $.ajax({
-                                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
-                                type: 'POST',
-                                data: JSON.stringify(PPISPayload), // Pass your payload here
-                                contentType: 'application/json',   // Specify content type for JSON data
-                                success: function (PPISResult) {
-                                    console.log(PPISResult);       // Handle success response
-                                },
-                                error: function (xhr, status, error) {
-                                    console.error('Error:', status, error); // Handle error response
-                                }
-                            });
+                            
                             ___updateNOTACTED_event();
                         }
                     };
@@ -977,9 +1396,252 @@ $.wms.form5 = (function() {
                                     "<td>"+data.received_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv-modal4 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+                $(document).on('click', '.btn-attachment-rcv-modal4', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal4
+                    $('#docket_no4').val(docketNo);
+                    $('#petitioner_name4').val(petitioner);
+                    $('#FOId4').val(field_office_id);
+
+                    // Populate the type select dropdown for modal4
+                    $('#type4').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Warrant" selected>Warrant</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal4
+                    $(document).off('change', '#type4').on('change', '#type4', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row4').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row4').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal4
+                    $('#attachmentModal4').modal('show');
+
+                    // Call load_table function specific to modal4
+                    load_table4("investigation", docketNo, field_office_id, "F5T2_warant");
+                });
+
+                function tableColumns4() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions4' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+
+                function hideDuplicateRows4() {
+                    let fileGroups = {};
+
+                    $('.table_head4 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+
+                var dataTable4 = null; // Initialize the variable globally to store the DataTable instance
+                function load_table4(type, uuid, officeId, kind) {
+                    if (dataTable4) {
+                        dataTable4.destroy();
+                        $('.table_head4 tbody').empty(); // Clear table body for modal4
+                    }
+
+                    // Reinitialize the DataTable for modal4
+                    dataTable4 = $('.table_head4').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns4() // Reuse tableColumns4 function if structure is identical
+                    });
+
+                    $('.table_head4').on('draw.dt', function () {
+                        hideDuplicateRows4(); // Call function specific to modal4
+                    });
+                }
+
+                $('.table_head4').on('click', '.btn-showVersions4', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head4 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton4').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal4
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no4').val());
+                    formData.append('createdby', $('#petitioner_name4').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type4').val();
+                    var remarks = $('#remarks4').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId4').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload4')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton4').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload4')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F5T2_warant");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+
+                            // Reload the table for modal4 after successful upload
+                            load_table4('investigation', $('#docket_no4').val(), $('#FOId4').val(), "F5T2_warant");
+
+                            // Clear the form fields after upload
+                            $('#remarks4').val(''); // Clear the remarks textarea
+                            $('#fileupload4').val(''); // Clear the file input
+
+                            // Reset the button state
+                            $('#uploadButton4').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+
+                            // Reset the button state
+                            $('#uploadButton4').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
+
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c2').DataTable( {
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -1348,7 +2010,7 @@ $.wms.form5 = (function() {
                     "type"                  : "PIS_INV",
                 }
             $.ajax({
-                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
                 type: 'POST',
                 data: JSON.stringify(PPISPayload), // Pass your payload here
                 contentType: 'application/json',   // Specify content type for JSON data
@@ -1420,29 +2082,20 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
 
             var PPISPayload = {
-                    "clientType"            : "Petitioner",
+                    "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_acted_docket_no").val(),
                     "fullName"              : $("#add_acted_petitioner").val(),
                     "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "firstName"             : "",
-                    "middleName"            : "",
-                    "lastName"              : "",
-                    "suffixName"            : "",
                     "manualDocket"          : false,
-                    "criminalCaseNo"        : $("#add_rcv_case_no").val(),
-                    "criminalCaseNumber"    : $("#add_rcv_case_no").val(),
-                    "pleaBargain"           : $("#add_rcv_plea_bargain").val(), // string to sa cmis
-                    "courtOfOrigin"         : $("#add_rcv_court_origin").val(),
-                    "offense"               : $("#add_rcv_offense").val(),
-                    "sentence"              : $("#add_rcv_sentence").val(),
-                    "courtOrderDate"        : $("#add_rcv_date_of_court_order").val(),
+                    "ppoRecommendation"     : $("#add_acted_recommendation").val(),
+                    "type"                  : "PIS_INV",
                 }
             $.ajax({
-                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
                 type: 'POST',
                 data: JSON.stringify(PPISPayload), // Pass your payload here
                 contentType: 'application/json',   // Specify content type for JSON data
@@ -1509,22 +2162,19 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
             var PPISPayload = {
-                    "clientType"            : "Petitioner",
+                    "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_notacted_docket_no").val(),
                     "fullName"              : $("#add_notacted_petitioner").val(),
                     "receivedDateByPPO"     : $("#add_notacted_date").val(),
-                    "type"                  : $("#add_notacted_decision").val(),
+                    // "type"                  : $("#add_notacted_decision").val(),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "firstName"             : "",
-                    "middleName"            : "",
-                    "lastName"              : "",
-                    "suffixName"            : "",
                     "manualDocket"          : false,
+                    "type"                  : "PIS_INV",
                 }
             $.ajax({
-                url: 'http://192.168.1.147:8000/ppis/create', // Replace with your endpoint URL
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
                 type: 'POST',
                 data: JSON.stringify(PPISPayload), // Pass your payload here
                 contentType: 'application/json',   // Specify content type for JSON data
@@ -2304,30 +2954,281 @@ $.wms.form5 = (function() {
                     data = $.wms.sanitize(data);
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
                     $('.F5T4_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.petitioner.toUpperCase()+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Granted" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Denied" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Dismissed" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Withdrawal" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Reinvestigation" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Warrant of Arrest" ? data.disposed_date : "")+"</td>"+
-                                                "<td>"+(data.disposed_decision == "Recall" ? data.disposed_date : "")+"</td>"+
-                                                "<td class=' center'>"+data.reason_denial+"</td>"+
-                                                "<td class=' center'>"+data.other_types+"</td>"+
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.petitioner.toUpperCase()+"</td>"+
+                        "<td>"+(data.disposed_decision == "Granted" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Denied" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Dismissed" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Withdrawal" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Reinvestigation" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Warrant of Arrest" ? data.disposed_date : "")+"</td>"+
+                        "<td>"+(data.disposed_decision == "Recall" ? data.disposed_date : "")+"</td>"+
+                        "<td class=' center'>"+data.reason_denial+"</td>"+
+                        "<td class=' center'>"+data.other_types+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td align='center' class='options'>" + 
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> " +
+                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
                 ___tableControls();
             }else{
-                // $(".F5T4_tbody").append(
-                //         "<tr>"+
-                //             "<td colspan='12' class='center b'>NONE</td>"+
-                //         "</tr>");
             }
+
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Probation Order">Probation Order</option>
+                    <option value="Order of Denial">Order of Denial</option>
+                    <option value="Order to Withdraw Application for Probation">Order to Withdraw Application for Probation</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F5T4RR");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F5T4RR");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T4RR");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
 
             $(document).ready(function () {
                 var table = $('#T_F5T4').DataTable( {
@@ -2413,8 +3314,8 @@ $.wms.form5 = (function() {
 
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
+            $(this).attr('disabled',true);
+            $(".modal-loader").removeClass("hidden");
             var fullname = $("#add_lname").val() +', '+ $("#add_fname").val() +' y '+ $("#add_mname").val();
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
@@ -2431,6 +3332,7 @@ $.wms.form5 = (function() {
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office" :$.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -2446,7 +3348,33 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+
+            var PPISPayload = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : fullname,
+                "courtOrderDate"        : $("#add_psir").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "firstName"             : $("#add_fname").val(),
+                "middleName"            : $("#add_mname").val(),
+                "lastName"              : $("#add_lname").val(),
+                "suffixName"            : $("#add_sname").val(),
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -2584,6 +3512,7 @@ $.wms.form5 = (function() {
                     "disposed_decision": $("#edit_psir_rec").val(),
                     "disposed_date": $("#edit_psir").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
@@ -2978,9 +3907,263 @@ $.wms.form5 = (function() {
                                     "<td>"+data.investigating_officer+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Courtesy Probation Investigation">Courtesy Probation Investigation</option>
+                    <option value="Full-blown Courtesy Probation Investigation">Full-blown Courtesy Probation Investigation</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F5T6RR");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F5T6RR");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T6RR");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_a').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -3033,9 +4216,242 @@ $.wms.form5 = (function() {
                                     "<td>"+data.completed_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options")
                             });
+
+                $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                    $('#docket_no2').val(docketNo);
+                    $('#petitioner_name2').val(petitioner);
+                    $('#FOId2').val(field_office_id);
+
+                    // Populate the type select dropdown for modal2
+                    $('#type2').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Accomplished CPI">Accomplished CPI</option>
+                        <option value="Accomplished FBCI">Accomplished FBCI</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                    $(document).off('change', '#type2').on('change', '#type2', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row2').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row2').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal2
+                    $('#attachmentModal2').modal('show');
+
+                    // Call load_table function specific to modal2
+                    load_table2("investigation", docketNo, field_office_id, "F5T6RCR");
+                });
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+                                
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+                function hideDuplicateRows2() {
+                    let fileGroups = {};
+
+                    $('.table_head2 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+                var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                function load_table2(type, uuid, officeId, kind) {
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    }
+
+                    // Reinitialize the DataTable for modal2
+                    dataTable = $('.table_head2').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    });
+
+                    $('.table_head2').on('draw.dt', function () {
+                        hideDuplicateRows2(); // Call function specific to modal2
+                    });
+                }
+                $('.table_head2').on('click', '.btn-showVersions2', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head2 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton2').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal2
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no2').val());
+                    formData.append('createdby', $('#petitioner_name2').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type2').val();
+                    var remarks = $('#remarks2').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId2').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload2')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload2')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F5T6RCR");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F5T6RCR");
+                                $('#remarks2').val(''); // Clear the remarks textarea
+                                $('#fileupload2').val(''); // Clear the file input
+                            
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_b').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -3290,7 +4706,34 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload_a = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_rcv_docket_no").val(),
+                "fullName"              : $("#add_rcv_petitioner").val(),
+                "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
+                "referringOfficeId"     : $("#add_rcv_referring_office").val(),
+                "firstName"             : "",
+                "middleName"            : "",
+                "lastName"              : "",
+                "suffixName"            : "",
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload_a), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
         //ADD
 
@@ -3430,6 +4873,7 @@ $.wms.form5 = (function() {
                     "investigating_officer" : $("#edit_rcv_investigating_officer").val(),
                     "reasons" : $("#edit_rcv_reasons").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update"
 
@@ -3505,7 +4949,31 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload_b = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_cmpltd_docket_no").val(),
+                "fullName"              : $("#add_cmpltd_petitioner").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "firstName"             : "",
+                "middleName"            : "",
+                "lastName"              : "",
+                "suffixName"            : "",
+                "manualDocket"          : false,
+                "type"                  : "PIS_INV",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload_b), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
         //ADD
         //ADD_CMPLTD
@@ -3617,6 +5085,7 @@ $.wms.form5 = (function() {
                     "petitioner" : $("#edit_cmpltd_petitioner").val(),
                     "completed_date" : $("#edit_cmpltd_date").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update"
 
@@ -3642,7 +5111,6 @@ $.wms.form5 = (function() {
 
     };
 
-
     var __attachF5T7PageEvent = function() {
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
@@ -3650,8 +5118,8 @@ $.wms.form5 = (function() {
             "method" : "fetchAll"
         }
         $('.F5T7_tbody').empty();
-        $(".form_loader").removeClass("hidden")
-        $(".result_form").addClass("hidden")
+        $(".form_loader").removeClass("hidden");
+        $(".result_form").addClass("hidden");
         $(".sel_field_office2").select2({
            placeholder: "Select Field Office",
         });
@@ -3664,18 +5132,18 @@ $.wms.form5 = (function() {
                    data = $.wms.upper($.wms.sanitize(data))
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
                     $('.F5T7_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.probationer+"</td>"+
-                                                
-                                                "<td class='center'>"+data.case_classification+"</td>"+
-                                                "<td class='center'>"+data.supervising_officer+"</td>"+
-                                                "<td class='center'>"+data.received_date+"</td>"+
-                                                "<td class='center'>"+data.probation_start+"</td>"+
-                                                "<td class='center'>"+data.probation_end+"</td>"+
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='btn btn-success btn-sm btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.probationer+"</td>"+
+                        
+                        "<td class='center'>"+data.case_classification+"</td>"+
+                        "<td class='center'>"+data.supervising_officer+"</td>"+
+                        "<td class='center'>"+data.received_date+"</td>"+
+                        "<td class='center'>"+data.probation_start+"</td>"+
+                        "<td class='center'>"+data.probation_end+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td width='15%' align='center' class='options'> <button class='btn btn-success btn-sm btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -3998,40 +5466,287 @@ $.wms.form5 = (function() {
                    data = $.wms.upper($.wms.sanitize(data))
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
                     $('.F5T8_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.probationer+"</td>"+
-                                                
-                                                "<td class='center'>"+data.referral_type+"</td>"+
-                                                "<td class='center'>"+data.cc_no+"</td>"+
-                                                "<td class='center'>"+data.court_origin+"</td>"+
-                                                "<td class='center'>"+data.case_classification+"</td>"+
-                                                "<td class='center'>"+data.supervising_officer+"</td>"+
-                                                "<td class='center'>"+data.received_date+"</td>"+
-                                                "<td class='center'>"+data.probation_start+"</td>"+
-                                                "<td class='center'>"+data.probation_end+"</td>"+
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.probationer+"</td>"+
+                        "<td class='center'>"+data.referral_type+"</td>"+
+                        "<td class='center'>"+data.cc_no+"</td>"+
+                        "<td class='center'>"+data.court_origin+"</td>"+
+                        "<td class='center'>"+data.case_classification+"</td>"+
+                        "<td class='center'>"+data.supervising_officer+"</td>"+
+                        "<td class='center'>"+data.received_date+"</td>"+
+                        "<td class='center'>"+data.probation_start+"</td>"+
+                        "<td class='center'>"+data.probation_end+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td align='center' class='options'>" + 
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> Attachment</button> " +
+                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
-                // $(".F5T8_tbody").append(
-                //         "<tr>"+
-                //             "<td colspan='13' class='center b'>NONE</td>"+
-                //         "</tr>");
             }
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
 
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Probation Order">Probation Order</option>
+                    <option value="Transfer Order">Transfer Order</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F5T8");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F5T8");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T8");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
             $(document).ready(function () {
                 var table = $('#T_F5T8').DataTable({
-                                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                                    "language": {
-                                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
-                                    },
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "language": {
+                        "lengthMenu": "Show _MENU_ entries", // Customizing the "Show Entries" label
+                    },
                     "drawCallback": function( settings ) {
                             $.wms.reports.form_lock();
                     }
-                } );
+                });
             });
         });
 
@@ -4123,13 +5838,13 @@ $.wms.form5 = (function() {
                 "referral_type": $("#add_type_referrals").val(),
                 "case_classification": $("#add_case_classification").val(),
                 "received_date" : $("#add_date_rcv").val(),
-                "case_classification" : $("#add_case_classification").val(),
                 "supervising_officer" : $("#add_supervising").val(),
                 "probation_start" : $("#add_start").val(),
                 "probation_end" : $("#add_end").val(),
                 "Y_M": $.wms.urlParam('date'),
                 "source" : "2",
                 "field_office": $.wms.urlParam('field'),
+                "field_office_id": $.wms.urlParam('officeId'),
                 "created_by" : $.cookie("USER_ID"),
                 "method" : "insert"
             }
@@ -4187,7 +5902,40 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+
+            var PPISPayload = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : fullname,
+                "receivedDateByPPO"     : $("#add_date_rcv").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "supervisingOfficer"    : $("#add_supervising").val(),
+                "firstName"             : $("#add_fname").val(),
+                "middleName"            : $("#add_mname").val(),
+                "lastName"              : $("#add_lname").val(),
+                "suffixName"            : $("#add_sname").val(),
+                "manualDocket"          : false,
+                "referralType"          : $("#add_type_referrals").val(),
+                "criminalCaseNo"        : $("#add_cc_no").val(),
+                "courtOfOrigin"         : $("#add_court_origin").val(),
+                "caseClassification"    : $("#add_case_classification").val(),
+                "probationStartDate"    : $("#add_start").val(),
+                "probationEndDate"      : $("#add_end").val(),
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -4393,6 +6141,7 @@ $.wms.form5 = (function() {
                     "probation_start" : $("#edit_start").val(),
                     "probation_end" : $("#edit_end").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "created_by" : $.cookie("USER_ID"),
                     "method" : "update"
@@ -4514,32 +6263,284 @@ $.wms.form5 = (function() {
 
                     source = ((data.source==1) ? 'PIS' : 'MANUAL');
                     $('.F5T9_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.probationer.toUpperCase()+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Termination - Full Term" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Termination - Early Termination" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Termination - Died" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Abscond" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Commission of Another Offense" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Violation of Probation Conditions" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Other" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Extension of Probation Period" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Transfer to Other Courts/PPO" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+data.reason_other+"</td>"+
-                                                "<td class='center'>"+data.transfer+"</td>"+
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='btn btn-success btn-sm btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='access_f5_write btn btn-danger btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.probationer.toUpperCase()+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Termination - Full Term" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Termination - Early Termination" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Termination - Died" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Abscond" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Commission of Another Offense" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Violation of Probation Conditions" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Other" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Extension of Probation Period" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Transfer to Other Courts/PPO" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+data.reason_other+"</td>"+
+                        "<td class='center'>"+data.transfer+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td align='center' class='options'>" + 
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> Attachment</button> " +
+                        "<button class='btn btn-success btn-xs btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
-                // $(".F5T9_tbody").append(
-                //         "<tr>"+
-                //             "<td colspan='14' class='center b'>NONE</td>"+
-                //         "</tr>");
             }
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Motion to Terminate">Motion to Terminate</option>
+                    <option value="Motion to Terminate (Died)">Motion to Terminate (Died)</option>
+                    <option value="Violation Report">Violation Report</option>
+                    <option value="Motion for Extension">Motion for Extension</option>
+                    <option value="Motion for Transfer">Motion for Transfer</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F5T9");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F5T9");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T9");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
             $(document).ready(function () {
                 var table = $('#T_F5T9').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -4619,18 +6620,6 @@ $.wms.form5 = (function() {
             $(".addProceedButton").addClass("hidden")
            
         });
-        // console.log("------------");
-        // console.log($("#add_findings").val());
-        // $("#add_findings").on('change', function (e) {
-        //     var valueSelected = this.value;
-        //     console.log(valueSelected);
-        //     // if (valueSelected == "Others") {
-        //     //     $("#Other_specify").removeClass('hide')
-        //     // } else {
-        //     //     $("#Other_specify").addClass('hide')
-        //     // }
-        // });
-        // console.log("------------");
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
@@ -4641,7 +6630,6 @@ $.wms.form5 = (function() {
                 "disposed_decision": $("#add_findings").val(),
                 "disposed_date" : $("#add_submitted").val(),
                 "Y_M": $.wms.urlParam('date'),
-                "probationer" : $("#add_probationer").val(),
                 "others_specify" : $("#add_other_specify").val(),
                 "reason_other" : $("#add_reason_other").val(),
                 "transfer" : $("#add_transfer").val(),
@@ -4658,11 +6646,31 @@ $.wms.form5 = (function() {
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF5T9PageEvent();
-                    location.reload();
+                    // location.reload();
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_probationer").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -4801,6 +6809,7 @@ $.wms.form5 = (function() {
                     "disposed_decision" : $("#edit_findings").val(),
                     "disposed_date" : $("#edit_submitted").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update"
 
@@ -5196,19 +7205,6 @@ $.wms.form5 = (function() {
            placeholder: "Select Field Office",
         });
 
-        //OFFICE_FINDINGS_SUPV_TERMINATION
-        //Termination - Full Term
-        //Termination - Early Termination
-        //Termination - Died
-        //REVOC
-        //Revocation - Abscond
-        //Revocation - Commission of Another Offense
-        //Revocation - Violation of Probation Conditions
-        //Revocation - Other
-        //
-        //Extension of Probation Period
-        //
-
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
             console.log(result);
             $(".form_loader").addClass("hidden")
@@ -5231,33 +7227,284 @@ $.wms.form5 = (function() {
                     }
                     
                     $('.F5T11_tbody').append("<tr>"+
-                                                "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
-                                                "<td>"+data.probationer.toUpperCase()+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Termination - Full Term" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Termination - Early Termination" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Termination - Died" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Abscond" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Commission of Another Offense" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Violation of Probation Conditions" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Revocation - Other" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Extension of Probation Period" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Transfer to Other Courts/PPO" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
-                                                "<td class='center'>"+data.reason_other+"</td>"+
-                                                "<td class='center'>"+data.transfer+"</td>"+
-                                                
-                                                "<td class='options center'>"+data.field_office+"</td>"+
-                                                "<td class='options center'>"+source+"</td>"+
-                                                "<td width='15%' align='center' class='options'> <button class='access_f5_write btn btn-success btn-sm btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                                                "<button class='btn btn-danger access_f5_write btn-sm btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
+                        "<td>"+data.probationer.toUpperCase()+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Termination - Full Term" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Termination - Early Termination" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Termination - Died" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Abscond" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Commission of Another Offense" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Violation of Probation Conditions" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Revocation - Other" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Extension of Probation Period" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Transfer to Other Courts/PPO" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+(data.disposed_decision == "Others" ? data.disposed_date : "")+"</td>"+
+                        "<td class='center'>"+data.reason_other+"</td>"+
+                        "<td class='center'>"+data.transfer+"</td>"+
+                        "<td class='options center'>"+data.field_office+"</td>"+
+                        "<td class='options center'>"+source+"</td>"+
+                        "<td align='center' class='options'>" + 
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> Attachment</button> " +
+                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
+                        "<button class='btn btn-danger access_f5_write btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
                 });
                 ___tableControls();
             }else{
-                // $(".F5T11_tbody").append(
-                //         "<tr>"+
-                //             "<td colspan='16' class='center b'>NONE</td>"+
-                //         "</tr>");
             }
+            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Terminate Order">Terminate Order</option>
+                    <option value="Revocation Order">Revocation Order</option>
+                    <option value="Violation Order">Violation Order</option>
+                    <option value="Order for Extension">Order for Extension</option>
+                    <option value="Order for Transfer">Order for Transfer</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F5T11");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F5T11");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T11");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
             $(document).ready(function () {
                 var table = $('#T_F5T11').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -5271,7 +7518,6 @@ $.wms.form5 = (function() {
                 $('.dataTables_length').addClass('bs-select');
             });
         });
-
 
         //Download
         $(".btn-download").unbind("click").on("click",function(){
@@ -5316,19 +7562,6 @@ $.wms.form5 = (function() {
                 sheetName: "Form5-Table11" // Custom sheet name
             });
         });
-
-        // console.log("------------");
-        // console.log($("#add_findings").val());
-        // $("#add_findings").on('change', function (e) {
-        //     var valueSelected = this.value;
-        //     console.log(valueSelected);
-        //     if (valueSelected == "Others") {
-        //         $("#Other_specify").removeClass('hide')
-        //     } else {
-        //         $("#Other_specify").addClass('hide')
-        //     }
-        // });
-        // console.log("------------");
 
         //Add
         $(".addSubmitButton").unbind("click").on("click",function(){
@@ -5392,7 +7625,28 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_docket_no").val(),
+                "fullName"              : $("#add_probationer").val(),
+                "supervisingOfficer"    : $("#add_supervising").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            });
         })
 
         var ___modalReset = function(){
@@ -5518,6 +7772,7 @@ $.wms.form5 = (function() {
                     "disposed_date" : $("#edit_submitted").val(),
                     "supervising_officer" : $("#edit_supervising").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update"
 
@@ -5930,9 +8185,261 @@ $.wms.form5 = (function() {
                                     "<td>"+data.case_classification+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
-                                        "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+                            $(document).on('click', '.btn-attachment-rcv', function() {
+                var docketNo = $(this).data('docket');
+                var recordId = $(this).data('id');
+                var petitioner = $(this).data('petitioner');
+                var field_office_id = $(this).data('field_office_id');
+                console.log(petitioner)
+                console.log(field_office_id)
+
+                // Set docketNo, petitioner, and field_office_id in the form's hidden fields
+                $('#docket_no').val(docketNo);
+                $('#petitioner_name').val(petitioner);
+                $('#FOId').val(field_office_id);
+
+                // Populate the type select dropdown
+                $('#type').empty().append(`
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Courtesy Referrals">Courtesy Referrals</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                `);
+                
+                // Remove any previous 'change' event and bind a new one to handle the select change
+                $(document).off('change', '#type').on('change', '#type', function() {
+                    var selectedValue = $(this).val();
+                    
+                    if (selectedValue === 'Other Document/s') {
+                        $('.remarks-row').show(); // Show the remarks field
+                    } else {
+                        $('.remarks-row').hide(); // Hide the remarks field
+                    }
+                });
+
+                // Open the Bootstrap modal
+                $('#attachmentModal').modal('show');
+
+                // Call load_table function
+                load_table("investigation", docketNo, field_office_id, "F5T13RR");
+            });
+
+            function tableColumns() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
+                        }
+                    },
+                    { "data": 'fileName' },
+                    { "data": 'version' },
+                    { "data": 'remarks' },
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                            const latestVersion = Math.max(...rows.map(r => r.version));
+                            
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                            `;
+
+                            if (rows.length > 1 && data.version === latestVersion) {
+                                actions += `
+                                    <button class='btn btn-secondary btn-sm btn-showVersions' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-angle-down'></i> Show All Versions
+                                    </button>
+                                `;
+                            }
+
+                            return actions;
+                        }
+                    }
+                ];
+            }
+            function hideDuplicateRows() {
+                let fileGroups = {};
+                
+                $('.table_head tbody tr').each(function () {
+                    const fileName = $(this).find('td:eq(1)').text().trim();
+                    if (!fileGroups[fileName]) {
+                        fileGroups[fileName] = [];
+                    }
+                    fileGroups[fileName].push($(this));
+                });
+
+                for (let fileName in fileGroups) {
+                    const rows = fileGroups[fileName];
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.slice(1).forEach(row => row.addClass('hidden'));
+                }
+            }
+            var dataTable = null; // Initialize the variable globally to store the DataTable instance
+            function load_table(type, uuid, officeId, kind) {
+                // Destroy the existing DataTable instance if it exists
+                if (dataTable) {
+                    dataTable.destroy();
+                    $('.table_head tbody').empty(); // Clear table body to avoid duplicate rows
+                }
+
+                // Reinitialize the DataTable
+                dataTable = $('.table_head').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    "columnDefs": [
+                        { "width": "5%", "targets": [0] },
+                        { "width": "20%", "targets": [1] },
+                        { "width": "15%", "targets": [2] },
+                        { "width": "25%", "targets": [3] },
+                        { "width": "35%", "targets": [4] },
+                    ],
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
+                        },
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            // Sort content by fileName and version
+                            json.content.sort((a, b) => 
+                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                            );
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
+                        }
+                    },
+                    columns: tableColumns() // Call your function to get table columns
+                });
+
+                // Handle the table redraw event
+                $('.table_head').on('draw.dt', function () {
+                    hideDuplicateRows();
+                });
+            }
+            $('.table_head').on('click', '.btn-showVersions', function () {
+                const fileName = $(this).data('file_name');
+                let rows = [];
+                $('.table_head tbody tr').each(function () {
+                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                        rows.push($(this));
+                    }
+                });
+
+                rows.sort((a, b) => {
+                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                    return versionB - versionA;
+                });
+
+                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                $(this).html(isHidden 
+                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
+            });
+            $('#uploadButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                $(this).prop('disabled', true).text('Uploading...');
+                // Create FormData object
+                var formData = new FormData();
+                formData.append('uuid', $('#docket_no').val());
+                formData.append('createdby', $('#petitioner_name').val());
+                formData.append('type', "investigation");
+                var type = $('#type').val();
+                var remarks = $('#remarks').val();
+                if (remarks) {
+                    formData.append('remarks', type + " - " + remarks);
+                } else {
+                    formData.append('remarks', type);
+                }
+                formData.append('officeId', $('#FOId').val());
+                formData.append('version', "0");
+                var file = $('#fileupload')[0].files[0];
+                if (!file) {
+                    alert('Please select a file to upload.');
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return; // Exit if no file is selected
+                }
+                formData.append('file', file);
+                var fileInput = $('#fileupload')[0];
+                if (fileInput.files.length > 0) {
+                    var fileName = fileInput.files[0].name;  // Get the file name
+                    formData.append('kind', "F5T13RR");  // Append file name to formData
+                }
+
+                // **Console log all form data**
+                console.log('File name:', fileName); // Log the file name to console
+                console.log('--- Form Data ---');
+                for (var pair of formData.entries()) {
+                    if (pair[1] instanceof File) {
+                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+                    } else {
+                        console.log(`${pair[0]}: ${pair[1]}`);
+                    }
+                }
+
+                var url = `${PPIS_path_upload}/file/upload`;
+                // Send AJAX request
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log('Response:', response);
+                        if ("true") {
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T13RR");
+                             // Clear the remarks textarea
+                            $('#remarks').val(''); 
+                            
+                            // Clear the file input (reset file input)
+                            $('#fileupload').val('');
+                        } else {
+                            alert('Error: ' + "Failed to upload");
+                        }
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Upload failed: ', error);
+                        alert('An error occurred during the upload.');
+                        $('#uploadButton').prop('disabled', false).text('Upload');
+                    }
+                });
+            });
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_a').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -5988,9 +8495,241 @@ $.wms.form5 = (function() {
                                     "<td>"+data.terminated_date+"</td>"+
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
-                                    "<td align='center' class='options'> <button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
+                                    "<td align='center' class='options'>" + 
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                         "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
+
+                $(document).on('click', '.btn-attachment-rcv-modal2', function() {
+                    var docketNo = $(this).data('docket');
+                    var recordId = $(this).data('id');
+                    var petitioner = $(this).data('petitioner');
+                    var field_office_id = $(this).data('field_office_id');
+
+                    // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
+                    $('#docket_no2').val(docketNo);
+                    $('#petitioner_name2').val(petitioner);
+                    $('#FOId2').val(field_office_id);
+
+                    // Populate the type select dropdown for modal2
+                    $('#type2').empty().append(`
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Courtesy Referrals Returned and Completed">Courtesy Referrals Returned and Completed</option>
+                        <option value="Other Document/s">Other Document/s</option>
+                    `);
+
+                    // Remove any previous 'change' event and bind a new one to handle the select change for modal2
+                    $(document).off('change', '#type2').on('change', '#type2', function() {
+                        var selectedValue = $(this).val();
+
+                        if (selectedValue === 'Other Document/s') {
+                            $('.remarks-row2').show(); // Show the remarks field
+                        } else {
+                            $('.remarks-row2').hide(); // Hide the remarks field
+                        }
+                    });
+
+                    // Open the Bootstrap modal for modal2
+                    $('#attachmentModal2').modal('show');
+
+                    // Call load_table function specific to modal2
+                    load_table2("investigation", docketNo, field_office_id, "F5T13Term");
+                });
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
+                        },
+                        { "data": 'fileName' },
+                        { "data": 'version' },
+                        { "data": 'remarks' },
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
+                                const latestVersion = Math.max(...rows.map(r => r.version));
+                                
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                `;
+
+                                if (rows.length > 1 && data.version === latestVersion) {
+                                    actions += `
+                                        <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-angle-down'></i> Show All Versions
+                                        </button>
+                                    `;
+                                }
+
+                                return actions;
+                            }
+                        }
+                    ];
+                }
+                function hideDuplicateRows2() {
+                    let fileGroups = {};
+
+                    $('.table_head2 tbody tr').each(function () {
+                        const fileName = $(this).find('td:eq(1)').text().trim();
+                        if (!fileGroups[fileName]) {
+                            fileGroups[fileName] = [];
+                        }
+                        fileGroups[fileName].push($(this));
+                    });
+
+                    for (let fileName in fileGroups) {
+                        const rows = fileGroups[fileName];
+                        rows.sort((a, b) => {
+                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                            return versionB - versionA;
+                        });
+
+                        rows.slice(1).forEach(row => row.addClass('hidden'));
+                    }
+                }
+                var dataTable = null; // Initialize the variable globally to store the DataTable instance
+                function load_table2(type, uuid, officeId, kind) {
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    }
+
+                    // Reinitialize the DataTable for modal2
+                    dataTable = $('.table_head2').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        "columnDefs": [
+                            { "width": "5%", "targets": [0] },
+                            { "width": "20%", "targets": [1] },
+                            { "width": "15%", "targets": [2] },
+                            { "width": "25%", "targets": [3] },
+                            { "width": "35%", "targets": [4] },
+                        ],
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.content.sort((a, b) => 
+                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
+                                );
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    });
+
+                    $('.table_head2').on('draw.dt', function () {
+                        hideDuplicateRows2(); // Call function specific to modal2
+                    });
+                }
+                $('.table_head2').on('click', '.btn-showVersions2', function () {
+                    const fileName = $(this).data('file_name');
+                    let rows = [];
+                    $('.table_head2 tbody tr').each(function () {
+                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
+                            rows.push($(this));
+                        }
+                    });
+
+                    rows.sort((a, b) => {
+                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
+                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
+                        return versionB - versionA;
+                    });
+
+                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
+
+                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
+                    $(this).html(isHidden 
+                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
+                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                });
+
+                $('#uploadButton2').on('click', function(e) {
+                    e.preventDefault(); // Prevent default form submission for modal2
+                    $(this).prop('disabled', true).text('Uploading...');
+
+                    var formData = new FormData();
+                    formData.append('uuid', $('#docket_no2').val());
+                    formData.append('createdby', $('#petitioner_name2').val());
+                    formData.append('type', "investigation");
+                    var type = $('#type2').val();
+                    var remarks = $('#remarks2').val();
+                    if (remarks) {
+                        formData.append('remarks', type + " - " + remarks);
+                    } else {
+                        formData.append('remarks', type);
+                    }
+                    formData.append('officeId', $('#FOId2').val());
+                    formData.append('version', "0");
+                    var file = $('#fileupload2')[0].files[0];
+                    if (!file) {
+                        alert('Please select a file to upload.');
+                        $('#uploadButton2').prop('disabled', false).text('Upload');
+                        return; // Exit if no file is selected
+                    }
+                    formData.append('file', file);
+
+                    var fileInput = $('#fileupload2')[0];
+                    if (fileInput.files.length > 0) {
+                        var fileName = fileInput.files[0].name;
+                        formData.append('kind', "F5T13Term");
+                    }
+
+                    var url = `${PPIS_path_upload}/file/upload`;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Response:', response);
+                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F5T13Term");
+                                $('#remarks2').val(''); // Clear the remarks textarea
+                                $('#fileupload2').val(''); // Clear the file input
+                            
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Upload failed: ', error);
+                            alert('An error occurred during the upload.');
+                            $('#uploadButton2').prop('disabled', false).text('Upload');
+                        }
+                    });
+                });
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_b').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -6196,10 +8935,7 @@ $.wms.form5 = (function() {
             });
         }
 
-
-
         //ADD
-        
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPS', 'CPS'];
             var requiredField= [ 'add_rcv_docket_no','add_rcv_probationer','add_rcv_case_no','add_rcv_court_origin','add_rcv_date_rcv','add_rcv_supervising','add_rcv_period'];          
@@ -6256,7 +8992,33 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_rcv_docket_no").val(),
+                "fullName"              : $("#add_rcv_probationer").val(),
+                "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
+                "referralData"          : $("#add_rcv_referring_office").val(),
+                "courtOfOrigin"         : $("#add_rcv_court_origin").val(),
+                "criminalCaseNo"        : $("#add_rcv_case_no").val(),
+                "supervisingOfficer"    : $("#add_rcv_supervising").val(),
+                "supervisionStartDate"  : $("#add_rcv_period").val(),
+                "caseClassification"    : $("#add_rcv_classification").val(),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            }); 
         })
         //ADD
 
@@ -6402,6 +9164,7 @@ $.wms.form5 = (function() {
                     "period" : $("#edit_rcv_period").val(),
                     "case_classification" : $("#edit_rcv_classification").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update"
 
@@ -6477,7 +9240,27 @@ $.wms.form5 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
+            var PPISPayload = {
+                "clientType"            : "PROBATIONER",
+                "docketNumber"          : $("#add_cmpltd_docket_no").val(),
+                "fullName"              : $("#add_cmpltd_petitioner").val(),
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "manualDocket"          : false,
+                "type"                  : "PIS_SUP",
+            }
+            $.ajax({
+                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+                type: 'POST',
+                data: JSON.stringify(PPISPayload), // Pass your payload here
+                contentType: 'application/json',   // Specify content type for JSON data
+                success: function (PPISResult) {
+                    console.log(PPISResult);       // Handle success response
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', status, error); // Handle error response
+                }
+            }); 
         })
         //ADD
         //ADD_CMPLTD
@@ -6589,6 +9372,7 @@ $.wms.form5 = (function() {
                     "probationer" : $("#edit_cmpltd_petitioner").val(),
                     "terminated_date" : $("#edit_cmpltd_date").val(),
                     "field_office": $.wms.urlParam('field'),
+                    "field_office_id": $.wms.urlParam('officeId'),
                     "Y_M": $.wms.urlParam('date'),
                     "method" : "update"
 
