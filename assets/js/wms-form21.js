@@ -5082,7 +5082,7 @@ $.wms.form21 = (function() {
                                     success: function(response) {
                                         console.log('Response:', response);
                                         if ("true") {
-                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T8_parolee");
+                                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T8_parolee");
                                              // Clear the remarks textarea
                                             $('#remarks').val(''); 
                                             
@@ -5378,7 +5378,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T8_pardonee");
+                            load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T8_pardonee");
                             $('#remarks2').val(''); // Clear the remarks textarea
                             $('#fileupload2').val(''); // Clear the file input
                         
@@ -6182,7 +6182,7 @@ $.wms.form21 = (function() {
                         success: function(response) {
                             console.log('Response:', response);
                             if ("true") {
-                                load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
+                                load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
                                  // Clear the remarks textarea
                                 $('#remarks').val(''); 
                                 
@@ -6482,7 +6482,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
+                            load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
                             $('#remarks2').val(''); // Clear the remarks textarea
                             $('#fileupload2').val(''); // Clear the file input
                         
@@ -7824,7 +7824,7 @@ $.wms.form21 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -8122,7 +8122,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T11_pardonee");
+                            load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T11_pardonee");
                             $('#remarks2').val(''); // Clear the remarks textarea
                             $('#fileupload2').val(''); // Clear the file input
                         
@@ -9418,7 +9418,7 @@ $.wms.form21 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -9708,7 +9708,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T13_pardonee");
+                            load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T13_pardonee");
                             $('#remarks2').val(''); // Clear the remarks textarea
                             $('#fileupload2').val(''); // Clear the file input
                         
@@ -11015,7 +11015,7 @@ $.wms.form21 = (function() {
                                     success: function(response) {
                                         console.log('Response:', response);
                                         if ("true") {
-                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T15RR_parolee");
+                                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T15RR_parolee");
                                              // Clear the remarks textarea
                                             $('#remarks').val(''); 
                                             
@@ -11308,7 +11308,7 @@ $.wms.form21 = (function() {
                         contentType: false,
                         success: function(response) {
                             console.log('Response:', response);
-                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T15TERM_parolee");
+                                load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T15TERM_parolee");
                                 $('#remarks2').val(''); // Clear the remarks textarea
                                 $('#fileupload2').val(''); // Clear the file input
                             
@@ -11600,7 +11600,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table3('investigation', $('#docket_no3').val(), $('#FOId3').val(), "F21T15_pardonee_rcv");
+                            load_table3('supervision', $('#docket_no3').val(), $('#FOId3').val(), "F21T15_pardonee_rcv");
                             $('#remarks3').val(''); // Clear the remarks textarea
                             $('#fileupload3').val(''); // Clear the file input
                         
@@ -11892,7 +11892,7 @@ $.wms.form21 = (function() {
                             console.log('Response:', response);
 
                             // Reload the table for modal4 after successful upload
-                            load_table4('investigation', $('#docket_no4').val(), $('#FOId4').val(), "F21T15_pardonee_term");
+                            load_table4('supervision', $('#docket_no4').val(), $('#FOId4').val(), "F21T15_pardonee_term");
 
                             // Clear the form fields after upload
                             $('#remarks4').val(''); // Clear the remarks textarea

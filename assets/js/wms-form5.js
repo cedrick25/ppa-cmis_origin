@@ -5719,7 +5719,7 @@ $.wms.form5 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T8");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T8");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -6523,7 +6523,7 @@ $.wms.form5 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T9");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T9");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -7487,7 +7487,7 @@ $.wms.form5 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T11");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T11");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -8422,7 +8422,7 @@ $.wms.form5 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T13RR");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T13RR");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -8716,7 +8716,7 @@ $.wms.form5 = (function() {
                         contentType: false,
                         success: function(response) {
                             console.log('Response:', response);
-                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F5T13Term");
+                                load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F5T13Term");
                                 $('#remarks2').val(''); // Clear the remarks textarea
                                 $('#fileupload2').val(''); // Clear the file input
                             
