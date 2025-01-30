@@ -1113,5 +1113,134 @@
   </div>
 </div>
 
+<div class="modal fade in" id="modalAdd_no_report" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: ;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">No Report</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-success hidden" role="alert">
+            Successfully Created!
+          </div>
+          <div class="alert alert-danger hidden" role="alert">
+            Error!
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Field Office</label>
+            <div class="col-sm-9 filter-modal">    
+             <select class="form-control select2 modal sel_field_office" id="office_no_report">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">First name</label>
+            <div class="col-sm-9">    
+              <input name="text" id="fname_no_report" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Middle name</label>
+            <div class="col-sm-9">
+              <input name="text" id="mname_no_report" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Last name</label>
+            <div class="col-sm-9">    
+              <input name="text" id="lname_no_report" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Suffix</label>
+            <div class="col-sm-9">    
+              <input name="text" id="sname_no_report" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Date</label>
+            <div class="col-sm-9">    
+              <input name="date" id="no_report_date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" maxlength="7">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn_no_reports">Proceed</button>
+        </div>
+      </div>
+    </div>
+</div>
 
+<div class="modal fade" id="modalUpdate_no_report" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="updateModalLabel">Update No Report</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success hidden" role="alert">
+                    Successfully Updated!
+                </div>
+                <div class="alert alert-danger hidden" role="alert">
+                    Error Updating Report!
+                </div>
 
+                <input type="hidden" id="update_report_id"> <!-- Hidden ID Field -->
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Field Office</label>
+                    <div class="col-sm-9 filter-modal">
+                        <select class="form-control select2 modal sel_field_office" id="update_office_no_report"></select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">First Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="update_fname_no_report" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Middle Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="update_mname_no_report" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Last Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="update_lname_no_report" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Suffix</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="update_sname_no_report" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Date</label>
+                    <div class="col-sm-9">
+                        <input name="date" id="update_no_report_date" class="sel_date date-picker form-control" maxlength="7">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn_save_update_no_reports">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

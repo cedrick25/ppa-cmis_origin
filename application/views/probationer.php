@@ -197,6 +197,34 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="font_20"><i class="fa fa-users"></i> <b>List of different offices those which have not submitted their reports</b></span>
+                <span class="pull-right">
+                    <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd_no_report">
+                        <i class="fa fa-plus-circle"></i> Add No Report
+                    </button> -->
+                </span>
+            </div>
+            <div class="panel-body"><br>
+                <div id="result_table">
+                    <table id="no_report_table" class="display table-bordered table-condensed nowrap" style="width:100%">
+                        <thead class="tb-header small">
+                            <tr>
+                                <th style="text-align: center;">FIELD OFFICE</th>
+                                <th style="text-align: center;">CLIENT NAME</th>
+                                <th style="text-align: center;">MONTH-YEAR</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-sm" style="text-align:center"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 	<div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -522,4 +550,63 @@
 		    $(".shide").trigger("click")
 		})
    });
+
+$(document).ready(function () {
+
+	function formatFullName(report) {
+	    let fullName = `${report.first_name || ''} ${report.middle_name || ''} ${report.last_name || ''}`;
+	    
+	    // Add suffix if it exists
+	    if (report.suffix) {
+	        fullName += `, ${report.suffix}`;
+	    }
+	    // Trim extra spaces and return
+	    return fullName.trim();
+	}
+    function fetchReports() {
+	    console.log('Fetching reports...');
+		var origin = window.location.origin + "/";
+	    
+	    $.ajax({
+		    url: origin + `ppa-cmis-api_origin/wsv1/no_reports/get_reports/F5`,
+		    type: 'GET',
+		    dataType: 'json',
+		    success: function (data) {
+		        // Log the data to inspect its structure
+		        console.log('Received Data:', data);
+
+		        // Ensure that data is sorted by 'id' in descending order
+		        data.sort(function(a, b) {
+		            return parseInt(b.id) - parseInt(a.id);  // Ensure the id is treated as an integer
+		        });
+
+
+		        if ($.fn.DataTable.isDataTable('#no_report_table')) {
+		            $('#no_report_table').DataTable().clear().destroy();
+		        }
+
+		        $('#no_report_table tbody').empty();
+
+		        $.each(data, function (index, report) {
+		            $('#no_report_table tbody').append(`
+		                <tr>
+		                    <td>${report.office}</td>
+		                    <td>${formatFullName(report)}</td>
+		                    <td>${report.month_year}</td>
+		                </tr>
+		            `);
+		        });
+
+		        $('#no_report_table').DataTable(); // Reinitialize DataTable
+		    },
+		    error: function (xhr, status, error) {
+		        console.error('AJAX Error:', error);
+		    }
+		});
+
+	}
+
+    fetchReports();
+});
+
 </script>

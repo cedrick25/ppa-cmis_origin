@@ -4720,7 +4720,7 @@ $.wms.form5 = (function() {
                 "lastName"              : "",
                 "suffixName"            : "",
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "PIS_CSINV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -4960,7 +4960,7 @@ $.wms.form5 = (function() {
                 "lastName"              : "",
                 "suffixName"            : "",
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "PIS_CSINV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -9005,7 +9005,7 @@ $.wms.form5 = (function() {
                 "supervisionStartDate"  : $("#add_rcv_period").val(),
                 "caseClassification"    : $("#add_rcv_classification").val(),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "PIS_CSUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -9247,7 +9247,7 @@ $.wms.form5 = (function() {
                 "fullName"              : $("#add_cmpltd_petitioner").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "PIS_CSUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL

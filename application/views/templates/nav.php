@@ -126,6 +126,8 @@
                                 <li><a href="probationer" class="">Probation Masterlist</a></li>
                                 <li><a href="probationer_approval" class="">Probation For Approval</a></li> 
                                 <li><a href="community_service_masterlist" class="demo_purpose hidden">Community Service Masterlist</a></li> 
+                                <li><a href="no_reports" class="demo_purpose hidden">No Submitted Reports in Probation Caseload</a></li> 
+                                <li><a href="no_submitted_reports_community" class="demo_purpose hidden">No Submitted Reports in Community Service</a></li> 
                             </ul>
                         </li>
 

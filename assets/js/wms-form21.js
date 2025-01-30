@@ -1334,7 +1334,7 @@ $.wms.form21 = (function() {
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "SC_PPI_INV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -1424,7 +1424,7 @@ $.wms.form21 = (function() {
                 "transferredOfficeId"   : $("#add_acted_transfer_to").val(),
                 "ppoRecommendation"     : $("#add_acted_recommendation").val(),
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "SC_PPI_INV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -2536,7 +2536,7 @@ $.wms.form21 = (function() {
                 "receivedDateByPPO"     : $("#add_date_rcv").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "SC_PPI_INV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -3855,7 +3855,7 @@ $.wms.form21 = (function() {
                 "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "SC_PPI_CSINV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -4090,7 +4090,7 @@ $.wms.form21 = (function() {
                 "fullName"              : $("#add_cmpltd_petitioner").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_INV",
+                "type"                  : "SC_PPI_CSINV",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -5705,7 +5705,7 @@ $.wms.form21 = (function() {
                 "referralType"          : $("#add_type_referrals").val(),
                 "probationStartDate"    : $("#add_start").val(),
                 "probationEndDate"      : $("#add_end").val(),
-                "type"                  : "PIS_SUP",
+                "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -6807,7 +6807,7 @@ $.wms.form21 = (function() {
                 "dateReportSubmittedToTheBoard"                 : $("#add_submitted").val(),
                 "dateReportSubmittedToRDForTransferToOtherPPO"  : $("#add_transfer").val(),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -8454,7 +8454,7 @@ $.wms.form21 = (function() {
                 "dateReportSubmittedToTheBoard": $("#add_submitted").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -10014,7 +10014,7 @@ $.wms.form21 = (function() {
                 "dateOrderReceivedFromTheBoard": $("#add_submitted").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -12333,7 +12333,7 @@ $.wms.form21 = (function() {
                 "supervisingOfficer"    : $("#add_rcv_supervising").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "SC_PPI_CSUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
@@ -12431,7 +12431,7 @@ $.wms.form21 = (function() {
                 "fullName"              : $("#add_term_probationer").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
-                "type"                  : "PIS_SUP",
+                "type"                  : "SC_PPI_CSUP",
             }
             $.ajax({
                 url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
