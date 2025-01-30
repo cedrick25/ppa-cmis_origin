@@ -1191,7 +1191,6 @@
                 <div class="alert alert-danger hidden" role="alert">
                     Error Updating Report!
                 </div>
-
                 <input type="hidden" id="update_report_id"> <!-- Hidden ID Field -->
 
                 <div class="form-group row">
