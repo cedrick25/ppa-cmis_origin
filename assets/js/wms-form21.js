@@ -683,7 +683,7 @@ $.wms.form21 = (function() {
                                         { "width": "35%", "targets": [4] },
                                     ],
                                     ajax: {
-                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                                         type: 'GET',
                                         cache: true,
                                         data: function (d) {
@@ -989,7 +989,7 @@ $.wms.form21 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -2293,7 +2293,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -3177,7 +3177,7 @@ $.wms.form21 = (function() {
                                         { "width": "35%", "targets": [4] },
                                     ],
                                     ajax: {
-                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                                         type: 'GET',
                                         cache: true,
                                         data: function (d) {
@@ -3480,7 +3480,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -4885,7 +4885,7 @@ $.wms.form21 = (function() {
                                 $('#attachmentModal').modal('show');
 
                                 // Call load_table function
-                                load_table("investigation", docketNo, field_office_id, "F21T8_parolee");
+                                load_table("supervision", docketNo, field_office_id, "F21T8_parolee");
                             });
 
                             function tableColumns() {
@@ -4979,7 +4979,7 @@ $.wms.form21 = (function() {
                                         { "width": "35%", "targets": [4] },
                                     ],
                                     ajax: {
-                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                                         type: 'GET',
                                         cache: true,
                                         data: function (d) {
@@ -5037,7 +5037,7 @@ $.wms.form21 = (function() {
                                 var formData = new FormData();
                                 formData.append('uuid', $('#docket_no').val());
                                 formData.append('createdby', $('#petitioner_name').val());
-                                formData.append('type', "investigation");
+                                formData.append('type', "supervision");
                                 var type = $('#type').val();
                                 var remarks = $('#remarks').val();
                                 if (remarks) {
@@ -5196,7 +5196,7 @@ $.wms.form21 = (function() {
                 $('#attachmentModal2').modal('show');
 
                 // Call load_table function specific to modal2
-                load_table2("investigation", docketNo, field_office_id, "F21T8_pardonee");
+                load_table2("supervision", docketNo, field_office_id, "F21T8_pardonee");
             });
             function tableColumns() {
                 return [
@@ -5288,7 +5288,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -5345,7 +5345,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no2').val());
                 formData.append('createdby', $('#petitioner_name2').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type2').val();
                 var remarks = $('#remarks2').val();
                 if (remarks) {
@@ -6079,7 +6079,7 @@ $.wms.form21 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -6182,7 +6182,7 @@ $.wms.form21 = (function() {
                         success: function(response) {
                             console.log('Response:', response);
                             if ("true") {
-                                load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
+                                load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
                                  // Clear the remarks textarea
                                 $('#remarks').val(''); 
                                 
@@ -6392,7 +6392,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -6482,7 +6482,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
+                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
                             $('#remarks2').val(''); // Clear the remarks textarea
                             $('#fileupload2').val(''); // Clear the file input
                         
@@ -7721,7 +7721,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -7824,7 +7824,7 @@ $.wms.form21 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -8032,7 +8032,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -9315,7 +9315,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -9418,7 +9418,7 @@ $.wms.form21 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
+                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -9618,7 +9618,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -10912,7 +10912,7 @@ $.wms.form21 = (function() {
                                         { "width": "35%", "targets": [4] },
                                     ],
                                     ajax: {
-                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                                         type: 'GET',
                                         cache: true,
                                         data: function (d) {
@@ -11015,7 +11015,7 @@ $.wms.form21 = (function() {
                                     success: function(response) {
                                         console.log('Response:', response);
                                         if ("true") {
-                                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T15RR_parolee");
+                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T15RR_parolee");
                                              // Clear the remarks textarea
                                             $('#remarks').val(''); 
                                             
@@ -11218,7 +11218,7 @@ $.wms.form21 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -11308,7 +11308,7 @@ $.wms.form21 = (function() {
                         contentType: false,
                         success: function(response) {
                             console.log('Response:', response);
-                                load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T15TERM_parolee");
+                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T15TERM_parolee");
                                 $('#remarks2').val(''); // Clear the remarks textarea
                                 $('#fileupload2').val(''); // Clear the file input
                             
@@ -11509,7 +11509,7 @@ $.wms.form21 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -11799,7 +11799,7 @@ $.wms.form21 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {

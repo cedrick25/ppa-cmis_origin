@@ -1137,30 +1137,6 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="" class="col-sm-3">First name</label>
-            <div class="col-sm-9">    
-              <input name="text" id="fname_no_report" class="form-control">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="" class="col-sm-3">Middle name</label>
-            <div class="col-sm-9">
-              <input name="text" id="mname_no_report" class="form-control">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="" class="col-sm-3">Last name</label>
-            <div class="col-sm-9">    
-              <input name="text" id="lname_no_report" class="form-control">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="" class="col-sm-3">Suffix</label>
-            <div class="col-sm-9">    
-              <input name="text" id="sname_no_report" class="form-control">
-            </div>
-          </div>
-          <div class="form-group row">
             <label for="" class="col-sm-3">Date</label>
             <div class="col-sm-9">    
               <input name="date" id="no_report_date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" maxlength="7">
@@ -1197,34 +1173,6 @@
                     <label for="" class="col-sm-3">Field Office</label>
                     <div class="col-sm-9 filter-modal">
                         <select class="form-control select2 modal sel_field_office" id="update_office_no_report"></select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-3">First Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="update_fname_no_report" class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-3">Middle Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="update_mname_no_report" class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-3">Last Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="update_lname_no_report" class="form-control">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="" class="col-sm-3">Suffix</label>
-                    <div class="col-sm-9">
-                        <input type="text" id="update_sname_no_report" class="form-control">
                     </div>
                 </div>
 

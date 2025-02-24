@@ -6,7 +6,9 @@
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span class="font_20"><i class="fa fa-users"></i> <b>List of different offices those which have not submitted their reports</b></span>
+                <!-- <span class="font_20"><i class="fa fa-users"></i> <b>List of different offices those which have not submitted their reports</b></span> -->
+                <span class="font_20"> <b>NOTIFICATION:  Field Offices without Caseload Report in the System</b>
+                </span>
                 <span class="pull-right">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd_no_report">
                         <i class="fa fa-plus-circle"></i> Add No Report
@@ -19,7 +21,7 @@
                         <thead class="tb-header small">
                             <tr>
                                 <th style="text-align: center;">FIELD OFFICE</th>
-                                <th style="text-align: center;">CLIENT NAME</th>
+                                <th style="text-align: center;">REGION</th>
                                 <th style="text-align: center;">MONTH-YEAR</th>
                                 <th style="text-align: center;">ACTION</th>
                             </tr>
@@ -118,7 +120,7 @@ $(document).ready(function () {
 		            $('#no_report_table tbody').append(`
 		                <tr>
 		                    <td>${report.office}</td>
-		                    <td>${formatFullName(report)}</td>
+		                    <td>${report.region_name}</td>
 		                    <td>${report.month_year}</td>
 		                    <td>
 		                        <button class="btn btn-primary btn-sm btn_update_no_reports" data-id="${report.id}">Edit</button>
@@ -145,10 +147,6 @@ $(document).ready(function () {
 
 	    var payload = {
 	        "office": $("#office_no_report").val(),
-	        "first_name": $("#fname_no_report").val(),
-	        "middle_name": $("#mname_no_report").val(),
-	        "last_name": $("#lname_no_report").val(),
-	        "suffix": $("#sname_no_report").val(),
 	        "month_year": $("#no_report_date").val(),
 	        "office_id": $("#office_no_report").find(":selected").attr("data-id"),
 			"type": "F5",
@@ -184,11 +182,7 @@ $(document).ready(function () {
 	});
 
 	function clearAddForm() {
-	    $("#office_no_report").val('All').trigger('change'); // Clear office selection
-	    $("#fname_no_report").val(''); // Clear first name
-	    $("#mname_no_report").val(''); // Clear middle name
-	    $("#lname_no_report").val(''); // Clear last name
-	    $("#sname_no_report").val(''); // Clear suffix
+	    $("#office_no_report").val('All').trigger('change'); 
 	    $("#no_report_date").val(''); // Clear date field
 	}
 	$(document).on('click', '.btn_update_no_reports', function() {
@@ -204,10 +198,6 @@ $(document).ready(function () {
 	                // Populate modal fields with the fetched report data
 	                $("#update_report_id").val(report.id);
 	                $("#update_office_no_report").val(report.office).trigger('change');
-	                $("#update_fname_no_report").val(report.first_name);
-	                $("#update_mname_no_report").val(report.middle_name);
-	                $("#update_lname_no_report").val(report.last_name);
-	                $("#update_sname_no_report").val(report.suffix);
 	                $("#update_no_report_date").val(report.month_year);
 
 	                // Show the update modal
@@ -227,10 +217,6 @@ $(document).ready(function () {
 
 	    var payload = {
 	        "office": $("#update_office_no_report").val(),
-	        "first_name": $("#update_fname_no_report").val(),
-	        "middle_name": $("#update_mname_no_report").val(),
-	        "last_name": $("#update_lname_no_report").val(),
-	        "suffix": $("#update_sname_no_report").val(),
 	        "month_year": $("#update_no_report_date").val(),
 	        "office_id": $("#update_office_no_report").find(":selected").attr("data-id")
 	    };

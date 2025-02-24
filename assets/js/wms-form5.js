@@ -646,7 +646,7 @@ $.wms.form5 = (function() {
                                         { "width": "35%", "targets": [4] },
                                     ],
                                     ajax: {
-                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                                         type: 'GET',
                                         cache: true,
                                         data: function (d) {
@@ -954,7 +954,7 @@ $.wms.form5 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -1241,7 +1241,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -1529,7 +1529,7 @@ $.wms.form5 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -3108,7 +3108,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -4043,7 +4043,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -4348,7 +4348,7 @@ $.wms.form5 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -5479,9 +5479,9 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> Attachment</button> " +
-                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
+                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -5522,7 +5522,7 @@ $.wms.form5 = (function() {
                 $('#attachmentModal').modal('show');
 
                 // Call load_table function
-                load_table("investigation", docketNo, field_office_id, "F5T8");
+                load_table("supervision", docketNo, field_office_id, "F5T8");
             });
 
             function tableColumns() {
@@ -5616,7 +5616,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -5674,7 +5674,7 @@ $.wms.form5 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no').val());
                 formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type').val();
                 var remarks = $('#remarks').val();
                 if (remarks) {
@@ -6280,9 +6280,9 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> Attachment</button> " +
-                        "<button class='btn btn-success btn-xs btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='btn btn-success btn-xs btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
+                        "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -6326,7 +6326,7 @@ $.wms.form5 = (function() {
                 $('#attachmentModal').modal('show');
 
                 // Call load_table function
-                load_table("investigation", docketNo, field_office_id, "F5T9");
+                load_table("supervision", docketNo, field_office_id, "F5T9");
             });
 
             function tableColumns() {
@@ -6420,7 +6420,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -6478,7 +6478,7 @@ $.wms.form5 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no').val());
                 formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type').val();
                 var remarks = $('#remarks').val();
                 if (remarks) {
@@ -6646,7 +6646,7 @@ $.wms.form5 = (function() {
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF5T9PageEvent();
-                    // location.reload();
+                    location.reload();
                 }else{
                     //Error Prompt
                 }
@@ -7244,9 +7244,9 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> Attachment</button> " +
-                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> Update</button> "+
-                        "<button class='btn btn-danger access_f5_write btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> Delete</button> </td></tr>")
+                        "<button class='access_f5_write btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
+                        "<button class='btn btn-danger access_f5_write btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
                 ___tableControls();
             }else{
@@ -7290,7 +7290,7 @@ $.wms.form5 = (function() {
                 $('#attachmentModal').modal('show');
 
                 // Call load_table function
-                load_table("investigation", docketNo, field_office_id, "F5T11");
+                load_table("supervision", docketNo, field_office_id, "F5T11");
             });
 
             function tableColumns() {
@@ -7384,7 +7384,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -7442,7 +7442,7 @@ $.wms.form5 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no').val());
                 formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type').val();
                 var remarks = $('#remarks').val();
                 if (remarks) {
@@ -8225,7 +8225,7 @@ $.wms.form5 = (function() {
                 $('#attachmentModal').modal('show');
 
                 // Call load_table function
-                load_table("investigation", docketNo, field_office_id, "F5T13RR");
+                load_table("supervision", docketNo, field_office_id, "F5T13RR");
             });
 
             function tableColumns() {
@@ -8319,7 +8319,7 @@ $.wms.form5 = (function() {
                         { "width": "35%", "targets": [4] },
                     ],
                     ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
                         cache: true,
                         data: function (d) {
@@ -8377,7 +8377,7 @@ $.wms.form5 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no').val());
                 formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type').val();
                 var remarks = $('#remarks').val();
                 if (remarks) {
@@ -8534,7 +8534,7 @@ $.wms.form5 = (function() {
                     $('#attachmentModal2').modal('show');
 
                     // Call load_table function specific to modal2
-                    load_table2("investigation", docketNo, field_office_id, "F5T13Term");
+                    load_table2("supervision", docketNo, field_office_id, "F5T13Term");
                 });
                 function tableColumns() {
                     return [
@@ -8626,7 +8626,7 @@ $.wms.form5 = (function() {
                             { "width": "35%", "targets": [4] },
                         ],
                         ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${officeId}/${kind}`,
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
                             cache: true,
                             data: function (d) {
@@ -8683,7 +8683,7 @@ $.wms.form5 = (function() {
                     var formData = new FormData();
                     formData.append('uuid', $('#docket_no2').val());
                     formData.append('createdby', $('#petitioner_name2').val());
-                    formData.append('type', "investigation");
+                    formData.append('type', "supervision");
                     var type = $('#type2').val();
                     var remarks = $('#remarks2').val();
                     if (remarks) {

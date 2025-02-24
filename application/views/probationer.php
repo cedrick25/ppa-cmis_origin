@@ -201,7 +201,7 @@
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span class="font_20"><i class="fa fa-users"></i> <b>List of different offices those which have not submitted their reports</b></span>
+                <span class="font_20"> <b>NOTIFICATION:  Field Offices without Caseload Report in the System</b>
                 <span class="pull-right">
                     <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd_no_report">
                         <i class="fa fa-plus-circle"></i> Add No Report
@@ -591,7 +591,7 @@ $(document).ready(function () {
 		            $('#no_report_table tbody').append(`
 		                <tr>
 		                    <td>${report.office}</td>
-		                    <td>${formatFullName(report)}</td>
+		                    <td>${report.region_name}</td>
 		                    <td>${report.month_year}</td>
 		                </tr>
 		            `);
