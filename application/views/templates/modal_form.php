@@ -932,9 +932,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="50%">File Name</th>
+                          <th width="40%">File Name</th>
                           <th width="20%">Type</th>
-                          <th width="25%">Actions</th>
+                          <th width="35%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -1021,9 +1021,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="50%">File Name</th>
+                          <th width="40%">File Name</th>
                           <th width="20%">Type</th>
-                          <th width="25%">Actions</th>
+                          <th width="35%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
