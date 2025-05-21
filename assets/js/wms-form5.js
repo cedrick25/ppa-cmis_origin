@@ -656,7 +656,7 @@ $.wms.form5 = (function() {
                                 });
                                 setTimeout(function () {
                                     dataTable.columns.adjust().draw();
-                                }, 100);
+                                }, 200);
                             }
 
                             $('#uploadButton').on('click', function(e) {
