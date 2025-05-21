@@ -752,10 +752,10 @@
                     <table id="inv_table" class="table table-bordered table_head" width="100%">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>File Name</th>
-                          <th>Type</th>
-                          <th>Actions</th>
+                          <th width="5%">#</th>
+                          <th width="50%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="25%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
