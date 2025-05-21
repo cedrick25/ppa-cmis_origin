@@ -163,6 +163,28 @@ $.wms.form5 = (function() {
 
     }
 
+    function deleteItem(event) {
+        const id = $(event.currentTarget).data('id');
+        const filePath = $(event.currentTarget).data('file_path');
+        const fileName = $(event.currentTarget).data('file_name');
+
+        console.log('Deleting item:', { id, filePath, fileName });
+
+        if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
+            $.ajax({
+                url: `${PPIS_path_upload}/file/delete/${id}`, // Corrected this line
+                method: 'POST',
+                data: { id, file_path: filePath, file_name: fileName },
+                success: function(response) {
+                    alert('Deleted successfully!');
+                    // You can reload your table or remove the element from DOM here
+                },
+                error: function(err) {
+                    alert('Failed to delete.');
+                }
+            });
+        }
+    }
     var __attachF5T1PageEvent = function() {
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
@@ -580,7 +602,7 @@ $.wms.form5 = (function() {
                                                         <i class='fa fa-download'></i> Download
                                                     </button>
                                                 </a>
-                                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                                     <i class='fa fa-trash'></i> Delete
                                                 </button>
                                             `;
@@ -589,6 +611,7 @@ $.wms.form5 = (function() {
                                     }
                                 ];
                             }
+                            $(document).on('click', '.btn-delete-upload', deleteItem);
 
                             var dataTable = null; // Initialize DataTable globally
 
@@ -2700,28 +2723,6 @@ $.wms.form5 = (function() {
         
 
     };
-    function deleteItem(event) {
-        const id = $(event.currentTarget).data('id');
-        const filePath = $(event.currentTarget).data('file_path');
-        const fileName = $(event.currentTarget).data('file_name');
-
-        console.log('Deleting item:', { id, filePath, fileName });
-
-        if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
-            $.ajax({
-                url: `${PPIS_path_upload}/file/delete/${id}`, // Corrected this line
-                method: 'POST',
-                data: { id, file_path: filePath, file_name: fileName },
-                success: function(response) {
-                    alert('Deleted successfully!');
-                    // You can reload your table or remove the element from DOM here
-                },
-                error: function(err) {
-                    alert('Failed to delete.');
-                }
-            });
-        }
-    }
 
     var __attachF5T4PageEvent = function() {
         var payload = {
