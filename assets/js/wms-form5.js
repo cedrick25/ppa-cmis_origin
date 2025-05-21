@@ -1844,32 +1844,32 @@ $.wms.form5 = (function() {
                 }
             });
 
-            var PPISPayload = {
-                    "clientType"            : "PROBATIONER",
-                    "docketNumber"          : $("#add_acted_docket_no").val(),
-                    "fullName"              : $("#add_acted_petitioner").val(),
-                    "firstName"             : null,
-                    "middleName"            : null,
-                    "lastName"              : null,
-                    "suffixName"            : null,
-                    "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
-                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "manualDocket"          : false,
-                    "ppoRecommendation"     : $("#add_acted_recommendation").val(),
-                    "type"                  : "PIS_INV",
-                }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            // var PPISPayload = {
+            //         "clientType"            : "PROBATIONER",
+            //         "docketNumber"          : $("#add_acted_docket_no").val(),
+            //         "fullName"              : $("#add_acted_petitioner").val(),
+            //         "firstName"             : null,
+            //         "middleName"            : null,
+            //         "lastName"              : null,
+            //         "suffixName"            : null,
+            //         "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
+            //         "fieldOfficeId"         : $.wms.urlParam('officeId'),
+            //         "manualDocket"          : false,
+            //         "ppoRecommendation"     : $("#add_acted_recommendation").val(),
+            //         "type"                  : "PIS_INV",
+            //     }
+            // $.ajax({
+            //     url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+            //     type: 'POST',
+            //     data: JSON.stringify(PPISPayload), // Pass your payload here
+            //     contentType: 'application/json',   // Specify content type for JSON data
+            //     success: function (PPISResult) {
+            //         console.log(PPISResult);       // Handle success response
+            //     },
+            //     error: function (xhr, status, error) {
+            //         console.error('Error:', status, error); // Handle error response
+            //     }
+            // });
         });
 
          //Add NOT ACTED
@@ -1927,32 +1927,32 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
-            var PPISPayload = {
-                    "clientType"            : "PROBATIONER",
-                    "docketNumber"          : $("#add_notacted_docket_no").val(),
-                    "fullName"              : $("#add_notacted_petitioner").val(),
-                    "firstName"             : null,
-                    "middleName"            : null,
-                    "lastName"              : null,
-                    "suffixName"            : null,
-                    "receivedDateByPPO"     : $("#add_notacted_date").val(),
-                    // "type"                  : $("#add_notacted_decision").val(),
-                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                    "manualDocket"          : false,
-                    "type"                  : "PIS_INV",
-                }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            // var PPISPayload = {
+            //         "clientType"            : "PROBATIONER",
+            //         "docketNumber"          : $("#add_notacted_docket_no").val(),
+            //         "fullName"              : $("#add_notacted_petitioner").val(),
+            //         "firstName"             : null,
+            //         "middleName"            : null,
+            //         "lastName"              : null,
+            //         "suffixName"            : null,
+            //         "receivedDateByPPO"     : $("#add_notacted_date").val(),
+            //         // "type"                  : $("#add_notacted_decision").val(),
+            //         "fieldOfficeId"         : $.wms.urlParam('officeId'),
+            //         "manualDocket"          : false,
+            //         "type"                  : "PIS_INV",
+            //     }
+            // $.ajax({
+            //     url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
+            //     type: 'POST',
+            //     data: JSON.stringify(PPISPayload), // Pass your payload here
+            //     contentType: 'application/json',   // Specify content type for JSON data
+            //     success: function (PPISResult) {
+            //         console.log(PPISResult);       // Handle success response
+            //     },
+            //     error: function (xhr, status, error) {
+            //         console.error('Error:', status, error); // Handle error response
+            //     }
+            // });
         });
 
         //Download
