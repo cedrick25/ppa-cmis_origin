@@ -1071,7 +1071,7 @@ $.wms.form5 = (function() {
                                             <i class='fa fa-download'></i> Download
                                         </button>
                                     </a>
-                                    <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                         <i class='fa fa-trash'></i> Delete
                                     </button>
                                 `;
@@ -1082,6 +1082,7 @@ $.wms.form5 = (function() {
                     ];
                 }
 
+                $(document).on('click', '.btn-delete-upload', deleteItem);
                 var dataTable = null; // Initialize DataTable globally
 
                 function load_table3(type, uuid, officeId, kind) {
@@ -1293,7 +1294,7 @@ $.wms.form5 = (function() {
                                             <i class='fa fa-download'></i> Download
                                         </button>
                                     </a>
-                                    <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                         <i class='fa fa-trash'></i> Delete
                                     </button>
                                 `;
@@ -1303,6 +1304,7 @@ $.wms.form5 = (function() {
                         }
                     ];
                 }
+                $(document).on('click', '.btn-delete-upload', deleteItem);
 
                 var dataTable = null; // Initialize DataTable globally
 
@@ -2814,7 +2816,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -2824,6 +2826,7 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -3682,7 +3685,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -3692,6 +3695,8 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -3923,7 +3928,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -3933,6 +3938,7 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -5127,7 +5133,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -5137,6 +5143,7 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -5866,7 +5873,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -5876,6 +5883,7 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -6768,7 +6776,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -6778,6 +6786,7 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -7641,7 +7650,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -7651,6 +7660,7 @@ $.wms.form5 = (function() {
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -7884,7 +7894,7 @@ $.wms.form5 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -7895,6 +7905,7 @@ $.wms.form5 = (function() {
                 ];
             }
 
+            $(document).on('click', '.btn-delete-upload', deleteItem);
             var dataTable = null; // Initialize DataTable globally
 
             function load_table2(type, uuid, officeId, kind) {
