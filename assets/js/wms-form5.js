@@ -2700,6 +2700,28 @@ $.wms.form5 = (function() {
         
 
     };
+    function deleteItem(event) {
+        const id = $(event.currentTarget).data('id');
+        const filePath = $(event.currentTarget).data('file_path');
+        const fileName = $(event.currentTarget).data('file_name');
+
+        console.log('Deleting item:', { id, filePath, fileName });
+
+        if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
+            $.ajax({
+                url: `${PPIS_path_upload}/file/delete/${id}`, // Corrected this line
+                method: 'POST',
+                data: { id, file_path: filePath, file_name: fileName },
+                success: function(response) {
+                    alert('Deleted successfully!');
+                    // You can reload your table or remove the element from DOM here
+                },
+                error: function(err) {
+                    alert('Failed to delete.');
+                }
+            });
+        }
+    }
 
     var __attachF5T4PageEvent = function() {
         var payload = {
