@@ -748,13 +748,12 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="tab-content tab_list" style="margin-top: 10px;">
-                  <div class="tab-pane fade in active" id="Investigation">
+                  <div class="tab-pane fade in active " id="Investigation">
                     <table id="inv_table" class="table table-bordered table_head" width="100%">
                       <thead>
                         <tr>
                           <th>#</th>
                           <th>File Name</th>
-                          <th>Version</th>
                           <th>Type</th>
                           <th>Actions</th>
                         </tr>
@@ -845,7 +844,6 @@
                         <tr>
                           <th>#</th>
                           <th>File Name</th>
-                          <th>Version</th>
                           <th>Type</th>
                           <th>Actions</th>
                         </tr>
@@ -935,7 +933,6 @@
                         <tr>
                           <th>#</th>
                           <th>File Name</th>
-                          <th>Version</th>
                           <th>Type</th>
                           <th>Actions</th>
                         </tr>
@@ -1025,7 +1022,6 @@
                         <tr>
                           <th>#</th>
                           <th>File Name</th>
-                          <th>Version</th>
                           <th>Type</th>
                           <th>Actions</th>
                         </tr>
