@@ -214,7 +214,7 @@
                         <thead class="tb-header small">
                             <tr>
                                 <th style="text-align: center;">FIELD OFFICE</th>
-                                <th style="text-align: center;">CLIENT NAME</th>
+                                <th style="text-align: center;">REGION</th>
                                 <th style="text-align: center;">MONTH-YEAR</th>
                             </tr>
                         </thead>
