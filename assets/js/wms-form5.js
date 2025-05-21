@@ -878,12 +878,6 @@ $.wms.form5 = (function() {
                         "lengthMenu": [10, 25, 50, 100],
                         "pageLength": 10,
                         "ordering": false,
-                        "columnDefs": [
-                            { "width": "5%", "targets": [0] },
-                            { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                            { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                            { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                        ],
                         ajax: {
                             url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
@@ -1105,12 +1099,6 @@ $.wms.form5 = (function() {
                         "lengthMenu": [10, 25, 50, 100],
                         "pageLength": 10,
                         "ordering": false,
-                        "columnDefs": [
-                            { "width": "5%", "targets": [0] },
-                            { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                            { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                            { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                        ],
                         ajax: {
                             url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
@@ -1333,12 +1321,6 @@ $.wms.form5 = (function() {
                         "lengthMenu": [10, 25, 50, 100],
                         "pageLength": 10,
                         "ordering": false,
-                        "columnDefs": [
-                            { "width": "5%", "targets": [0] },
-                            { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                            { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                            { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                        ],
                         ajax: {
                             url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                             type: 'GET',
@@ -2860,12 +2842,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -3734,12 +3710,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -3981,12 +3951,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -5191,12 +5155,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -5936,12 +5894,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -6844,12 +6796,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -7723,12 +7669,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
@@ -7972,12 +7912,6 @@ $.wms.form5 = (function() {
                     "lengthMenu": [10, 25, 50, 100],
                     "pageLength": 10,
                     "ordering": false,
-                    "columnDefs": [
-                        { "width": "5%", "targets": [0] },
-                        { "width": "20%", "targets": [1] }, // Adjusted width for file name
-                        { "width": "20%", "targets": [2] }, // Adjusted width for remarks
-                        { "width": "30%", "targets": [3] }  // Adjusted width for actions
-                    ],
                     ajax: {
                         url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
                         type: 'GET',
