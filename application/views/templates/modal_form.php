@@ -842,10 +842,10 @@
                     <table id="inv_table2" class="table table-bordered table_head2" width="100%">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>File Name</th>
-                          <th>Type</th>
-                          <th>Actions</th>
+                          <th width="5%">#</th>
+                          <th width="50%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="25%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -931,10 +931,10 @@
                     <table id="inv_table3" class="table table-bordered table_head3" width="100%">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>File Name</th>
-                          <th>Type</th>
-                          <th>Actions</th>
+                          <th width="5%">#</th>
+                          <th width="50%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="25%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -1020,10 +1020,10 @@
                     <table id="inv_table4" class="table table-bordered table_head4" width="100%">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>File Name</th>
-                          <th>Type</th>
-                          <th>Actions</th>
+                          <th width="5%">#</th>
+                          <th width="50%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="25%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
