@@ -296,6 +296,7 @@ $.wms.probationer = (function() {
 		    				var endyy 	= result.payload.ENDYY;
 		    				var endmm 	= result.payload.ENDMM;
 		    				var enddd 	= result.payload.ENDDD;
+		    				var fo 		= result.payload.FIELD_OFFICE
 		    				$("#modalRequest").modal('show')
 
 			            	$(".saveRequest").unbind('click').on('click', function(){
@@ -311,7 +312,7 @@ $.wms.probationer = (function() {
 			                        "MIDDLENAME"    :mname,
 			                        "LASTNAME"      :lname,
 			                        "ALIAS"         :alias,
-			                        "SUPVOFFICE"    :superv,
+			                        "SUPVOFFICE"    :fo,
 			                        "REMARKS"       :remarks,
 			                        "STARTMM"       :startmm,
 			                        "STARTDD"       :startdd,

@@ -208,6 +208,11 @@ $.wms.dashboard = (function() {
                             case "22" : $(".access_cppo_write").remove();   break;
                             case "23" : $.cookie("analyst", "false");   break;
                             case "25" : $.cookie("carryoverOverride", "false");   break;
+                            case "26" : $(".access_rc").remove();   break;
+                            case "27" : $(".access_pfa").remove();   break;
+                            case "28" : $(".access_csm").remove();   break;
+                            case "29" : $(".access_pc_exception").remove();   break;
+                            case "30" : $(".access_cs_exception").remove();   break;
                         }
                     }else{
                         switch(ACCESS_RIGHTS[i].USER_LEVEL_MODULE_ID){

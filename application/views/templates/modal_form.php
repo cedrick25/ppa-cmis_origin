@@ -692,10 +692,364 @@
       </div>
     </div>
   </div>
+<div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header tb-header">
+        <h4 class="modal-title" id=""><i class="fa fa-upload"></i> Upload Attachment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body modal-loader2 hidden">
+        <div class="row text-center">
+          <div>
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i> Loading Data...
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <label for="type" class="col-md-3 col-form-label">Docket no.</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="docket_no" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type" class="col-md-3 col-form-label">Petitioner's Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="petitioner_name" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type" class="col-md-3 col-form-label">Type</label>
+              <div class="col-md-9">
+                <select class="form-control type" id="type" name="type" required>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row remarks-row" style="display: none;">
+                <label for="remarks" class="col-md-3 col-form-label">Remarks</label>
+                <div class="col-md-9">
+                    <textarea class="form-control remarks" id="remarks" name="remarks" rows="2" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="fileupload" class="col-md-3 col-form-label">Upload File</label>
+              <div class="col-md-9">
+                <input type="file" class="form-control-file" id="fileupload" accept=".jpg, .png, .pdf, .docx" required>
+              </div>
+            </div>
+            <input type="hidden" id="FOId" name="FOId">
 
+            <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="tab-content tab_list" style="margin-top: 10px;">
+                  <div class="tab-pane fade in active " id="Investigation">
+                    <table id="inv_table" class="table table-bordered table_head" width="100%">
+                      <thead>
+                        <tr>
+                          <th width="5%">#</th>
+                          <th width="40%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="35%">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table_body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+          </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer d-flex align-items-center">
+        <div class="row w-100">
+          <div class="col-sm-6">
+              <span>Powered by PPIS</span>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+              <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="attachmentModal2" tabindex="-1" role="dialog" aria-labelledby="attachmentModalLabel2">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header tb-header">
+        <h4 class="modal-title" id=""><i class="fa fa-upload"></i> Upload Attachment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body modal-loader2 hidden">
+        <div class="row text-center">
+          <div>
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i> Loading Data...
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <label for="type2" class="col-md-3 col-form-label">Docket no.</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="docket_no2" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type2" class="col-md-3 col-form-label">Petitioner's Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="petitioner_name2" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type2" class="col-md-3 col-form-label">Type</label>
+              <div class="col-md-9">
+                <select class="form-control type" id="type2" name="type2" required>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row remarks-row2" style="display: none;">
+                <label for="remarks2" class="col-md-3 col-form-label">Remarks</label>
+                <div class="col-md-9">
+                    <textarea class="form-control remarks" id="remarks2" name="remarks2" rows="2" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="fileupload2" class="col-md-3 col-form-label">Upload File</label>
+              <div class="col-md-9">
+                <input type="file" class="form-control-file" id="fileupload2" accept=".jpg, .png, .pdf, .docx" required>
+              </div>
+            </div>
+            <input type="hidden" id="FOId2" name="FOId2">
 
+            <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="tab-content tab_list" style="margin-top: 10px;">
+                  <div class="tab-pane fade in active" id="Investigation2">
+                    <table id="inv_table2" class="table table-bordered table_head2" width="100%">
+                      <thead>
+                        <tr>
+                          <th width="5%">#</th>
+                          <th width="40%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="35%">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table_body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+          </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer d-flex align-items-center">
+        <div class="row w-100">
+          <div class="col-sm-6">
+              <span>Powered by PPIS</span>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+              <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton2">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="attachmentModal3" tabindex="-1" role="dialog" aria-labelledby="attachmentModalLabel3">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header tb-header">
+        <h4 class="modal-title" id=""><i class="fa fa-upload"></i> Upload Attachment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body modal-loader3 hidden">
+        <div class="row text-center">
+          <div>
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i> Loading Data...
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <label for="type3" class="col-md-3 col-form-label">Docket no.</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="docket_no3" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type3" class="col-md-3 col-form-label">Petitioner's Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="petitioner_name3" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type3" class="col-md-3 col-form-label">Type</label>
+              <div class="col-md-9">
+                <select class="form-control type" id="type3" name="type3" required>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row remarks-row3" style="display: none;">
+                <label for="remarks3" class="col-md-3 col-form-label">Remarks</label>
+                <div class="col-md-9">
+                    <textarea class="form-control remarks" id="remarks3" name="remarks3" rows="2" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="fileupload3" class="col-md-3 col-form-label">Upload File</label>
+              <div class="col-md-9">
+                <input type="file" class="form-control-file" id="fileupload3" accept=".jpg, .png, .pdf, .docx" required>
+              </div>
+            </div>
+            <input type="hidden" id="FOId3" name="FOId3">
+
+            <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="tab-content tab_list" style="margin-top: 10px;">
+                  <div class="tab-pane fade in active" id="Investigation3">
+                    <table id="inv_table3" class="table table-bordered table_head3" width="100%">
+                      <thead>
+                        <tr>
+                          <th width="5%">#</th>
+                          <th width="40%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="35%">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table_body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer d-flex align-items-center">
+        <div class="row w-100">
+          <div class="col-sm-6">
+              <span>Powered by PPIS</span>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+              <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton3">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="attachmentModal4" tabindex="-1" role="dialog" aria-labelledby="attachmentModalLabel4">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header tb-header">
+        <h4 class="modal-title" id=""><i class="fa fa-upload"></i> Upload Attachment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body modal-loader4 hidden">
+        <div class="row text-center">
+          <div>
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i> Loading Data...
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group row">
+              <label for="type4" class="col-md-3 col-form-label">Docket no.</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="docket_no4" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type4" class="col-md-3 col-form-label">Petitioner's Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="petitioner_name4" readonly>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="type4" class="col-md-3 col-form-label">Type</label>
+              <div class="col-md-9">
+                <select class="form-control type" id="type4" name="type4" required>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row remarks-row4" style="display: none;">
+                <label for="remarks4" class="col-md-3 col-form-label">Remarks</label>
+                <div class="col-md-9">
+                    <textarea class="form-control remarks" id="remarks4" name="remarks4" rows="2" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="fileupload4" class="col-md-3 col-form-label">Upload File</label>
+              <div class="col-md-9">
+                <input type="file" class="form-control-file" id="fileupload4" accept=".jpg, .png, .pdf, .docx" required>
+              </div>
+            </div>
+            <input type="hidden" id="FOId4" name="FOId4">
+
+            <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="tab-content tab_list" style="margin-top: 10px;">
+                  <div class="tab-pane fade in active" id="Investigation4">
+                    <table id="inv_table4" class="table table-bordered table_head4" width="100%">
+                      <thead>
+                        <tr>
+                          <th width="5%">#</th>
+                          <th width="40%">File Name</th>
+                          <th width="20%">Type</th>
+                          <th width="35%">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody class="table_body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer d-flex align-items-center">
+        <div class="row w-100">
+          <div class="col-sm-6">
+              <span>Powered by PPIS</span>
+          </div>
+          <div class="col-sm-6" style="text-align: right;">
+              <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton4">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Modal -->
 <div id="modalChangePassword" class="modal fade" role="dialog">
@@ -755,5 +1109,81 @@
   </div>
 </div>
 
+<div class="modal fade in" id="modalAdd_no_report" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: ;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+           <h4 class="modal-title" id="exampleModalLabel">No Report</h4>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-success hidden" role="alert">
+            Successfully Created!
+          </div>
+          <div class="alert alert-danger hidden" role="alert">
+            Error!
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Field Office</label>
+            <div class="col-sm-9 filter-modal">    
+             <select class="form-control select2 modal sel_field_office" id="office_no_report">
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="" class="col-sm-3">Date</label>
+            <div class="col-sm-9">    
+              <input name="date" id="no_report_date" class="sel_date date-picker form-control" value="<?php echo date("Y-m"); ?>" maxlength="7">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary btn_no_reports">Proceed</button>
+        </div>
+      </div>
+    </div>
+</div>
 
+<div class="modal fade" id="modalUpdate_no_report" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="updateModalLabel">Update No Report</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success hidden" role="alert">
+                    Successfully Updated!
+                </div>
+                <div class="alert alert-danger hidden" role="alert">
+                    Error Updating Report!
+                </div>
+                <input type="hidden" id="update_report_id"> <!-- Hidden ID Field -->
 
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Field Office</label>
+                    <div class="col-sm-9 filter-modal">
+                        <select class="form-control select2 modal sel_field_office" id="update_office_no_report"></select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="" class="col-sm-3">Date</label>
+                    <div class="col-sm-9">
+                        <input name="date" id="update_no_report_date" class="sel_date date-picker form-control" maxlength="7">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn_save_update_no_reports">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>

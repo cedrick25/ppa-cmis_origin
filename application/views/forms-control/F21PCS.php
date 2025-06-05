@@ -44,7 +44,6 @@
       <div class="modal-header tb-header">
         <h4 class="modal-title" id=""><i class="fa fa-pencil"></i> Update Record</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          
         </button>
       </div>
       <div class="modal-body modal-loader2 hidden">

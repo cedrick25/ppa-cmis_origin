@@ -12,256 +12,28 @@
 					<span class="font_20 pull-right shide " style="cursor: pointer;"><i class="fa fa-caret-square-o-up"></i> <u>H</u>ide</span>
 				</div>
 				<div class="panel-body p1 pp1" style=""><br/>
-					<div class="col-lg-12">
-			      <div class="row">
-			        <div class="col-lg-6">
-			          <div class="form-group row">
-			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Forms</label>
-			            <div class="col-sm-8">
-			              <select class="form-control select2" id="RC_forms">
-			                <option value="F5">F5</option>
-			                <option value="F21">F21</option>
-			                <option value="F44">F44</option>
-			                <option value="F45">F45</option>
-			                <option value="F50">F50</option>
-			                <option value="F51">F51</option>
-			                <option value="F53">F53</option>
-			              </select>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="col-lg-6">
-			          <div class="form-group row">
-			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Table</label>
-			            <div class="col-sm-8">
-    								<div id="RC-5-forms-container" class="hidden">
-				            	<select class="form-control select2" id="RC-5-forms">
-					            	<optgroup label="Forms 5">
-						                <option value="F5T1">TABLE 1 - CARRY OVER PROBATION INVESTIGATION CASELOAD</option>
-						                <option value="F5T2">TABLE 2 - COURT INVESTIGATION REFERRALS RECEIVED, ACTED UPON, AND NOT ACTED UPON</option>
-						                <option value="F5T3">TABLE 3 - CARRY OVER PROBATION INVESTIGATION CASES PENDING DISPOSITION IN COURT</option>
-						                <option value="F5T4">TABLE 4 - PROBATION INVESTIGATION CASES DISPOSED OF BY THE COURT AND ISSUANCE OF</option>
-						                <option value="F5T5">TABLE 5 - CARRY OVER COURTESY PROBATION INVESTIGATION REFERRALS RECEIVED</option>
-						                <option value="F5T6">TABLE 6 - NEW COURTESY PROBATION INVESTIGATION REFERRALS RECEIVED, AND COMPLETED AND RETURNED</option>
-						                <option value="F5T7">TABLE 7 - CARRY OVER PROBATION SUPERVISION CASELOAD</option>
-						                <option value="F5T8">TABLE 8 - PROBATION SUPERVISION REFERRALS RECEIVED</option>
-						                <option value="F5T9">TABLE 9 - PROBATION SUPERVISION CASES ACTED UPON</option>
-						                <option value="F5T10">TABLE 10 - CARRY OVER PROBATION SUPERVISION CASES PENDING DISPOSITION IN COURT</option>
-						                <option value="F5T11">TABLE 11 - PROBATION SUPERVISION CASES DISPOSED OF BY THE COURT</option>
-						                <option value="F5T12">TABLE 12 - CARRY OVER COURTESY PROBATION SUPERVISION REFERRALS RECEIVED</option>
-						                <option value="F5T13">TABLE 13 - NEW COURTESY PROBATION SUPERVISION REFERRALS RECEIVED AND TERMINATED</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-										<div id="RC-21-forms-container" class="hidden">
-			              	<select class="form-control select2" id="RC-21-forms">
-			              		<optgroup label="Forms 21">
-					                <option value="F21T1">Table 1 - CARRY OVER PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASELOAD</option>
-					                <option value="F21T2">Table 2 - PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
-					                <option value="F21T3">Table 3 - CARRY OVER PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASES PENDING RESOLUTION BY THE BOARD</option>
-					                <option value="F21T4">Table 4 - PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION CASES RESOLVED BY THE BOARD</option>
-					                <option value="F21T5">Table 5 - CARRY OVER COURTESY PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS RECEIVED</option>
-					                <option value="F21T6">Table 6 - NEW COURTESY PRE-PAROLE/EXECUTIVE CLEMENCY INVESTIGATION REFERRALS RECEIVED AND COMPLETED AND RETURNED</option>
-					                <option value="F21T7">Table 7 - CARRY OVER PAROLE AND PARDON SUPERVISION CASELOAD</option>
-					                <option value="F21T8">Table 8 - PAROLE AND PARDON SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F21T9">Table 9 - PAROLE AND PARDON SUPERVISION CASES ACTED UPON</option>
-					                <option value="F21T10">Table 10 - CARRY OVER PAROLE AND PARDON SUPERVISION CASES PENDING RESOLUTION BY THE BOARD</option>
-					                <option value="F21T11">Table 11 - PAROLE AND PARDON SUPERVISION CASES RESOLVED BY THE BOARD</option>
-					                <option value="F21T12">Table 12 - CARRY OVER PAROLE AND PARDON SUPERVISION CASES PENDING RESOLUTION BY THE REGIONAL DIRECTOR</option>
-					                <option value="F21T13">Table 13 - PAROLE AND PARDON SUPERVISION CASES RESOLVED BY THE REGIONAL DIRECTOR</option>
-					                <option value="F21T14">Table 14 - CARRY OVER COURTESY PAROLE AND PARDON SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F21T15">Table 15 - NEW COURTESY PAROLE AND PARDON SUPERVISION REFERRALS RECEIVED AND TERMINATED</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-										<div id="RC-44-forms-container" class="hidden">
-			              	<select class="form-control select2" id="RC-44-forms">
-			              		<optgroup label="Forms 44">
-					                <option value="F44T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
-					                <option value="F44T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
-					                <option value="F44T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE EXECUTIVE DIRECTOR</option>
-					                <option value="F44T4">Table 4 - INVESTIGATION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
-					                <option value="F44T5">Table 5 - CARRY OVER COURTESY REFERRALS RECEIVED</option>
-					                <option value="F44T6">Table 6 - COURTESY INVESTIGATION REFERRALS RECEIVED AND COMPLETED AND RETURNED</option>
-					                <option value="F44T7">Table 7 - CARRY OVER SUPERVISION CASELOAD</option>
-					                <option value="F44T8">Table 8 - SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F44T9">Table 9 - SUPERVISION CASES ACTED UPON</option>
-					                <option value="F44T10">Table 10 - CARRY OVER SUPERVISION CASES PENDING RESOLUTION BY THE EXECUTIVE DIRECTOR</option>
-					                <option value="F44T11">Table 11 - SUPERVISION CASES DISPOSED OF BY THE EXECUTIVE DIRECTOR</option>
-					                <option value="F44T12">Table 12 - CARRY OVER COURTESY SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F44T13">Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND TERMINATED</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-										<div id="RC-45-forms-container" class="hidden">
-			              	<select class="form-control select2" id="RC-45-forms">
-			              		<optgroup label="Forms 45">
-					                <option value="F45T1">Table 1 - CARRY OVER INVESTIGATION CASELOAD</option>
-					                <option value="F45T2">Table 2 - INVESTIGATION REFERRALS RECEIVED AND ACTED UPON</option>
-					                <option value="F45T3">Table 3 - CARRY OVER INVESTIGATION CASES PENDING DISPOSITION BY THE COURT</option>
-					                <option value="F45T4">Table 4 - INVESTIGATION CASES DISPOSED OF BY THE COURT</option>
-					                <option value="F45T5">Table 5 - CARRY OVER COURTESY INVESTIGATION REFERRALS RECEIVED</option>
-					                <option value="F45T6">Table 6 - COURTESY INVESTIGATION REFERRALS RECEIVED AND COMPLETED AND RETURNED</option>
-					                <option value="F45T7">Table 7 - CARRY OVER SUPERVISION CASELOAD</option>
-					                <option value="F45T8">Table 8 - SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F45T9">Table 9 - SUPERVISION REFERRALS ACTED UPON</option>
-					                <option value="F45T10">Table 10 - CARRY OVER SUPERVISION CASES PENDING DISPOSITION BY THE COURT</option>
-					                <option value="F45T11">Table 11 - SUPERVISION CASES DISPOSED OF BY THE COURT</option>
-					                <option value="F45T12">Table 12 - CARRY OVER COURTESY SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F45T13">Table 13 - COURTESY SUPERVISION REFERRALS RECEIVED AND COMPLETED AND TERMINATED</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-										<div id="RC-50-forms-container" class="hidden">
-			              	<select class="form-control select2" id="RC-50-forms">
-			              		<optgroup label="Forms 50">
-					                <option value="F50VCCS">VOLUNTARY CONFINEMENT CASELOAD SUMMARY</option>
-					                <option value="F50T1">Table 1 - VOLUNTARY CONFINEMENT CASES HANDLED</option>
-					                <option value="F50T2">Table 2 - COURT DISPOSITION ON VOLUNTARY CONFINEMENT</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-										<div id="RC-51-forms-container" class="hidden">
-			              	<select class="form-control select2" id="RC-51-forms">
-			              		<optgroup label="Forms 51">
-					                <option value="F51T1">Table 1 - CARRY OVER SUPERVISION CASELOAD</option>
-					                <option value="F51T2">Table 2 - SUPERVISION REFERRALS RECEIVED</option>
-					                <option value="F51T3">Table 3 - MONITORING REPORT SUBMITTED TO COURT</option>
-					                <option value="F51T4">Table 4 - COURT DISPOSITION OF RELEASE ON RECOGNIZANCE</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-										<div id="RC-53-forms-container" class="hidden">
-			              	<select class="form-control select2" id="RC-53-forms">
-			              		<optgroup label="Forms 53">
-					                <option value="F53T1">Table 1 - CARRY OVER FOR APPLICATION FOR COMMUNITY SERVICE CASELOAD</option>
-					                <option value="F53T2">Table 2 - NEW APPLICATION FOR COMMUNITY SERVICE RECEIVED</option>
-					                <option value="F53T3">Table 3 - CARRY OVER NOTICE OF HEARING RECEIVED</option>
-					                <option value="F53T4">Table 4 - NEW NOTICE OF HEARING RECEIVED</option>
-					                <option value="F53T5">Table 5 - CARRY OVER FOR ORDER RECEIVED REGARDING SETTING APPLICATION FOR HEARING AND SUBMISSION REPORTS</option>
-					                <option value="F53T6">Table 6 - NEW ORDER RECEIVED REGARDING SETTING APPLICATION FOR HEARING AND SUBMISSION OF REPORTS AND COMMUNITY SERVICE PROGRAM AND REHABILITATION COUNSELLING SCHEDULE SUBMITTED</option>
-					                <option value="F53T7">Table 7 - CARRY OVER APPLICATION PENDING DISPOSITION IN COURT</option>
-					                <option value="F53T8">Table 8 - APPLICATION FOR COMMUNITY SERVICE RESOLVED BY THE COURT</option>
-					                <option value="F53T9">Table 9 - CARRY OVER COMMUNITY SERVICE CASELOAD</option>
-					                <option value="F53T10">Table 10 - NEW COMMUNITY SERVICE CASELOAD</option>
-					                <option value="F53T11">Table 11 - COMMUNITY SERVICES TERMINATED</option>
-				                </optgroup>
-			              	</select>
-			            	</div>
-			            </div>
-			          </div>
-			        </div>
-			      </div>
-			    </div>
-			    <div class="col-lg-12">
-			      <div class="row">
-			        <div class="col-lg-6">
-			          <div class="form-group row">
-			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Field Office</label>
-			            <div class="col-sm-8">
-			             	<select class="form-control select2 sel_field_office" id="field_office">
-			              </select>
-			            </div>
-			          </div>
-			        </div>
-			        <div class="col-lg-6">
-							  <div class="form-group row">
-							    <div class="col-sm-1"></div>
-							    <!-- Year Field -->
-							    <label for="year" class="col-sm-3">Year</label>
-							    <div class="col-sm-8">
-							      <select name="Year" id="year" class="form-control select2">
-							        <!-- Example years, you can adjust this as needed -->
-							        <option value="">Select Year</option>
-							        <option value="2027">2027</option>
-							        <option value="2026">2026</option>
-							        <option value="2025">2025</option>
-							        <option value="2024">2024</option>
-							        <option value="2023">2023</option>
-							        <option value="2022">2022</option>
-							        <option value="2021">2021</option>
-							        <option value="2020">2020</option>
-							        <option value="2019">2019</option>
-							        <option value="2017">2017</option>
-							        <option value="2016">2016</option>
-							        <option value="2015">2015</option>
-							        <option value="2014">2014</option>
-							      </select>
-							    </div>
-							  </div>
-							</div>
-			      </div>
-			    </div>
-			    <div class="col-lg-12">
-			      <div class="row">
-			        <div class="col-lg-6">
-			          <div class="form-group row">
-			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Docket No.</label>
-			            <div class="col-sm-8">
-			              <input type="text" tabindex="-1"  class="form-control input-sm upperCase" id="docket_no" placeholder="">
-			            </div>
-			          </div>
-			        </div>
-			        <div class="col-lg-6">
-							  <div class="form-group row">
-							    <div class="col-sm-1"></div>
-							    <!-- Month Field -->
-							    <label for="month" class="col-sm-3">Month</label>
-							    <div class="col-sm-8">
-							      <select name="Month" id="month" class="form-control select2">
-							        <option value="">Select Month</option>
-							        <!-- Month options -->
-							        <option value="01">January</option>
-							        <option value="02">February</option>
-							        <option value="03">March</option>
-							        <option value="04">April</option>
-							        <option value="05">May</option>
-							        <option value="06">June</option>
-							        <option value="07">July</option>
-							        <option value="08">August</option>
-							        <option value="09">September</option>
-							        <option value="10">October</option>
-							        <option value="11">November</option>
-							        <option value="12">December</option>
-							      </select>
-							    </div>
-							  </div>
-							</div>
-			      </div>
-			    </div>
-			    <div class="col-lg-12">
-			      <div class="row">
-			        <div class="col-lg-6">
-			          <div class="form-group row">
-			            <div class="col-sm-1"></div>
-			            <label for="" class="col-sm-3">Name</label>
-			            <div class="col-sm-8">
-			              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="petitioner" placeholder="">
-			            </div>
-			          </div>
-			        </div>
-			        <div class="col-lg-6">
-							  <div class="form-group row">
-							    <div class="col-sm-1"></div>
-							    <!-- Quarter Field -->
-							    <label for="quarter" class="col-sm-3">Quarter</label>
-							    <div class="col-sm-8">
-							      <select name="quarter" id="quarter" class="form-control select2">
-							        <option value="">Select Quarter</option>
-							        <option value="1">1st Quarter (Jan - Mar)</option>
-							        <option value="2">2nd Quarter (Apr - Jun)</option>
-							        <option value="3">3rd Quarter (Jul - Sep)</option>
-							        <option value="4">4th Quarter (Oct - Dec)</option>
-							      </select>
-							    </div>
-							  </div>
-							</div>
-			      </div>
-			    </div>
+				    <div class="col-lg-12">
+				      <div class="row">
+				        <div class="col-lg-6">
+				          <div class="form-group row">
+				            <div class="col-sm-1"></div>
+				            <label for="" class="col-sm-3">Docket No.</label>
+				            <div class="col-sm-8">
+				              <input type="text" tabindex="-1"  class="form-control input-sm upperCase docket_no" id="docket_no" placeholder="">
+				            </div>
+				          </div>
+				        </div>
+				        <div class="col-lg-6">
+				          	<div class="form-group row">
+					            <div class="col-sm-1"></div>
+					            <label for="" class="col-sm-3">Name</label>
+					            <div class="col-sm-8">
+					              	<input type="text" tabindex="1" class="form-control input-sm upperCase name" id="name" placeholder="">
+					            </div>
+				          	</div>
+						</div>
+				      </div>
+				    </div>
 				</div>
 				<div class="panel-footer p1" style="">
 					
@@ -280,30 +52,50 @@
 		</div>
 </div>
 
-	<div class="col-md-12">
-		<div class="panel panel-primary">
-			<div class="panel-body">
-				<div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
-				<div id="result_table" class="">
-					<table id="f5t1" class="display table-bordered table-condensed nowrap" style="width:100%">
-		        <thead class="tb-header small">
-		          <tr>
-		            <th style="text-align: center;">ID</th>
-		            <th style="text-align: center;">DOCKET NO.</th>
-		            <th style="text-align: center;">PETITIONER'S NAME</th>
-		            <th style="text-align: center;">DATE RECEIVED BY THE PPO</th>
-		            <th style="text-align: center;">INVESTIGATION OFFICER</th>
-		            <th style="text-align: center;">FIELD OFFICE</th>
-		            <th style="text-align: center;">YEAR-MONTH</th>
-		          </tr>
-		        </thead>
-		        <tbody class="small">
-		        </tbody>
-	      	</table>
-      	</div>
-			</div>
-		</div>
-	</div>
+<?php
+$tables = [
+    // f5 tables
+    'f5t1', 'f5t2_rcv', 'f5t2_acted', 'f5t2_notacted', 'f5t3', 'f5t4', 'f5t5', 'f5t6_rcv', 'f5t6_cmpltd', 'f5t7', 'f5t8', 'f5t9', 'f5t10', 'f5t11', 'f5t12', 'f5t13_rcv', 'f5t13_term',
+    'f21t1', 'f21t2_rcv', 'f21t2_acted', 'f21t4', 'f21t5', 'f21t6_rcv', 'f21t6_cmpltd', 'f21t7_pardon', 'f21t7_parol', 'f21t8_pardon', 'f21t8_parol', 'f21t9_pardon', 'f21t9_parol',
+    'f21t10_pardon', 'f21t10_parol', 'f21t11_pardon', 'f21t11_parol', 'f21t12_pardon', 'f21t12_parol', 'f21t13_pardon', 'f21t13_parol', 'f21t14_pardon', 'f21t14_parol', 
+    'f21t15_rcv_pardon', 'f21t15_rcv_parol', 'f21t15_term_pardon', 'f21t15_term_parol',
+    'f44t1', 'f44t2', 'f44t2_acted', 'f44t3', 'f44t4', 'f44t5', 'f44t6', 'f44t6_car', 'f44t7', 'f44t8', 'f44t9', 'f44t10', 'f44t11', 'f44t12', 'f44t13', 'f44t13_crt',
+    'f45t1', 'f45t2', 'f45t2_acted', 'f45t3', 'f45t4', 'f45t5', 'f45t6', 'f45t6_car', 'f45t7', 'f45t8', 'f45t9', 'f45t10', 'f45t11', 'f45t12', 'f45t13', 'f44t13_crt',
+    'f50t1', 'f50t2',
+    'f51t1', 'f51t2','f51t3', 'f51t4',
+    'f53t1', 'f53t2','f53t3', 'f53t4','f53t5','f53t6', 'f53t7','f53t8', 'f53t9','f53t10','f53t11', 
+];
+
+foreach ($tables as $table) {
+    echo '
+    <div class="col-md-12 result_table_' . $table . ' hidden"> <!-- Entire div is hidden initially -->
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <div class="form_loader_' . $table . ' hidden" center><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
+                <div class="table-container">
+                    <table id="' . $table . '" class="display table-bordered table-condensed nowrap" style="width:100%">
+                        <thead class="tb-header small" style="text-align: center;">
+                            <tr>
+                                <th style="text-align: center;">FORM TABLE</th>
+                                <th style="text-align: center;">DOCKET NO.</th>
+                                <th style="text-align: center;">NAME</th>
+                                <th style="text-align: center;">FIELD OFFICE</th>
+                                <th style="text-align: center;">YEAR-MONTH</th>
+                                <th style="text-align: center;">CREATED DATE</th>
+                            </tr>
+                        </thead>
+                        <tbody class="small" id="result_body_' . $table . '" style="text-align: center;">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form_loader_' . $table . ' hidden"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div>
+    ';
+}
+?>
+
  <div class="modal fade" id="modal-search" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
     
@@ -336,86 +128,17 @@
     setTimeout(function () {
     	if($.wms.dashboard.checkPermission("7")){
     		$.wms.dashboard.attachPageEvent();
-       	$.wms.modal.attachModalEvent();
+       		$.wms.modal.attachModalEvent();
     		
     		$(".loading-data").fadeOut();
-    		$(".form_loader").addClass("hidden");
 
     		$('.filter-modal select').css('width', '100%')
-	    	$(document).ready(function() {
-				    // Initialize Select2 for the RC_forms dropdown (main selection)
-				    $(".select2").select2({
-				        width: '100%'
-				    });
-
-				    // Function to show the relevant table options based on the selected form
-				    function updateTableOptions() {
-				        // Get the selected form
-				        var selectedForm = $("#RC_forms").val();
-				        
-				        // Hide all containers
-				        $("#RC-5-forms-container, #RC-21-forms-container, #RC-44-forms-container, #RC-45-forms-container, #RC-50-forms-container, #RC-51-forms-container, #RC-53-forms-container").addClass("hidden");
-
-				        // Show the relevant container and reinitialize Select2 based on the selected form
-				        switch (selectedForm) {
-				            case "F5":
-				                $("#RC-5-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            case "F21":
-				                $("#RC-21-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            case "F44":
-				                $("#RC-44-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            case "F45":
-				                $("#RC-45-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            case "F50":
-				                $("#RC-50-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            case "F51":
-				                $("#RC-51-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            case "F53":
-				                $("#RC-53-forms-container").removeClass("hidden").find('select').select2({
-				                    placeholder: "Select an option",
-				                    width: '100%'
-				                });
-				                break;
-				            default:
-				                // If no match, keep all containers hidden
-				                $("#RC-5-forms-container, #RC-21-forms-container, #RC-44-forms-container, #RC-45-forms-container, #RC-50-forms-container, #RC-51-forms-container, #RC-53-forms-container").addClass("hidden");
-				                break;
-				        }
-				    }
-
-				    // Attach the updateTableOptions function to the change event of the Forms dropdown
-				    $("#RC_forms").on("change", updateTableOptions);
-
-				    // Trigger the updateTableOptions function on page load to set the initial state
-				    updateTableOptions();
-				});
-
-        $.wms.widget.attachWidgetEvent();
-        $.wms.records.attachRecordsEvent();
+    		
+		    $(".select2").select2({
+		        width: '100%'
+		    });
+	        $.wms.widget.attachWidgetEvent();
+	        $.wms.records.attachRecordsEvent();
   		}
     }, 200);
 

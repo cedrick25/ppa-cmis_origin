@@ -126,5 +126,13 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('community_service_masterlist');
 	}
+	public function no_reports()
+	{
+		$this->load->view('no_reports');
+	}
+	public function no_submitted_reports_community()
+	{
+		$this->load->view('no_submitted_reports_community');
+	}
 
 }

@@ -525,3 +525,14 @@ height: 500px !important;
     position:absolute; 
     color:red;
 }
+.custom-modal-footer {
+    padding: 15px;
+/*    text-align: right;*/
+    border-top: 1px solid #e5e5e5;
+}
+
+.custom-modal-footer span {
+    font-size: 14px; /* Optional: Adjust font size */
+    color: #6c757d; /* Optional: Adjust text color */
+}
+
