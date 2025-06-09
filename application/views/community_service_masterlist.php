@@ -167,17 +167,27 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<span class="font_20"><i class="fa fa-users"></i> <b>Community Service Masterlist</b></span>
+				<form id="downloadReportForm" action="<?= base_url('download_report_CS') ?>" method="POST" style="display:none;">
+				    <input type="hidden" name="docket_number" id="report_docket_number">
+				    <input type="hidden" name="first_name" id="report_first_name">
+				    <input type="hidden" name="middle_name" id="report_middle_name">
+				    <input type="hidden" name="last_name" id="report_last_name">
+				    <input type="hidden" name="cc_number" id="report_cc_number">
+				    <input type="hidden" name="court_of_origin" id="report_court_of_origin">
+				    <input type="hidden" name="assigned_officer" id="report_assigned_officer">
+				    <input type="hidden" name="start_date" id="report_start_date">
+				    <input type="hidden" name="end_date" id="report_end_date">
+				    <input type="hidden" name="field_office" id="report_field_office">
+				    <input type="hidden" name="year" id="report_year">
+				</form>
 
 				<span class="pull-right">
-					  <!-- <button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button> -->
+					  	<button id="downloadReportBtn" class="btn btn-success" style="display:;">
+						  <i class="fa fa-download"></i> Download
+						</button>
 				</span>
 			</div>
 			<div class="panel-body">
-				<!-- <div class="form_loader center"><h2><i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i> Processing.... </h2></div> -->
-
-				<!-- Export: <button class="btn btn-primary btnCSV">CSV</button> <button class="btn btn-primary btnXLS">EXCEL</button> -->
-
-				
 				<div id="result_table" class="">
 					<table id="probationer_table" class="display table-bordered table-condensed nowrap" style="width:100%">
 				        <thead class="tb-header small">

@@ -428,6 +428,7 @@ $.wms.probationer = (function() {
         })
         
         $(".btn-search").unbind("click").on("click",function(){
+	        $("#downloadReportBtn").show();
 
 	        $('#probationer_table').DataTable().destroy();
 	        $('#probationer_table tbody').empty();
@@ -496,24 +497,42 @@ $.wms.probationer = (function() {
 	            "initComplete": function(settings, json) {
 	            	console.log(json);
 	            	$(".pp1").focus();
-	            	if(json.recordsTotal == 0){
-	            		$("#modal-search").modal();
-	            		
-	            		//$(".btnSearchYes").focus();
-	            		shortcuts.add('y',function() {
-	            			$(".btnSearchYes").trigger("click")
-							
-	            		});
+            	    if (json.recordsTotal == 0) {
+				        $("#modal-search").modal();
 
-	            		shortcuts.add('n',function() {
-	            			$(".btnSearchNo").trigger("click")
-	            		});
-	            	}
-	            	
+				        shortcuts.add('y', function() {
+				            $(".btnSearchYes").trigger("click");
+				        });
+
+				        shortcuts.add('n', function() {
+				            $(".btnSearchNo").trigger("click");
+				        });
+
+				    }
+	            	$('#downloadReportBtn').on('click', function () {
+					    // Populate form fields
+					    $("#report_region").val($("#search_region").val());
+						$("#report_fname").val($("#search_fname").val());
+						$("#report_mname").val($("#search_mname").val());
+						$("#report_lname").val($("#search_lname").val());
+						$("#report_alias").val($("#search_alias").val());
+						$("#report_year").val($("#search_year").val());
+						$("#report_docket").val($("#search_docket").val());
+						$("#report_supervoffice").val($("#search_supervoffice").val());
+						$("#report_remarks").val($("#search_remarks").val());
+						$("#report_start_dd").val($("#search_start_dd").val());
+						$("#report_start_yy").val($("#search_start_yy").val());
+						$("#report_start_mm").val($("#search_start_mm").val());
+						$("#report_end_dd").val($("#search_end_dd").val());
+						$("#report_end_yy").val($("#search_end_yy").val());
+						$("#report_end_mm").val($("#search_end_mm").val());
+					    
+					    $('#downloadReportForm').submit(); // Submit the form
+				  	});
 
 	            	$(".dataTables_filter").addClass("hidden")
 	            	$(".form_loader").addClass("hidden")
-	                },
+                },
         	})
 
         	$(".dt-buttons").addClass("hidden")
@@ -767,7 +786,22 @@ $.wms.probationer = (function() {
 	            			$(".btnSearchNo").trigger("click")
 	            		});
 	            	}
-	            	
+	            	$('#downloadReportBtn').on('click', function () {
+					    // Populate form fields
+						$('#report_docket_number').val($("#docket_number").val());
+						$('#report_first_name').val($("#first_name").val());
+						$('#report_middle_name').val($("#middle_name").val());
+						$('#report_last_name').val($("#last_name").val());
+						$('#report_cc_number').val($("#cc_number").val());
+						$('#report_court_of_origin').val($("#court_of_origin").val());
+						$('#report_assigned_officer').val($("#assigned_officer").val());
+						$('#report_start_date').val($("#start_date").val());
+						$('#report_end_date').val($("#end_date").val());
+						$('#report_field_office').val($("#field_office").val());
+						$('#report_year').val($("#year").val());
+					    
+					    $('#downloadReportForm').submit(); // Submit the form
+				  	});
 
 	            	$(".dataTables_filter").addClass("hidden")
 	            	$(".form_loader").addClass("hidden")

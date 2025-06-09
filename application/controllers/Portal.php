@@ -134,17 +134,5 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('no_submitted_reports_community');
 	}
-    public function download_report()
-    {
-        // Load CI's download helper
-        $this->load->helper('download');
-
-        // Customize the content
-        $content = "This is a dynamically generated report.\nGenerated at: " . date("Y-m-d H:i:s");
-
-        // Force download as 'report.txt'
-        force_download('report.txt', $content);
-    }
-
 
 }

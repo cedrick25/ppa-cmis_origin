@@ -160,12 +160,29 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<span class="font_20"><i class="fa fa-users"></i> <b>Masterlist of Probationers</b></span>
+				<form id="downloadReportForm" action="<?= base_url('download_report') ?>" method="POST" style="display:none;">
+					<input type="hidden" name="region" id="report_region">
+					<input type="hidden" name="firstname" id="report_fname">
+					<input type="hidden" name="middlename" id="report_mname">
+					<input type="hidden" name="lastname" id="report_lname">
+					<input type="hidden" name="alias" id="report_alias">
+					<input type="hidden" name="year" id="report_year">
+					<input type="hidden" name="sdocketno" id="report_docket">
+					<input type="hidden" name="supervoffice" id="report_supervoffice">
+					<input type="hidden" name="remarks" id="report_remarks">
+					<input type="hidden" name="start_dd" id="report_start_dd">
+					<input type="hidden" name="start_yy" id="report_start_yy">
+					<input type="hidden" name="start_mm" id="report_start_mm">
+					<input type="hidden" name="end_dd" id="report_end_dd">
+					<input type="hidden" name="end_yy" id="report_end_yy">
+					<input type="hidden" name="end_mm" id="report_end_mm">
+				</form>
 
 				<span class="pull-right">
-					  <button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
-					  	<a href="<?= base_url('download_report') ?>">
-						  <button type="button" class="access_ml_write btn btn-success" style="display: ;"><i class="fa fa-download"></i> Download </button>
-						</a>
+					  	<button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
+					  	<button id="downloadReportBtn" class="btn btn-success" style="display:none;">
+						  <i class="fa fa-download"></i> Download
+						</button>
 				</span>
 			</div>
 			<div class="panel-body">

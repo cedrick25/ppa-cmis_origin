@@ -53,6 +53,7 @@ $route['wsv1/(:any)'] = "wsv1/$1";
 $route['ws'] = "ws/version";
 $route['dashboard'] = "portal/dashboard";
 $route['download_report'] = "report/download_report";
+$route['download_report_CS'] = "report/download_report_CS";
 $route['caseload'] = "portal/caseload";
 $route['print_caseload'] = "portal/print_caseload";
 $route['probationer'] = "portal/probationer";
