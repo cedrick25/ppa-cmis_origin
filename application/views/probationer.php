@@ -163,6 +163,9 @@
 
 				<span class="pull-right">
 					  <button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
+					  	<a href="<?= base_url('download_report') ?>">
+						  <button type="button" class="access_ml_write btn btn-success" style="display: ;"><i class="fa fa-download"></i> Download </button>
+						</a>
 				</span>
 			</div>
 			<div class="panel-body">
@@ -608,5 +611,4 @@ $(document).ready(function () {
 
     fetchReports();
 });
-
 </script>
