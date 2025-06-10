@@ -133,7 +133,8 @@ class Report extends CI_Controller {
         </table>
         ";
         $html .= "<hr style='border: 1px solid #eb603c; margin: 20px 0;'>";
-        $html .= "<br><br><p class='p_title'>RESULT OF RECORDS CHECK</p><br><br>";
+        $html .= "<br><br><div class='p_title'>RESULT OF RECORDS CHECK</div>";
+        $html .= "<div class='p_title'>(PROBATION)</div><br><br>";
         $html .= "<p class='p_sentence'>This has reference to the request for records check on petitioner</p>";
         $html .= "<p class='p_center' style='font-size: 10pt;'>$fullname</p>";
         if (!empty($data['masterlist'])) {
@@ -358,8 +359,9 @@ class Report extends CI_Controller {
         </table>
         ";
         $html .= "<hr style='border: 1px solid #eb603c; margin: 20px 0;'>";
-        $html .= "<br><br><p class='p_title'>RESULT OF RECORDS CHECK</p><br><br>";
-        $html .= "<p class='p_sentence'>This has reference to the request for records check on petitioner</p>";
+        $html .= "<br><br><div class='p_title'>RESULT OF RECORDS CHECK</div>";
+        $html .= "<div class='p_title'>(COMMUNITY SERVICE)</div><br><br>";
+        $html .= "<p class='p_sentence'>This has reference to the request for records check on the client applying for community service</p>";
         $html .= "<p class='p_center' style='font-size: 10pt;'>$fullname</p>";
         if (!empty($data['community_masterlist'])) {
             $html .= "<br><p class='p_sentence'>The matrix below shows the similar name/s with the petitioner’s name being requested for records check from 1978 to " . date('Y') . ":</p>";
@@ -370,13 +372,17 @@ class Report extends CI_Controller {
         <table border='1' cellpadding='5' cellspacing='0' style='width:100%; border-collapse: collapse;'>
             <thead>
                 <tr>
-                    <th>Full Name</th>
-                    <th>CC Number</th>
-                    <th>Court of Origin</th>
-                    <th>Field Office</th>
-                    <th>Year</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th rowspan='2'>Docket Number</th>
+                    <th rowspan='2'>Client's Name</th>
+                    <th rowspan='2'>Criminal Case Number</th>
+                    <th rowspan='2'>Court of Origin</th>
+                    <th rowspan='2'>Assigned Officer</th>
+                    <th rowspan='2'>Date Order Received by the PPO</th>
+                    <th colspan='2'>Community Service Period</th>
+                </tr>
+                <tr>
+                    <th>Start</th>
+                    <th>End</th>
                 </tr>
             </thead>
             <tbody>
@@ -384,11 +390,12 @@ class Report extends CI_Controller {
         if (!empty($data['community_masterlist'])) {
             foreach ($data['community_masterlist'] as $row) {
                 $html .= "<tr>
+                            <td>{$row['docket_number']}</td>
                             <td>{$row['full_name']}</td>
                             <td>{$row['criminal_case_number']}</td>
                             <td>{$row['court_of_origin']}</td>
-                            <td>{$row['field_office']}</td>
-                            <td>{$row['year_range']}</td>
+                            <td>{$row['assigned_officer']}</td>
+                            <td>" . date('Y-m-d', strtotime($row['date_received_by_ppo'])) . "</td>
                             <td>" . date('Y-m-d', strtotime($row['community_service_start'])) . "</td>
                             <td>" . date('Y-m-d', strtotime($row['community_service_end'])) . "</td>
 
