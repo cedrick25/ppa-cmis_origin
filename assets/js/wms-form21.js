@@ -570,7 +570,7 @@ $.wms.form21 = (function() {
                                 // Populate the type select dropdown
                                 $('#type').empty().append(`
                                     <option value="" disabled selected>Select Type</option>
-                                    <option value="Pre-Parole Referral">Pre-Parole Referral</option>
+                                    <option value="Order to Conduct Pre-Parole/Executive Clemency Investigation">Order to Conduct Pre-Parole/Executive Clemency Investigation</option>
                                     <option value="Other Document/s">Other Document/s</option>
                                 `);
                                 
@@ -812,7 +812,8 @@ $.wms.form21 = (function() {
                     // Populate the type select dropdown for modal2
                     $('#type2').empty().append(`
                         <option value="" disabled selected>Select Type</option>
-                        <option value="Pre-Parole/Executive Clemency Investigation Report">Pre-Parole/Executive Clemency Investigation Report</option>
+                        <option value="Pre-Parole Investigation Report">Pre-Parole Investigation Report</option>
+                        <option value="Pre- Executive Clemency Investigation Report">Pre- Executive Clemency Investigation Report</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -2057,11 +2058,15 @@ $.wms.form21 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Discharge on Parole">Discharge on Parole</option>
-                    <option value="Arrival Report">Arrival Report</option>
-                    <option value="Briefing Report">Briefing Report</option>
-                    <option value="Certificate of Undertaking">Certificate of Undertaking</option>
-                    <option value="Other Document/s">Other Document/s</option>
+                    <option value="Order for the Grant of Parole">Order for the Grant of Parole</option>
+                    <option value="Order for the Grant of Commutation of Sentence">Order for the Grant of Commutation of Sentence</option>
+                    <option value="Order for the Grant of Conditional Pardon">Order for the Grant of Conditional Pardon</option>
+                    <option value="Order for the Grant of Absolute Pardon">Order for the Grant of Absolute Pardon</option>
+                    <option value="Order for the Denial of Parole">Order for the Denial of Parole</option>
+                    <option value="Order for the Denial of Commutation of Sentence">Order for the Denial of Commutation of Sentence</option>
+                    <option value="Order for the Denial of Conditional Pardon">Order for the Denial of Conditional Pardon</option>
+                    <option value="Order for the Denial of Absolute Pardon">Order for the Denial of Absolute Pardon</option>
+                    <option value="Death">Death</option>
                 `);
                 
                 // Remove any previous 'change' event and bind a new one to handle the select change
@@ -2882,8 +2887,7 @@ $.wms.form21 = (function() {
                                 $('#type').empty().append(`
                                     <option value="" disabled selected>Select Type</option>
                                     <option value="Request for Community Interview">Request for Community Interview</option>
-                                    <option value="Indorsement">Indorsement</option>
-                                    <option value="General Inter-Office Referral">General Inter-Office Referral</option>
+                                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
                                     <option value="Other Document/s">Other Document/s</option>
                                 `);
                                 
@@ -5598,7 +5602,7 @@ $.wms.form21 = (function() {
                         <option value="Summary Report">Summary Report</option>
                         <option value="Infraction Report">Infraction Report</option>
                         <option value="Death Report">Death Report</option>
-                        <option value="Report for Transfer to Other PPO's">Report for Transfer to Other PPO's</option>
+                        <option value="Report for Transfer">Report for Transfer</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
                     
@@ -5827,7 +5831,7 @@ $.wms.form21 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    // "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -10173,7 +10177,7 @@ $.wms.form21 = (function() {
                                 // Populate the type select dropdown
                                 $('#type').empty().append(`
                                     <option value="" disabled selected>Select Type</option>
-                                    <option value="Letter re Courtesy Supervision">Letter re Courtesy Supervision</option>
+                                    <option value="Request for Courtesy Supervision">Request for Courtesy Supervision</option>
                                     <option value="Other Document/s">Other Document/s</option>
                                 `);
                                 
@@ -10414,9 +10418,7 @@ $.wms.form21 = (function() {
                     // Populate the type select dropdown for modal2
                     $('#type2').empty().append(`
                         <option value="" disabled selected>Select Type</option>
-                        <option value="Both Parolees and Pardonees">Both Parolees and Pardonees</option>
-                        <option value="Referrals Received">Referrals Received</option>
-                        <option value="Referrals Terminated">Referrals Terminated</option>
+                        <option value="Courtesy Supervision Terminated">Courtesy Supervision Terminated</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -10642,7 +10644,7 @@ $.wms.form21 = (function() {
                 // Populate the type select dropdown for modal3
                 $('#type3').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Letter re Courtesy Supervision" selected>Letter re Courtesy Supervision</option>
+                    <option value="Request for Courtesy Supervision" selected>Request for Courtesy Supervision</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
 
@@ -10923,9 +10925,7 @@ $.wms.form21 = (function() {
                     // Populate the type select dropdown for modal4
                     $('#type4').empty().append(`
                         <option value="" disabled selected>Select Type</option>
-                        <option value="Both Parolees and Pardonees">Both Parolees and Pardonees</option>
-                        <option value="Referrals Received">Referrals Received</option>
-                        <option value="Referrals Terminated">Referrals Terminated</option>
+                        <option value="Courtesy Supervision Terminated">Courtesy Supervision Terminated</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 

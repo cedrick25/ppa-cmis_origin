@@ -806,6 +806,7 @@ $.wms.form5 = (function() {
                         <option value="" disabled selected>Select Type</option>
                         <option value="Post-Sentence Investigation Report">Post-Sentence Investigation Report</option>
                         <option value="Manifestation">Manifestation</option>
+                        <option value="Fingerprint Record">Fingerprint Record</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -2768,9 +2769,11 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Probation Order">Probation Order</option>
-                    <option value="Order of Denial">Order of Denial</option>
-                    <option value="Order to Withdraw Application for Probation">Order to Withdraw Application for Probation</option>
+                    <option value="Order of Grant Probation">Order of Grant Probation</option>
+                    <option value="Order of Denial of Probation">Order of Denial of Probation</option>
+                    <option value="Order of Dismissal">Order of Dismissal</option>
+                    <option value="Order to Withdrawal of Application for Probation">Order to Withdrawal of Application for Probation</option>
+                    <option value="Order to Reinvestigate">Order to Reinvestigate</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -3639,8 +3642,7 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Courtesy Probation Investigation">Courtesy Probation Investigation</option>
-                    <option value="Full-blown Courtesy Probation Investigation">Full-blown Courtesy Probation Investigation</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -3881,8 +3883,8 @@ $.wms.form5 = (function() {
                     // Populate the type select dropdown for modal2
                     $('#type2').empty().append(`
                         <option value="" disabled selected>Select Type</option>
-                        <option value="Accomplished CPI">Accomplished CPI</option>
-                        <option value="Accomplished FBCI">Accomplished FBCI</option>
+                        <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
+                        <option value="Full Blown Courtesy Investigation">Full Blown Courtesy Investigation</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -5086,8 +5088,9 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Probation Order">Probation Order</option>
+                    <option value="Order of Grant of Probation">Order of Grant of Probation</option>
                     <option value="Transfer Order">Transfer Order</option>
+                    <option value="Fingerprint Record">Fingerprint Record</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -5823,7 +5826,6 @@ $.wms.form5 = (function() {
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
                     <option value="Motion to Terminate">Motion to Terminate</option>
-                    <option value="Motion to Terminate (Died)">Motion to Terminate (Died)</option>
                     <option value="Violation Report">Violation Report</option>
                     <option value="Motion for Extension">Motion for Extension</option>
                     <option value="Motion for Transfer">Motion for Transfer</option>
