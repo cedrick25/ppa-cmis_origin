@@ -185,6 +185,65 @@ $.wms.form5 = (function() {
             });
         }
     }
+    function uploadInvestigationFile(docketNo, petitioner, uploadType, remarksInput, officeId, fileInputId, kind, type) {
+        var formData = new FormData();
+        formData.append('uuid', docketNo);
+        formData.append('createdby', petitioner);
+        formData.append('type', type);
+
+        if (remarksInput) {
+            formData.append('remarks', uploadType + " - " + remarksInput);
+        } else {
+            formData.append('remarks', uploadType);
+        }
+
+        formData.append('officeId', officeId);
+        formData.append('version', "0");
+
+        var fileInput = $('#' + fileInputId)[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var fileName = file.name;
+            formData.append('file', file);
+            formData.append('kind', kind);  // use passed kind
+            console.log('File name:', fileName);
+        } else {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        console.log('--- Form Data ---');
+        for (var pair of formData.entries()) {
+            if (pair[1] instanceof File) {
+                console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+            } else {
+                console.log(`${pair[0]}: ${pair[1]}`);
+            }
+        }
+
+        var url = `${PPIS_path_upload}/file/upload`;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('Response:', response);
+                if ("true") {
+                    // handle success
+                } else {
+                    alert('Error: Failed to upload');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Upload failed: ', error);
+                alert('An error occurred during the upload.');
+            }
+        });
+    }
+
     var __attachF5T1PageEvent = function() {
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
@@ -1686,12 +1745,20 @@ $.wms.form5 = (function() {
             $(".btn-reset").trigger('click');
         }
         //Add RCV
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitRCVButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_rcv_petitioner', 'add_date_rcv', 'add_rcv_date_of_court_order','add_rcv_date_rcv'];
+            var requiredField= [ 'add_rcv_petitioner', 'add_date_rcv', 'add_rcv_date_of_court_order','add_rcv_date_rcv', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F5T1', 'F5T2_RCV']
-
 
             ___validateSaveCarryOver(allowedDocket,$("#add_rcv_docket_no"),requiredField,check,checkTable).done(function(result){
                 console.log(result)
@@ -1756,6 +1823,16 @@ $.wms.form5 = (function() {
                 }
             });
 
+            uploadInvestigationFile(
+                $('#add_rcv_docket_no').val(),
+                $('#add_rcv_petitioner').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T2RR',
+                'investigation'
+            );
             var PPISPayload = {
                     "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_rcv_docket_no").val(),
@@ -1792,9 +1869,18 @@ $.wms.form5 = (function() {
         })
 
         //Add ACTED
+        $(document).off('change', '#add_upload_type_acted').on('change', '#add_upload_type_acted', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitACTEDButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_acted_petitioner'];
+            var requiredField= [ 'add_acted_petitioner','add_upload_type_acted','add_fileupload_acted'];
             var check = true
             var checkTable = ['F5T1', 'F5T2_RCV']
 
@@ -1851,7 +1937,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
-
+            uploadInvestigationFile(
+                $('#add_acted_docket_no').val(),
+                $('#add_acted_petitioner').val(),
+                $('#add_upload_type_acted').val(),
+                $('#add_remarks_acted').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_acted',
+                'F5T2_RAU',
+                'investigation'
+            );
             var PPISPayload = {
                     "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_acted_docket_no").val(),
@@ -1881,9 +1976,19 @@ $.wms.form5 = (function() {
         });
 
          //Add NOT ACTED
+
+        $(document).off('change', '#add_upload_type_not_acted').on('change', '#add_upload_type_not_acted', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitNOTACTEDButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_notacted_petitioner', 'add_notacted_date'];
+            var requiredField= [ 'add_notacted_petitioner', 'add_notacted_date', 'add_upload_type_not_acted', 'add_fileupload_not_acted', 'add_notacted_decision'];
             var check = true
             var checkTable = ['F5T1', 'F5T2_RCV']
 
@@ -1909,11 +2014,19 @@ $.wms.form5 = (function() {
         $(".addProceedNOTACTEDButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
+            var disposed = $("#add_notacted_decision").val();
+            var kind = "";
+
+            if (disposed === "Recall") {
+                kind = "F5T2_recall";
+            } else if (disposed === "Warrant of Arrest") {
+                kind = "F5T2_warant";
+            }
             var payload = { 
                 "docket_no" : $("#add_notacted_docket_no").val(),
                 "petitioner_name": $("#add_notacted_petitioner").val(),
                 "received_date": $("#add_notacted_date").val(),
-                "disposed_decision" : $("#add_notacted_decision").val(),
+                "disposed_decision": disposed,
                 "field_office": $.wms.urlParam('field'),
                 "field_office_id": $.wms.urlParam('officeId'),
                 "Y_M": $.wms.urlParam('date'),
@@ -1935,6 +2048,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_notacted_docket_no').val(),
+                $('#add_notacted_petitioner').val(),
+                $('#add_upload_type_not_acted').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_not_acted',
+                kind,
+                'investigation'
+            );
             var PPISPayload = {
                     "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_notacted_docket_no").val(),
@@ -2994,9 +3117,18 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_petitioner','add_psir'];
+            var requiredField= [ 'add_petitioner','add_psir', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F5T2_ACTED', 'F5T3']
 
@@ -3062,7 +3194,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
-
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                fullname,
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T4RR',
+                'investigation'
+            );
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -4238,10 +4379,18 @@ $.wms.form5 = (function() {
         });
 
         //ADD
-        
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPI', 'CPI', 'FBCI'];
-            var requiredField= [ 'add_rcv_docket_no', 'add_rcv_petitioner', 'add_rcv_date_rcv','add_rcv_investigating_officer','add_rcv_reasons'];
+            var requiredField= [ 'add_rcv_docket_no', 'add_rcv_petitioner', 'add_rcv_date_rcv','add_rcv_investigating_officer','add_rcv_reasons','add_upload_type','add_fileupload'];
             var check = true
             var checkTable = ['F5T6_RCV', 'F5T5']
 
@@ -4293,6 +4442,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_rcv_docket_no').val(),
+                $('#add_rcv_petitioner').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T6RR',
+                'investigation'
+            );
             var PPISPayload_a = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_rcv_docket_no").val(),
@@ -4484,10 +4643,18 @@ $.wms.form5 = (function() {
 
         //ADD_CMPLTD
         //ADD
-        
+        $(document).off('change', '#add_upload_type_car').on('change', '#add_upload_type_car', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addCMPLTDSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPI', 'CPI', 'FBCI'];
-            var requiredField= [ 'add_cmpltd_docket_no','add_cmpltd_petitioner','add_cmpltd_date'];
+            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date','add_upload_type_car','add_fileupload_car'];
             var check = true
             var checkTable = ['F5T5', 'F5T6_RCV']
 
@@ -4536,6 +4703,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_cmpltd_docket_no').val(),
+                $('#add_cmpltd_petitioner').val(),
+                $('#add_upload_type_car').val(),
+                $('#add_remarks_car').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_car',
+                'F5T6RCR',
+                'investigation'
+            );
             var PPISPayload_b = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_cmpltd_docket_no").val(),
@@ -5318,9 +5495,19 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [  'JPS', 'PS', 'JRPS', 'RPS', 'JTPS', 'TPS'];
-            var requiredField= [ 'add_probationer','add_cc_no','add_court_origin','add_date_rcv','add_supervising','add_fname','add_lname'];          
+            var requiredField= [ 'add_probationer','add_cc_no','add_court_origin','add_date_rcv','add_supervising','add_fname','add_lname', 'add_upload_type', 'add_fileupload'];          
             var check = true
             var checkTable = ['F5T8', 'F5T7']
             
@@ -5425,7 +5612,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
-
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                fullname,
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T8',
+                'supervision'
+            );
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -6049,9 +6245,18 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPS', 'PS', 'JRPS', 'RPS', 'JTPS', 'TPS' ];
-            var requiredField= [ 'add_probationer','add_submitted'];
+            var requiredField= [ 'add_probationer','add_submitted', 'add_upload_type' ,'add_fileupload'];
             var check = true
             var checkTable = ['F5T7', 'F5T8']
 
@@ -6108,6 +6313,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T9',
+                'supervision'
+            );
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -6960,9 +7175,10 @@ $.wms.form5 = (function() {
         });
 
         //Add
+
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPS', 'PS', 'JRPS', 'RPS', 'JTPS', 'TPS' ]       
-            var requiredField= [ 'add_probationer','add_submitted'];
+            var requiredField= [ 'add_probationer','add_submitted', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F5T9', 'F5T10']
 
@@ -6992,6 +7208,15 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
@@ -7022,6 +7247,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T11',
+                'supervision'
+            );
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -8210,9 +8445,18 @@ $.wms.form5 = (function() {
         }
 
         //ADD
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPS', 'CPS'];
-            var requiredField= [ 'add_rcv_docket_no','add_rcv_probationer','add_rcv_case_no','add_rcv_court_origin','add_rcv_date_rcv','add_rcv_supervising','add_rcv_period'];          
+            var requiredField= [ 'add_upload_type', 'add_fileupload', 'add_rcv_probationer','add_rcv_case_no','add_rcv_court_origin','add_rcv_date_rcv','add_rcv_supervising','add_rcv_period'];          
             var check = true
             var checkTable = ['F5T13_RCV', 'F5T12']        
             
@@ -8267,6 +8511,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_rcv_docket_no').val(),
+                $('#add_rcv_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F5T13RR',
+                'supervision'
+            );
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_rcv_docket_no").val(),
@@ -8467,10 +8721,18 @@ $.wms.form5 = (function() {
 
         //ADD_CMPLTD
         //ADD
-        
+        $(document).off('change', '#add_upload_type_term').on('change', '#add_upload_type_term', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addCMPLTDSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPS', 'CPS' ];
-            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date'];
+            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date', 'add_upload_type_term', 'add_fileupload_term'];
             var check = true
             var checkTable = ['F5T12', 'F5T13_RCV']
 
@@ -8519,6 +8781,16 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_cmpltd_docket_no').val(),
+                $('#add_cmpltd_petitioner').val(),
+                $('#add_upload_type_term').val(),
+                $('#add_remarks_term').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_term',
+                'F5T13Term',
+                'supervision'
+            );
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_cmpltd_docket_no").val(),
