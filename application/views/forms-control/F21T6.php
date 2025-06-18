@@ -206,6 +206,32 @@
                   <input type="text" class="form-control  sel_date" id="add_rcv_Y_M" placeholder="">
                 </div>
               </div>
+              <!-- upload start -->
+              <div class="form-group row">
+                <label for="type" class="col-md-3 col-form-label">Type</label>
+                <div class="col-sm-9">
+                  <select class="form-control add_upload_type col-md-3" id="add_upload_type" name="type" required>
+                    <option value="" selected>Select Type</option>
+                    <option value="Request for Community Interview">Request for Community Interview</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row remarks-row" style="display: none;">
+                  <label for="remarks" class="col-md-3 col-form-label">Remarks</label>
+                  <div class="col-sm-9">
+                      <textarea class="form-control add_remarks" id="add_remarks" name="remarks" rows="2" placeholder="Enter remarks..."></textarea>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="add_fileupload" class="col-md-3 col-form-label">Upload File</label>
+                <div class="col-sm-9">
+                  <input type="file" class="form-control-file add_fileupload form-control" id="add_fileupload" accept=".jpg, .png, .pdf, .docx" required>
+                </div>
+              </div>
+              <input type="hidden" id="FOId" name="FOId">
+              <!-- upload end -->
             </div>
           </div>
           <div class="confirmAdd hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>
@@ -284,6 +310,31 @@
                   <input type="text" class="form-control  sel_date" id="add_cmpltd_Y_M" placeholder="">
                 </div>
               </div>
+              <!-- upload start -->
+              <div class="form-group row">
+                <label for="type" class="col-md-3 col-form-label">Type</label>
+                <div class="col-sm-9">
+                  <select class="form-control add_upload_type_car col-md-3" id="add_upload_type_car" name="type" required>
+                    <option value="" selected>Select Type</option>
+                    <option value="Community Interview Report">Community Interview Report</option>
+                    <option value="Other Document/s">Other Document/s</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row remarks-row" style="display: none;">
+                  <label for="remarks" class="col-md-3 col-form-label">Remarks</label>
+                  <div class="col-sm-9">
+                      <textarea class="form-control add_remarks_car" id="add_remarks_car" name="remarks" rows="2" placeholder="Enter remarks..."></textarea>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label for="add_fileupload" class="col-md-3 col-form-label">Upload File</label>
+                <div class="col-sm-9">
+                  <input type="file" class="form-control-file add_fileupload_car form-control" id="add_fileupload_car" accept=".jpg, .png, .pdf, .docx" required>
+                </div>
+              </div>
+              <input type="hidden" id="FOId" name="FOId">
+              <!-- upload end -->
             </div>
           </div>
           <div class="confirmAdd hidden center">Make sure all details are correct. Click <b>Confirm</b> button to proceed: </div>

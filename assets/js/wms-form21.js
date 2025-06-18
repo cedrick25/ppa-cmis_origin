@@ -124,6 +124,77 @@ $.wms.form21 = (function() {
         
 
     }
+
+    var ___validateSave2 = function(allowedDocket,docket,requiredField,check,checkTable){
+        $(".err_msg").remove()
+        docket.removeClass("error_field")
+        var dontSubmit = false;
+        var docketSeries = docket.val().split("-")
+        var error_msg = "";
+        console.log(allowedDocket)
+        console.log(docketSeries[0].toUpperCase())
+        console.log(allowedDocket.indexOf(docketSeries[0].toUpperCase()));
+        if(allowedDocket.indexOf(docketSeries[0].toUpperCase()) < 0 ){ 
+            dontSubmit = true;
+            docket.addClass("error_field")
+            $("<p class='err_msg color-red font_12 i'>*Invalid Docket No.</p>").insertAfter(docket)
+        }
+
+        if(check != undefined){
+            var payload = {
+                "checkTable" : checkTable,
+                "Y_M" : $.wms.urlParam('date'),
+                "docket_no" : docket.val(),
+                "field_office" : $.wms.urlParam('field')
+            }
+
+            requiredField.forEach(function(data){
+                if($("#"+data).val() == ""){
+                    dontSubmit = true;
+                    $("#"+data).addClass("error_field");
+                    $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+                }else{
+                    $("#"+data).removeClass("error_field");
+                }
+            });
+            var d = $.Deferred();
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/validateDocket',JSON.stringify(payload)).done(function (result2) {   
+                if(result2.status == 'SUCCESS'){
+
+                }else{
+                    dontSubmit = true;
+                    docket.addClass("error_field")
+                    $("<p class='err_msg color-red font_12 i'>*Docket not found in "+checkTable.join("/")+"</p>").insertAfter(docket)
+                }
+               
+                if(dontSubmit){
+                    d.resolve(false);
+                }else{
+                     d.resolve(true);
+                }
+
+                
+            });
+            return d.promise();
+           
+        }else{
+            requiredField.forEach(function(data){
+            if($("#"+data).val() == ""){
+                dontSubmit = true;
+                $("#"+data).addClass("error_field");
+                $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+            }else{
+                $("#"+data).removeClass("error_field");
+            }
+            });
+
+            if(dontSubmit){
+                return false;
+            }else{
+                return true;    
+            }
+        }
+    }
     var ___validateSaveCarryOver = function(allowedDocket,docket,requiredField,check,checkTable){
         $(".err_msg").remove()
         docket.removeClass("error_field")
@@ -217,7 +288,86 @@ $.wms.form21 = (function() {
         
 
     }
+    function deleteItem(event) {
+        const id = $(event.currentTarget).data('id');
+        const filePath = $(event.currentTarget).data('file_path');
+        const fileName = $(event.currentTarget).data('file_name');
 
+        console.log('Deleting item:', { id, filePath, fileName });
+
+        if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
+            $.ajax({
+                url: `${PPIS_path_upload}/file/delete/${id}`, // Corrected this line
+                method: 'POST',
+                data: { id, file_path: filePath, file_name: fileName },
+                success: function(response) {
+                    alert('Deleted successfully!');
+                    // You can reload your table or remove the element from DOM here
+                },
+                error: function(err) {
+                    alert('Failed to delete.');
+                }
+            });
+        }
+    }
+    function uploadInvestigationFile(docketNo, petitioner, uploadType, remarksInput, officeId, fileInputId, kind, type) {
+        var formData = new FormData();
+        formData.append('uuid', docketNo);
+        formData.append('createdby', petitioner);
+        formData.append('type', type);
+
+        if (remarksInput) {
+            formData.append('remarks', uploadType + " - " + remarksInput);
+        } else {
+            formData.append('remarks', uploadType);
+        }
+
+        formData.append('officeId', officeId);
+        formData.append('version', "0");
+
+        var fileInput = $('#' + fileInputId)[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var fileName = file.name;
+            formData.append('file', file);
+            formData.append('kind', kind);  // use passed kind
+            console.log('File name:', fileName);
+        } else {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        console.log('--- Form Data ---');
+        for (var pair of formData.entries()) {
+            if (pair[1] instanceof File) {
+                console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
+            } else {
+                console.log(`${pair[0]}: ${pair[1]}`);
+            }
+        }
+
+        var url = `${PPIS_path_upload}/file/upload`;
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('Response:', response);
+                if ("true") {
+                    // handle success
+                } else {
+                    alert('Error: Failed to upload');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Upload failed: ', error);
+                alert('An error occurred during the upload.');
+            }
+        });
+    }
     var __attachF21T1PageEvent = function() {
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
@@ -616,7 +766,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -859,7 +1009,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -1132,10 +1282,19 @@ $.wms.form21 = (function() {
         }
         
         //Add RCV
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitRCVButton").unbind("click").on("click",function(){
 
             var allowedDocket= [ 'PPI', 'PECI', 'TPPI', 'TPECI' ];
-            var requiredField= [ 'add_rcv_petitioner', 'add_rcv_date_rcv', 'add_rcv_investigating_officer'];
+            var requiredField= [ 'add_rcv_petitioner', 'add_rcv_date_rcv', 'add_rcv_investigating_officer', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F21T1', 'F21T2_RCV']
 
@@ -1187,15 +1346,27 @@ $.wms.form21 = (function() {
                
                 $(".addSubmitRCVButton").removeClass("hidden")
                 $(".addProceedRCVButton").addClass("hidden")
-                $("#modal-add-rcv").modal('toggle')
                 
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF21T2PageEvent();
-                    location.reload();
+                    setTimeout(function() {
+                        $("#modal-add-rcv").modal('toggle')
+                        location.reload();
+                    }, 2000); // 2000 milliseconds = 2 seconds
                 }else{
                     //Error Prompt
                 }
             });
+            uploadInvestigationFile(
+                $('#add_rcv_docket_no').val(),
+                $('#add_rcv_petitioner').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F21T2RR',
+                'investigation'
+            );
             var PPISPayload = {
                 "clientType"            : "PAROLEE",
                 "docketNumber"          : $("#add_rcv_docket_no").val(),
@@ -1230,15 +1401,23 @@ $.wms.form21 = (function() {
 
 
         //Add ACTED
+        $(document).off('change', '#add_upload_type_rau').on('change', '#add_upload_type_rau', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitACTEDButton").unbind("click").on("click",function(){
-
             var allowedDocket= [ 'PPI', 'PECI', 'TPPI', 'TPECI' ];
-            var requiredField= [ 'add_acted_petitioner'];
+            var requiredField= [ 'add_acted_petitioner','add_upload_type_rau', 'add_fileupload_rau'];
 
             var check = true
             var checkTable = ['F21T1', 'F21T2_RCV']
 
-            ___validateSave(allowedDocket,$("#add_acted_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSave2(allowedDocket,$("#add_acted_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
                     $(".modal-form input").attr("disabled",true);
                     $(".modal-form select").attr("disabled",true);
@@ -1260,37 +1439,18 @@ $.wms.form21 = (function() {
          $(".addProceedACTEDButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
-            var payload = {
-                "docket_no" : $("#add_acted_docket_no").val(),
-                "petitioner_name": $("#add_acted_petitioner").val(),
-                "psir_date": $("#add_acted_psir").val(),
-                "received_date": $("#add_acted_date_rcv").val(),
-                "transfer_date": $("#add_acted_transfer_date").val(),
-                "transfer_to": $("#add_acted_transfer_to").val(),
-                "field_office":$.wms.urlParam('field'),
-                "ppo_recommendation" : $("#add_acted_recommendation").val(),
-                "Y_M": $.wms.urlParam('date'),
-                "field_office_id": $.wms.urlParam('officeId'),
-                "source" : "2",
-                "created_by" : $.cookie("USER_ID"),
-                "method" : "insert"
-            }
-            console.log(payload);
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                ___modalReset();
 
-                $(".addSubmitACTEDButton").removeClass("hidden")
-                $(".addProceedACTEDButton").addClass("hidden")
-                $("#modal-add-acted").modal('toggle')
-                
-                if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF21T2PageEvent();
-                    location.reload();
-                }else{
-                    //Error Prompt
-                }
-            });
+
+            uploadInvestigationFile(
+                $('#add_acted_docket_no').val(),
+                $('#add_acted_petitioner').val(),
+                $('#add_upload_type_rau').val(),
+                $('#add_remarks_rau').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_rau',
+                'F21T2_RAU',
+                'investigation'
+            );
             var PPISPayload = {
                 "clientType"            : "PAROLEE",
                 "docketNumber"          : $("#add_acted_docket_no").val(),
@@ -1319,6 +1479,39 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });  
+            var payload = {
+                "docket_no" : $("#add_acted_docket_no").val(),
+                "petitioner_name": $("#add_acted_petitioner").val(),
+                "psir_date": $("#add_acted_psir").val(),
+                "received_date": $("#add_acted_date_rcv").val(),
+                "transfer_date": $("#add_acted_transfer_date").val(),
+                "transfer_to": $("#add_acted_transfer_to").val(),
+                "field_office":$.wms.urlParam('field'),
+                "ppo_recommendation" : $("#add_acted_recommendation").val(),
+                "Y_M": $.wms.urlParam('date'),
+                "field_office_id": $.wms.urlParam('officeId'),
+                "source" : "2",
+                "created_by" : $.cookie("USER_ID"),
+                "method" : "insert"
+            }
+            console.log(payload);
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED',JSON.stringify(payload)).done(function (result) {
+                $(".modal-loader").addClass("hidden")
+                ___modalReset();
+
+                $(".addSubmitACTEDButton").removeClass("hidden")
+                $(".addProceedACTEDButton").addClass("hidden")
+                
+                if(result.status != undefined && result.status == "SUCCESS"){
+                    //__attachF21T2PageEvent();
+                    setTimeout(function() {
+                        $("#modal-add-acted").modal('toggle')
+                        location.reload();
+                    }, 2000); 
+                }else{
+                    //Error Prompt
+                }
+            });
         });
 
 
@@ -2111,7 +2304,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -2290,13 +2483,22 @@ $.wms.form21 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PPI', 'PECI', 'TPPI', 'TPECI' ];
-            var requiredField= [ 'add_petitioner','add_psir', 'add_psir_rec'];
+            var requiredField= [ 'add_petitioner','add_psir', 'add_psir_rec','add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F21T2_ACTED', 'F21T3']
 
-            ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSave2(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
 
                     var checkTable2 = ['F21T4']
@@ -2348,7 +2550,7 @@ $.wms.form21 = (function() {
                 }else{
                     //Error Prompt
                 }
-            });    
+            });
             var PPISPayload = {
                 "clientType"            : "PAROLEE",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -2374,6 +2576,17 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_petitioner').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F21T4',
+                'investigation'
+            );
         })
 
         var ___modalReset = function(){
@@ -2933,7 +3146,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -3173,7 +3386,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -3486,10 +3699,18 @@ $.wms.form21 = (function() {
         });
 
         //ADD
-        
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPPI', 'CPECI' ];
-            var requiredField= [ 'add_rcv_petitioner', 'add_rcv_date_rcv', 'add_rcv_investigating_officer'];
+            var requiredField= [ 'add_rcv_petitioner', 'add_rcv_date_rcv', 'add_rcv_investigating_officer', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F21T5', 'F21T6_RCV']
 
@@ -3569,6 +3790,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });  
+            uploadInvestigationFile(
+                $('#add_rcv_docket_no').val(),
+                $('#add_rcv_petitioner').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                'F21T6RR',
+                'investigation'
+            );
         })
         //ADD
 
@@ -3732,14 +3963,22 @@ $.wms.form21 = (function() {
 
         //ADD_CMPLTD
         //ADD
-        
+        $(document).off('change', '#add_upload_type_car').on('change', '#add_upload_type_car', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addCMPLTDSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPPI', 'CPECI' ];
-            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date'];
+            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date','add_upload_type_car','add_fileupload_car'];
             var check = true
             var checkTable = ['F21T5', 'F21T6_RCV']
 
-            ___validateSave(allowedDocket,$("#add_cmpltd_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSave2(allowedDocket,$("#add_cmpltd_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
                     $(".modal-form input").attr("disabled",true);
                     $(".modal-form select").attr("disabled",true);
@@ -3808,6 +4047,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_cmpltd_docket_no').val(),
+                $('#add_cmpltd_petitioner').val(),
+                $('#add_upload_type_car').val(),
+                $('#add_remarks_car').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_car',
+                'F21T6CAR',
+                'investigation'
+            );
 
         })
         //ADD
@@ -4616,7 +4865,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -4846,7 +5095,6 @@ $.wms.form21 = (function() {
                         }
                     },
                     { "data": 'fileName' },
-                    { "data": 'version' },
                     { "data": 'remarks' },
                     {
                         "data": null,
@@ -4880,95 +5128,82 @@ $.wms.form21 = (function() {
                     }
                 ];
             }
-            function hideDuplicateRows2() {
-                let fileGroups = {};
-
-                $('.table_head2 tbody tr').each(function () {
-                    const fileName = $(this).find('td:eq(1)').text().trim();
-                    if (!fileGroups[fileName]) {
-                        fileGroups[fileName] = [];
-                    }
-                    fileGroups[fileName].push($(this));
-                });
-
-                for (let fileName in fileGroups) {
-                    const rows = fileGroups[fileName];
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA;
-                    });
-
-                    rows.slice(1).forEach(row => row.addClass('hidden'));
-                }
-            }
-            var dataTable = null; // Initialize the variable globally to store the DataTable instance
-            function load_table2(type, uuid, officeId, kind) {
-                if (dataTable) {
-                    dataTable.destroy();
-                    $('.table_head2 tbody').empty(); // Clear table body for modal2
-                }
-
-                // Reinitialize the DataTable for modal2
-                dataTable = $('.table_head2').DataTable({
-                    "processing": false,
-                    "serverSide": true,
-                    "scrollX": true,
-                    "searching": false,
-                    "autoWidth": false,
-                    "lengthMenu": [10, 25, 50, 100],
-                    "pageLength": 10,
-                    "ordering": false,
-                    ajax: {
-                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
-                        type: 'GET',
-                        cache: true,
-                        data: function (d) {
-                            return { 
-                                page: d.start / d.length, // Pagination logic
-                                size: d.length           // Page size 
-                            };
+                function tableColumns() {
+                    return [
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                return meta.settings._iDisplayStart + meta.row + 1;
+                            }
                         },
-                        dataFilter: function (data) {
-                            var json = jQuery.parseJSON(data);
-                            json.content.sort((a, b) => 
-                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
-                            );
-                            json.recordsTotal = json.totalElements;
-                            json.recordsFiltered = json.totalElements;
-                            json.data = json.content;
-                            return JSON.stringify(json);
+                        { "data": 'fileName' }, // Keep only file name
+                        { "data": 'remarks' }, // Keep remarks column
+                        {
+                            "data": null,
+                            "render": function (data, type, row, meta) {
+                                let actions = `
+                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-eye'></i> View
+                                        </button>
+                                    </a>
+                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                            <i class='fa fa-download'></i> Download
+                                        </button>
+                                    </a>
+                                    <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-trash'></i> Delete
+                                    </button>
+                                `;
+
+                                return actions;
+                            }
                         }
-                    },
-                    columns: tableColumns() // Reuse tableColumns function if structure is identical
-                });
+                    ];
+                }
 
-                $('.table_head2').on('draw.dt', function () {
-                    hideDuplicateRows2(); // Call function specific to modal2
-                });
-            }
-            $('.table_head2').on('click', '.btn-showVersions2', function () {
-                const fileName = $(this).data('file_name');
-                let rows = [];
-                $('.table_head2 tbody tr').each(function () {
-                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                        rows.push($(this));
+                var dataTable = null; // Initialize DataTable globally
+
+                function load_table2(type, uuid, officeId, kind) {
+                    if (dataTable) {
+                        dataTable.destroy();
+                        $('.table_head2 tbody').empty(); // Clear table body to avoid duplicates
                     }
-                });
 
-                rows.sort((a, b) => {
-                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                    return versionB - versionA;
-                });
-
-                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
-
-                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
-                $(this).html(isHidden 
-                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
-            });
+                    dataTable = $('.table_head2').DataTable({
+                        "processing": false,
+                        "serverSide": true,
+                        "scrollX": true,
+                        "searching": false,
+                        "autoWidth": false,
+                        "lengthMenu": [10, 25, 50, 100],
+                        "pageLength": 10,
+                        "ordering": false,
+                        ajax: {
+                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
+                            type: 'GET',
+                            cache: true,
+                            data: function (d) {
+                                return { 
+                                    page: d.start / d.length, // Pagination logic
+                                    size: d.length           // Page size 
+                                };
+                            },
+                            dataFilter: function (data) {
+                                var json = jQuery.parseJSON(data);
+                                json.recordsTotal = json.totalElements;
+                                json.recordsFiltered = json.totalElements;
+                                json.data = json.content;
+                                return JSON.stringify(json);
+                            }
+                        },
+                        columns: tableColumns() // Call function to get table columns
+                    });
+                    setTimeout(function () {
+                        dataTable.columns.adjust().draw();
+                    }, 100);
+                }
 
             $('#uploadButton2').on('click', function(e) {
                 e.preventDefault(); // Prevent default form submission for modal2
@@ -5253,9 +5488,18 @@ $.wms.form21 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
-            var requiredField= [ 'add_probationer', 'add_date_rcv', 'add_supervising'];
+            var requiredField= [ 'add_probationer', 'add_date_rcv', 'add_supervising','add_upload_type','add_fileupload'];
             var check = true
             var checkTable = ['F21T7_PARDON','F21T7_PAROL','F21T8_PARDON','F21T8_PAROL']
 
@@ -5314,13 +5558,17 @@ $.wms.form21 = (function() {
             });
             var addTableValue = $("#add_table").val(); // Get the value of #add_table
             var clientType;
+            var kind;
 
             if (addTableValue === "F21T8_PAROL") {
                 clientType = "PAROLEE";
+                kind = "F21T8_parolee";
             } else if (addTableValue === "F21T8_PARDON") {
                 clientType = "PARDONEE";
+                kind = "F21T8_pardonee";
             } else {
                 clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
+                kind = "";
             }
             console.log(clientType);
             var PPISPayload = {
@@ -5355,6 +5603,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                kind,
+                'supervision'
+            );
         })
 
         var ___modalReset = function(){
@@ -5621,7 +5879,7 @@ $.wms.form21 = (function() {
                     $('#attachmentModal').modal('show');
 
                     // Call load_table function
-                    load_table("investigation", docketNo, field_office_id, "F21T9_parolee");
+                    load_table("supervision", docketNo, field_office_id, "F21T9_parolee");
                 });
 
             function tableColumns() {
@@ -5648,7 +5906,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -5708,7 +5966,7 @@ $.wms.form21 = (function() {
                     var formData = new FormData();
                     formData.append('uuid', $('#docket_no').val());
                     formData.append('createdby', $('#petitioner_name').val());
-                    formData.append('type', "investigation");
+                    formData.append('type', "supervision");
                     var type = $('#type').val();
                     var remarks = $('#remarks').val();
                     if (remarks) {
@@ -5753,7 +6011,7 @@ $.wms.form21 = (function() {
                         success: function(response) {
                             console.log('Response:', response);
                             if ("true") {
-                                load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
+                                load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T9_parolee");
                                  // Clear the remarks textarea
                                 $('#remarks').val(''); 
                                 
@@ -5831,7 +6089,7 @@ $.wms.form21 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    // "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f21_write btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f21_write btn btn-success btn-xs btn-edit form_lock' data-table='F21T9_PARDON' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f21_write btn btn-danger btn-xs btn-delete form_lock' data-table='F21T9_PARDON'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -5871,7 +6129,7 @@ $.wms.form21 = (function() {
                 $('#attachmentModal2').modal('show');
 
                 // Call load_table function specific to modal2
-                load_table2("investigation", docketNo, field_office_id, "F21T9_pardonee");
+                load_table2("supervision", docketNo, field_office_id, "F21T9_pardonee");
             });
 
             function tableColumns() {
@@ -5898,7 +6156,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -5959,7 +6217,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no2').val());
                 formData.append('createdby', $('#petitioner_name2').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type2').val();
                 var remarks = $('#remarks2').val();
                 if (remarks) {
@@ -5992,7 +6250,7 @@ $.wms.form21 = (function() {
                     contentType: false,
                     success: function(response) {
                         console.log('Response:', response);
-                            load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
+                            load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F21T9_pardonee");
                             $('#remarks2').val(''); // Clear the remarks textarea
                             $('#fileupload2').val(''); // Clear the file input
                         
@@ -6237,14 +6495,23 @@ $.wms.form21 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
             var requiredField;
             var findingsInputValue = $("#add_transfer").val();
             if (findingsInputValue === "") {
-                requiredField= [ 'add_table','add_acted_petitioner','add_probationer', 'add_findings'];
+                requiredField= [ 'add_table','add_acted_petitioner','add_probationer', 'add_findings','add_upload_type','add_fileupload'];
             } else {
-                requiredField= [ 'add_table','add_acted_petitioner','add_probationer'];
+                requiredField= [ 'add_table','add_acted_petitioner','add_probationer','add_upload_type','add_fileupload'];
             }
             var check = true
             var checkTable = ['F21T9_PARDON','F21T9_PAROL','F21T10_PARDON','F21T10_PAROL']
@@ -6300,11 +6567,14 @@ $.wms.form21 = (function() {
             });    
             var addTableValue = $("#add_table").val(); // Get the value of #add_table
             var clientType;
+            var kind;
 
             if (addTableValue === "F21T9_PAROL") {
+                kind = "F21T9_parolee";
                 clientType = "PAROLEE";
             } else if (addTableValue === "F21T9_PARDON") {
                 clientType = "PARDONEE";
+                kind = "F21T9_pardonee";
             } else {
                 clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
             }
@@ -6335,6 +6605,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                kind,
+                'supervision'
+            );
         })
 
         var ___modalReset = function(){
@@ -7141,7 +7421,7 @@ $.wms.form21 = (function() {
                 $('#attachmentModal').modal('show');
 
                 // Call load_table function
-                load_table("investigation", docketNo, field_office_id, "F21T11_parolee");
+                load_table("supervision", docketNo, field_office_id, "F21T11_parolee");
             });
 
             function tableColumns() {
@@ -7168,7 +7448,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -7228,7 +7508,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no').val());
                 formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type').val();
                 var remarks = $('#remarks').val();
                 if (remarks) {
@@ -7273,7 +7553,7 @@ $.wms.form21 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T11_parolee");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -7389,7 +7669,7 @@ $.wms.form21 = (function() {
                 $('#attachmentModal2').modal('show');
 
                 // Call load_table function specific to modal2
-                load_table2("investigation", docketNo, field_office_id, "F21T11_pardonee");
+                load_table2("supervision", docketNo, field_office_id, "F21T11_pardonee");
             });
             function tableColumns() {
                 return [
@@ -7399,15 +7679,11 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' },
-                    { "data": 'version' },
-                    { "data": 'remarks' },
+                    { "data": 'fileName' }, // Keep only file name
+                    { "data": 'remarks' }, // Keep remarks column
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
-                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
-                            const latestVersion = Math.max(...rows.map(r => r.version));
-                            
                             let actions = `
                                 <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
                                     <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
@@ -7419,51 +7695,26 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
+                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <i class='fa fa-trash'></i> Delete
+                                </button>
                             `;
-
-                            if (rows.length > 1 && data.version === latestVersion) {
-                                actions += `
-                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-angle-down'></i> Show All Versions
-                                    </button>
-                                `;
-                            }
 
                             return actions;
                         }
                     }
                 ];
             }
-            function hideDuplicateRows2() {
-                let fileGroups = {};
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
-                $('.table_head2 tbody tr').each(function () {
-                    const fileName = $(this).find('td:eq(1)').text().trim();
-                    if (!fileGroups[fileName]) {
-                        fileGroups[fileName] = [];
-                    }
-                    fileGroups[fileName].push($(this));
-                });
+            var dataTable = null; // Initialize DataTable globally
 
-                for (let fileName in fileGroups) {
-                    const rows = fileGroups[fileName];
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA;
-                    });
-
-                    rows.slice(1).forEach(row => row.addClass('hidden'));
-                }
-            }
-            var dataTable = null; // Initialize the variable globally to store the DataTable instance
             function load_table2(type, uuid, officeId, kind) {
                 if (dataTable) {
                     dataTable.destroy();
-                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    $('.table_head2 tbody').empty(); // Clear table body to avoid duplicates
                 }
 
-                // Reinitialize the DataTable for modal2
                 dataTable = $('.table_head2').DataTable({
                     "processing": false,
                     "serverSide": true,
@@ -7485,44 +7736,18 @@ $.wms.form21 = (function() {
                         },
                         dataFilter: function (data) {
                             var json = jQuery.parseJSON(data);
-                            json.content.sort((a, b) => 
-                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
-                            );
                             json.recordsTotal = json.totalElements;
                             json.recordsFiltered = json.totalElements;
                             json.data = json.content;
                             return JSON.stringify(json);
                         }
                     },
-                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    columns: tableColumns() // Call function to get table columns
                 });
-
-                $('.table_head2').on('draw.dt', function () {
-                    hideDuplicateRows2(); // Call function specific to modal2
-                });
+                setTimeout(function () {
+                    dataTable.columns.adjust().draw();
+                }, 100);
             }
-            $('.table_head2').on('click', '.btn-showVersions2', function () {
-                const fileName = $(this).data('file_name');
-                let rows = [];
-                $('.table_head2 tbody tr').each(function () {
-                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                        rows.push($(this));
-                    }
-                });
-
-                rows.sort((a, b) => {
-                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                    return versionB - versionA;
-                });
-
-                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
-
-                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
-                $(this).html(isHidden 
-                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
-            });
 
             $('#uploadButton2').on('click', function(e) {
                 e.preventDefault(); // Prevent default form submission for modal2
@@ -7531,7 +7756,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no2').val());
                 formData.append('createdby', $('#petitioner_name2').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type2').val();
                 var remarks = $('#remarks2').val();
                 if (remarks) {
@@ -7804,11 +8029,20 @@ $.wms.form21 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
 
 
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
-            var requiredField= [ 'add_probationer','add_submitted','add_findings'];
+            var requiredField= [ 'add_probationer','add_submitted','add_findings','add_upload_type','add_fileupload'];
             var check = true
             if($("#add_table").val() == "F21T11_PARDON"){
                 var checkTable = ['F21T9_PARDON', 'F21T10_PARDON']    
@@ -7817,7 +8051,7 @@ $.wms.form21 = (function() {
             }
             
 
-            ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSave2(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
 
 
@@ -7872,18 +8106,21 @@ $.wms.form21 = (function() {
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF21T11PageEvent();
-                    location.reload();
+                    // location.reload();
                 }else{
                     //Error Prompt
                 }
             });  
             var addTableValue = $("#add_table").val(); // Get the value of #add_table
             var clientType;
+            var kind;
 
             if (addTableValue === "F21T11_PAROL") {
                 clientType = "PAROLEE";
+                kind = "F21T11_parolee";
             } else if (addTableValue === "F21T11_PARDON") {
                 clientType = "PARDONEE";
+                kind = "F21T11_pardonee";
             } else {
                 clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
             }
@@ -7914,6 +8151,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                kind,
+                'supervision'
+            );
         })
 
         var ___modalReset = function(){
@@ -8606,7 +8853,7 @@ $.wms.form21 = (function() {
                 "method" : "fetchAll",
                 "table" : "F21T13_PAROL"
             }
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T14',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T13',JSON.stringify(payload)).done(function (result) {
                 $(".form_loader").addClass("hidden")
                 $(".result_form").removeClass("hidden")
                 if(result.status != undefined && result.status == "SUCCESS"){
@@ -8667,7 +8914,7 @@ $.wms.form21 = (function() {
                 $('#attachmentModal').modal('show');
 
                 // Call load_table function
-                load_table("investigation", docketNo, field_office_id, "F21T13_parolee");
+                load_table("supervision", docketNo, field_office_id, "F21T13_parolee");
             });
 
             function tableColumns() {
@@ -8694,7 +8941,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -8754,7 +9001,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no').val());
                 formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type').val();
                 var remarks = $('#remarks').val();
                 if (remarks) {
@@ -8799,7 +9046,7 @@ $.wms.form21 = (function() {
                     success: function(response) {
                         console.log('Response:', response);
                         if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
+                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F21T13_parolee");
                              // Clear the remarks textarea
                             $('#remarks').val(''); 
                             
@@ -8861,7 +9108,7 @@ $.wms.form21 = (function() {
                             result.payload.forEach(function(data){
                                 data = $.wms.upper($.wms.sanitize(data))
                                 source = ((data.source==1) ? 'PIS' : 'MANUAL');
-                                $('.F21T14_tbody_b').append("<tr>"+
+                                $('.F21T13_tbody_b').append("<tr>"+
                                     "<td><a class='docket_view' data-docket='"+data.docket_no.toUpperCase()+"' title='View Docket Investigation Record From PIS'>"+data.docket_no.toUpperCase()+"</a></td>"+
                                     "<td>"+data.probationer.toUpperCase()+"</td>"+
                                     "<td>"+data.disposed_date+"</td>"+
@@ -8907,7 +9154,7 @@ $.wms.form21 = (function() {
                 $('#attachmentModal2').modal('show');
 
                 // Call load_table function specific to modal2
-                load_table2("investigation", docketNo, field_office_id, "F21T13_pardonee");
+                load_table2("supervision", docketNo, field_office_id, "F21T13_pardonee");
             });
             function tableColumns() {
                 return [
@@ -8917,15 +9164,11 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' },
-                    { "data": 'version' },
-                    { "data": 'remarks' },
+                    { "data": 'fileName' }, // Keep only file name
+                    { "data": 'remarks' }, // Keep remarks column
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
-                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
-                            const latestVersion = Math.max(...rows.map(r => r.version));
-                            
                             let actions = `
                                 <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
                                     <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
@@ -8937,51 +9180,26 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
+                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <i class='fa fa-trash'></i> Delete
+                                </button>
                             `;
-
-                            if (rows.length > 1 && data.version === latestVersion) {
-                                actions += `
-                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-angle-down'></i> Show All Versions
-                                    </button>
-                                `;
-                            }
 
                             return actions;
                         }
                     }
                 ];
             }
-            function hideDuplicateRows2() {
-                let fileGroups = {};
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
-                $('.table_head2 tbody tr').each(function () {
-                    const fileName = $(this).find('td:eq(1)').text().trim();
-                    if (!fileGroups[fileName]) {
-                        fileGroups[fileName] = [];
-                    }
-                    fileGroups[fileName].push($(this));
-                });
+            var dataTable = null; // Initialize DataTable globally
 
-                for (let fileName in fileGroups) {
-                    const rows = fileGroups[fileName];
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA;
-                    });
-
-                    rows.slice(1).forEach(row => row.addClass('hidden'));
-                }
-            }
-            var dataTable = null; // Initialize the variable globally to store the DataTable instance
             function load_table2(type, uuid, officeId, kind) {
                 if (dataTable) {
                     dataTable.destroy();
-                    $('.table_head2 tbody').empty(); // Clear table body for modal2
+                    $('.table_head2 tbody').empty(); // Clear table body to avoid duplicates
                 }
 
-                // Reinitialize the DataTable for modal2
                 dataTable = $('.table_head2').DataTable({
                     "processing": false,
                     "serverSide": true,
@@ -9003,44 +9221,18 @@ $.wms.form21 = (function() {
                         },
                         dataFilter: function (data) {
                             var json = jQuery.parseJSON(data);
-                            json.content.sort((a, b) => 
-                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
-                            );
                             json.recordsTotal = json.totalElements;
                             json.recordsFiltered = json.totalElements;
                             json.data = json.content;
                             return JSON.stringify(json);
                         }
                     },
-                    columns: tableColumns() // Reuse tableColumns function if structure is identical
+                    columns: tableColumns() // Call function to get table columns
                 });
-
-                $('.table_head2').on('draw.dt', function () {
-                    hideDuplicateRows2(); // Call function specific to modal2
-                });
+                setTimeout(function () {
+                    dataTable.columns.adjust().draw();
+                }, 100);
             }
-            $('.table_head2').on('click', '.btn-showVersions2', function () {
-                const fileName = $(this).data('file_name');
-                let rows = [];
-                $('.table_head2 tbody tr').each(function () {
-                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                        rows.push($(this));
-                    }
-                });
-
-                rows.sort((a, b) => {
-                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                    return versionB - versionA;
-                });
-
-                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
-
-                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
-                $(this).html(isHidden 
-                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
-            });
 
             $('#uploadButton2').on('click', function(e) {
                 e.preventDefault(); // Prevent default form submission for modal2
@@ -9049,7 +9241,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no2').val());
                 formData.append('createdby', $('#petitioner_name2').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type2').val();
                 var remarks = $('#remarks2').val();
                 if (remarks) {
@@ -9096,7 +9288,7 @@ $.wms.form21 = (function() {
                 });
             });
                             $(document).ready(function () {
-                                var table = $('#T_F21T14_b').DataTable({
+                                var table = $('#T_F21T13_b').DataTable({
                                     "drawCallback": function( settings ) {
                                             $.wms.reports.form_lock();
                                     }
@@ -9302,9 +9494,18 @@ $.wms.form21 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'PR', 'PD', 'TPR', 'TPD' ];
-            var requiredField= [ 'add_probationer','add_submitted'];
+            var requiredField= [ 'add_probationer','add_submitted','add_upload_type','add_fileupload'];
             var check = true
             if($("#add_table").val() == "F21T11_PARDON"){
                 var checkTable = ['F21T9_PARDON', 'F21T12_PARDON']    
@@ -9313,7 +9514,7 @@ $.wms.form21 = (function() {
             }
             
 
-            ___validateSave(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSave2(allowedDocket,$("#add_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
 
                     var checkTable2 = ['F21T13_PARDON','F21T13_PAROL']
@@ -9365,18 +9566,21 @@ $.wms.form21 = (function() {
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF21T13PageEvent();
-                    location.reload();
+                    // location.reload();
                 }else{
                     //Error Prompt
                 }
             });    
             var addTableValue = $("#add_table").val(); // Get the value of #add_table
             var clientType;
+            var kind;
 
             if (addTableValue === "F21T13_PAROL") {
+                kind = "F21T13_parolee";
                 clientType = "PAROLEE";
             } else if (addTableValue === "F21T13_PARDON") {
                 clientType = "PARDONEE";
+                kind = "F21T13_pardonee";
             } else {
                 clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
             }
@@ -9406,6 +9610,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_docket_no').val(),
+                $('#add_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                kind,
+                'supervision'
+            );
         })
 
         var ___modalReset = function(){
@@ -10196,7 +10410,7 @@ $.wms.form21 = (function() {
                                 $('#attachmentModal').modal('show');
 
                                 // Call load_table function
-                                load_table("investigation", docketNo, field_office_id, "F21T15RR_parolee");
+                                load_table("supervision", docketNo, field_office_id, "F21T15RR_parolee");
                             });
 
             function tableColumns() {
@@ -10223,7 +10437,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -10283,7 +10497,7 @@ $.wms.form21 = (function() {
                                 var formData = new FormData();
                                 formData.append('uuid', $('#docket_no').val());
                                 formData.append('createdby', $('#petitioner_name').val());
-                                formData.append('type', "investigation");
+                                formData.append('type', "supervision");
                                 var type = $('#type').val();
                                 var remarks = $('#remarks').val();
                                 if (remarks) {
@@ -10437,7 +10651,7 @@ $.wms.form21 = (function() {
                     $('#attachmentModal2').modal('show');
 
                     // Call load_table function specific to modal2
-                    load_table2("investigation", docketNo, field_office_id, "F21T15TERM_parolee");
+                    load_table2("supervision", docketNo, field_office_id, "F21T15TERM_parolee");
                 });
 
             function tableColumns() {
@@ -10464,7 +10678,7 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                     <i class='fa fa-trash'></i> Delete
                                 </button>
                             `;
@@ -10524,7 +10738,7 @@ $.wms.form21 = (function() {
                     var formData = new FormData();
                     formData.append('uuid', $('#docket_no2').val());
                     formData.append('createdby', $('#petitioner_name2').val());
-                    formData.append('type', "investigation");
+                    formData.append('type', "supervision");
                     var type = $('#type2').val();
                     var remarks = $('#remarks2').val();
                     if (remarks) {
@@ -10663,10 +10877,10 @@ $.wms.form21 = (function() {
                 $('#attachmentModal3').modal('show');
 
                 // Call load_table function specific to modal3
-                load_table3("investigation", docketNo, field_office_id, "F21T15_pardonee_rcv");
+                load_table3("supervision", docketNo, field_office_id, "F21T15_pardonee_rcv");
             });
 
-            function tableColumns3() {
+            function tableColumn3() {
                 return [
                     {
                         "data": null,
@@ -10674,15 +10888,11 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' },
-                    { "data": 'version' },
-                    { "data": 'remarks' },
+                    { "data": 'fileName' }, // Keep only file name
+                    { "data": 'remarks' }, // Keep remarks column
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
-                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
-                            const latestVersion = Math.max(...rows.map(r => r.version));
-
                             let actions = `
                                 <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
                                     <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
@@ -10694,54 +10904,27 @@ $.wms.form21 = (function() {
                                         <i class='fa fa-download'></i> Download
                                     </button>
                                 </a>
+                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <i class='fa fa-trash'></i> Delete
+                                </button>
                             `;
-
-                            if (rows.length > 1 && data.version === latestVersion) {
-                                actions += `
-                                    <button class='btn btn-secondary btn-sm btn-showVersions3' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-angle-down'></i> Show All Versions
-                                    </button>
-                                `;
-                            }
 
                             return actions;
                         }
                     }
                 ];
             }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
 
-            function hideDuplicateRows3() {
-                let fileGroups = {};
+            var dataTable3 = null; // Initialize DataTable globally
 
-                $('.table_head3 tbody tr').each(function () {
-                    const fileName = $(this).find('td:eq(1)').text().trim();
-                    if (!fileGroups[fileName]) {
-                        fileGroups[fileName] = [];
-                    }
-                    fileGroups[fileName].push($(this));
-                });
-
-                for (let fileName in fileGroups) {
-                    const rows = fileGroups[fileName];
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA;
-                    });
-
-                    rows.slice(1).forEach(row => row.addClass('hidden'));
-                }
-            }
-
-            var dataTable3 = null; // Initialize the variable globally to store the DataTable instance
             function load_table3(type, uuid, officeId, kind) {
                 if (dataTable3) {
                     dataTable3.destroy();
-                    $('.table_head3 tbody').empty(); // Clear table body for modal3
+                    $('.table_head3 tbody').empty(); // Clear table body to avoid duplicates
                 }
 
-                // Reinitialize the DataTable for modal3
-                dataTable3 = $('.table_head3').DataTable({
+                dataTable = $('.table_head3').DataTable({
                     "processing": false,
                     "serverSide": true,
                     "scrollX": true,
@@ -10762,45 +10945,18 @@ $.wms.form21 = (function() {
                         },
                         dataFilter: function (data) {
                             var json = jQuery.parseJSON(data);
-                            json.content.sort((a, b) => 
-                                a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
-                            );
                             json.recordsTotal = json.totalElements;
                             json.recordsFiltered = json.totalElements;
                             json.data = json.content;
                             return JSON.stringify(json);
                         }
                     },
-                    columns: tableColumns3() // Reuse tableColumns3 function if structure is identical
+                    columns: tableColumn3() // Call function to get table columns
                 });
-
-                $('.table_head3').on('draw.dt', function () {
-                    hideDuplicateRows3(); // Call function specific to modal3
-                });
+                setTimeout(function () {
+                    dataTable.columns.adjust().draw();
+                }, 100);
             }
-
-            $('.table_head3').on('click', '.btn-showVersions3', function () {
-                const fileName = $(this).data('file_name');
-                let rows = [];
-                $('.table_head3 tbody tr').each(function () {
-                    if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                        rows.push($(this));
-                    }
-                });
-
-                rows.sort((a, b) => {
-                    const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                    const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                    return versionB - versionA;
-                });
-
-                rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
-
-                const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
-                $(this).html(isHidden 
-                    ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                    : `<i class='fa fa-angle-up'></i> Hide Versions`);
-            });
 
             $('#uploadButton3').on('click', function(e) {
                 e.preventDefault(); // Prevent default form submission for modal3
@@ -10809,7 +10965,7 @@ $.wms.form21 = (function() {
                 var formData = new FormData();
                 formData.append('uuid', $('#docket_no3').val());
                 formData.append('createdby', $('#petitioner_name3').val());
-                formData.append('type', "investigation");
+                formData.append('type', "supervision");
                 var type = $('#type3').val();
                 var remarks = $('#remarks3').val();
                 if (remarks) {
@@ -10944,144 +11100,86 @@ $.wms.form21 = (function() {
                     $('#attachmentModal4').modal('show');
 
                     // Call load_table function specific to modal4
-                    load_table4("investigation", docketNo, field_office_id, "F21T15_pardonee_term");
+                    load_table4("supervision", docketNo, field_office_id, "F21T15_pardonee_term");
                 });
 
-                function tableColumns4() {
-                    return [
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                return meta.settings._iDisplayStart + meta.row + 1;
-                            }
-                        },
-                        { "data": 'fileName' },
-                        { "data": 'version' },
-                        { "data": 'remarks' },
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
-                                const latestVersion = Math.max(...rows.map(r => r.version));
-
-                                let actions = `
-                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-eye'></i> View
-                                        </button>
-                                    </a>
-                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-download'></i> Download
-                                        </button>
-                                    </a>
-                                `;
-
-                                if (rows.length > 1 && data.version === latestVersion) {
-                                    actions += `
-                                        <button class='btn btn-secondary btn-sm btn-showVersions4' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-angle-down'></i> Show All Versions
-                                        </button>
-                                    `;
-                                }
-
-                                return actions;
-                            }
+            function tableColumns4() {
+                return [
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            return meta.settings._iDisplayStart + meta.row + 1;
                         }
-                    ];
-                }
+                    },
+                    { "data": 'fileName' }, // Keep only file name
+                    { "data": 'remarks' }, // Keep remarks column
+                    {
+                        "data": null,
+                        "render": function (data, type, row, meta) {
+                            let actions = `
+                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-eye'></i> View
+                                    </button>
+                                </a>
+                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                        <i class='fa fa-download'></i> Download
+                                    </button>
+                                </a>
+                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
+                                    <i class='fa fa-trash'></i> Delete
+                                </button>
+                            `;
 
-                function hideDuplicateRows4() {
-                    let fileGroups = {};
-
-                    $('.table_head4 tbody tr').each(function () {
-                        const fileName = $(this).find('td:eq(1)').text().trim();
-                        if (!fileGroups[fileName]) {
-                            fileGroups[fileName] = [];
+                            return actions;
                         }
-                        fileGroups[fileName].push($(this));
-                    });
-
-                    for (let fileName in fileGroups) {
-                        const rows = fileGroups[fileName];
-                        rows.sort((a, b) => {
-                            const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                            const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                            return versionB - versionA;
-                        });
-
-                        rows.slice(1).forEach(row => row.addClass('hidden'));
                     }
+                ];
+            }
+            $(document).on('click', '.btn-delete-upload', deleteItem);
+
+            var dataTable4 = null; // Initialize DataTable globally
+
+            function load_table4(type, uuid, officeId, kind) {
+                if (dataTable4) {
+                    dataTable4.destroy();
+                    $('.table_head4 tbody').empty(); // Clear table body to avoid duplicates
                 }
 
-                var dataTable4 = null; // Initialize the variable globally to store the DataTable instance
-                function load_table4(type, uuid, officeId, kind) {
-                    if (dataTable4) {
-                        dataTable4.destroy();
-                        $('.table_head4 tbody').empty(); // Clear table body for modal4
-                    }
-
-                    // Reinitialize the DataTable for modal4
-                    dataTable4 = $('.table_head4').DataTable({
-                        "processing": false,
-                        "serverSide": true,
-                        "scrollX": true,
-                        "searching": false,
-                        "autoWidth": false,
-                        "lengthMenu": [10, 25, 50, 100],
-                        "pageLength": 10,
-                        "ordering": false,
-                        ajax: {
-                            url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
-                            type: 'GET',
-                            cache: true,
-                            data: function (d) {
-                                return { 
-                                    page: d.start / d.length, // Pagination logic
-                                    size: d.length           // Page size 
-                                };
-                            },
-                            dataFilter: function (data) {
-                                var json = jQuery.parseJSON(data);
-                                json.content.sort((a, b) => 
-                                    a.fileName === b.fileName ? b.version - a.version : a.fileName.localeCompare(b.fileName)
-                                );
-                                json.recordsTotal = json.totalElements;
-                                json.recordsFiltered = json.totalElements;
-                                json.data = json.content;
-                                return JSON.stringify(json);
-                            }
+                dataTable = $('.table_head4').DataTable({
+                    "processing": false,
+                    "serverSide": true,
+                    "scrollX": true,
+                    "searching": false,
+                    "autoWidth": false,
+                    "lengthMenu": [10, 25, 50, 100],
+                    "pageLength": 10,
+                    "ordering": false,
+                    ajax: {
+                        url: `${PPIS_path_upload}/file/page/${type}/${uuid}/${kind}/${officeId}`,
+                        type: 'GET',
+                        cache: true,
+                        data: function (d) {
+                            return { 
+                                page: d.start / d.length, // Pagination logic
+                                size: d.length           // Page size 
+                            };
                         },
-                        columns: tableColumns4() // Reuse tableColumns4 function if structure is identical
-                    });
-
-                    $('.table_head4').on('draw.dt', function () {
-                        hideDuplicateRows4(); // Call function specific to modal4
-                    });
-                }
-
-                $('.table_head4').on('click', '.btn-showVersions4', function () {
-                    const fileName = $(this).data('file_name');
-                    let rows = [];
-                    $('.table_head4 tbody tr').each(function () {
-                        if ($(this).find('td:eq(1)').text().trim() === fileName) {
-                            rows.push($(this));
+                        dataFilter: function (data) {
+                            var json = jQuery.parseJSON(data);
+                            json.recordsTotal = json.totalElements;
+                            json.recordsFiltered = json.totalElements;
+                            json.data = json.content;
+                            return JSON.stringify(json);
                         }
-                    });
-
-                    rows.sort((a, b) => {
-                        const versionA = parseInt(a.find('td:eq(2)').text().trim());
-                        const versionB = parseInt(b.find('td:eq(2)').text().trim());
-                        return versionB - versionA;
-                    });
-
-                    rows.forEach((row, index) => index === 0 ? row.removeClass('hidden') : row.toggleClass('hidden'));
-
-                    const isHidden = rows.slice(1).some(row => row.hasClass('hidden'));
-                    $(this).html(isHidden 
-                        ? `<i class='fa fa-angle-down'></i> Show All Versions` 
-                        : `<i class='fa fa-angle-up'></i> Hide Versions`);
+                    },
+                    columns: tableColumns4() // Call function to get table columns
                 });
+                setTimeout(function () {
+                    dataTable.columns.adjust().draw();
+                }, 100);
+            }
 
                 $('#uploadButton4').on('click', function(e) {
                     e.preventDefault(); // Prevent default form submission for modal4
@@ -11090,7 +11188,7 @@ $.wms.form21 = (function() {
                     var formData = new FormData();
                     formData.append('uuid', $('#docket_no4').val());
                     formData.append('createdby', $('#petitioner_name4').val());
-                    formData.append('type', "investigation");
+                    formData.append('type', "supervision");
                     var type = $('#type4').val();
                     var remarks = $('#remarks4').val();
                     if (remarks) {
@@ -11482,9 +11580,18 @@ $.wms.form21 = (function() {
 
         //RCV
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPD', 'CPR'    ];
-            var requiredField= [ 'add_rcv_probationer', 'add_rcv_date_rcv', 'add_rcv_supervising'];
+            var requiredField= [ 'add_rcv_probationer', 'add_rcv_date_rcv', 'add_rcv_supervising', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F21T15_TERM_PARDON','F21T15_TERM_PAROL']
             
@@ -11539,18 +11646,21 @@ $.wms.form21 = (function() {
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF21T15PageEvent();
-                    location.reload();
+                    // location.reload();
                 }else{
                     //Error Prompt
                 }
             });    
             var addTableValue = $("#add_rcv_table").val(); // Get the value of #add_table
             var clientType;
+            var kind;
 
             if (addTableValue === "F21T15_RCV_PAROL") {
                 clientType = "PAROLEE";
+                kind = "F21T15RR_parolee";
             } else if (addTableValue === "F21T15_RCV_PARDON") {
                 clientType = "PARDONEE";
+                kind = "F21T15_pardonee_rcv";
             } else {
                 clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
             }
@@ -11584,14 +11694,33 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_rcv_docket_no').val(),
+                $('#add_rcv_probationer').val(),
+                $('#add_upload_type').val(),
+                $('#add_remarks').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload',
+                kind,
+                'supervision'
+            );
         })
 
         //ADD TERM
         //RCV
         //Add
+        $(document).off('change', '#add_upload_type_rt').on('change', '#add_upload_type_rt', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addTERMSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'CPD', 'CPR'    ];
-            var requiredField= [ 'add_term_probationer','add_term_date_terminated'];
+            var requiredField= [ 'add_term_probationer','add_term_date_terminated', 'add_upload_type_rt', 'add_fileupload_rt'];
             var check = true
             if($("#add_table").val() == "F21T15_TERM_PARDON"){
                 var checkTable = ['F21T14_PARDON', 'F21T15_RCV_PARDON']    
@@ -11600,7 +11729,7 @@ $.wms.form21 = (function() {
             }
             
 
-            ___validateSave(allowedDocket,$("#add_term_docket_no"),requiredField,check,checkTable).done(function(result){
+            ___validateSave2(allowedDocket,$("#add_term_docket_no"),requiredField,check,checkTable).done(function(result){
                 if(result){
                     $(".modal-form input").attr("disabled",true);
                     $(".modal-form select").attr("disabled",true);
@@ -11646,18 +11775,21 @@ $.wms.form21 = (function() {
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
                     //__attachF21T15PageEvent();
-                    location.reload();
+                    // location.reload();
                 }else{
                     //Error Prompt
                 }
             });    
             var addTableValue = $("#add_term_table").val(); // Get the value of #add_table
             var clientType;
+            var kind2;
 
             if (addTableValue === "F21T15_TERM_PAROL") {
                 clientType = "PAROLEE";
+                kind2 = "F21T15TERM_parolee";
             } else if (addTableValue === "F21T15_TERM_PARDON") {
                 clientType = "PARDONEE";
+                kind2 = "F21T15_pardonee_term";
             } else {
                 clientType = "UNKNOWN"; // Optional, handle cases where the value doesn't match
             }
@@ -11686,6 +11818,16 @@ $.wms.form21 = (function() {
                     console.error('Error:', status, error); // Handle error response
                 }
             });
+            uploadInvestigationFile(
+                $('#add_term_docket_no').val(),
+                $('#add_term_probationer').val(),
+                $('#add_upload_type_rt').val(),
+                $('#add_remarks_rt').val(),
+                $.wms.urlParam('officeId'),
+                'add_fileupload_rt',
+                kind2,
+                'supervision'
+            );
         })
 
         var ___modalReset = function(){

@@ -753,9 +753,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
+                          <th width="35%">File Name</th>
                           <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="20%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -843,9 +843,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
+                          <th width="35%">File Name</th>
                           <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="20%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -865,7 +865,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton2">Upload</button>
+              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton2">Upload</button> -->
           </div>
         </div>
       </div>
@@ -932,9 +932,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
+                          <th width="35%">File Name</th>
                           <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="20%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -954,7 +954,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton3">Upload</button>
+              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton3">Upload</button> -->
           </div>
         </div>
       </div>
@@ -1021,9 +1021,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
+                          <th width="35%">File Name</th>
                           <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="20%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -1043,7 +1043,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton4">Upload</button>
+              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton4">Upload</button> -->
           </div>
         </div>
       </div>
