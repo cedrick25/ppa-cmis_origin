@@ -205,37 +205,38 @@ class Report extends CI_Controller {
         }
 
         $html .= "</tbody></table>";
+        $footer = FCPATH . 'images/footer.png';
+        $footerData = base64_encode(file_get_contents($footer));
+
         $html .= "
             <div style='
                 position: fixed;
                 bottom: 40px;
-                left: 20px;
                 font-family: Arial, sans-serif;
                 font-size: 10pt;
                 width: 100%;
                 text-align: left;
-                padding-bottom: 20px;
+                padding-bottom: 30px;
             '>
                 This is an Online Records Check Result. Signature is not required.<br>
                 Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
             </div>
             <div style='
                 position: fixed;
-                bottom: 20px;
-                right: 20px;
-                text-align: right;
-                width: 300px;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
                 font-family: Arial, sans-serif;
             '>
-                <div style='font-size: 10pt; font-weight: bold;'>ISO 9001:2015</div>
-                <div style='font-size: 8pt;'>Certificate No.: PHP QMS 25 93 0254</div>
+                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width: 100%; height: auto;'>
             </div>
         ";
         // Generate PDF
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $dompdf->stream("report.pdf", ["Attachment" => true]);
+        $dompdf->stream("Download Result.pdf", ["Attachment" => true]);
     }
     public function download_report_CS()
     {
@@ -364,9 +365,9 @@ class Report extends CI_Controller {
         $html .= "<p class='p_sentence'>This has reference to the request for records check on the client applying for community service</p>";
         $html .= "<p class='p_center' style='font-size: 10pt;'>$fullname</p>";
         if (!empty($data['community_masterlist'])) {
-            $html .= "<br><p class='p_sentence'>The matrix below shows the similar name/s with the petitioner’s name being requested for records check from 1978 to " . date('Y') . ":</p>";
+            $html .= "<br><p class='p_sentence'>The matrix below shows the similar name/s with the applicant’s name being requested for records check from 1978 to " . date('Y') . ":</p>";
         } else {
-            $html .= "<br><p class='p_sentence'>The matrix below shows no similar name/s with the petitioner’s name being requested for records check from 1978 to " . date('Y') . ".</p>";
+            $html .= "<br><p class='p_sentence'>The matrix below shows no similar name/s with the applicant’s name being requested for records check from 1978 to " . date('Y') . ".</p>";
         }
         $html .= "
         <table border='1' cellpadding='5' cellspacing='0' style='width:100%; border-collapse: collapse;'>
@@ -402,7 +403,7 @@ class Report extends CI_Controller {
                           </tr>";
             }
         } else {
-            $html .= "<tr><td colspan='11'>No masterlist records found.</td></tr>";
+            $html .= "<tr><td colspan='8'>No masterlist records found.</td></tr>";
         }
         $html .= "</tbody></table><br>";            
         $html .= "<p class='p_sentence'>The list above does not include the data of the field offices that have not filled out their caseload to the system, namely;</p>";
@@ -429,30 +430,31 @@ class Report extends CI_Controller {
         }
 
         $html .= "</tbody></table>";
+        $footer = FCPATH . 'images/footer.png';
+        $footerData = base64_encode(file_get_contents($footer));
+
         $html .= "
             <div style='
                 position: fixed;
                 bottom: 40px;
-                left: 20px;
                 font-family: Arial, sans-serif;
                 font-size: 10pt;
                 width: 100%;
                 text-align: left;
-                padding-bottom: 20px;
+                padding-bottom: 30px;
             '>
                 This is an Online Records Check Result. Signature is not required.<br>
                 Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
             </div>
             <div style='
                 position: fixed;
-                bottom: 20px;
-                right: 20px;
-                text-align: right;
-                width: 300px;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
                 font-family: Arial, sans-serif;
             '>
-                <div style='font-size: 10pt; font-weight: bold;'>ISO 9001:2015</div>
-                <div style='font-size: 8pt;'>Certificate No.: PHP QMS 25 93 0254</div>
+                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width: 100%; height: auto;'>
             </div>
         ";
         // Generate PDF
@@ -460,6 +462,6 @@ class Report extends CI_Controller {
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         ob_end_clean(); // <--- ADD THIS LINE
-        $dompdf->stream("community service report.pdf", ["Attachment" => true]);
+        $dompdf->stream("Download Result.pdf", ["Attachment" => true]);
     }
 }

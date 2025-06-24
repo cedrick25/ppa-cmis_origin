@@ -723,7 +723,7 @@
                 <input type="text" class="form-control" id="petitioner_name" readonly>
               </div>
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
               <label for="type" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type" name="type" required>
@@ -739,10 +739,10 @@
             <div class="form-group row">
               <label for="fileupload" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload" accept=".jpg, .png, .pdf, .docx" required multiple>
               </div>
-            </div> -->
-            <!-- <input type="hidden" id="FOId" name="FOId"> -->
+            </div>
+            <input type="hidden" id="FOId" name="FOId">
 
             <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
             <div class="row">
@@ -754,8 +754,8 @@
                         <tr>
                           <th width="5%">#</th>
                           <th width="35%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="20%">Actions</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -775,7 +775,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload</button> -->
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload</button>
           </div>
         </div>
       </div>
@@ -813,7 +813,7 @@
                 <input type="text" class="form-control" id="petitioner_name2" readonly>
               </div>
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
               <label for="type2" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type2" name="type2" required>
@@ -829,10 +829,10 @@
             <div class="form-group row">
               <label for="fileupload2" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload2" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload2" accept=".jpg, .png, .pdf, .docx" multiple>
               </div>
             </div>
-            <input type="hidden" id="FOId2" name="FOId2"> -->
+            <input type="hidden" id="FOId2" name="FOId2">
 
             <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
             <div class="row">
@@ -844,8 +844,8 @@
                         <tr>
                           <th width="5%">#</th>
                           <th width="35%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="20%">Actions</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -865,7 +865,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton2">Upload</button> -->
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton2">Upload</button>
           </div>
         </div>
       </div>
@@ -902,7 +902,7 @@
                 <input type="text" class="form-control" id="petitioner_name3" readonly>
               </div>
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
               <label for="type3" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type3" name="type3" required>
@@ -918,10 +918,10 @@
             <div class="form-group row">
               <label for="fileupload3" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload3" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload3" accept=".jpg, .png, .pdf, .docx" multiple>
               </div>
             </div>
-            <input type="hidden" id="FOId3" name="FOId3"> -->
+            <input type="hidden" id="FOId3" name="FOId3">
 
             <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
             <div class="row">
@@ -933,8 +933,8 @@
                         <tr>
                           <th width="5%">#</th>
                           <th width="35%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="20%">Actions</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -954,7 +954,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton3">Upload</button> -->
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton3">Upload</button>
           </div>
         </div>
       </div>
@@ -991,7 +991,7 @@
                 <input type="text" class="form-control" id="petitioner_name4" readonly>
               </div>
             </div>
-            <!-- <div class="form-group row">
+            <div class="form-group row">
               <label for="type4" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type4" name="type4" required>
@@ -1007,10 +1007,10 @@
             <div class="form-group row">
               <label for="fileupload4" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload4" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload4" accept=".jpg, .png, .pdf, .docx" multiple>
               </div>
             </div>
-            <input type="hidden" id="FOId4" name="FOId4"> -->
+            <input type="hidden" id="FOId4" name="FOId4">
 
             <!-- Nav tabs for Investigation, Supervision, Rehabilitation, and Others -->
             <div class="row">
@@ -1022,8 +1022,8 @@
                         <tr>
                           <th width="5%">#</th>
                           <th width="35%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="20%">Actions</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -1043,7 +1043,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <!-- <button type="button" class="btn btn-sm btn-primary" id="uploadButton4">Upload</button> -->
+              <button type="button" class="btn btn-sm btn-primary" id="uploadButton4">Upload</button>
           </div>
         </div>
       </div>
