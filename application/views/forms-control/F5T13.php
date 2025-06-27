@@ -300,7 +300,7 @@
               <div class="form-group row">
                 <label for="add_fileupload" class="col-md-3 col-form-label">Upload File</label>
                 <div class="col-sm-9">
-                  <input type="file" class="form-control-file add_fileupload form-control" id="add_fileupload" accept=".jpg, .png, .pdf, .docx" required>
+                  <input type="file" class="form-control-file add_fileupload form-control" id="add_fileupload" accept=".jpg, .png, .pdf, .docx" multiple>
                 </div>
               </div>
               <input type="hidden" id="FOId" name="FOId">
@@ -403,7 +403,7 @@
               <div class="form-group row">
                 <label for="add_fileupload" class="col-md-3 col-form-label">Upload File</label>
                 <div class="col-sm-9">
-                  <input type="file" class="form-control-file add_fileupload_term form-control" id="add_fileupload_term" accept=".jpg, .png, .pdf, .docx" required>
+                  <input type="file" class="form-control-file add_fileupload_term form-control" id="add_fileupload_term" accept=".jpg, .png, .pdf, .docx" multiple>
                 </div>
               </div>
               <input type="hidden" id="FOId" name="FOId">
