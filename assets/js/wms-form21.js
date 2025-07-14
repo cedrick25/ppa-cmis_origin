@@ -738,33 +738,39 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
                     }
                 ];
             }
-
             var dataTable = null; // Initialize DataTable globally
 
             function load_table(type, uuid, officeId, kind) {
@@ -973,33 +979,39 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
                     }
                 ];
             }
-
             var dataTable = null; // Initialize DataTable globally
 
             function load_table2(type, uuid, officeId, kind) {
@@ -2249,39 +2261,46 @@ $.wms.form21 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -3077,40 +3096,46 @@ $.wms.form21 = (function() {
                             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
 
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
             var dataTable = null; // Initialize DataTable globally
 
             function load_table(type, uuid, officeId, kind) {
@@ -3309,39 +3334,46 @@ $.wms.form21 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -4785,39 +4817,46 @@ $.wms.form21 = (function() {
                             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -5022,81 +5061,46 @@ $.wms.form21 = (function() {
                 load_table2("supervision", docketNo, field_office_id, "F21T8_pardonee");
             });
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' },
-                    { "data": 'remarks' },
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            const rows = meta.settings.json.data.filter(r => r.fileName === data.fileName);
-                            const latestVersion = Math.max(...rows.map(r => r.version));
-                            
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            if (rows.length > 1 && data.version === latestVersion) {
-                                actions += `
-                                    <button class='btn btn-secondary btn-sm btn-showVersions2' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-angle-down'></i> Show All Versions
-                                    </button>
-                                `;
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
                             }
-
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
-
-                            return actions;
-                        }
-                    }
-                ];
-            }
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -5822,39 +5826,46 @@ $.wms.form21 = (function() {
                 });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -6064,39 +6075,46 @@ $.wms.form21 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -7367,26 +7385,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
@@ -7606,26 +7631,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
@@ -8854,26 +8886,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
@@ -9084,26 +9123,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
@@ -10339,26 +10385,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
@@ -10570,26 +10623,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
@@ -11025,7 +11085,7 @@ $.wms.form21 = (function() {
                     load_table4("supervision", docketNo, field_office_id, "F21T15_pardonee_term");
                 });
 
-            function tableColumns4() {
+            function tableColumns() {
                 return [
                     {
                         "data": null,
@@ -11033,26 +11093,33 @@ $.wms.form21 = (function() {
                             return meta.settings._iDisplayStart + meta.row + 1;
                         }
                     },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
+                    { "data": 'fileName' },
+                    { "data": 'remarks' },
                     {
                         "data": null,
                         "render": function (data, type, row, meta) {
+                            const totalRows = meta.settings.json?.data?.length || 0;
+
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
+                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
+                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-download"></i> Download
                                     </button>
                                 </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload hidden' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
                             `;
+
+                            if (totalRows > 1) {
+                                actions += `
+                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                        <i class="fa fa-trash"></i> Delete
+                                    </button>
+                                `;
+                            }
 
                             return actions;
                         }
