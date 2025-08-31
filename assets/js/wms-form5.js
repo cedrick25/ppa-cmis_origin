@@ -177,7 +177,7 @@ $.wms.form5 = (function() {
                 data: { id, file_path: filePath, file_name: fileName },
                 success: function(response) {
                     alert('Deleted successfully!');
-                    // You can reload your table or remove the element from DOM here
+                    location.reload(); // 🔁 Reload the page
                 },
                 error: function(err) {
                     alert('Failed to delete.');
