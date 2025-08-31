@@ -181,11 +181,11 @@
 				    <input type="hidden" name="year" id="report_year">
 				</form>
 
-				<span class="pull-right">
+				<!-- <span class="pull-right">
 					  	<button id="downloadReportBtn" class="btn btn-success" style="display:;">
 						  <i class="fa fa-download"></i> Download
 						</button>
-				</span>
+				</span> -->
 			</div>
 			<div class="panel-body">
 				<div id="result_table" class="">
@@ -213,16 +213,11 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span class="font_20"><b>NOTIFICATION:  Field Offices without Caseload Report in the System</b>
-                <span class="pull-right">
-                    <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAdd_no_report">
-                        <i class="fa fa-plus-circle"></i> Add No Report
-                    </button> -->
-                </span>
             </div>
             <div class="panel-body"><br>
                 <div id="result_table">
@@ -240,7 +235,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 </body>
 <?php $this->load->view('templates/footer.php'); ?> 
 <?php $this->load->view('templates/admin_footer.php'); ?> 
