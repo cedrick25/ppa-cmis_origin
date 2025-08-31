@@ -3,6 +3,9 @@
  *  Portal web services.
  */
 
+var PPIS_path_upload = "http://192.168.1.147:8080";
+var PPIS_path = "http://192.168.1.147:8000";
+
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};
 
