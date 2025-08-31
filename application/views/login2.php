@@ -215,7 +215,7 @@
 		                            dt = (myDate.getFullYear() + '-' +('0' + (myDate.getMonth()+1)).slice(-2)+ '-' +  ('0' + myDate.getDate()).slice(-2) + ' '+myDate.getHours()+ ':'+('0' + (myDate.getMinutes())).slice(-2)+ ':'+myDate.getSeconds());
 		                                    
 		                        var payload3  = {
-		                            api_key : "51646085120210913192337",
+		                            api_key : "98809558920210831045603",
 		                            message_CONTENT : "Hi " + result.payload.USER_FULLNAME + ", your OTP KEY is " + $("#otpkeygen").val() +".",
 		                            message_TO : result.payload.USER_CONTACT,
 		                            CREATED_BY : "1",
@@ -239,7 +239,7 @@
 		                        $("#btnResendOtp").unbind("click").on("click",function(){
 		                            $("#btnResendOtp").addClass("hidden");
 		                            var payload3  = {
-		                                api_key : "51646085120210913192337",
+		                                api_key : "98809558920210831045603",
 		                                message_CONTENT : "Hi " + result.payload.USER_FULLNAME + ", your OTP KEY is " + $("#otpkeygen").val() +".",
 		                                message_TO : result.payload.USER_CONTACT,
 		                                CREATED_BY : "1",

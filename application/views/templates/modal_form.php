@@ -739,7 +739,7 @@
             <div class="form-group row">
               <label for="fileupload" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload" accept=".jpg, .png, .pdf, .docx" required multiple>
               </div>
             </div>
             <input type="hidden" id="FOId" name="FOId">
@@ -753,9 +753,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="35%">File Name</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -829,7 +829,7 @@
             <div class="form-group row">
               <label for="fileupload2" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload2" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload2" accept=".jpg, .png, .pdf, .docx" multiple>
               </div>
             </div>
             <input type="hidden" id="FOId2" name="FOId2">
@@ -843,9 +843,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="35%">File Name</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -918,7 +918,7 @@
             <div class="form-group row">
               <label for="fileupload3" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload3" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload3" accept=".jpg, .png, .pdf, .docx" multiple>
               </div>
             </div>
             <input type="hidden" id="FOId3" name="FOId3">
@@ -932,9 +932,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="35%">File Name</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>
@@ -1007,7 +1007,7 @@
             <div class="form-group row">
               <label for="fileupload4" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file" id="fileupload4" accept=".jpg, .png, .pdf, .docx" required>
+                <input type="file" class="form-control-file form-control" id="fileupload4" accept=".jpg, .png, .pdf, .docx" multiple>
               </div>
             </div>
             <input type="hidden" id="FOId4" name="FOId4">
@@ -1021,9 +1021,9 @@
                       <thead>
                         <tr>
                           <th width="5%">#</th>
-                          <th width="40%">File Name</th>
-                          <th width="20%">Type</th>
-                          <th width="35%">Actions</th>
+                          <th width="35%">File Name</th>
+                          <th width="15%">Type</th>
+                          <th width="30%">Actions</th>
                         </tr>
                       </thead>
                       <tbody class="table_body"></tbody>

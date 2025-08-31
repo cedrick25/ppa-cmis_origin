@@ -173,11 +173,11 @@ $.wms.form5 = (function() {
         if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
             $.ajax({
                 url: `${PPIS_path_upload}/file/delete/${id}`, // Corrected this line
-                method: 'POST',
+                method: 'GET',
                 data: { id, file_path: filePath, file_name: fileName },
                 success: function(response) {
                     alert('Deleted successfully!');
-                    // You can reload your table or remove the element from DOM here
+                    location.reload(); // 🔁 Reload the page
                 },
                 error: function(err) {
                     alert('Failed to delete.');
@@ -185,6 +185,54 @@ $.wms.form5 = (function() {
             });
         }
     }
+    function uploadInvestigationFile(docketNo, petitioner, uploadType, remarksInput, officeId, fileInputId, kind, type) {
+        var fileInput = $('#' + fileInputId)[0];
+        if (!fileInput || fileInput.files.length === 0) {
+            alert("⚠️ Please select at least one file to upload.");
+            $('#' + fileInputId).focus();
+            return;
+        }
+
+        let totalFiles = fileInput.files.length;
+        let completedUploads = 0;
+
+        for (let i = 0; i < totalFiles; i++) {
+            let file = fileInput.files[i];
+
+            let formData = new FormData();
+            formData.append('uuid', docketNo);
+            formData.append('createdby', petitioner);
+            formData.append('type', type);
+            formData.append('remarks', remarksInput ? uploadType + " - " + remarksInput : uploadType);
+            formData.append('officeId', officeId);
+            formData.append('version', "0");
+            formData.append('file', file);
+            formData.append('kind', kind);
+
+            $.ajax({
+                url: `${PPIS_path_upload}/file/upload`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(`Upload success: ${file.name}`, response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(`Upload failed for file: ${file.name}`, error);
+                },
+                complete: function() {
+                    completedUploads++;
+                    if (completedUploads === totalFiles) {
+                        // ✅ All uploads completed
+                        location.reload();
+                    }
+                }
+            });
+        }
+    }
+
+
     var __attachF5T1PageEvent = function() {
         var payload = {
             "Y_M" : $.wms.urlParam('date'),
@@ -579,39 +627,45 @@ $.wms.form5 = (function() {
                             function tableColumns() {
                                 return [
                                     {
-                                        "title": "#",  // Add title for index column
                                         "data": null,
                                         "render": function (data, type, row, meta) {
                                             return meta.settings._iDisplayStart + meta.row + 1;
                                         }
                                     },
-                                    { "title": "File Name", "data": "fileName" },  // Add title
-                                    { "title": "Type", "data": "remarks" },  // Add title (Change if needed)
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
                                     {
-                                        "title": "Actions",  // Add title for actions column
                                         "data": null,
                                         "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
+
                                             let actions = `
-                                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                                        <i class='fa fa-eye'></i> View
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                                        <i class='fa fa-download'></i> Download
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
                                                     </button>
                                                 </a>
-                                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                                    <i class='fa fa-trash'></i> Delete
-                                                </button>
                                             `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
                                             return actions;
                                         }
                                     }
                                 ];
                             }
-                            $(document).on('click', '.btn-delete-upload', deleteItem);
+                            $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
                             var dataTable = null; // Initialize DataTable globally
 
@@ -659,76 +713,67 @@ $.wms.form5 = (function() {
                                 }, 200);
                             }
 
-                            $('#uploadButton').on('click', function(e) {
-                                e.preventDefault(); // Prevent default form submission
+                            $('#uploadButton').on('click', function (e) {
+                                e.preventDefault();
                                 $(this).prop('disabled', true).text('Uploading...');
-                                // Create FormData object
-                                var formData = new FormData();
-                                formData.append('uuid', $('#docket_no').val());
-                                formData.append('createdby', $('#petitioner_name').val());
-                                formData.append('type', "investigation");
-                                var type = $('#type').val();
-                                var remarks = $('#remarks').val();
-                                if (remarks) {
-                                    formData.append('remarks', type + " - " + remarks);
-                                } else {
-                                    formData.append('remarks', type);
-                                }
-                                formData.append('officeId', $('#FOId').val());
-                                formData.append('version', "0");
-                                var file = $('#fileupload')[0].files[0];
-                                if (!file) {
-                                    alert('Please select a file to upload.');
-                                    $('#uploadButton').prop('disabled', false).text('Upload');
-                                    return; // Exit if no file is selected
-                                }
-                                formData.append('file', file);
-                                var fileInput = $('#fileupload')[0];
-                                if (fileInput.files.length > 0) {
-                                    var fileName = fileInput.files[0].name;  // Get the file name
-                                    formData.append('kind', "F5T2RR");  // Append file name to formData
+
+                                const files = $('#fileupload')[0].files;
+                                if (!files.length) {
+                                    alert('⚠️ Please select at least one file to upload.');
+                                    $(this).prop('disabled', false).text('Upload');
+                                    return;
                                 }
 
-                                // **Console log all form data**
-                                console.log('File name:', fileName); // Log the file name to console
-                                console.log('--- Form Data ---');
-                                for (var pair of formData.entries()) {
-                                    if (pair[1] instanceof File) {
-                                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                                    } else {
-                                        console.log(`${pair[0]}: ${pair[1]}`);
-                                    }
-                                }
+                                const uuid = $('#docket_no').val();
+                                const createdby = $('#petitioner_name').val();
+                                const type = "investigation";
+                                const officeId = $('#FOId').val();
+                                const kind = "F5T2RR";
+                                const remarksText = $('#remarks').val();
+                                const remarks = remarksText ? `${$('#type').val()} - ${remarksText}` : $('#type').val();
 
-                                var url = `${PPIS_path_upload}/file/upload`;
-                                // Send AJAX request
-                                $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    data: formData,
-                                    processData: false,
-                                    contentType: false,
-                                    success: function(response) {
-                                        console.log('Response:', response);
-                                        if ("true") {
-                                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T2RR");
-                                             // Clear the remarks textarea
-                                            $('#remarks').val(''); 
-                                            
-                                            // Clear the file input (reset file input)
-                                            $('#fileupload').val('');
-                                        } else {
-                                            alert('Error: ' + "Failed to upload");
+                                let completed = 0;
+
+                                for (let i = 0; i < files.length; i++) {
+                                    const formData = new FormData();
+                                    formData.append('uuid', uuid);
+                                    formData.append('createdby', createdby);
+                                    formData.append('type', type);
+                                    formData.append('remarks', remarks);
+                                    formData.append('officeId', officeId);
+                                    formData.append('version', "0");
+                                    formData.append('file', files[i]);
+                                    formData.append('kind', kind);
+
+                                    console.log(`Uploading file ${i + 1}/${files.length}: ${files[i].name}`);
+
+                                    $.ajax({
+                                        url: `${PPIS_path_upload}/file/upload`,
+                                        type: 'POST',
+                                        data: formData,
+                                        processData: false,
+                                        contentType: false,
+                                        success: function (response) {
+                                            console.log(`✅ Uploaded: ${files[i].name}`, response);
+                                        },
+                                        error: function (xhr, status, error) {
+                                            console.error(`❌ Upload failed for: ${files[i].name}`, error);
+                                            alert(`Upload failed for ${files[i].name}`);
+                                        },
+                                        complete: function () {
+                                            completed++;
+                                            if (completed === files.length) {
+                                                // All uploads done
+                                                $('#remarks').val('');
+                                                $('#fileupload').val('');
+                                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                                load_table('investigation', uuid, officeId, kind);
+                                            }
                                         }
-                                        $('#uploadButton').prop('disabled', false).text('Upload');
-                                    },
-                                    error: function(xhr, status, error) {
-                                        console.error('Upload failed: ', error);
-                                        alert('An error occurred during the upload.');
-                                        $('#uploadButton').prop('disabled', false).text('Upload');
-                                    }
-                                });
+                                    });
+                                }
                             });
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_a').DataTable( {
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -806,6 +851,7 @@ $.wms.form5 = (function() {
                         <option value="" disabled selected>Select Type</option>
                         <option value="Post-Sentence Investigation Report">Post-Sentence Investigation Report</option>
                         <option value="Manifestation">Manifestation</option>
+                        <option value="Fingerprint Record">Fingerprint Record</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -827,40 +873,48 @@ $.wms.form5 = (function() {
                     load_table2("investigation", docketNo, field_office_id, "F5T2_RAU");
                 });
                 function tableColumns() {
-                    return [
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                return meta.settings._iDisplayStart + meta.row + 1;
-                            }
-                        },
-                        { "data": 'fileName' }, // Keep only file name
-                        { "data": 'remarks' }, // Keep remarks column
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                let actions = `
-                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-eye'></i> View
-                                        </button>
-                                    </a>
-                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-download'></i> Download
-                                        </button>
-                                    </a>
-                                    <button class='btn btn-danger btn-sm btn-delete' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-trash'></i> Delete
-                                    </button>
-                                `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                                return actions;
-                            }
-                        }
-                    ];
-                }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
 
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
                 var dataTable = null; // Initialize DataTable globally
 
                 function load_table2(type, uuid, officeId, kind) {
@@ -903,57 +957,63 @@ $.wms.form5 = (function() {
                     }, 100);
                 }
                 $('#uploadButton2').on('click', function(e) {
-                    e.preventDefault(); // Prevent default form submission for modal2
+                    e.preventDefault();
                     $(this).prop('disabled', true).text('Uploading...');
 
-                    var formData = new FormData();
-                    formData.append('uuid', $('#docket_no2').val());
-                    formData.append('createdby', $('#petitioner_name2').val());
-                    formData.append('type', "investigation");
-                    var type = $('#type2').val();
-                    var remarks = $('#remarks2').val();
-                    if (remarks) {
-                        formData.append('remarks', type + " - " + remarks);
-                    } else {
-                        formData.append('remarks', type);
-                    }
-                    formData.append('officeId', $('#FOId2').val());
-                    formData.append('version', "0");
-                    var file = $('#fileupload2')[0].files[0];
-                    if (!file) {
-                        alert('Please select a file to upload.');
-                        $('#uploadButton2').prop('disabled', false).text('Upload');
-                        return; // Exit if no file is selected
-                    }
-                    formData.append('file', file);
-
-                    var fileInput = $('#fileupload2')[0];
-                    if (fileInput.files.length > 0) {
-                        var fileName = fileInput.files[0].name;
-                        formData.append('kind', "F5T2_RAU");
+                    const files = $('#fileupload2')[0].files;
+                    if (!files.length) {
+                        alert('⚠️ Please select at least one file to upload.');
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
                     }
 
-                    var url = `${PPIS_path_upload}/file/upload`;
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            console.log('Response:', response);
-                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F5T2_RAU");
-                                $('#remarks2').val(''); // Clear the remarks textarea
-                                $('#fileupload2').val(''); // Clear the file input
-                            
-                            $('#uploadButton2').prop('disabled', false).text('Upload');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Upload failed: ', error);
-                            alert('An error occurred during the upload.');
-                            $('#uploadButton2').prop('disabled', false).text('Upload');
-                        }
-                    });
+                    const uuid = $('#docket_no2').val();
+                    const createdby = $('#petitioner_name2').val();
+                    const officeId = $('#FOId2').val();
+                    const kind = "F5T2_RAU";
+                    const remarksText = $('#remarks2').val();
+                    const type = $('#type2').val();
+                    const remarks = remarksText ? `${type} - ${remarksText}` : type;
+
+                    let completed = 0;
+
+                    for (let i = 0; i < files.length; i++) {
+                        const formData = new FormData();
+                        formData.append('uuid', uuid);
+                        formData.append('createdby', createdby);
+                        formData.append('type', "investigation");
+                        formData.append('remarks', remarks);
+                        formData.append('officeId', officeId);
+                        formData.append('version', "0");
+                        formData.append('file', files[i]);
+                        formData.append('kind', kind);
+
+                        console.log(`Uploading file ${i + 1}/${files.length}: ${files[i].name}`);
+
+                        $.ajax({
+                            url: `${PPIS_path_upload}/file/upload`,
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(`✅ Uploaded: ${files[i].name}`, response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(`❌ Upload failed for: ${files[i].name}`, error);
+                                alert(`Upload failed for ${files[i].name}`);
+                            },
+                            complete: function() {
+                                completed++;
+                                if (completed === files.length) {
+                                    $('#remarks2').val('');
+                                    $('#fileupload2').val('');
+                                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                                    load_table2('investigation', uuid, officeId, kind);
+                                }
+                            }
+                        });
+                    }
                 });
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_b').DataTable( {
@@ -1048,41 +1108,48 @@ $.wms.form5 = (function() {
             });
 
                 function tableColumns() {
-                    return [
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                return meta.settings._iDisplayStart + meta.row + 1;
-                            }
-                        },
-                        { "data": 'fileName' }, // Keep only file name
-                        { "data": 'remarks' }, // Keep remarks column
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                let actions = `
-                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-eye'></i> View
-                                        </button>
-                                    </a>
-                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-download'></i> Download
-                                        </button>
-                                    </a>
-                                    <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-trash'></i> Delete
-                                    </button>
-                                `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                                return actions;
-                            }
-                        }
-                    ];
-                }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
 
-                $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
                 var dataTable = null; // Initialize DataTable globally
 
                 function load_table3(type, uuid, officeId, kind) {
@@ -1124,59 +1191,66 @@ $.wms.form5 = (function() {
                         dataTable.columns.adjust().draw();
                     }, 100);
                 }
-            $('#uploadButton3').on('click', function(e) {
-                e.preventDefault(); // Prevent default form submission for modal3
-                $(this).prop('disabled', true).text('Uploading...');
+                $('#uploadButton3').on('click', function(e) {
+                    e.preventDefault();
+                    $(this).prop('disabled', true).text('Uploading...');
 
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no3').val());
-                formData.append('createdby', $('#petitioner_name3').val());
-                formData.append('type', "investigation");
-                var type = $('#type3').val();
-                var remarks = $('#remarks3').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId3').val());
-                formData.append('version', "0");
-                var file = $('#fileupload3')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
-                    $('#uploadButton3').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
+                    const files = $('#fileupload3')[0].files;
+                    if (!files.length) {
+                        alert('⚠️ Please select at least one file to upload.');
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
+                    }
 
-                var fileInput = $('#fileupload3')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;
-                    formData.append('kind', "F5T2_recall");
-                }
+                    const uuid = $('#docket_no3').val();
+                    const createdby = $('#petitioner_name3').val();
+                    const officeId = $('#FOId3').val();
+                    const kind = "F5T2_recall";
+                    const remarksText = $('#remarks3').val();
+                    const type = $('#type3').val();
+                    const remarks = remarksText ? `${type} - ${remarksText}` : type;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                            load_table3('investigation', $('#docket_no3').val(), $('#FOId3').val(), "F5T2_recall");
-                            $('#remarks3').val(''); // Clear the remarks textarea
-                            $('#fileupload3').val(''); // Clear the file input
-                        
-                        $('#uploadButton3').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton3').prop('disabled', false).text('Upload');
+                    let completed = 0;
+
+                    for (let i = 0; i < files.length; i++) {
+                        const formData = new FormData();
+                        formData.append('uuid', uuid);
+                        formData.append('createdby', createdby);
+                        formData.append('type', "investigation");
+                        formData.append('remarks', remarks);
+                        formData.append('officeId', officeId);
+                        formData.append('version', "0");
+                        formData.append('file', files[i]);
+                        formData.append('kind', kind);
+
+                        console.log(`Uploading file ${i + 1}/${files.length}: ${files[i].name}`);
+
+                        $.ajax({
+                            url: `${PPIS_path_upload}/file/upload`,
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(`✅ Uploaded: ${files[i].name}`, response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(`❌ Upload failed for: ${files[i].name}`, error);
+                                alert(`Upload failed for ${files[i].name}`);
+                            },
+                            complete: function() {
+                                completed++;
+                                if (completed === files.length) {
+                                    $('#remarks3').val('');
+                                    $('#fileupload3').val('');
+                                    $('#uploadButton3').prop('disabled', false).text('Upload');
+                                    load_table3('investigation', uuid, officeId, kind);
+                                }
+                            }
+                        });
                     }
                 });
-            });
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c1').DataTable( {
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -1271,40 +1345,47 @@ $.wms.form5 = (function() {
 
 
                 function tableColumns() {
-                    return [
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                return meta.settings._iDisplayStart + meta.row + 1;
-                            }
-                        },
-                        { "data": 'fileName' }, // Keep only file name
-                        { "data": 'remarks' }, // Keep remarks column
-                        {
-                            "data": null,
-                            "render": function (data, type, row, meta) {
-                                let actions = `
-                                    <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-eye'></i> View
-                                        </button>
-                                    </a>
-                                    <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                        <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                            <i class='fa fa-download'></i> Download
-                                        </button>
-                                    </a>
-                                    <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-trash'></i> Delete
-                                    </button>
-                                `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                                return actions;
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
                             }
-                        }
-                    ];
-                }
-                $(document).on('click', '.btn-delete-upload', deleteItem);
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
                 var dataTable = null; // Initialize DataTable globally
 
@@ -1348,67 +1429,64 @@ $.wms.form5 = (function() {
                     }, 100);
                 }
                 $('#uploadButton4').on('click', function(e) {
-                    e.preventDefault(); // Prevent default form submission for modal4
+                    e.preventDefault(); // Prevent default form submission
                     $(this).prop('disabled', true).text('Uploading...');
 
-                    var formData = new FormData();
-                    formData.append('uuid', $('#docket_no4').val());
-                    formData.append('createdby', $('#petitioner_name4').val());
-                    formData.append('type', "investigation");
-                    var type = $('#type4').val();
-                    var remarks = $('#remarks4').val();
-                    if (remarks) {
-                        formData.append('remarks', type + " - " + remarks);
-                    } else {
-                        formData.append('remarks', type);
-                    }
-                    formData.append('officeId', $('#FOId4').val());
-                    formData.append('version', "0");
-                    var file = $('#fileupload4')[0].files[0];
-                    if (!file) {
-                        alert('Please select a file to upload.');
-                        $('#uploadButton4').prop('disabled', false).text('Upload');
-                        return; // Exit if no file is selected
-                    }
-                    formData.append('file', file);
-
-                    var fileInput = $('#fileupload4')[0];
-                    if (fileInput.files.length > 0) {
-                        var fileName = fileInput.files[0].name;
-                        formData.append('kind', "F5T2_warant");
+                    const files = $('#fileupload4')[0].files;
+                    if (!files.length) {
+                        alert('⚠️ Please select at least one file to upload.');
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
                     }
 
-                    var url = `${PPIS_path_upload}/file/upload`;
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            console.log('Response:', response);
+                    const uuid = $('#docket_no4').val();
+                    const createdby = $('#petitioner_name4').val();
+                    const officeId = $('#FOId4').val();
+                    const kind = "F5T2_warant";
+                    const remarksText = $('#remarks4').val();
+                    const type = $('#type4').val();
+                    const remarks = remarksText ? `${type} - ${remarksText}` : type;
 
-                            // Reload the table for modal4 after successful upload
-                            load_table4('investigation', $('#docket_no4').val(), $('#FOId4').val(), "F5T2_warant");
+                    let completed = 0;
 
-                            // Clear the form fields after upload
-                            $('#remarks4').val(''); // Clear the remarks textarea
-                            $('#fileupload4').val(''); // Clear the file input
+                    for (let i = 0; i < files.length; i++) {
+                        const formData = new FormData();
+                        formData.append('uuid', uuid);
+                        formData.append('createdby', createdby);
+                        formData.append('type', "investigation");
+                        formData.append('remarks', remarks);
+                        formData.append('officeId', officeId);
+                        formData.append('version', "0");
+                        formData.append('file', files[i]);
+                        formData.append('kind', kind);
 
-                            // Reset the button state
-                            $('#uploadButton4').prop('disabled', false).text('Upload');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Upload failed: ', error);
-                            alert('An error occurred during the upload.');
+                        console.log(`Uploading file ${i + 1}/${files.length}: ${files[i].name}`);
 
-                            // Reset the button state
-                            $('#uploadButton4').prop('disabled', false).text('Upload');
-                        }
-                    });
+                        $.ajax({
+                            url: `${PPIS_path_upload}/file/upload`,
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(`✅ Uploaded: ${files[i].name}`, response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(`❌ Upload failed for: ${files[i].name}`, error);
+                                alert(`Upload failed for ${files[i].name}`);
+                            },
+                            complete: function() {
+                                completed++;
+                                if (completed === files.length) {
+                                    $('#remarks4').val('');
+                                    $('#fileupload4').val('');
+                                    $('#uploadButton4').prop('disabled', false).text('Upload');
+                                    load_table4('investigation', uuid, officeId, kind);
+                                }
+                            }
+                        });
+                    }
                 });
-
-
                             $(document).ready(function () {
                                 var table = $('#T_F5T2_c2').DataTable( {
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -1685,12 +1763,20 @@ $.wms.form5 = (function() {
             $(".btn-reset").trigger('click');
         }
         //Add RCV
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitRCVButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_rcv_petitioner', 'add_date_rcv', 'add_rcv_date_of_court_order','add_rcv_date_rcv'];
+            var requiredField= [ 'add_rcv_petitioner', 'add_date_rcv', 'add_rcv_date_of_court_order','add_rcv_date_rcv', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F5T1', 'F5T2_RCV']
-
 
             ___validateSaveCarryOver(allowedDocket,$("#add_rcv_docket_no"),requiredField,check,checkTable).done(function(result){
                 console.log(result)
@@ -1739,19 +1825,30 @@ $.wms.form5 = (function() {
                 "created_by" : $.cookie("USER_ID")
             }
             console.log(payload);
-            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_RCV',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                ___modalReset();
-               
-                $(".addSubmitRCVButton").removeClass("hidden")
-                $(".addProceedRCVButton").addClass("hidden")
-                $("#modal-add-rcv").modal('toggle')
-                
-                if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T2PageEvent();
-                    location.reload();
-                }else{
-                    //Error Prompt
+            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_RCV', JSON.stringify(payload))
+            .done(function (result) {
+                // $(".modal-loader").addClass("hidden");
+
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    // 🔄 Upload files first
+                    uploadInvestigationFile(
+                        $('#add_rcv_docket_no').val(),
+                        $('#add_rcv_petitioner').val(),
+                        $('#add_upload_type').val(),
+                        $('#add_remarks').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload',
+                        'F5T2RR',
+                        'investigation'
+                    );
+
+                    // ✅ Then reset the modal AFTER file upload
+                    // ___modalReset();
+                    // $(".addSubmitRCVButton").removeClass("hidden");
+                    // $(".addProceedRCVButton").addClass("hidden");
+                    // $("#modal-add-rcv").modal('toggle');
+                } else {
+                    // Error prompt here
                 }
             });
 
@@ -1791,9 +1888,18 @@ $.wms.form5 = (function() {
         })
 
         //Add ACTED
+        $(document).off('change', '#add_upload_type_acted').on('change', '#add_upload_type_acted', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitACTEDButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_acted_petitioner'];
+            var requiredField= [ 'add_acted_petitioner','add_upload_type_acted','add_fileupload_acted'];
             var check = true
             var checkTable = ['F5T1', 'F5T2_RCV']
 
@@ -1836,21 +1942,20 @@ $.wms.form5 = (function() {
             }
             console.log(payload);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_ACTED',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                ___modalReset();
-
-                $(".addSubmitACTEDButton").removeClass("hidden")
-                $(".addProceedACTEDButton").addClass("hidden")
-                $("#modal-add-acted").modal('toggle')
-                
-                if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T2PageEvent();
-                    location.reload();
-                }else{
-                    //Error Prompt
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    uploadInvestigationFile(
+                        $('#add_acted_docket_no').val(),
+                        $('#add_acted_petitioner').val(),
+                        $('#add_upload_type_acted').val(),
+                        $('#add_remarks_acted').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload_acted',
+                        'F5T2_RAU',
+                        'investigation'
+                    );
+                } else {
                 }
             });
-
             var PPISPayload = {
                     "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_acted_docket_no").val(),
@@ -1880,9 +1985,19 @@ $.wms.form5 = (function() {
         });
 
          //Add NOT ACTED
+
+        $(document).off('change', '#add_upload_type_not_acted').on('change', '#add_upload_type_not_acted', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitNOTACTEDButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_notacted_petitioner', 'add_notacted_date'];
+            var requiredField= [ 'add_notacted_petitioner', 'add_notacted_date', 'add_upload_type_not_acted', 'add_fileupload_not_acted', 'add_notacted_decision'];
             var check = true
             var checkTable = ['F5T1', 'F5T2_RCV']
 
@@ -1908,11 +2023,19 @@ $.wms.form5 = (function() {
         $(".addProceedNOTACTEDButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
+            var disposed = $("#add_notacted_decision").val();
+            var kind = "";
+
+            if (disposed === "Recall") {
+                kind = "F5T2_recall";
+            } else if (disposed === "Warrant of Arrest") {
+                kind = "F5T2_warant";
+            }
             var payload = { 
                 "docket_no" : $("#add_notacted_docket_no").val(),
                 "petitioner_name": $("#add_notacted_petitioner").val(),
                 "received_date": $("#add_notacted_date").val(),
-                "disposed_decision" : $("#add_notacted_decision").val(),
+                "disposed_decision": disposed,
                 "field_office": $.wms.urlParam('field'),
                 "field_office_id": $.wms.urlParam('officeId'),
                 "Y_M": $.wms.urlParam('date'),
@@ -1921,17 +2044,18 @@ $.wms.form5 = (function() {
             }
             console.log(payload);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertF5T2_NOTACTED',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                ___modalReset();
-                $(".addSubmitNOTACTEDButton").removeClass("hidden")
-                $(".addProceedNOTACTEDButton").addClass("hidden")
-                $("#modal-add-notacted").modal('toggle')
-                
-                if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T2PageEvent();
-                    location.reload();
-                }else{
-                    //Error Prompt
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    uploadInvestigationFile(
+                        $('#add_notacted_docket_no').val(),
+                        $('#add_notacted_petitioner').val(),
+                        $('#add_upload_type_not_acted').val(),
+                        $('#add_remarks_not_acted').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload_not_acted',
+                        kind,
+                        'investigation'
+                    );
+                } else {
                 }
             });
             var PPISPayload = {
@@ -2768,9 +2892,11 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Probation Order">Probation Order</option>
-                    <option value="Order of Denial">Order of Denial</option>
-                    <option value="Order to Withdraw Application for Probation">Order to Withdraw Application for Probation</option>
+                    <option value="Order of Grant Probation">Order of Grant Probation</option>
+                    <option value="Order of Denial of Probation">Order of Denial of Probation</option>
+                    <option value="Order of Dismissal">Order of Dismissal</option>
+                    <option value="Order to Withdrawal of Application for Probation">Order to Withdrawal of Application for Probation</option>
+                    <option value="Order to Reinvestigate">Order to Reinvestigate</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -2793,44 +2919,52 @@ $.wms.form5 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+            $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
             function load_table(type, uuid, officeId, kind) {
+                console.log('load table')
                 if (dataTable) {
                     dataTable.destroy();
                     $('.table_head tbody').empty(); // Clear table body to avoid duplicates
@@ -2872,73 +3006,67 @@ $.wms.form5 = (function() {
             $('#uploadButton').on('click', function(e) {
                 e.preventDefault(); // Prevent default form submission
                 $(this).prop('disabled', true).text('Uploading...');
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no').val());
-                formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
-                var type = $('#type').val();
-                var remarks = $('#remarks').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId').val());
-                formData.append('version', "0");
-                var file = $('#fileupload')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
+
+                const files = $('#fileupload')[0].files;
+                if (!files.length) {
+                    alert('⚠️ Please select at least one file to upload.');
                     $('#uploadButton').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
-                var fileInput = $('#fileupload')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;  // Get the file name
-                    formData.append('kind', "F5T4RR");  // Append file name to formData
+                    return;
                 }
 
-                // **Console log all form data**
-                console.log('File name:', fileName); // Log the file name to console
-                console.log('--- Form Data ---');
-                for (var pair of formData.entries()) {
-                    if (pair[1] instanceof File) {
-                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                    } else {
-                        console.log(`${pair[0]}: ${pair[1]}`);
-                    }
-                }
+                const uuid = $('#docket_no').val();
+                const createdby = $('#petitioner_name').val();
+                const type = "investigation";
+                const kind = "F5T4RR";
+                const remarksText = $('#remarks').val();
+                const uploadType = $('#type').val();
+                const remarks = remarksText ? `${uploadType} - ${remarksText}` : uploadType;
+                const officeId = $('#FOId').val();
+                const url = `${PPIS_path_upload}/file/upload`;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                // Send AJAX request
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                        if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T4RR");
-                             // Clear the remarks textarea
-                            $('#remarks').val(''); 
-                            
-                            // Clear the file input (reset file input)
-                            $('#fileupload').val('');
-                        } else {
-                            alert('Error: ' + "Failed to upload");
+                let completed = 0;
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('uuid', uuid);
+                    formData.append('createdby', createdby);
+                    formData.append('type', type);
+                    formData.append('remarks', remarks);
+                    formData.append('officeId', officeId);
+                    formData.append('version', "0");
+                    formData.append('file', file);
+                    formData.append('kind', kind);
+
+                    console.log(`Uploading file ${i + 1}/${files.length}: ${file.name}`);
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('✅ Uploaded:', file.name, response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(`❌ Upload failed for ${file.name}`, error);
+                            alert(`Upload failed for ${file.name}`);
+                        },
+                        complete: function() {
+                            completed++;
+                            if (completed === files.length) {
+                                // All files uploaded
+                                $('#remarks').val('');
+                                $('#fileupload').val('');
+                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                load_table('investigation', uuid, officeId, kind);
+                            }
                         }
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    }
-                });
+                    });
+                }
             });
+
 
             $(document).ready(function () {
                 var table = $('#T_F5T4').DataTable( {
@@ -2991,9 +3119,18 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPI', 'PI', 'JRPI', 'RPI', 'JTPI', 'TPI' ];
-            var requiredField= [ 'add_petitioner','add_psir'];
+            var requiredField= [ 'add_petitioner','add_psir', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F5T2_ACTED', 'F5T3']
 
@@ -3047,19 +3184,20 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T4',JSON.stringify(payload)).done(function (result) {
-                if(result.status != undefined && result.status == "SUCCESS"){
-
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    ___modalReset();
-                    location.reload();
-                         
-                }else{
-                    //Error Prompt
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    uploadInvestigationFile(
+                        $('#add_docket_no').val(),
+                        fullname,
+                        $('#add_upload_type').val(),
+                        $('#add_remarks').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload',
+                        'F5T4RR',
+                        'investigation'
+                    );
+                } else {
                 }
             });
-
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -3639,8 +3777,7 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Courtesy Probation Investigation">Courtesy Probation Investigation</option>
-                    <option value="Full-blown Courtesy Probation Investigation">Full-blown Courtesy Probation Investigation</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -3662,41 +3799,48 @@ $.wms.form5 = (function() {
                 load_table("investigation", docketNo, field_office_id, "F5T6RR");
             });
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
 
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -3740,75 +3884,69 @@ $.wms.form5 = (function() {
                 }, 100);
             }
             $('#uploadButton').on('click', function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
                 $(this).prop('disabled', true).text('Uploading...');
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no').val());
-                formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "investigation");
-                var type = $('#type').val();
-                var remarks = $('#remarks').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId').val());
-                formData.append('version', "0");
-                var file = $('#fileupload')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
-                    $('#uploadButton').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
-                var fileInput = $('#fileupload')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;  // Get the file name
-                    formData.append('kind', "F5T6RR");  // Append file name to formData
+
+                const fileInput = $('#fileupload')[0];
+                const files = fileInput.files;
+                if (!files.length) {
+                    alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
                 }
 
-                // **Console log all form data**
-                console.log('File name:', fileName); // Log the file name to console
-                console.log('--- Form Data ---');
-                for (var pair of formData.entries()) {
-                    if (pair[1] instanceof File) {
-                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                    } else {
-                        console.log(`${pair[0]}: ${pair[1]}`);
-                    }
-                }
+                const uuid = $('#docket_no').val();
+                const createdby = $('#petitioner_name').val();
+                const type = "investigation";
+                const kind = "F5T6RR";
+                const uploadType = $('#type').val();
+                const remarksText = $('#remarks').val();
+                const remarks = remarksText ? `${uploadType} - ${remarksText}` : uploadType;
+                const officeId = $('#FOId').val();
+                const url = `${PPIS_path_upload}/file/upload`;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                // Send AJAX request
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                        if ("true") {
-                            load_table('investigation', $('#docket_no').val(), $('#FOId').val(), "F5T6RR");
-                             // Clear the remarks textarea
-                            $('#remarks').val(''); 
-                            
-                            // Clear the file input (reset file input)
-                            $('#fileupload').val('');
-                        } else {
-                            alert('Error: ' + "Failed to upload");
+                let uploadedCount = 0;
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('uuid', uuid);
+                    formData.append('createdby', createdby);
+                    formData.append('type', type);
+                    formData.append('remarks', remarks);
+                    formData.append('officeId', officeId);
+                    formData.append('version', "0");
+                    formData.append('file', file);
+                    formData.append('kind', kind);
+
+                    console.log(`Uploading file ${i + 1}/${files.length}: ${file.name}`);
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log('Uploaded:', file.name, response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(`Upload failed for ${file.name}:`, error);
+                            alert(`Upload failed for file: ${file.name}`);
+                        },
+                        complete: function() {
+                            uploadedCount++;
+                            if (uploadedCount === files.length) {
+                                $('#remarks').val('');
+                                $('#fileupload').val('');
+                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                load_table('investigation', uuid, officeId, kind);
+                            }
                         }
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    }
-                });
+                    });
+                }
             });
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_a').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -3881,8 +4019,8 @@ $.wms.form5 = (function() {
                     // Populate the type select dropdown for modal2
                     $('#type2').empty().append(`
                         <option value="" disabled selected>Select Type</option>
-                        <option value="Accomplished CPI">Accomplished CPI</option>
-                        <option value="Accomplished FBCI">Accomplished FBCI</option>
+                        <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
+                        <option value="Full Blown Courtesy Investigation">Full Blown Courtesy Investigation</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -3905,40 +4043,47 @@ $.wms.form5 = (function() {
                 });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -3983,58 +4128,68 @@ $.wms.form5 = (function() {
             }
 
                 $('#uploadButton2').on('click', function(e) {
-                    e.preventDefault(); // Prevent default form submission for modal2
+                    e.preventDefault();
                     $(this).prop('disabled', true).text('Uploading...');
 
-                    var formData = new FormData();
-                    formData.append('uuid', $('#docket_no2').val());
-                    formData.append('createdby', $('#petitioner_name2').val());
-                    formData.append('type', "investigation");
-                    var type = $('#type2').val();
-                    var remarks = $('#remarks2').val();
-                    if (remarks) {
-                        formData.append('remarks', type + " - " + remarks);
-                    } else {
-                        formData.append('remarks', type);
-                    }
-                    formData.append('officeId', $('#FOId2').val());
-                    formData.append('version', "0");
-                    var file = $('#fileupload2')[0].files[0];
-                    if (!file) {
-                        alert('Please select a file to upload.');
-                        $('#uploadButton2').prop('disabled', false).text('Upload');
-                        return; // Exit if no file is selected
-                    }
-                    formData.append('file', file);
+                    const fileInput = $('#fileupload2')[0];
+                    const files = fileInput.files;
 
-                    var fileInput = $('#fileupload2')[0];
-                    if (fileInput.files.length > 0) {
-                        var fileName = fileInput.files[0].name;
-                        formData.append('kind', "F5T6RCR");
+                    if (!files.length) {
+                        alert('Please select at least one file to upload.');
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
                     }
 
-                    var url = `${PPIS_path_upload}/file/upload`;
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            console.log('Response:', response);
-                                load_table2('investigation', $('#docket_no2').val(), $('#FOId2').val(), "F5T6RCR");
-                                $('#remarks2').val(''); // Clear the remarks textarea
-                                $('#fileupload2').val(''); // Clear the file input
-                            
-                            $('#uploadButton2').prop('disabled', false).text('Upload');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Upload failed: ', error);
-                            alert('An error occurred during the upload.');
-                            $('#uploadButton2').prop('disabled', false).text('Upload');
-                        }
-                    });
+                    const uuid = $('#docket_no2').val();
+                    const createdby = $('#petitioner_name2').val();
+                    const type = "investigation";
+                    const kind = "F5T6RCR";
+                    const uploadType = $('#type2').val();
+                    const remarksText = $('#remarks2').val();
+                    const remarks = remarksText ? `${uploadType} - ${remarksText}` : uploadType;
+                    const officeId = $('#FOId2').val();
+                    const url = `${PPIS_path_upload}/file/upload`;
+
+                    let uploadedCount = 0;
+
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const formData = new FormData();
+                        formData.append('uuid', uuid);
+                        formData.append('createdby', createdby);
+                        formData.append('type', type);
+                        formData.append('remarks', remarks);
+                        formData.append('officeId', officeId);
+                        formData.append('version', "0");
+                        formData.append('file', file);
+                        formData.append('kind', kind);
+
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(`Uploaded: ${file.name}`, response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(`Upload failed for ${file.name}:`, error);
+                                alert(`Upload failed for file: ${file.name}`);
+                            },
+                            complete: function() {
+                                uploadedCount++;
+                                if (uploadedCount === files.length) {
+                                    $('#remarks2').val('');
+                                    $('#fileupload2').val('');
+                                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                                    load_table2('investigation', uuid, officeId, kind);
+                                }
+                            }
+                        });
+                    }
                 });
+
 
                             $(document).ready(function () {
                                 var table = $('#T_F5T6_b').DataTable({
@@ -4236,10 +4391,18 @@ $.wms.form5 = (function() {
         });
 
         //ADD
-        
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPI', 'CPI', 'FBCI'];
-            var requiredField= [ 'add_rcv_docket_no', 'add_rcv_petitioner', 'add_rcv_date_rcv','add_rcv_investigating_officer','add_rcv_reasons'];
+            var requiredField= [ 'add_rcv_docket_no', 'add_rcv_petitioner', 'add_rcv_date_rcv','add_rcv_investigating_officer','add_rcv_reasons','add_upload_type','add_fileupload'];
             var check = true
             var checkTable = ['F5T6_RCV', 'F5T5']
 
@@ -4280,15 +4443,18 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_RCV',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addRCVProceedButton").attr('disabled',false)
-                $("#modal-rcv-add").modal('toggle')
-                ___modalReset();
-                if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T6PageEvent();
-                    location.reload();
-                }else{
-                    //Error Prompt
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    uploadInvestigationFile(
+                        $('#add_rcv_docket_no').val(),
+                        $('#add_rcv_petitioner').val(),
+                        $('#add_upload_type').val(),
+                        $('#add_remarks').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload',
+                        'F5T6RR',
+                        'investigation'
+                    );
+                } else {
                 }
             });
             var PPISPayload_a = {
@@ -4482,10 +4648,18 @@ $.wms.form5 = (function() {
 
         //ADD_CMPLTD
         //ADD
-        
+        $(document).off('change', '#add_upload_type_car').on('change', '#add_upload_type_car', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addCMPLTDSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPI', 'CPI', 'FBCI'];
-            var requiredField= [ 'add_cmpltd_docket_no','add_cmpltd_petitioner','add_cmpltd_date'];
+            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date','add_upload_type_car','add_fileupload_car'];
             var check = true
             var checkTable = ['F5T5', 'F5T6_RCV']
 
@@ -4523,16 +4697,19 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addCMPLTDProceedButton").attr('disabled',false)
-                $("#modal-cmpltd-add").modal('toggle')
-                ___modalReset();
-                if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T6PageEvent();
-                    location.reload();
-                }else{
-                    //Error Prompt
-                }
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    uploadInvestigationFile(
+                        $('#add_cmpltd_docket_no').val(),
+                        $('#add_cmpltd_petitioner').val(),
+                        $('#add_upload_type_car').val(),
+                        $('#add_remarks_car').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload_car',
+                        'F5T6RCR',
+                        'investigation'
+                    );
+                } else {
+                }            
             });
             var PPISPayload_b = {
                 "clientType"            : "PROBATIONER",
@@ -5086,8 +5263,9 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Probation Order">Probation Order</option>
+                    <option value="Order of Grant of Probation">Order of Grant of Probation</option>
                     <option value="Transfer Order">Transfer Order</option>
+                    <option value="Fingerprint Record">Fingerprint Record</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -5110,40 +5288,47 @@ $.wms.form5 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -5187,75 +5372,68 @@ $.wms.form5 = (function() {
                 }, 100);
             }
             $('#uploadButton').on('click', function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
                 $(this).prop('disabled', true).text('Uploading...');
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no').val());
-                formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "supervision");
-                var type = $('#type').val();
-                var remarks = $('#remarks').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId').val());
-                formData.append('version', "0");
-                var file = $('#fileupload')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
-                    $('#uploadButton').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
-                var fileInput = $('#fileupload')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;  // Get the file name
-                    formData.append('kind', "F5T8");  // Append file name to formData
+
+                const fileInput = $('#fileupload')[0];
+                const files = fileInput.files;
+
+                if (!files.length) {
+                    alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
                 }
 
-                // **Console log all form data**
-                console.log('File name:', fileName); // Log the file name to console
-                console.log('--- Form Data ---');
-                for (var pair of formData.entries()) {
-                    if (pair[1] instanceof File) {
-                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                    } else {
-                        console.log(`${pair[0]}: ${pair[1]}`);
-                    }
-                }
+                const uuid = $('#docket_no').val();
+                const createdby = $('#petitioner_name').val();
+                const docType = "supervision";
+                const kind = "F5T8";
+                const uploadType = $('#type').val();
+                const remarksText = $('#remarks').val();
+                const remarks = remarksText ? `${uploadType} - ${remarksText}` : uploadType;
+                const officeId = $('#FOId').val();
+                const url = `${PPIS_path_upload}/file/upload`;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                // Send AJAX request
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                        if ("true") {
-                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T8");
-                             // Clear the remarks textarea
-                            $('#remarks').val(''); 
-                            
-                            // Clear the file input (reset file input)
-                            $('#fileupload').val('');
-                        } else {
-                            alert('Error: ' + "Failed to upload");
+                let uploadedCount = 0;
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('uuid', uuid);
+                    formData.append('createdby', createdby);
+                    formData.append('type', docType);
+                    formData.append('remarks', remarks);
+                    formData.append('officeId', officeId);
+                    formData.append('version', "0");
+                    formData.append('file', file);
+                    formData.append('kind', kind);
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log(`Upload success: ${file.name}`, response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(`Upload failed for ${file.name}:`, error);
+                            alert(`An error occurred while uploading ${file.name}`);
+                        },
+                        complete: function() {
+                            uploadedCount++;
+                            if (uploadedCount === files.length) {
+                                $('#remarks').val('');
+                                $('#fileupload').val('');
+                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                load_table('supervision', uuid, officeId, kind);
+                            }
                         }
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    }
-                });
+                    });
+                }
             });
+
             $(document).ready(function () {
                 var table = $('#T_F5T8').DataTable({
                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -5315,9 +5493,19 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [  'JPS', 'PS', 'JRPS', 'RPS', 'JTPS', 'TPS'];
-            var requiredField= [ 'add_probationer','add_cc_no','add_court_origin','add_date_rcv','add_supervising','add_fname','add_lname'];          
+            var requiredField= [ 'add_probationer','add_cc_no','add_court_origin','add_date_rcv','add_supervising','add_fname','add_lname', 'add_upload_type', 'add_fileupload'];          
             var check = true
             var checkTable = ['F5T8', 'F5T7']
             
@@ -5409,11 +5597,16 @@ $.wms.form5 = (function() {
                     $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/upsertMasterlist_request',JSON.stringify(payload_request)).done(function (result) {
                     //__attachF5T8PageEvent();
                         if(result.status == "SUCCESS"){
-                            $(".modal-loader").addClass("hidden")
-                            $(".addProceedButton").attr('disabled',false)
-                            $("#modal-add").modal('toggle')
-                            ___modalReset();
-                            location.reload();
+                            uploadInvestigationFile(
+                                $('#add_docket_no').val(),
+                                fullname,
+                                $('#add_upload_type').val(),
+                                $('#add_remarks').val(),
+                                $.wms.urlParam('officeId'),
+                                'add_fileupload',
+                                'F5T8',
+                                'supervision'
+                            );
                         }else{
                             alert("Failed")
                         }
@@ -5422,7 +5615,6 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
-
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_docket_no").val(),
@@ -5823,7 +6015,6 @@ $.wms.form5 = (function() {
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
                     <option value="Motion to Terminate">Motion to Terminate</option>
-                    <option value="Motion to Terminate (Died)">Motion to Terminate (Died)</option>
                     <option value="Violation Report">Violation Report</option>
                     <option value="Motion for Extension">Motion for Extension</option>
                     <option value="Motion for Transfer">Motion for Transfer</option>
@@ -5850,40 +6041,47 @@ $.wms.form5 = (function() {
 
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -5927,75 +6125,68 @@ $.wms.form5 = (function() {
                 }, 100);
             }
             $('#uploadButton').on('click', function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
                 $(this).prop('disabled', true).text('Uploading...');
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no').val());
-                formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "supervision");
-                var type = $('#type').val();
-                var remarks = $('#remarks').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId').val());
-                formData.append('version', "0");
-                var file = $('#fileupload')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
-                    $('#uploadButton').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
-                var fileInput = $('#fileupload')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;  // Get the file name
-                    formData.append('kind', "F5T9");  // Append file name to formData
+
+                const fileInput = $('#fileupload')[0];
+                const files = fileInput.files;
+
+                if (!files.length) {
+                    alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
                 }
 
-                // **Console log all form data**
-                console.log('File name:', fileName); // Log the file name to console
-                console.log('--- Form Data ---');
-                for (var pair of formData.entries()) {
-                    if (pair[1] instanceof File) {
-                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                    } else {
-                        console.log(`${pair[0]}: ${pair[1]}`);
-                    }
-                }
+                const uuid = $('#docket_no').val();
+                const createdby = $('#petitioner_name').val();
+                const docType = "supervision";
+                const kind = "F5T9";
+                const uploadType = $('#type').val();
+                const remarksText = $('#remarks').val();
+                const remarks = remarksText ? `${uploadType} - ${remarksText}` : uploadType;
+                const officeId = $('#FOId').val();
+                const url = `${PPIS_path_upload}/file/upload`;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                // Send AJAX request
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                        if ("true") {
-                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T9");
-                             // Clear the remarks textarea
-                            $('#remarks').val(''); 
-                            
-                            // Clear the file input (reset file input)
-                            $('#fileupload').val('');
-                        } else {
-                            alert('Error: ' + "Failed to upload");
+                let uploadedCount = 0;
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('uuid', uuid);
+                    formData.append('createdby', createdby);
+                    formData.append('type', docType);
+                    formData.append('remarks', remarks);
+                    formData.append('officeId', officeId);
+                    formData.append('version', "0");
+                    formData.append('file', file);
+                    formData.append('kind', kind);
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log(`Uploaded: ${file.name}`, response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(`Error uploading ${file.name}:`, error);
+                            alert(`Failed to upload: ${file.name}`);
+                        },
+                        complete: function() {
+                            uploadedCount++;
+                            if (uploadedCount === files.length) {
+                                $('#remarks').val('');
+                                $('#fileupload').val('');
+                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                load_table('supervision', uuid, officeId, kind);
+                            }
                         }
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    }
-                });
+                    });
+                }
             });
+
             $(document).ready(function () {
                 var table = $('#T_F5T9').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -6047,9 +6238,18 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPS', 'PS', 'JRPS', 'RPS', 'JTPS', 'TPS' ];
-            var requiredField= [ 'add_probationer','add_submitted'];
+            var requiredField= [ 'add_probationer','add_submitted', 'add_upload_type' ,'add_fileupload'];
             var check = true
             var checkTable = ['F5T7', 'F5T8']
 
@@ -6095,13 +6295,17 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T9',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addProceedButton").attr('disabled',false)
-                $("#modal-add").modal('toggle')
-                ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T9PageEvent();
-                    location.reload();
+                    uploadInvestigationFile(
+                        $('#add_docket_no').val(),
+                        $('#add_probationer').val(),
+                        $('#add_upload_type').val(),
+                        $('#add_remarks').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload',
+                        'F5T9',
+                        'supervision'
+                    );
                 }else{
                     //Error Prompt
                 }
@@ -6753,40 +6957,47 @@ $.wms.form5 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -6830,75 +7041,68 @@ $.wms.form5 = (function() {
                 }, 100);
             }
             $('#uploadButton').on('click', function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
                 $(this).prop('disabled', true).text('Uploading...');
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no').val());
-                formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "supervision");
-                var type = $('#type').val();
-                var remarks = $('#remarks').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId').val());
-                formData.append('version', "0");
-                var file = $('#fileupload')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
-                    $('#uploadButton').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
-                var fileInput = $('#fileupload')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;  // Get the file name
-                    formData.append('kind', "F5T11");  // Append file name to formData
+
+                const files = $('#fileupload')[0].files;
+                if (!files.length) {
+                    alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
                 }
 
-                // **Console log all form data**
-                console.log('File name:', fileName); // Log the file name to console
-                console.log('--- Form Data ---');
-                for (var pair of formData.entries()) {
-                    if (pair[1] instanceof File) {
-                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                    } else {
-                        console.log(`${pair[0]}: ${pair[1]}`);
-                    }
-                }
+                const uuid = $('#docket_no').val();
+                const createdby = $('#petitioner_name').val();
+                const docType = "supervision";
+                const kind = "F5T11";
+                const uploadType = $('#type').val();
+                const remarksText = $('#remarks').val();
+                const remarks = remarksText ? `${uploadType} - ${remarksText}` : uploadType;
+                const officeId = $('#FOId').val();
+                const url = `${PPIS_path_upload}/file/upload`;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                // Send AJAX request
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                        if ("true") {
-                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T11");
-                             // Clear the remarks textarea
-                            $('#remarks').val(''); 
-                            
-                            // Clear the file input (reset file input)
-                            $('#fileupload').val('');
-                        } else {
-                            alert('Error: ' + "Failed to upload");
+                let uploadedCount = 0;
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('uuid', uuid);
+                    formData.append('createdby', createdby);
+                    formData.append('type', docType);
+                    formData.append('remarks', remarks);
+                    formData.append('officeId', officeId);
+                    formData.append('version', "0");
+                    formData.append('file', file);
+                    formData.append('kind', kind);
+
+                    console.log(`Uploading: ${file.name}`);
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log(`Uploaded: ${file.name}`, response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(`Upload failed for ${file.name}:`, error);
+                            alert(`Failed to upload: ${file.name}`);
+                        },
+                        complete: function() {
+                            uploadedCount++;
+                            if (uploadedCount === files.length) {
+                                $('#remarks').val('');
+                                $('#fileupload').val('');
+                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                load_table('supervision', uuid, officeId, kind);
+                            }
                         }
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    }
-                });
+                    });
+                }
             });
+
             $(document).ready(function () {
                 var table = $('#T_F5T11').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -6958,9 +7162,10 @@ $.wms.form5 = (function() {
         });
 
         //Add
+
         $(".addSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JPS', 'PS', 'JRPS', 'RPS', 'JTPS', 'TPS' ]       
-            var requiredField= [ 'add_probationer','add_submitted'];
+            var requiredField= [ 'add_probationer','add_submitted', 'add_upload_type', 'add_fileupload'];
             var check = true
             var checkTable = ['F5T9', 'F5T10']
 
@@ -6990,6 +7195,15 @@ $.wms.form5 = (function() {
         });
 
         //Add
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
@@ -7009,13 +7223,17 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T11',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addProceedButton").attr('disabled',false)
-                $("#modal-add").modal('toggle')
-                ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T11PageEvent();
-                    location.reload();
+                    uploadInvestigationFile(
+                        $('#add_docket_no').val(),
+                        $('#add_probationer').val(),
+                        $('#add_upload_type').val(),
+                        $('#add_remarks').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload',
+                        'F5T11',
+                        'supervision'
+                    );
                 }else{
                     //Error Prompt
                 }
@@ -7627,40 +7845,47 @@ $.wms.form5 = (function() {
             });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
+
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
 
             var dataTable = null; // Initialize DataTable globally
 
@@ -7704,75 +7929,68 @@ $.wms.form5 = (function() {
                 }, 100);
             }
             $('#uploadButton').on('click', function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
                 $(this).prop('disabled', true).text('Uploading...');
-                // Create FormData object
-                var formData = new FormData();
-                formData.append('uuid', $('#docket_no').val());
-                formData.append('createdby', $('#petitioner_name').val());
-                formData.append('type', "supervision");
-                var type = $('#type').val();
-                var remarks = $('#remarks').val();
-                if (remarks) {
-                    formData.append('remarks', type + " - " + remarks);
-                } else {
-                    formData.append('remarks', type);
-                }
-                formData.append('officeId', $('#FOId').val());
-                formData.append('version', "0");
-                var file = $('#fileupload')[0].files[0];
-                if (!file) {
-                    alert('Please select a file to upload.');
-                    $('#uploadButton').prop('disabled', false).text('Upload');
-                    return; // Exit if no file is selected
-                }
-                formData.append('file', file);
-                var fileInput = $('#fileupload')[0];
-                if (fileInput.files.length > 0) {
-                    var fileName = fileInput.files[0].name;  // Get the file name
-                    formData.append('kind', "F5T13RR");  // Append file name to formData
+
+                const files = $('#fileupload')[0].files;
+                if (!files.length) {
+                    alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
                 }
 
-                // **Console log all form data**
-                console.log('File name:', fileName); // Log the file name to console
-                console.log('--- Form Data ---');
-                for (var pair of formData.entries()) {
-                    if (pair[1] instanceof File) {
-                        console.log(`${pair[0]}: (File) Name: ${pair[1].name}, Size: ${pair[1].size}, Type: ${pair[1].type}`);
-                    } else {
-                        console.log(`${pair[0]}: ${pair[1]}`);
-                    }
-                }
+                const uuid = $('#docket_no').val();
+                const createdby = $('#petitioner_name').val();
+                const docType = "supervision";
+                const kind = "F5T13RR";
+                const type = $('#type').val();
+                const remarksVal = $('#remarks').val();
+                const remarks = remarksVal ? `${type} - ${remarksVal}` : type;
+                const officeId = $('#FOId').val();
+                const url = `${PPIS_path_upload}/file/upload`;
 
-                var url = `${PPIS_path_upload}/file/upload`;
-                // Send AJAX request
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        console.log('Response:', response);
-                        if ("true") {
-                            load_table('supervision', $('#docket_no').val(), $('#FOId').val(), "F5T13RR");
-                             // Clear the remarks textarea
-                            $('#remarks').val(''); 
-                            
-                            // Clear the file input (reset file input)
-                            $('#fileupload').val('');
-                        } else {
-                            alert('Error: ' + "Failed to upload");
+                let uploadedCount = 0;
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('uuid', uuid);
+                    formData.append('createdby', createdby);
+                    formData.append('type', docType);
+                    formData.append('remarks', remarks);
+                    formData.append('officeId', officeId);
+                    formData.append('version', "0");
+                    formData.append('file', file);
+                    formData.append('kind', kind);
+
+                    console.log(`Uploading file: ${file.name}`);
+
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            console.log(`Uploaded: ${file.name}`, response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(`Upload failed for ${file.name}:`, error);
+                            alert(`Failed to upload: ${file.name}`);
+                        },
+                        complete: function() {
+                            uploadedCount++;
+                            if (uploadedCount === files.length) {
+                                $('#remarks').val('');
+                                $('#fileupload').val('');
+                                $('#uploadButton').prop('disabled', false).text('Upload');
+                                load_table('supervision', uuid, officeId, kind);
+                            }
                         }
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Upload failed: ', error);
-                        alert('An error occurred during the upload.');
-                        $('#uploadButton').prop('disabled', false).text('Upload');
-                    }
-                });
+                    });
+                }
             });
+
                             $(document).ready(function () {
                                 var table = $('#T_F5T13_a').DataTable({
                                     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
@@ -7871,41 +8089,48 @@ $.wms.form5 = (function() {
                 });
 
             function tableColumns() {
-                return [
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            return meta.settings._iDisplayStart + meta.row + 1;
-                        }
-                    },
-                    { "data": 'fileName' }, // Keep only file name
-                    { "data": 'remarks' }, // Keep remarks column
-                    {
-                        "data": null,
-                        "render": function (data, type, row, meta) {
-                            let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-eye'></i> View
-                                    </button>
-                                </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
-                                    <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                        <i class='fa fa-download'></i> Download
-                                    </button>
-                                </a>
-                                <button class='btn btn-danger btn-sm btn-delete-upload' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
-                                    <i class='fa fa-trash'></i> Delete
-                                </button>
-                            `;
+                                return [
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            return meta.settings._iDisplayStart + meta.row + 1;
+                                        }
+                                    },
+                                    { "data": 'fileName' },
+                                    { "data": 'remarks' },
+                                    {
+                                        "data": null,
+                                        "render": function (data, type, row, meta) {
+                                            const totalRows = meta.settings.json?.data?.length || 0;
 
-                            return actions;
-                        }
-                    }
-                ];
-            }
+                                            let actions = `
+                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-eye"></i> View
+                                                    </button>
+                                                </a>
+                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                    <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-download"></i> Download
+                                                    </button>
+                                                </a>
+                                            `;
 
-            $(document).on('click', '.btn-delete-upload', deleteItem);
+                                            if (totalRows > 1) {
+                                                actions += `
+                                                    <button class="btn btn-danger btn-sm btn-delete-upload" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                `;
+                                            }
+
+                                            return actions;
+                                        }
+                                    }
+                                ];
+                            }
+
+                $(document).off('click', '.btn-delete-upload').on('click', '.btn-delete-upload', deleteItem);
             var dataTable = null; // Initialize DataTable globally
 
             function load_table2(type, uuid, officeId, kind) {
@@ -7949,57 +8174,66 @@ $.wms.form5 = (function() {
             }
 
                 $('#uploadButton2').on('click', function(e) {
-                    e.preventDefault(); // Prevent default form submission for modal2
+                    e.preventDefault(); // Prevent default form submission
                     $(this).prop('disabled', true).text('Uploading...');
 
-                    var formData = new FormData();
-                    formData.append('uuid', $('#docket_no2').val());
-                    formData.append('createdby', $('#petitioner_name2').val());
-                    formData.append('type', "supervision");
-                    var type = $('#type2').val();
-                    var remarks = $('#remarks2').val();
-                    if (remarks) {
-                        formData.append('remarks', type + " - " + remarks);
-                    } else {
-                        formData.append('remarks', type);
-                    }
-                    formData.append('officeId', $('#FOId2').val());
-                    formData.append('version', "0");
-                    var file = $('#fileupload2')[0].files[0];
-                    if (!file) {
-                        alert('Please select a file to upload.');
-                        $('#uploadButton2').prop('disabled', false).text('Upload');
-                        return; // Exit if no file is selected
-                    }
-                    formData.append('file', file);
-
-                    var fileInput = $('#fileupload2')[0];
-                    if (fileInput.files.length > 0) {
-                        var fileName = fileInput.files[0].name;
-                        formData.append('kind', "F5T13Term");
+                    const files = $('#fileupload2')[0].files;
+                    if (!files.length) {
+                        alert('Please select at least one file to upload.');
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
                     }
 
-                    var url = `${PPIS_path_upload}/file/upload`;
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            console.log('Response:', response);
-                                load_table2('supervision', $('#docket_no2').val(), $('#FOId2').val(), "F5T13Term");
-                                $('#remarks2').val(''); // Clear the remarks textarea
-                                $('#fileupload2').val(''); // Clear the file input
-                            
-                            $('#uploadButton2').prop('disabled', false).text('Upload');
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Upload failed: ', error);
-                            alert('An error occurred during the upload.');
-                            $('#uploadButton2').prop('disabled', false).text('Upload');
-                        }
-                    });
+                    const uuid = $('#docket_no2').val();
+                    const createdby = $('#petitioner_name2').val();
+                    const docType = "supervision";
+                    const kind = "F5T13Term";
+                    const type = $('#type2').val();
+                    const remarksVal = $('#remarks2').val();
+                    const remarks = remarksVal ? `${type} - ${remarksVal}` : type;
+                    const officeId = $('#FOId2').val();
+                    const url = `${PPIS_path_upload}/file/upload`;
+
+                    let uploadedCount = 0;
+
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const formData = new FormData();
+                        formData.append('uuid', uuid);
+                        formData.append('createdby', createdby);
+                        formData.append('type', docType);
+                        formData.append('remarks', remarks);
+                        formData.append('officeId', officeId);
+                        formData.append('version', "0");
+                        formData.append('file', file);
+                        formData.append('kind', kind);
+
+                        console.log(`Uploading file: ${file.name}`);
+
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                console.log(`Uploaded: ${file.name}`, response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(`Upload failed for ${file.name}:`, error);
+                                alert(`Failed to upload: ${file.name}`);
+                            },
+                            complete: function() {
+                                uploadedCount++;
+                                if (uploadedCount === files.length) {
+                                    $('#remarks2').val('');
+                                    $('#fileupload2').val('');
+                                    $('#uploadButton2').prop('disabled', false).text('Upload');
+                                    load_table2('supervision', uuid, officeId, kind);
+                                }
+                            }
+                        });
+                    }
                 });
 
                             $(document).ready(function () {
@@ -8208,9 +8442,18 @@ $.wms.form5 = (function() {
         }
 
         //ADD
+        $(document).off('change', '#add_upload_type').on('change', '#add_upload_type', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addRCVSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPS', 'CPS'];
-            var requiredField= [ 'add_rcv_docket_no','add_rcv_probationer','add_rcv_case_no','add_rcv_court_origin','add_rcv_date_rcv','add_rcv_supervising','add_rcv_period'];          
+            var requiredField= [ 'add_upload_type', 'add_fileupload', 'add_rcv_probationer','add_rcv_case_no','add_rcv_court_origin','add_rcv_date_rcv','add_rcv_supervising','add_rcv_period'];          
             var check = true
             var checkTable = ['F5T13_RCV', 'F5T12']        
             
@@ -8254,13 +8497,17 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_RCV',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addRCVProceedButton").attr('disabled',false)
-                $("#modal-rcv-add").modal('toggle')
-                ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T13PageEvent();
-                    location.reload();
+                    uploadInvestigationFile(
+                        $('#add_rcv_docket_no').val(),
+                        $('#add_rcv_probationer').val(),
+                        $('#add_upload_type').val(),
+                        $('#add_remarks').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload',
+                        'F5T13RR',
+                        'supervision'
+                    );
                 }else{
                     //Error Prompt
                 }
@@ -8465,10 +8712,18 @@ $.wms.form5 = (function() {
 
         //ADD_CMPLTD
         //ADD
-        
+        $(document).off('change', '#add_upload_type_term').on('change', '#add_upload_type_term', function() {
+            var selectedValue = $(this).val();
+            
+            if (selectedValue === 'Other Document/s') {
+                $('.remarks-row').show(); // Show the remarks field
+            } else {
+                $('.remarks-row').hide(); // Hide the remarks field
+            }
+        });
         $(".addCMPLTDSubmitButton").unbind("click").on("click",function(){
             var allowedDocket= [ 'JCPS', 'CPS' ];
-            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date'];
+            var requiredField= [ 'add_cmpltd_petitioner','add_cmpltd_date', 'add_upload_type_term', 'add_fileupload_term'];
             var check = true
             var checkTable = ['F5T12', 'F5T13_RCV']
 
@@ -8506,13 +8761,17 @@ $.wms.form5 = (function() {
                 "method" : "insert"
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F5T13_TERM',JSON.stringify(payload)).done(function (result) {
-                $(".modal-loader").addClass("hidden")
-                $(".addCMPLTDProceedButton").attr('disabled',false)
-                $("#modal-cmpltd-add").modal('toggle')
-                ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T13PageEvent();
-                    location.reload();
+                    uploadInvestigationFile(
+                        $('#add_cmpltd_docket_no').val(),
+                        $('#add_cmpltd_petitioner').val(),
+                        $('#add_upload_type_term').val(),
+                        $('#add_remarks_term').val(),
+                        $.wms.urlParam('officeId'),
+                        'add_fileupload_term',
+                        'F5T13Term',
+                        'supervision'
+                    );
                 }else{
                     //Error Prompt
                 }

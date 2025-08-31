@@ -2,6 +2,7 @@
  * This the main API js of WMS 
  *  Portal web services.
  */
+
 var PPIS_path_upload = "http://192.168.1.147:8080";
 var PPIS_path = "http://192.168.1.147:8000";
 
@@ -25,6 +26,7 @@ $.wms = (function() {
     var __debug = function(){
         return ___mode;
     }
+
     var ___ctx = '';
     /*var ___ctx = 'http://cmis.probation.gov.ph';
     if(___production == true){
@@ -74,7 +76,7 @@ $.wms = (function() {
         //return "/wms-portal/";
         return "/";
     }
-	var __executeGet = function (path) {
+    var __executeGet = function (path) {
         var dfd = $.Deferred();
         $.get(path, function(data) {})
         .done(function(data){
