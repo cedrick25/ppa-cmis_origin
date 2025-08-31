@@ -2,8 +2,6 @@
  * This the main API js of WMS 
  *  Portal web services.
  */
-var PPIS_path_upload = "http://192.168.1.147:8080";
-var PPIS_path = "http://192.168.1.147:8000";
 
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};
@@ -25,6 +23,7 @@ $.wms = (function() {
     var __debug = function(){
         return ___mode;
     }
+
     var ___ctx = '';
     /*var ___ctx = 'http://cmis.probation.gov.ph';
     if(___production == true){
@@ -74,7 +73,7 @@ $.wms = (function() {
         //return "/wms-portal/";
         return "/";
     }
-	var __executeGet = function (path) {
+    var __executeGet = function (path) {
         var dfd = $.Deferred();
         $.get(path, function(data) {})
         .done(function(data){
@@ -142,6 +141,44 @@ $.wms = (function() {
                 // 'Content-Type': 'multipart/form-data;'
                 'Content-Type':'application/json'
             },
+            data: jsonObj
+        }).done(function (data, textStatus, jqXHR) {
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+            d.resolve(data)
+        }).fail(function (jqXHR, textStatus, errorThrown,request) {
+            console.log('---FAILED---');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+            console.log('---FAILED---');
+            
+            d.resolve({
+                status : 'ERROR',
+                message : request
+            });
+            
+            if(customLoader != ""){
+                $("#"+customLoader).hide();
+                $("#"+customLoader).addClass("hide");
+            }
+        });
+        
+        return d.promise();
+    };
+    var __executeExternalPost2 = function(path, jsonObj, customLoader) {
+        path = $.wms.getContext() + path;
+        var d = $.Deferred();
+        if(customLoader != ""){
+            $("#"+customLoader).show();
+            $("#"+customLoader).removeClass("hide");
+        }
+        $.ajax({
+            method: "POST",
+            url: path,
+            dataType: "json",
             data: jsonObj
         }).done(function (data, textStatus, jqXHR) {
             if(customLoader != ""){
@@ -341,6 +378,7 @@ $.wms = (function() {
         getImgPath : __getImgPath,
         executePost : __executePost,
         executeExternalPost : __executeExternalPost,
+        executeExternalPost2 :__executeExternalPost2,
         executeExternalPut : __executeExternalPut,
         executeExternalDelete : __executeExternalDelete,
         executeGet : __executeGet,
