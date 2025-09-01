@@ -696,7 +696,7 @@ $.wms.form21 = (function() {
                                 var docketNo = $(this).data('docket');
                                 var recordId = $(this).data('id');
                                 var petitioner = $(this).data('petitioner');
-                                var field_office_id = $(this).data('field_office_id');
+                                var field_office_id = $.wms.urlParam('officeId');
                                 console.log(petitioner)
                                 console.log(field_office_id)
 
@@ -940,7 +940,7 @@ $.wms.form21 = (function() {
                     var docketNo = $(this).data('docket');
                     var recordId = $(this).data('id');
                     var petitioner = $(this).data('petitioner');
-                    var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
 
                     // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                     $('#docket_no2').val(docketNo);
@@ -2223,7 +2223,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
                 console.log(petitioner)
                 console.log(field_office_id)
 
@@ -3065,7 +3066,8 @@ $.wms.form21 = (function() {
                                 var docketNo = $(this).data('docket');
                                 var recordId = $(this).data('id');
                                 var petitioner = $(this).data('petitioner');
-                                var field_office_id = $(this).data('field_office_id');
+                                var field_office_id = $.wms.urlParam('officeId');
+
                                 console.log(petitioner)
                                 console.log(field_office_id)
 
@@ -3307,7 +3309,7 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                var field_office_id = $.wms.urlParam('officeId');
 
                 // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                 $('#docket_no2').val(docketNo);
@@ -4786,7 +4788,8 @@ $.wms.form21 = (function() {
                                 var docketNo = $(this).data('docket');
                                 var recordId = $(this).data('id');
                                 var petitioner = $(this).data('petitioner');
-                                var field_office_id = $(this).data('field_office_id');
+                                var field_office_id = $.wms.urlParam('officeId');
+
                                 console.log(petitioner)
                                 console.log(field_office_id)
 
@@ -5035,7 +5038,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                var field_office_id = $.wms.urlParam('officeId');
+
 
                 // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                 $('#docket_no2').val(docketNo);
@@ -5797,7 +5801,8 @@ $.wms.form21 = (function() {
                     var docketNo = $(this).data('docket');
                     var recordId = $(this).data('id');
                     var petitioner = $(this).data('petitioner');
-                    var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
                     console.log(petitioner)
                     console.log(field_office_id)
 
@@ -6049,7 +6054,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
 
                 // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                 $('#docket_no2').val(docketNo);
@@ -7352,7 +7358,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
                 console.log(petitioner)
                 console.log(field_office_id)
 
@@ -7602,7 +7609,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
 
                 // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                 $('#docket_no2').val(docketNo);
@@ -8856,7 +8864,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
                 console.log(petitioner)
                 console.log(field_office_id)
 
@@ -9095,7 +9104,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
 
                 // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                 $('#docket_no2').val(docketNo);
@@ -10356,7 +10366,8 @@ $.wms.form21 = (function() {
                                 var docketNo = $(this).data('docket');
                                 var recordId = $(this).data('id');
                                 var petitioner = $(this).data('petitioner');
-                                var field_office_id = $(this).data('field_office_id');
+                                var field_office_id = $.wms.urlParam('officeId');
+
                                 console.log(petitioner)
                                 console.log(field_office_id)
 
@@ -10597,7 +10608,8 @@ $.wms.form21 = (function() {
                     var docketNo = $(this).data('docket');
                     var recordId = $(this).data('id');
                     var petitioner = $(this).data('petitioner');
-                    var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
 
                     // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal2
                     $('#docket_no2').val(docketNo);
@@ -10838,7 +10850,8 @@ $.wms.form21 = (function() {
                 var docketNo = $(this).data('docket');
                 var recordId = $(this).data('id');
                 var petitioner = $(this).data('petitioner');
-                var field_office_id = $(this).data('field_office_id');
+                var field_office_id = $.wms.urlParam('officeId');
+
 
                 // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal3
                 $('#docket_no3').val(docketNo);
@@ -11068,7 +11081,8 @@ $.wms.form21 = (function() {
                     var docketNo = $(this).data('docket');
                     var recordId = $(this).data('id');
                     var petitioner = $(this).data('petitioner');
-                    var field_office_id = $(this).data('field_office_id');
+                    var field_office_id = $.wms.urlParam('officeId');
+
 
                     // Set docketNo, petitioner, and field_office_id in the form's hidden fields for modal4
                     $('#docket_no4').val(docketNo);
