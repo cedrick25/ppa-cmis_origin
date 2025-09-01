@@ -6052,7 +6052,6 @@ $.wms.form44 = (function() {
 
         $(".certUpload").unbind("click").on("click", function () {
             console.log("clicked");
-
             var fileToUpload = $('#fileupload').prop('files')[0];
 
             if (fileToUpload === undefined) {
@@ -6077,7 +6076,6 @@ $.wms.form44 = (function() {
                 });
             }
         });
-
         var __cert_list_upload = function(){
             console.log("cert list")
             var payload = {
