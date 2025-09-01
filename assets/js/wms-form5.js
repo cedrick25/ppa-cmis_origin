@@ -5269,8 +5269,11 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
+                    <option value="Order of Grant of Probation">Order of Grant of Probation</option>
                     <option value="Transfer Order">Transfer Order</option>
+                    <option value="Fingerprint Record">Fingerprint Record</option>
                     <option value="Other Document/s">Other Document/s</option>
+
                 `);
                 
                 // Remove any previous 'change' event and bind a new one to handle the select change

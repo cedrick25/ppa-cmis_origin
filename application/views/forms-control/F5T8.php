@@ -344,7 +344,9 @@
                 <div class="col-sm-9">
                   <select class="form-control add_upload_type col-md-3" id="add_upload_type" name="type" required>
                     <option value="" selected>Select Type</option>
+                    <option value="Order of Grant of Probation">Order of Grant of Probation</option>
                     <option value="Transfer Order">Transfer Order</option>
+                    <option value="Fingerprint Record">Fingerprint Record</option>
                     <option value="Other Document/s">Other Document/s</option>
                   </select>
                 </div>
