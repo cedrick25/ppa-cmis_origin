@@ -276,7 +276,7 @@
                 <div class="col-sm-9">
                   <select class="form-control add_upload_type col-md-3" id="add_upload_type" name="type" required>
                     <option value="" selected>Select Type</option>
-                    <option value="Discharge in Parole">Discharge in Parole</option>
+                    <option value="Discharge on Parole">Discharge on Parole</option>
                     <option value="Arrival Report">Arrival Report</option>
                     <option value="Briefing Report">Briefing Report</option>
                     <option value="Certificate of Undertaking">Certificate of Undertaking</option>

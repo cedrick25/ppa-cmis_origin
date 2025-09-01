@@ -221,6 +221,11 @@
                     <option value="Order for the Denial of Commutation of Sentence">Order for the Denial of Commutation of Sentence</option>
                     <option value="Order for the Denial of Conditional Pardon">Order for the Denial of Conditional Pardon</option>
                     <option value="Order for the Denial of Absolute Pardon">Order for the Denial of Absolute Pardon</option>
+                    <option value="Cancellation of Parole">Cancellation of Parole</option>
+                    <option value="Cancellation of Commutation of Sentence">Cancellation of Commutation of Sentence</option>
+                    <option value="Cacellation of Conditional Pardon">Cacellation of Conditional Pardon</option>
+                    <option value="Death">Death</option>
+                    <option value="Other Document/s">Other Document/s</option>
                   </select>
                 </div>
               </div>
