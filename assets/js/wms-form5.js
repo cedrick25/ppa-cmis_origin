@@ -2895,7 +2895,13 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
+                    <option value="Order of Grant Probation">Order of Grant Probation</option>
+                    <option value="Order of Denial of Probation">Order of Denial of Probation</option>
+                    <option value="Order of Dismissal">Order of Dismissal</option>
                     <option value="Order to Withdrawal of Application for Probation">Order to Withdrawal of Application for Probation</option>
+                    <option value="Order to Reinvestigate">Order to Reinvestigate</option>
+                    <option value="Warrant of Arrest">Warrant of Arrest</option>
+                    <option value="Recall Order">Recall Order</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
