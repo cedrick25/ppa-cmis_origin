@@ -852,7 +852,6 @@ $.wms.form5 = (function() {
                         <option value="" disabled selected>Select Type</option>
                         <option value="Post-Sentence Investigation Report">Post-Sentence Investigation Report</option>
                         <option value="Manifestation">Manifestation</option>
-                        <option value="Fingerprint Record">Fingerprint Record</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
