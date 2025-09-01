@@ -293,11 +293,7 @@
                 <div class="col-sm-9">
                   <select class="form-control add_upload_type col-md-3" id="add_upload_type" name="type" required>
                     <option value="" selected>Select Type</option>
-                    <option value="Order of Grant Probation">Order of Grant Probation</option>
-                    <option value="Order of Denial of Probation">Order of Denial of Probation</option>
-                    <option value="Order of Dismissal">Order of Dismissal</option>
                     <option value="Order to Withdrawal of Application for Probation">Order to Withdrawal of Application for Probation</option>
-                    <option value="Order to Reinvestigate">Order to Reinvestigate</option>
                     <option value="Other Document/s">Other Document/s</option>
                   </select>
                 </div>
