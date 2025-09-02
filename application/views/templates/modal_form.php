@@ -723,7 +723,7 @@
                 <input type="text" class="form-control" id="petitioner_name" readonly>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="type" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type" name="type" required>
@@ -736,7 +736,7 @@
                     <textarea class="form-control remarks" id="remarks" name="remarks" rows="2" placeholder="Enter remarks..."></textarea>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="fileupload" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
                 <input type="file" class="form-control-file form-control" id="fileupload" accept=".jpg, .png, .pdf, .docx" required multiple>
@@ -775,7 +775,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton">Upload</button>
+              <button type="button" class="btn btn-sm btn-primary access_f5_write" id="uploadButton">Upload</button>
           </div>
         </div>
       </div>
@@ -813,7 +813,7 @@
                 <input type="text" class="form-control" id="petitioner_name2" readonly>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="type2" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type2" name="type2" required>
@@ -826,7 +826,7 @@
                     <textarea class="form-control remarks" id="remarks2" name="remarks2" rows="2" placeholder="Enter remarks..."></textarea>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="fileupload2" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
                 <input type="file" class="form-control-file form-control" id="fileupload2" accept=".jpg, .png, .pdf, .docx" multiple>
@@ -865,7 +865,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton2">Upload</button>
+              <button type="button" class="btn btn-sm btn-primary access_f5_write" id="uploadButton2">Upload</button>
           </div>
         </div>
       </div>
@@ -902,7 +902,7 @@
                 <input type="text" class="form-control" id="petitioner_name3" readonly>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="type3" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type3" name="type3" required>
@@ -915,7 +915,7 @@
                     <textarea class="form-control remarks" id="remarks3" name="remarks3" rows="2" placeholder="Enter remarks..."></textarea>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="fileupload3" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
                 <input type="file" class="form-control-file form-control" id="fileupload3" accept=".jpg, .png, .pdf, .docx" multiple>
@@ -954,7 +954,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton3">Upload</button>
+              <button type="button" class="btn btn-sm btn-primary access_f5_write" id="uploadButton3">Upload</button>
           </div>
         </div>
       </div>
@@ -991,7 +991,7 @@
                 <input type="text" class="form-control" id="petitioner_name4" readonly>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="type4" class="col-md-3 col-form-label">Type</label>
               <div class="col-md-9">
                 <select class="form-control type" id="type4" name="type4" required>
@@ -1004,7 +1004,7 @@
                     <textarea class="form-control remarks" id="remarks4" name="remarks4" rows="2" placeholder="Enter remarks..."></textarea>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row access_f5_write">
               <label for="fileupload4" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
                 <input type="file" class="form-control-file form-control" id="fileupload4" accept=".jpg, .png, .pdf, .docx" multiple>
@@ -1043,7 +1043,7 @@
           </div>
           <div class="col-sm-6" style="text-align: right;">
               <button type="button" class="btn btn-sm btn-secondary me-2" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" id="uploadButton4">Upload</button>
+              <button type="button" class="btn btn-sm btn-primary access_f5_write" id="uploadButton4">Upload</button>
           </div>
         </div>
       </div>
