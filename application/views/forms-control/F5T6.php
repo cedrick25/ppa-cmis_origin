@@ -314,8 +314,8 @@
                 <div class="col-sm-9">
                   <select class="form-control add_upload_type_car col-md-3" id="add_upload_type_car" name="type" required>
                     <option value="" selected>Select Type</option>
-                    <option value="Courtesy Probation Investigation Report">Accomplished General Inter-Office Referral</option>
-                    <option value="Full Blown Courtesy Investigation">Full Blown Courtesy Investigation</option>
+                    <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
+                    <option value="Full Blown Courtesy Investigation Report">Full Blown Courtesy Investigation Report</option>
                     <option value="Other Document/s">Other Document/s</option>
                   </select>
                 </div>

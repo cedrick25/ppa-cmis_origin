@@ -317,6 +317,7 @@
                   <select class="form-control add_upload_type_car col-md-3" id="add_upload_type_car" name="type" required>
                     <option value="" selected>Select Type</option>
                     <option value="Community Interview Report">Community Interview Report</option>
+                    <option value="General Inter-Office Referral Report">General Inter-Office Referral Report</option>
                     <option value="Other Document/s">Other Document/s</option>
                   </select>
                 </div>

@@ -2244,7 +2244,11 @@ $.wms.form21 = (function() {
                     <option value="Order for the Denial of Commutation of Sentence">Order for the Denial of Commutation of Sentence</option>
                     <option value="Order for the Denial of Conditional Pardon">Order for the Denial of Conditional Pardon</option>
                     <option value="Order for the Denial of Absolute Pardon">Order for the Denial of Absolute Pardon</option>
+                    <option value="Cancellation of Parole">Cancellation of Parole</option>
+                    <option value="Cancellation of Commutation of Sentence">Cancellation of Commutation of Sentence</option>
+                    <option value="Cacellation of Conditional Pardon">Cacellation of Conditional Pardon</option>
                     <option value="Death">Death</option>
+                    <option value="Other Document/s">Other Document/s</option>
                 `);
                 
                 // Remove any previous 'change' event and bind a new one to handle the select change
@@ -3320,6 +3324,7 @@ $.wms.form21 = (function() {
                 $('#type2').empty().append(`
                     <option value="" disabled selected>Select Type</option>
                     <option value="Community Interview Report">Community Interview Report</option>
+                    <option value="General Inter-Office Referral Report">General Inter-Office Referral Report</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
 
@@ -4801,7 +4806,7 @@ $.wms.form21 = (function() {
                                 // Populate the type select dropdown
                                 $('#type').empty().append(`
                                     <option value="" disabled selected>Select Type</option>
-                                    <option value="Discharge in Parole">Discharge in Parole</option>
+                                    <option value="Discharge on Parole">Discharge on Parole</option>
                                     <option value="Arrival Report">Arrival Report</option>
                                     <option value="Briefing Report">Briefing Report</option>
                                     <option value="Certificate of Undertaking">Certificate of Undertaking</option>

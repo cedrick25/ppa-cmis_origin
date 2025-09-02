@@ -852,7 +852,6 @@ $.wms.form5 = (function() {
                         <option value="" disabled selected>Select Type</option>
                         <option value="Post-Sentence Investigation Report">Post-Sentence Investigation Report</option>
                         <option value="Manifestation">Manifestation</option>
-                        <option value="Fingerprint Record">Fingerprint Record</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -2901,6 +2900,8 @@ $.wms.form5 = (function() {
                     <option value="Order of Dismissal">Order of Dismissal</option>
                     <option value="Order to Withdrawal of Application for Probation">Order to Withdrawal of Application for Probation</option>
                     <option value="Order to Reinvestigate">Order to Reinvestigate</option>
+                    <option value="Warrant of Arrest">Warrant of Arrest</option>
+                    <option value="Recall Order">Recall Order</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -3782,7 +3783,6 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
-                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -4025,8 +4025,6 @@ $.wms.form5 = (function() {
                     // Populate the type select dropdown for modal2
                     $('#type2').empty().append(`
                         <option value="" disabled selected>Select Type</option>
-                        <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
-                        <option value="Full Blown Courtesy Investigation">Full Blown Courtesy Investigation</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
@@ -5275,6 +5273,7 @@ $.wms.form5 = (function() {
                     <option value="Transfer Order">Transfer Order</option>
                     <option value="Fingerprint Record">Fingerprint Record</option>
                     <option value="Other Document/s">Other Document/s</option>
+
                 `);
                 
                 // Remove any previous 'change' event and bind a new one to handle the select change
