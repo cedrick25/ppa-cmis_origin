@@ -3783,6 +3783,7 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
