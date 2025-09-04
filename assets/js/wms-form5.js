@@ -3783,6 +3783,7 @@ $.wms.form5 = (function() {
                 // Populate the type select dropdown
                 $('#type').empty().append(`
                     <option value="" disabled selected>Select Type</option>
+                    <option value="Accomplished General Inter-Office Referral">Accomplished General Inter-Office Referral</option>
                     <option value="Other Document/s">Other Document/s</option>
                 `);
                 
@@ -4025,6 +4026,8 @@ $.wms.form5 = (function() {
                     // Populate the type select dropdown for modal2
                     $('#type2').empty().append(`
                         <option value="" disabled selected>Select Type</option>
+                        <option value="Courtesy Probation Investigation Report">Courtesy Probation Investigation Report</option>
+                        <option value="Full Blown Courtesy Investigation Report">Full Blown Courtesy Investigation Report</option>
                         <option value="Other Document/s">Other Document/s</option>
                     `);
 
