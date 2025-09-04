@@ -830,7 +830,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal2 ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-acted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-acted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -1067,7 +1067,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal3 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal3 ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -1304,7 +1304,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal4 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal4 ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner_name + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-notacted-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-notacted-delete form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -2870,7 +2870,7 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                         "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> " +
                         "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
@@ -3761,7 +3761,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -4006,7 +4006,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal2 ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.petitioner + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>").addClass("options")
                             });
@@ -5247,7 +5247,7 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                         "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
                         "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
@@ -6001,7 +6001,7 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                         "<button class='btn btn-success btn-xs btn-edit access_f5_write form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
                         "<button class='access_f5_write btn btn-danger btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
@@ -6918,7 +6918,7 @@ $.wms.form5 = (function() {
                         "<td class='options center'>"+data.field_office+"</td>"+
                         "<td class='options center'>"+source+"</td>"+
                         "<td align='center' class='options'>" + 
-                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                        "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                         "<button class='access_f5_write btn btn-success btn-xs btn-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i> </button> "+
                         "<button class='btn btn-danger access_f5_write btn-xs btn-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i> </button> </td></tr>")
                 });
@@ -7814,7 +7814,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-rcv-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                     "<button class='access_f5_write btn btn-danger btn-xs btn-rcv-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
@@ -8060,7 +8060,7 @@ $.wms.form5 = (function() {
                                     "<td class='options field'>"+data.field_office+"</td>"+
                                     "<td class='options'>"+source+"</td>"+
                                     "<td align='center' class='options'>" + 
-                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal2 form_lock' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
+                                    "<button class='access_f5 btn btn-success btn-xs btn-attachment-rcv-modal2 ' data-docket='" + data.docket_no.toUpperCase() + "' data-id='" + data.id + "' data-petitioner='" + data.probationer + "' data-field_office_id='" + data.field_office_id + "'><i class='fa fa-upload'></i> </button> " +
                                     "<button class='access_f5_write btn btn-success btn-xs btn-cmpltd-edit form_lock' data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-pencil'></i></button> "+
                                         "<button class='access_f5_write btn btn-danger btn-xs btn-cmpltd-delete form_lock'  data-docket='"+data.docket_no.toUpperCase()+"' data-id='"+data.id+"'><i class='fa fa-trash'></i></button> </td></tr>")
                             });
