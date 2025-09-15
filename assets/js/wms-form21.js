@@ -298,11 +298,11 @@ $.wms.form21 = (function() {
         if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
             $.ajax({
                 url: `${PPIS_path_upload}/file/delete/${id}`, // Corrected this line
-                method: 'POST',
+                method: 'GET',
                 data: { id, file_path: filePath, file_name: fileName },
                 success: function(response) {
                     alert('Deleted successfully!');
-                    // You can reload your table or remove the element from DOM here
+                    location.reload(); // 🔁 Reload the page
                 },
                 error: function(err) {
                     alert('Failed to delete.');
