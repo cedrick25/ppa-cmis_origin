@@ -3773,27 +3773,32 @@ $.wms.form53 = (function() {
         var isocode      =  $.wms.urlParam('isocode')
         console.log(isocode)
 
-        $(".certUpload").unbind("click").on("click", function(){
-            console.log("clicked")
+        $(".certUpload").unbind("click").on("click", function () {
+            console.log("clicked");
             var fileToUpload = $('#fileupload').prop('files')[0];
 
             if (fileToUpload === undefined) {
-                alert("Please Choose File Before Upload!")
-            }else {
+                alert("Please Choose File Before Upload!");
+            } else {
                 var formdata = new FormData();
-                formdata.append("files", fileupload.files[0], fileupload.files[0].name);
+                formdata.append("files", fileToUpload, fileToUpload.name);
 
-                $.wms.executeFile('http://192.168.1.33:8000/cert/upload?officeId='+officeId+'&yearMonth='+date+'&uploaderId='+$.cookie("USER_ID")+'&formTable=f53',formdata).done(function (result) {
-                    console.log(result)
-                    if(result){
+                $.wms.executeFile(
+                    'http://192.168.1.33:8000/cert/upload?officeId=' + officeId +
+                    '&yearMonth=' + date +
+                    '&uploaderId=' + $.cookie("USER_ID") +
+                    '&formTable=f53',
+                    formdata
+                ).done(function (result) {
+                    console.log(result);
+                    if (result) {
                         __cert_list_upload();
-
-                    }else{
-                        // alert ("region Failed");
+                    } else {
+                        // alert("region Failed");
                     }
                 });
-            } 
-        })
+            }
+        });
         var __cert_list_upload = function(){
             console.log("cert list")
             var payload = {
