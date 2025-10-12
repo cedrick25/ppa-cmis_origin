@@ -134,5 +134,9 @@ class Portal extends CI_Controller {
 	{
 		$this->load->view('no_submitted_reports_community');
 	}
+	public function upload_masterlist()
+	{
+		$this->load->view('upload_masterlist');
+	}
 
 }

@@ -85,6 +85,7 @@ $route['restore_deleted'] = "Portal/restore_deleted";
 $route['restore_date'] = "Portal/restore_date";
 $route['forms'] = "Portal/forms";
 $route['migrate_offline'] = "Portal/migrate_offline";
+$route['upload_masterlist'] = "Portal/upload_masterlist";
 
 
 $route['default_controller'] = 'Portal';
