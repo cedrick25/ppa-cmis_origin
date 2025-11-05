@@ -3168,11 +3168,15 @@ $.wms.form5 = (function() {
         $(".addProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true);
             $(".modal-loader").removeClass("hidden");
-            var fullname = $("#add_lname").val() +', '+ $("#add_fname").val() +' y '+ $("#add_mname").val();
-            var suffix = $("#add_sname").val();
-            if (suffix) {
-                fullname += ' ' + suffix; 
-            }
+            var lname = $("#add_lname").val();
+            var fname = $("#add_fname").val();
+            var mname = $("#add_mname").val();
+            var suffix = $("#add_sname").val(); 
+
+            var suffixPart = (suffix) ? ' ' + suffix : '';
+
+            var fullname = lname + ', ' + fname + suffixPart + ' y ' + mname;
+            
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
                 "petitioner": fullname,
@@ -5545,11 +5549,14 @@ $.wms.form5 = (function() {
         $(".addProceedButton").unbind("click").on("click",function(){
             $(this).attr('disabled',true);
             $(".modal-loader").removeClass("hidden")
-            var fullname = $("#add_lname").val() +', '+ $("#add_fname").val() +' y '+ $("#add_mname").val();
-            var suffix = $("#add_sname").val();
-            if (suffix) {
-                fullname += ' ' + suffix; 
-            }
+            var lname = $("#add_lname").val();
+            var fname = $("#add_fname").val();
+            var mname = $("#add_mname").val();
+            var suffix = $("#add_sname").val(); 
+
+            var suffixPart = (suffix) ? ' ' + suffix : '';
+
+            var fullname = lname + ', ' + fname + suffixPart + ' y ' + mname;
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
                 "probationer": fullname,
