@@ -3176,7 +3176,7 @@ $.wms.form5 = (function() {
             var suffixPart = (suffix) ? ' ' + suffix : '';
 
             var fullname = lname + ', ' + fname + suffixPart + ' y ' + mname;
-            
+
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
                 "petitioner": fullname,
@@ -3358,7 +3358,17 @@ $.wms.form5 = (function() {
             $(".editProceedButton").unbind("click").on("click",function(){
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
-                var fullname = $("#edit_lname").val() +', '+ $("#edit_fname").val() +' y '+ $("#edit_mname").val();
+                // var fullname = $("#edit_lname").val() +', '+ $("#edit_fname").val() +' y '+ $("#edit_mname").val();
+                var lname = $("#edit_lname").val();
+                var fname = $("#edit_fname").val();
+                var mname = $("#edit_mname").val();
+                var suffix = $("#edit_sname").val(); // Get the suffix value
+
+                // Determine the suffix part: if it exists, add a space before it, otherwise, add an empty string.
+                var suffixPart = (suffix) ? ' ' + suffix : '';
+
+                // Concatenate the parts in the desired format: LASTNAME, FIRSTNAME [SUFFIX] y MIDDLENAME
+                var fullname = lname + ', ' + fname + suffixPart + ' y ' + mname;
                 var payload = { 
                     "id" : $("#edit_id").val(),
                     "docket_no" : $("#edit_docket_no").val(),
@@ -5858,7 +5868,17 @@ $.wms.form5 = (function() {
             $(".editProceedButton").unbind("click").on("click",function(){
                 $(this).attr('disabled',true)
                 $(".modal-loader").removeClass("hidden")
-                var fullname = $("#edit_lname").val() +', '+ $("#edit_fname").val() +' y '+ $("#edit_mname").val();
+                // var fullname = $("#edit_lname").val() +', '+ $("#edit_fname").val() +' y '+ $("#edit_mname").val();
+                var lname = $("#edit_lname").val();
+                var fname = $("#edit_fname").val();
+                var mname = $("#edit_mname").val();
+                var suffix = $("#edit_sname").val(); // Get the suffix value
+
+                // Determine the suffix part: if it exists, add a space before it, otherwise, add an empty string.
+                var suffixPart = (suffix) ? ' ' + suffix : '';
+
+                // Concatenate the parts in the desired format: LASTNAME, FIRSTNAME [SUFFIX] y MIDDLENAME
+                var fullname = lname + ', ' + fname + suffixPart + ' y ' + mname;
                 var payload = { 
                     "id" : $("#edit_id").val(),
                     "docket_no" : $("#edit_docket_no").val(),
