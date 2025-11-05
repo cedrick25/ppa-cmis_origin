@@ -3169,6 +3169,10 @@ $.wms.form5 = (function() {
             $(this).attr('disabled',true);
             $(".modal-loader").removeClass("hidden");
             var fullname = $("#add_lname").val() +', '+ $("#add_fname").val() +' y '+ $("#add_mname").val();
+            var suffix = $("#add_sname").val();
+            if (suffix) {
+                fullname += ' ' + suffix; 
+            }
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
                 "petitioner": fullname,
@@ -5542,6 +5546,10 @@ $.wms.form5 = (function() {
             $(this).attr('disabled',true);
             $(".modal-loader").removeClass("hidden")
             var fullname = $("#add_lname").val() +', '+ $("#add_fname").val() +' y '+ $("#add_mname").val();
+            var suffix = $("#add_sname").val();
+            if (suffix) {
+                fullname += ' ' + suffix; 
+            }
             var payload = { 
                 "docket_no" : $("#add_docket_no").val(),
                 "probationer": fullname,
