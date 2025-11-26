@@ -180,9 +180,9 @@
 
 				<span class="pull-right">
 					  	<button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
-					  	<!-- <button id="downloadReportBtn" class="btn btn-success" style="display:none;">
+					  	<button id="downloadReportBtn" class="btn btn-success" style="display:none;">
 						  <i class="fa fa-download"></i> Download
-						</button> -->
+						</button>
 				</span>
 			</div>
 			<div class="panel-body">

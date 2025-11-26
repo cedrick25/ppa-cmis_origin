@@ -181,11 +181,11 @@
 				    <input type="hidden" name="year" id="report_year">
 				</form>
 
-				<!-- <span class="pull-right">
+				<span class="pull-right">
 					  	<button id="downloadReportBtn" class="btn btn-success" style="display:;">
 						  <i class="fa fa-download"></i> Download
 						</button>
-				</span> -->
+				</span>
 			</div>
 			<div class="panel-body">
 				<div id="result_table" class="">
