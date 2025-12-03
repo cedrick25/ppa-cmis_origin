@@ -217,7 +217,7 @@
 		</div>
 	</div>
 </div>
-<!-- <div class="row">
+<div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -239,7 +239,7 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 	<div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">

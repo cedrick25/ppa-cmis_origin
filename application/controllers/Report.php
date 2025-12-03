@@ -132,9 +132,14 @@ class Report extends CI_Controller {
             </tr>
         </table>
         ";
+        $current_date = time(); 
+
+        // Format the date using 'F j, Y'
+        $formatted_date = date('F j, Y', $current_date);
         $html .= "<hr style='border: 1px solid #eb603c; margin: 20px 0;'>";
         $html .= "<br><br><div class='p_title'>RESULT OF RECORDS CHECK</div>";
-        $html .= "<div class='p_title'>(PROBATION)</div><br><br>";
+        $html .= "<div class='p_title'>(PROBATION)</div>";
+        $html .= "<div class='p_title'>". $formatted_date ."</div><br><br>";
         $html .= "<p class='p_sentence'>This has reference to the request for records check on petitioner</p>";
         $html .= "<p class='p_center' style='font-size: 10pt;'>$fullname</p>";
         if (!empty($data['masterlist'])) {
@@ -359,9 +364,14 @@ class Report extends CI_Controller {
             </tr>
         </table>
         ";
+        $current_date = time(); 
+
+        // Format the date using 'F j, Y'
+        $formatted_date = date('F j, Y', $current_date);
         $html .= "<hr style='border: 1px solid #eb603c; margin: 20px 0;'>";
         $html .= "<br><br><div class='p_title'>RESULT OF RECORDS CHECK</div>";
-        $html .= "<div class='p_title'>(COMMUNITY SERVICE)</div><br><br>";
+        $html .= "<div class='p_title'>(COMMUNITY SERVICE)</div>";
+        $html .= "<div class='p_title'>". $formatted_date ."</div><br><br>";
         $html .= "<p class='p_sentence'>This has reference to the request for records check on the client applying for community service</p>";
         $html .= "<p class='p_center' style='font-size: 10pt;'>$fullname</p>";
         if (!empty($data['community_masterlist'])) {
