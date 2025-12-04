@@ -215,26 +215,22 @@ class Report extends CI_Controller {
 
         $html .= "
             <div style='
-                position: fixed;
-                bottom: 40px;
+                margin-top:40px;
                 font-family: Arial, sans-serif;
                 font-size: 10pt;
                 width: 100%;
                 text-align: left;
-                padding-bottom: 30px;
             '>
                 This is an Online Records Check Result. Signature is not required.<br>
                 Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
             </div>
+
             <div style='
-                position: fixed;
-                bottom: 0;
-                left: 0;
+                margin-top:20px;
                 width: 100%;
                 text-align: center;
-                font-family: Arial, sans-serif;
             '>
-                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width: 100%; height: auto;'>
+                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width:100%; height:auto;'>
             </div>
         ";
         // Generate PDF
@@ -444,27 +440,24 @@ class Report extends CI_Controller {
         $footerData = base64_encode(file_get_contents($footer));
 
         $html .= "
+
             <div style='
-                position: fixed;
-                bottom: 40px;
+                margin-top:40px;
                 font-family: Arial, sans-serif;
                 font-size: 10pt;
                 width: 100%;
                 text-align: left;
-                padding-bottom: 30px;
             '>
                 This is an Online Records Check Result. Signature is not required.<br>
                 Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
             </div>
+
             <div style='
-                position: fixed;
-                bottom: 0;
-                left: 0;
+                margin-top:20px;
                 width: 100%;
                 text-align: center;
-                font-family: Arial, sans-serif;
             '>
-                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width: 100%; height: auto;'>
+                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width:100%; height:auto;'>
             </div>
         ";
         // Generate PDF
