@@ -61,9 +61,9 @@
 				        <div class="col-lg-6">
 				          <div class="form-group row">
 				            <div class="col-sm-1"></div>
-				            <label for="" class="col-sm-3">FIRST NAME</label>
+				            <label for="" class="col-sm-3">LAST NAME</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="2" class="form-control input-sm upperCase" id="first_name" placeholder="">
+				              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="last_name" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -83,9 +83,9 @@
 				        <div class="col-lg-6">
 				          <div class="form-group row">
 				            <div class="col-sm-1"></div>
-				            <label for="" class="col-sm-3">MIDDLE NAME</label>
+				            <label for="" class="col-sm-3">FIRST NAME</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="3" class="form-control input-sm upperCase" id="middle_name" placeholder="">
+				              <input type="text" tabindex="2" class="form-control input-sm upperCase" id="first_name" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -105,9 +105,9 @@
 				        <div class="col-lg-6">
 				          <div class="form-group row">
 				            <div class="col-sm-1"></div>
-				            <label for="" class="col-sm-3">LAST NAME</label>
+				            <label for="" class="col-sm-3">MIDDLE NAME</label>
 				            <div class="col-sm-8">
-				              <input type="text" tabindex="1" class="form-control input-sm upperCase" id="last_name" placeholder="">
+				              <input type="text" tabindex="3" class="form-control input-sm upperCase" id="middle_name" placeholder="">
 				            </div>
 				          </div>
 				        </div>
@@ -129,7 +129,8 @@
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">FIELD OFFICE</label>
 				            <div class="col-sm-8">
-			             		<select class="form-control select2 sel_field_office" id="field_office">
+			             		<select class="form-control select2 sel_field_office3" id="field_office">
+			             			<option value="ALL" selected>All</option>
 			              		</select>
 				            </div>
 				          </div>
@@ -281,7 +282,6 @@
 		})
    });
 $(document).ready(function () {
-
 	function formatFullName(report) {
 	    let fullName = `${report.first_name || ''} ${report.middle_name || ''} ${report.last_name || ''}`;
 	    
