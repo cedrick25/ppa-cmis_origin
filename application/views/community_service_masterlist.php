@@ -125,7 +125,7 @@
 				    <div class="col-lg-12">
 				      <div class="row">
 				        <div class="col-lg-6">
-				          <div class="form-group row">
+				          <div class="form-group row hidden">
 				            <div class="col-sm-1"></div>
 				            <label for="" class="col-sm-3">FIELD OFFICE</label>
 				            <div class="col-sm-8">
