@@ -180,9 +180,9 @@
 
 				<span class="pull-right">
 					  	<button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
-					  	<button id="downloadReportBtn" class="btn btn-success" style="display:none;">
+					  	<!-- <button id="downloadReportBtn" class="btn btn-success" style="display:none;">
 						  <i class="fa fa-download"></i> Download
-						</button>
+						</button> -->
 				</span>
 			</div>
 			<div class="panel-body">
@@ -217,7 +217,7 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -239,7 +239,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 	<div class="modal fade" id="modalEdit" role="dialog" aria-labelledby="modalSaveLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">

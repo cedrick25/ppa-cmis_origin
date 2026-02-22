@@ -183,9 +183,9 @@
 				</form>
 
 				<span class="pull-right">
-					  	<button id="downloadReportBtn" class="btn btn-success" style="display:;">
+					  	<!-- <button id="downloadReportBtn" class="btn btn-success" style="display:;">
 						  <i class="fa fa-download"></i> Download
-						</button>
+						</button> -->
 				</span>
 			</div>
 			<div class="panel-body">
@@ -214,7 +214,7 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -236,7 +236,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 </body>
 <?php $this->load->view('templates/footer.php'); ?> 
 <?php $this->load->view('templates/admin_footer.php'); ?> 
