@@ -3144,38 +3144,54 @@ $.wms.form53 = (function() {
                 $('.dataTables_length').addClass('bs-select');
             });
 
-            $(".btn-delete").unbind("click").on("click",function(){
-                var data_id     = $(this).data("id");
-                var docket_no   = $(this).data("docket");
-                var profid      = $.cookie("USER_ID");
-                console.log(data_id);
-                $(".sel-docket").html(docket_no)
-                $(".sel-id").html(data_id)
+            $(".btn-delete").unbind("click").on("click", function() {
+                var data_id = $(this).data("id");
+                var docket_no = $(this).data("docket");
+                var profid = $.cookie("USER_ID");
+                
+                $(".sel-docket").html(docket_no);
+                $(".sel-id").html(data_id);
                 $("#modal-delete").modal();
 
-                //Delete
-                $(".deleteProceedButton").unbind("click").on("click",function(){
-                    $(this).attr('disabled',true)
-                    $(".modal-loader").removeClass("hidden")
+                // Delete Logic
+                $(".deleteProceedButton").unbind("click").on("click", function() {
+                    var $btn = $(this);
+                    $btn.attr('disabled', true);
+                    $(".modal-loader").removeClass("hidden");
 
-                    $.wms.executeExternalDelete('http://192.168.1.33:8000/F53t10/'+data_id+'?&user='+profid).done(function (result) {
-                        $("#modal-delete").modal('toggle')
-                        $(".modal-loader").addClass("hidden")
-                        $(".deleteProceedButton").attr('disabled',false)
-                        if(result.status != undefined && result.status == "SUCCESS"){
-                            var form = "Delete: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". ";
+                    // Define both API calls
+                    var deleteRequest1 = $.wms.executeExternalDelete('http://192.168.1.33:8000/F53t10/' + data_id + '?&user=' + profid);
+                    var deleteRequest2 = $.wms.executeExternalDelete('/ppa-cmis-api_origin/wsv1/community_service/delete/' + data_id);
+
+                    // Execute both and wait for completion
+                    $.when(deleteRequest1, deleteRequest2).done(function(res1, res2) {
+                        // res1 and res2 are arrays: [data, textStatus, jqXHR]
+                        var result1 = res1[0]; 
+
+                        if (result1.status !== undefined && result1.status == "SUCCESS") {
+                            var form = "Delete: " + $.wms.urlParam('form') + ", Field: " + $.wms.urlParam('field') + ", Date:" + $.wms.urlParam('date') + ". ";
                             var payload_audit = {
-                                "created_by" : $.cookie("USER_ID"),
-                                "module" : "CASELOAD",
-                                "action" : form
-                                
-                            }
-                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                                "created_by": $.cookie("USER_ID"),
+                                "module": "CASELOAD",
+                                "action": form
+                            };
+
+                            $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert', JSON.stringify(payload_audit)).done(function() {
                                 location.reload();
                             });
+                        } else {
+                            // Handle case where API 1 might have failed
+                            alert("Deletion failed. Please check logs.");
+                            $btn.attr('disabled', false);
+                            $(".modal-loader").addClass("hidden");
                         }
+                    }).fail(function() {
+                        // Handle network or server errors for either API
+                        alert("An error occurred during the deletion process.");
+                        $btn.attr('disabled', false);
+                        $(".modal-loader").addClass("hidden");
                     });
-                })
+                });
             });
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -3211,63 +3227,88 @@ $.wms.form53 = (function() {
                         $("#edit_com_start").val(payload.communityServiceStart)
                         $("#edit_com_end").val(payload.communityServiceEnd)
                        
-                            //Update proceed
-                            $(".editProceedButton").unbind("click").on("click",function(){
-                                $(this).attr('disabled',true)
-                                $(".modal-loader").removeClass("hidden")
+                        //Update proceed
+                        $(".editProceedButton").unbind("click").on("click", function() {
+                            var $btn = $(this);
+                            $btn.attr('disabled', true);
+                            $(".modal-loader").removeClass("hidden");
 
-                                var d = new Date();
-                                var month = d.getMonth()+1;
-                                var day = d.getDate();
-                                var output = d.getFullYear() + '-' +
-                                    (month<10 ? '0' : '') + month + '-' +
-                                    (day<10 ? '0' : '') + day;
-                                var time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
-                                var date_time = output +" "+time;
-
-                                var payload_update = {
-                                    "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
-                                    "updatedBy"             : $.cookie("USER_ID"),
-                                    "source"                : "2",
-                                    "encodingMonth"         : $.wms.urlParam('date'),
-                                    "fieldOffice"           : $.wms.urlParam('field'),
-                                    "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                                    "criminalCaseNo"        : $("#edit_cc_no").val(),
-                                    "courtOfOrigin"         : $("#edit_court_origin").val(),
-                                    "assignedOfficer"       : $("#edit_assigned_officer").val(),
-                                    "dateReceivedByCppo"    : $("#edit_date_rcv").val(),
-                                    "communityServiceStart" : $("#edit_com_start").val(),
-                                    "communityServiceEnd"   : $("#edit_com_end").val(),
-                                    "clientProfileDto"      : {
-                                        "docketNumber"          : $("#edit_docket_no").val().toUpperCase(),
-                                        "updatedBy"             : $.cookie("USER_ID"),
-                                        "source"                : "2",
-                                        "encodingMonth"         : $.wms.urlParam('date'),
-                                        "firstName"             : $("#edit_fname").val(),
-                                        "middleName"            : $("#edit_mname").val(),
-                                        "lastName"              : $("#edit_lname").val(),
-                                        "suffix"                : $("#edit_sname").val()
-                                    },
-
+                            // Prepare main payload
+                            var payload_update = {
+                                "docketNumber": $("#edit_docket_no").val().toUpperCase(),
+                                "updatedBy": $.cookie("USER_ID"),
+                                "source": "2",
+                                "encodingMonth": $.wms.urlParam('date'),
+                                "fieldOffice": $.wms.urlParam('field'),
+                                "fieldOfficeId": $.wms.urlParam('officeId'),
+                                "criminalCaseNo": $("#edit_cc_no").val(),
+                                "courtOfOrigin": $("#edit_court_origin").val(),
+                                "assignedOfficer": $("#edit_assigned_officer").val(),
+                                "dateReceivedByCppo": $("#edit_date_rcv").val(),
+                                "communityServiceStart": $("#edit_com_start").val(),
+                                "communityServiceEnd": $("#edit_com_end").val(),
+                                "clientProfileDto": {
+                                    "docketNumber": $("#edit_docket_no").val().toUpperCase(),
+                                    "updatedBy": $.cookie("USER_ID"),
+                                    "source": "2",
+                                    "encodingMonth": $.wms.urlParam('date'),
+                                    "firstName": $("#edit_fname").val(),
+                                    "middleName": $("#edit_mname").val(),
+                                    "lastName": $("#edit_lname").val(),
+                                    "suffix": $("#edit_sname").val()
                                 }
-                                console.log(payload_update)
-                                $.wms.executeExternalPut('http://192.168.1.33:8000/F53t10/'+data_id,JSON.stringify(payload_update)).done(function (result) {
-                                    if(result.status != undefined && result.status == "SUCCESS"){
-                                        var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                            };
+
+                            // Step 1: Update Main API (External)
+                            $.wms.executeExternalPut('http://192.168.1.33:8000/F53t10/' + data_id, JSON.stringify(payload_update)).done(function(result) {
+                                
+                                if (result.status != undefined && result.status == "SUCCESS") {
+
+                                    // Step 2: Update Local API (Community Service)
+                                    // Gamit ang data_id (f53t10_id)
+                                    var payload_local = {
+                                        "first_name": $("#edit_fname").val(),
+                                        "last_name": $("#edit_lname").val(),
+                                        "middle_name": $("#edit_mname").val(),
+                                        "suffix": $("#edit_sname").val(),
+                                        "docket_number": $("#edit_docket_no").val().toUpperCase(),
+                                        "assigned_officer": $("#edit_assigned_officer").val(),
+                                        "community_service_start": $("#edit_com_start").val(),
+                                        "community_service_end": $("#edit_com_end").val(),
+                                        "court_of_origin": $("#edit_court_origin").val(),
+                                        "criminal_case_number": $("#edit_cc_no").val(),
+                                        "date_received_by_ppo": $("#edit_date_rcv").val(),
+                                        "updated_by": $.cookie("USER_ID")
+                                    };
+
+                                    // Dito ipapasa ang data_id sa URL ng update API mo
+                                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/community_service/update/' + data_id, JSON.stringify(payload_local)).done(function(local_res) {
+                                        
+                                        // Step 3: Audit and Finalize
+                                        var form = "Updated Caseload Form: " + $.wms.urlParam('form') + ", Field: " + $.wms.urlParam('field') + ", Date:" + $.wms.urlParam('date') + ". ";
                                         var payload_audit = {
-                                            "created_by" : $.cookie("USER_ID"),
-                                            "module" : "CASELOAD",
-                                            "action" : form
-                                            
-                                        }
-                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                                            "created_by": $.cookie("USER_ID"),
+                                            "module": "CASELOAD",
+                                            "action": form + JSON.stringify(result.response)
+                                        };
+
+                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert', JSON.stringify(payload_audit)).done(function() {
                                             location.reload();
                                         });
-                                    }else{
-                                        //Error Prompt
-                                    }
-                                });
-                            })
+                                    });
+
+                                } else {
+                                    // Error Handling
+                                    $btn.attr('disabled', false);
+                                    $(".modal-loader").addClass("hidden");
+                                    alert("Update failed: " + (result.message || "Unknown error"));
+                                }
+                            }).fail(function() {
+                                $btn.attr('disabled', false);
+                                $(".modal-loader").addClass("hidden");
+                                alert("Server communication error.");
+                            });
+                        });
                     }else{
                         alert("[Error] Please try again...")
                     }
@@ -3340,68 +3381,98 @@ $.wms.form53 = (function() {
             $(".btn-reset").trigger("click")
         });
 
-        //Add
-        $(".addProceedButton").unbind("click").on("click",function(){
-            $(this).attr('disabled',true)
-            $(".modal-loader").removeClass("hidden")
-            var payload = { 
-                "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                "createdBy"             : $.cookie("USER_ID"),
-                "status"                : true,
-                "source"                : "2",
-                "encodingMonth"         : $.wms.urlParam('date'),
-                "fieldOffice"           : $.wms.urlParam('field'),
-                "fieldOfficeId"         : $.wms.urlParam('officeId'),
-                "criminalCaseNo"        : $("#add_cc_no").val(),
-                "courtOfOrigin"         : $("#add_court_origin").val(),
-                "assignedOfficer"       : $("#add_assigned_officer").val(),
-                "dateReceivedByCppo"    : $("#add_date_rcv").val(),
-                "communityServiceStart" : $("#add_com_start").val(),
-                "communityServiceEnd"   : $("#add_com_end").val(),
-                "clientProfileDto"      : {
-                    "docketNumber"          : $("#add_docket_no").val().toUpperCase(),
-                    "createdBy"             : $.cookie("USER_ID"),
-                    "updatedBy"             : "",
-                    "status"                : true,
-                    "source"                : "2",
-                    "encodingMonth"         : $.wms.urlParam('date'),
-                    "firstName"             : $("#add_fname").val(),
-                    "middleName"            : $("#add_mname").val(),
-                    "lastName"              : $("#add_lname").val(),
-                    "suffix"                : $("#add_sname").val()
-                },
+        $(".addProceedButton").unbind("click").on("click", function() {
+            var $btn = $(this);
+            $btn.attr('disabled', true);
+            $(".modal-loader").removeClass("hidden");
 
-            }
-            console.log(payload)
-            $.wms.executeExternalPost('http://192.168.1.33:8000/F53t10/create',JSON.stringify(payload)).done(function (result) {
-  
-                if(result.status != undefined && result.status == "SUCCESS"){
+            var payload = {
+                "docketNumber": $("#add_docket_no").val().toUpperCase(),
+                "createdBy": $.cookie("USER_ID"),
+                "status": true,
+                "source": "2",
+                "encodingMonth": $.wms.urlParam('date'),
+                "fieldOffice": $.wms.urlParam('field'),
+                "fieldOfficeId": $.wms.urlParam('officeId'),
+                "criminalCaseNo": $("#add_cc_no").val(),
+                "courtOfOrigin": $("#add_court_origin").val(),
+                "assignedOfficer": $("#add_assigned_officer").val(),
+                "dateReceivedByCppo": $("#add_date_rcv").val(),
+                "communityServiceStart": $("#add_com_start").val(),
+                "communityServiceEnd": $("#add_com_end").val(),
+                "clientProfileDto": {
+                    "docketNumber": $("#add_docket_no").val().toUpperCase(),
+                    "createdBy": $.cookie("USER_ID"),
+                    "updatedBy": "",
+                    "status": true,
+                    "source": "2",
+                    "encodingMonth": $.wms.urlParam('date'),
+                    "firstName": $("#add_fname").val(),
+                    "middleName": $("#add_mname").val(),
+                    "lastName": $("#add_lname").val(),
+                    "suffix": $("#add_sname").val()
+                }
+            };
 
-                    $(".modal-loader").addClass("hidden")
-                    $(".addProceedButton").attr('disabled',false)
-                    $("#modal-add").modal('toggle')
-                    $(".btn-reset").trigger("click")
+            // Step 1: Create record in F53t10
+            $.wms.executeExternalPost('http://192.168.1.33:8000/F53t10/create', JSON.stringify(payload)).done(function(result) {
 
-                        var form = "Added Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
+                if (result.status != undefined && result.status == "SUCCESS") {
+                    
+                    // Step 2: Prepare payload for Community Service Store
+                    // Mapping your fields to the snake_case required by the second API
+                    var payload_cs = {
+                        "f53t10_id": result.response.id, // Assuming response returns the new ID
+                        "client_profile_id": result.response.clientProfileId, 
+                        "first_name": $("#add_fname").val(),
+                        "last_name": $("#add_lname").val(),
+                        "middle_name": $("#add_mname").val(),
+                        "suffix": $("#add_sname").val(),
+                        "docket_number": $("#add_docket_no").val().toUpperCase(),
+                        "created_by": $.cookie("USER_ID"),
+                        "y_m": $.wms.urlParam('date'),
+                        "source": "2",
+                        "status": 1,
+                        "assigned_officer": $("#add_assigned_officer").val(),
+                        "community_service_start": $("#add_com_start").val(),
+                        "community_service_end": $("#add_com_end").val(),
+                        "court_of_origin": $("#add_court_origin").val(),
+                        "criminal_case_number": $("#add_cc_no").val(),
+                        "date_received_by_ppo": $("#add_date_rcv").val(),
+                        "field_office": $.wms.urlParam('field'),
+                        "field_office_id": $.wms.urlParam('officeId')
+                    };
+
+                    $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/community_service/store', JSON.stringify(payload_cs)).done(function(cs_result) {
+                        
+                        // Step 3: Cleanup and Audit
+                        $(".modal-loader").addClass("hidden");
+                        $btn.attr('disabled', false);
+                        $("#modal-add").modal('toggle');
+                        $(".btn-reset").trigger("click");
+
+                        var form = "Added Caseload Form: " + $.wms.urlParam('form') + ", Field: " + $.wms.urlParam('field') + ", Date:" + $.wms.urlParam('date') + ". ";
                         var payload_audit = {
-                            "created_by" : $.cookie("USER_ID"),
-                            "module" : "CASELOAD",
-                            "action" : form
-                            
-                        }
-                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload_audit)).done(function (result) {
+                            "created_by": $.cookie("USER_ID"),
+                            "module": "CASELOAD",
+                            "action": form + JSON.stringify(result.response)
+                        };
+
+                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert', JSON.stringify(payload_audit)).done(function() {
                             location.reload();
                         });
-                }else{
-                    $(".err_msg").remove()
-                    $(".addProceedButton").attr('disabled',false)
-                    $(".modal-loader").addClass("hidden")
-                    $("#add_docket_no").attr('disabled',false)
-                    $("#add_docket_no").addClass("error_field");
-                    $("<p class='err_msg color-red font_12 i'>*"+result.message+"</p>").insertAfter(("#add_docket_no"))
+                    });
+
+                } else {
+                    // Error handling
+                    $(".err_msg").remove();
+                    $btn.attr('disabled', false);
+                    $(".modal-loader").addClass("hidden");
+                    $("#add_docket_no").attr('disabled', false).addClass("error_field");
+                    $("<p class='err_msg color-red font_12 i'>*" + result.message + "</p>").insertAfter(("#add_docket_no"));
                 }
             });
-        })
+        });
 
     };
 
