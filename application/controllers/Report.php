@@ -258,13 +258,13 @@ class Report extends CI_Controller {
             'end_date'        => $this->input->post('end_date'),   // expect YYYY-MM-DD
         ];
 
-        $fname  = $filters['FIRSTNAME'];
-        $mname  = $filters['MIDDLENAME'];
-        $lname  = $filters['LASTNAME'];
-        $full_name = $fname . ' ' . $mname . ' ' . $lname;
+        // Extract region and year for display
+        $fname  = $filters['first_name'];
+        $mname  = $filters['middle_name'];
+        $lname  = $filters['last_name'];
 
-        // Use mb_convert_case for proper multi-byte (UTF-8) support, handles ñ correctly
-        $fullname = mb_convert_case(mb_strtolower($full_name, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
+        $full_name = $fname . ' ' . $mname . ' ' . $lname;
+        $fullname = ucwords(strtolower($full_name));
         // Send request to API for community_masterlist
         $apiUrl_json = 'http://localhost/ppa-cmis-api_origin/wsv1/Expansion/community_json';
         $ch = curl_init($apiUrl_json);
