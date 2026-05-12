@@ -187,7 +187,7 @@ class Report extends CI_Controller {
             $html .= "<tr><td colspan='11'>No masterlist records found.</td></tr>";
         }
         $html .= "</tbody></table><br>";            
-        $html .= "<p class='p_sentence'>The list above does not include the data of the field offices that have not yet submitted their caseload information to the PPCMIS. Please refer to the PPCMOS - Probation Masterlost to verify which field offices have not yet completed the system submission.</p>";
+        $html .= "<p class='p_sentence'>The list above does not include the data of the field offices that have not yet submitted their caseload information to the PPCMIS. Please refer to the PPCMIS - Probation Masterlist to verify which field offices have not yet completed the system submission.</p>";
         
         $footer = FCPATH . 'images/footer.png';
 $footerData = base64_encode(file_get_contents($footer));
@@ -405,54 +405,45 @@ $html .= "
             $html .= "<tr><td colspan='8'>No masterlist records found.</td></tr>";
         }
         $html .= "</tbody></table><br>";            
-        $html .= "<p class='p_sentence'>The list above does not include the data of the field offices that have not filled out their caseload to the system, namely;</p>";
-        $html .= "<table border='1' cellpadding='5' cellspacing='0' style='width:100%; border-collapse: collapse;'>
-                    <thead>
-                        <tr>
-                            <th>Office</th>
-                            <th>Region</th>
-                            <th>Month-Year</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
-
-        if (empty($reportData)) {
-            $html .= "<tr><td colspan='3'>No records found.</td></tr>";
-        } else {
-            foreach ($reportData as $report) {
-                $html .= "<tr>
-                            <td>{$report['office']}</td>
-                            <td>{$report['region_name']}</td>
-                            <td>{$report['month_year']}</td>
-                          </tr>";
-            }
-        }
-
-        $html .= "</tbody></table>";
+                  
+        $html .= "<p class='p_sentence'>The list above does not include the data of the field offices that have not yet submitted their caseload information to the PPCMIS. Please refer to the PPCMIS - Community Service Masterlist to verify which field offices have not yet completed the system submission.</p>";
         $footer = FCPATH . 'images/footer.png';
         $footerData = base64_encode(file_get_contents($footer));
 
-        $html .= "
+$html .= "
+    <style>
+        @page {
+            margin-bottom: 150px; /* Adjust this so the content doesn't overlap the fixed footer */
+        }
+        .fixed-footer {
+            position: fixed;
+            bottom: -30px; /* Adjust based on your PDF engine's margin */
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+    </style>
 
-            <div style='
-                margin-top:40px;
-                font-family: Arial, sans-serif;
-                font-size: 10pt;
-                width: 100%;
-                text-align: left;
-            '>
-                This is an Online Records Check Result. Signature is not required.<br>
-                Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
-            </div>
+    <div class='fixed-footer'>
+        <div style='
+            margin-bottom:20px;
+            font-family: Arial, sans-serif;
+            font-size: 10pt;
+            width: 100%;
+            text-align: left;
+        '>
+            This is an Online Records Check Result. Signature is not required.<br>
+            Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
+        </div>
 
-            <div style='
-                margin-top:20px;
-                width: 100%;
-                text-align: center;
-            '>
-                <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width:100%; height:auto;'>
-            </div>
-        ";
+        <div style='
+            width: 100%;
+            text-align: center;
+        '>
+            <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width:100%; height:auto;'>
+        </div>
+    </div>
+";
         // Generate PDF
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
