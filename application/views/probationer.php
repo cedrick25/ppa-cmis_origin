@@ -139,13 +139,24 @@
 				      </div>
 				    </div>
 	  				
+					<div class="col-lg-12">
+				      	<div class="row">
+				     		<br>
+					        <div class="col-lg-12">
+					            <div class="alert alert-info" style="margin-bottom: 0; padding: 10px; font-size: 14px; line-height: 1.4;">
+					                <i class="fa fa-info-circle"></i> 
+					                Even when all data fields in the <b>SEARCH MENU</b> have been filled out, the desired result may not be generated because the entries are case-sensitive, space-sensitive, and punctuation-sensitive. The information entered in these fields must exactly match how the data was encoded in the system to produce the correct result. Therefore, it is recommended that end users enter only the client's <b>LAST NAME</b> and <b>FIRST NAME</b> to obtain the desired result.
+					            </div>
+					        </div>
+				        </div><br>
+				    </div>
 				</div>
 				<div class="panel-footer p1" style="display:none">
-					
 			     	<div class="row">
-			     		<div class="col-lg-9">
-		     			</div>
-		     			<div class="col-lg-3">
+			     		<!-- Message Column -->
+				        <div class="col-lg-10">
+				        </div>
+		     			<div class="col-lg-2">
 		     				<span class="pull-right">
 								<button type="button" class="btn btn btn-reset btn-danger">Reset</button>
 			    				<button  tabindex="4" type="button" class="btn btn btn-primary btn-search"><i class="fa fa-search"></i> Search</button>
