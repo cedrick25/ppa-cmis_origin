@@ -188,11 +188,31 @@
 					<input type="hidden" name="end_yy" id="report_end_yy">
 					<input type="hidden" name="end_mm" id="report_end_mm">
 				</form>
+				<form id="downloadReportForm_analyst" action="<?= base_url('download_report_admin') ?>" method="POST" style="display:none;">
+					<input type="hidden" name="region" id="report_region_analyst">
+					<input type="hidden" name="firstname" id="report_fname_analyst">
+					<input type="hidden" name="middlename" id="report_mname_analyst">
+					<input type="hidden" name="lastname" id="report_lname_analyst">
+					<input type="hidden" name="alias" id="report_alias_analyst">
+					<input type="hidden" name="year" id="report_year_analyst">
+					<input type="hidden" name="sdocketno" id="report_docket_analyst">
+					<input type="hidden" name="supervoffice" id="report_supervoffice_analyst">
+					<input type="hidden" name="remarks" id="report_remarks_analyst">
+					<input type="hidden" name="start_dd" id="report_start_dd_analyst">
+					<input type="hidden" name="start_yy" id="report_start_yy_analyst">
+					<input type="hidden" name="start_mm" id="report_start_mm_analyst">
+					<input type="hidden" name="end_dd" id="report_end_dd_analyst">
+					<input type="hidden" name="end_yy" id="report_end_yy_analyst">
+					<input type="hidden" name="end_mm" id="report_end_mm_analyst">
+				</form>
 
 				<span class="pull-right">
 					  	<button type="button" class="access_ml_write btn btn-success adminTools" style="display: none;" data-toggle="modal" data-target="#modalAdd" id="openModal"><i class="fa fa-plus-circle"></i> Add Record</button>
 					  	<button id="downloadReportBtn" class="btn btn-success" style="display:none;">
 						  <i class="fa fa-download"></i> Download
+						</button>
+						<button id="downloadReportBtn_analyst" class="btn btn-success anlystTools" style="display:none;">
+						  <i class="fa fa-download"></i> Download(Analyst)
 						</button>
 				</span>
 			</div>

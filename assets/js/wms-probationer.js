@@ -529,6 +529,26 @@ $.wms.probationer = (function() {
 					    
 					    $('#downloadReportForm').submit(); // Submit the form
 				  	});
+	            	$('#downloadReportBtn_analyst').on('click', function () {
+					    // Populate form fields
+					    $("#report_region_analyst").val($("#search_region").val());
+						$("#report_fname_analyst").val($("#search_fname").val());
+						$("#report_mname_analyst").val($("#search_mname").val());
+						$("#report_lname_analyst").val($("#search_lname").val());
+						$("#report_alias_analyst").val($("#search_alias").val());
+						$("#report_year_analyst").val($("#search_year").val());
+						$("#report_docket_analyst").val($("#search_docket").val());
+						$("#report_supervoffice_analyst").val($("#search_supervoffice").val());
+						$("#report_remarks_analyst").val($("#search_remarks").val());
+						$("#report_start_dd_analyst").val($("#search_start_dd").val());
+						$("#report_start_yy_analyst").val($("#search_start_yy").val());
+						$("#report_start_mm_analyst").val($("#search_start_mm").val());
+						$("#report_end_dd_analyst").val($("#search_end_dd").val());
+						$("#report_end_yy_analyst").val($("#search_end_yy").val());
+						$("#report_end_mm_analyst").val($("#search_end_mm").val());
+					    
+					    $('#downloadReportForm_analyst').submit(); // Submit the form
+				  	});
 
 	            	$(".dataTables_filter").addClass("hidden")
 	            	$(".form_loader").addClass("hidden")
@@ -801,6 +821,22 @@ $.wms.probationer = (function() {
 						$('#report_year').val($("#year").val());
 					    
 					    $('#downloadReportForm').submit(); // Submit the form
+				  	});
+	            	$('#downloadReportBtn_analyst').on('click', function () {
+					    // Populate form fields
+						$('#report_docket_number_analyst').val($("#docket_number").val());
+						$('#report_first_name_analyst').val($("#first_name").val());
+						$('#report_middle_name_analyst').val($("#middle_name").val());
+						$('#report_last_name_analyst').val($("#last_name").val());
+						$('#report_cc_number_analyst').val($("#cc_number").val());
+						$('#report_court_of_origin_analyst').val($("#court_of_origin").val());
+						$('#report_assigned_officer_analyst').val($("#assigned_officer").val());
+						$('#report_start_date_analyst').val($("#start_date").val());
+						$('#report_end_date_analyst').val($("#end_date").val());
+						$('#report_field_office_analyst').val($("#field_office").val());
+						$('#report_year_analyst').val($("#year").val());
+					    
+					    $('#downloadReportForm_analyst').submit(); // Submit the form
 				  	});
 
 	            	$(".dataTables_filter").addClass("hidden")

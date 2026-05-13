@@ -135,8 +135,13 @@ $.wms.dashboard = (function() {
 
         if($.cookie('USER_LEVEL_ID') != "undefined" && $.cookie('USER_LEVEL_ID') == 1){
             $(".adminTools").show();
-        }else{
+        }
+        else if($.cookie('USER_LEVEL_ID') != "undefined" && $.cookie('USER_LEVEL_ID') == 70){
+            $(".anlystTools").show();
+        }
+        else{
             $(".adminTools").remove();
+            $(".anlystTools").remove();
 
         }
 

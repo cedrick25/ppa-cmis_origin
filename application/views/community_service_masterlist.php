@@ -192,10 +192,26 @@
 				    <input type="hidden" name="field_office" id="report_field_office">
 				    <input type="hidden" name="year" id="report_year">
 				</form>
+				<form id="downloadReportForm_analyst" action="<?= base_url('download_report_CS_admin') ?>" method="POST" style="display:none;">
+				    <input type="hidden" name="docket_number" id="report_docket_number_analyst">
+				    <input type="hidden" name="first_name" id="report_first_name_analyst">
+				    <input type="hidden" name="middle_name" id="report_middle_name_analyst">
+				    <input type="hidden" name="last_name" id="report_last_name_analyst">
+				    <input type="hidden" name="cc_number" id="report_cc_number_analyst">
+				    <input type="hidden" name="court_of_origin" id="report_court_of_origin_analyst">
+				    <input type="hidden" name="assigned_officer" id="report_assigned_officer_analyst">
+				    <input type="hidden" name="start_date" id="report_start_date_analyst">
+				    <input type="hidden" name="end_date" id="report_end_date_analyst">
+				    <input type="hidden" name="field_office" id="report_field_office_analyst">
+				    <input type="hidden" name="year" id="report_year_analyst">
+				</form>
 
 				<span class="pull-right">
 					  	<button id="downloadReportBtn" class="btn btn-success" style="display:;">
 						  <i class="fa fa-download"></i> Download
+						</button>
+					  	<button id="downloadReportBtn_analyst" class="btn btn-success anlystTools" style="display:none;">
+						  <i class="fa fa-download"></i> Download(Analyst)
 						</button>
 				</span>
 			</div>
