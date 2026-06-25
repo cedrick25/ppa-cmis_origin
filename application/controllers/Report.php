@@ -195,34 +195,41 @@ class Report extends CI_Controller {
         $html .= "
             <style>
                 @page {
-                    margin-bottom: 150px; /* Adjust this so the content doesn't overlap the fixed footer */
+                    margin-bottom: 165px;
                 }
                 .fixed-footer {
                     position: fixed;
-                    bottom: -30px; /* Adjust based on your PDF engine's margin */
+                    bottom: -80px;
                     left: 0;
                     right: 0;
                     width: 100%;
                 }
+                .fixed-footer img {
+                    /* display: block; */
+                    width: 100%;
+                    height: auto;
+                }
             </style>
 
-            <div class='fixed-footer'>
-                <div style='
-                    margin-bottom:20px;
-                    font-family: Arial, sans-serif;
-                    font-size: 10pt;
-                    width: 100%;
-                    text-align: left;
-                '>
-                    This is an Online Records Check Result. Signature is not required.<br>
-                    Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
-                </div>
+            <div style='
+                margin-top:30px;
+                margin-bottom:20px;
+                font-family: Arial, sans-serif;
+                font-size: 10pt;
+                width: 100%;
+                text-align: left;
+                font-weight: bold;
+            '>
+                This is an Online Records Check Result. Signature is not required.<br>
+                Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
+            </div>
 
+            <div class='fixed-footer'>
                 <div style='
                     width: 100%;
                     text-align: center;
                 '>
-                    <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width:100%; height:auto;'>
+                    <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo'>
                 </div>
             </div>
         ";
@@ -369,20 +376,21 @@ class Report extends CI_Controller {
             $html .= "<br><p class='p_sentence'>The matrix below shows no similar name/s with the applicant’s name being requested for records check from 1978 to " . date('Y') . ".</p>";
         }
         $html .= "
-        <table border='1' cellpadding='5' cellspacing='0' style='width:100%; border-collapse: collapse;'>
+        <table border='1' cellpadding='3' cellspacing='0' style='width:100%; border-collapse: collapse; table-layout: fixed; word-wrap: break-word;'>
             <thead>
                 <tr>
-                    <th rowspan='2'>Docket Number</th>
-                    <th rowspan='2'>Client's Name</th>
-                    <th rowspan='2'>Criminal Case Number</th>
-                    <th rowspan='2'>Court of Origin</th>
-                    <th rowspan='2'>Assigned Officer</th>
-                    <th rowspan='2'>Date Order Received by the PPO</th>
-                    <th colspan='2'>Community Service Period</th>
+                    <th rowspan='2' width='10%'>Docket Number</th>
+                    <th rowspan='2' width='15%'>Client's Name</th>
+                    <th rowspan='2' width='12%'>Criminal Case Number</th>
+                    <th rowspan='2' width='13%'>Court of Origin</th>
+                    <th rowspan='2' width='12%'>Assigned Officer</th>
+                    <th rowspan='2' width='12%'>Field Office</th>
+                    <th rowspan='2' width='12%'>Date Order Received by the PPO</th>
+                    <th colspan='2' width='14%'>Community Service Period</th>
                 </tr>
                 <tr>
-                    <th>Start</th>
-                    <th>End</th>
+                    <th width='7%'>Start</th>
+                    <th width='7%'>End</th>
                 </tr>
             </thead>
             <tbody>
@@ -395,14 +403,15 @@ class Report extends CI_Controller {
                             <td>{$row['criminal_case_number']}</td>
                             <td>{$row['court_of_origin']}</td>
                             <td>{$row['assigned_officer']}</td>
-                            <td>" . date('Y-m-d', strtotime($row['date_received_by_ppo'])) . "</td>
-                            <td>" . date('Y-m-d', strtotime($row['community_service_start'])) . "</td>
-                            <td>" . date('Y-m-d', strtotime($row['community_service_end'])) . "</td>
+                            <td>" . (!empty($row['field_office']) ? $row['field_office'] : '') . "</td>
+                            <td>" . (!empty($row['date_received_by_ppo']) ? date('Y-m-d', strtotime($row['date_received_by_ppo'])) : '') . "</td>
+                            <td>" . (!empty($row['community_service_start']) ? date('Y-m-d', strtotime($row['community_service_start'])) : '') . "</td>
+                            <td>" . (!empty($row['community_service_end']) ? date('Y-m-d', strtotime($row['community_service_end'])) : '') . "</td>
 
                           </tr>";
             }
         } else {
-            $html .= "<tr><td colspan='8'>No masterlist records found.</td></tr>";
+            $html .= "<tr><td colspan='9'>No masterlist records found.</td></tr>";
         }
         $html .= "</tbody></table><br>";            
                   
@@ -413,34 +422,41 @@ class Report extends CI_Controller {
         $html .= "
             <style>
                 @page {
-                    margin-bottom: 150px; /* Adjust this so the content doesn't overlap the fixed footer */
+                    margin-bottom: 200px;
                 }
                 .fixed-footer {
                     position: fixed;
-                    bottom: -30px; /* Adjust based on your PDF engine's margin */
+                    bottom: -80px;
                     left: 0;
                     right: 0;
                     width: 100%;
                 }
+                .fixed-footer img {
+                    /* display: block; */
+                    width: 100%;
+                    height: auto;
+                }
             </style>
 
-            <div class='fixed-footer'>
-                <div style='
-                    margin-bottom:20px;
-                    font-family: Arial, sans-serif;
-                    font-size: 10pt;
-                    width: 100%;
-                    text-align: left;
-                '>
-                    This is an Online Records Check Result. Signature is not required.<br>
-                    Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
-                </div>
+            <div style='
+                margin-top:30px;
+                margin-bottom:10px;
+                font-family: Arial, sans-serif;
+                font-size: 10pt;
+                font-weight: bold;
+                width: 100%;
+                text-align: left;
+            '>
+                This is an Online Records Check Result. Signature is not required.<br>
+                Please coordinate with the Supervising Office in case there is a similar name by using the Encrypted Communication Platform System.
+            </div>
 
+            <div class='fixed-footer'>
                 <div style='
                     width: 100%;
                     text-align: center;
                 '>
-                    <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo' style='width:100%; height:auto;'>
+                    <img src='data:image/png;base64,{$footerData}' alt='ISO Footer Logo'>
                 </div>
             </div>
         ";
@@ -821,20 +837,21 @@ class Report extends CI_Controller {
             $html .= "<br><p class='p_sentence'>The matrix below shows no similar name/s with the applicant’s name being requested for records check from 1978 to " . date('Y') . ".</p>";
         }
         $html .= "
-        <table border='1' cellpadding='5' cellspacing='0' style='width:100%; border-collapse: collapse;'>
+        <table border='1' cellpadding='3' cellspacing='0' style='width:100%; border-collapse: collapse; table-layout: fixed; word-wrap: break-word;'>
             <thead>
                 <tr>
-                    <th rowspan='2'>Docket Number</th>
-                    <th rowspan='2'>Client's Name</th>
-                    <th rowspan='2'>Criminal Case Number</th>
-                    <th rowspan='2'>Court of Origin</th>
-                    <th rowspan='2'>Assigned Officer</th>
-                    <th rowspan='2'>Date Order Received by the PPO</th>
-                    <th colspan='2'>Community Service Period</th>
+                    <th rowspan='2' width='10%'>Docket Number</th>
+                    <th rowspan='2' width='15%'>Client's Name</th>
+                    <th rowspan='2' width='12%'>Criminal Case Number</th>
+                    <th rowspan='2' width='13%'>Court of Origin</th>
+                    <th rowspan='2' width='12%'>Assigned Officer</th>
+                    <th rowspan='2' width='12%'>Field Office</th>
+                    <th rowspan='2' width='12%'>Date Order Received by the PPO</th>
+                    <th colspan='2' width='14%'>Community Service Period</th>
                 </tr>
                 <tr>
-                    <th>Start</th>
-                    <th>End</th>
+                    <th width='7%'>Start</th>
+                    <th width='7%'>End</th>
                 </tr>
             </thead>
             <tbody>
@@ -847,14 +864,15 @@ class Report extends CI_Controller {
                             <td>{$row['criminal_case_number']}</td>
                             <td>{$row['court_of_origin']}</td>
                             <td>{$row['assigned_officer']}</td>
-                            <td>" . date('Y-m-d', strtotime($row['date_received_by_ppo'])) . "</td>
-                            <td>" . date('Y-m-d', strtotime($row['community_service_start'])) . "</td>
-                            <td>" . date('Y-m-d', strtotime($row['community_service_end'])) . "</td>
+                            <td>" . (!empty($row['field_office']) ? $row['field_office'] : '') . "</td>
+                            <td>" . (!empty($row['date_received_by_ppo']) ? date('Y-m-d', strtotime($row['date_received_by_ppo'])) : '') . "</td>
+                            <td>" . (!empty($row['community_service_start']) ? date('Y-m-d', strtotime($row['community_service_start'])) : '') . "</td>
+                            <td>" . (!empty($row['community_service_end']) ? date('Y-m-d', strtotime($row['community_service_end'])) : '') . "</td>
 
                           </tr>";
             }
         } else {
-            $html .= "<tr><td colspan='8'>No masterlist records found.</td></tr>";
+            $html .= "<tr><td colspan='9'>No masterlist records found.</td></tr>";
         }
         $html .= "</tbody></table><br>";            
         $html .= "<p class='p_sentence'>The list above does not include the data of the field offices that have not filled out their caseload to the system, namely;</p>";
