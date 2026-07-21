@@ -7,6 +7,16 @@ use Dompdf\Dompdf;
 
 class Report extends CI_Controller {
 
+    /**
+     * Same-host API base URL using the current request scheme (http/https).
+     */
+    private function api_base_url()
+    {
+        $scheme = is_https() ? 'https' : 'http';
+        $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+        return $scheme . '://' . $host . '/ppa-cmis-api_origin';
+    }
+
     public function download_report()
     {
         $dompdf = new Dompdf();
@@ -38,7 +48,7 @@ class Report extends CI_Controller {
         // Use mb_convert_case for proper multi-byte (UTF-8) support, handles ñ correctly
         $fullname = mb_convert_case(mb_strtolower($full_name, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
         // Send request to API for masterlist
-        $apiUrl_json = 'http://localhost/ppa-cmis-api_origin/wsv1/Cmis/masterlist_json';
+        $apiUrl_json = $this->api_base_url() . '/wsv1/Cmis/masterlist_json';
         $ch = curl_init($apiUrl_json);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
@@ -48,7 +58,7 @@ class Report extends CI_Controller {
         $data['masterlist'] = json_decode($response, true);
 
         // Get report data (non-filtered, just sorted)
-        $apiUrl = 'http://localhost/ppa-cmis-api_origin/wsv1/no_reports/get_reports/F5';
+        $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F5';
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $apiResponse = curl_exec($ch);
@@ -265,7 +275,7 @@ class Report extends CI_Controller {
         $full_name = $fname . ' ' . $mname . ' ' . $lname;
         $fullname = ucwords(strtolower($full_name));
         // Send request to API for community_masterlist
-        $apiUrl_json = 'http://localhost/ppa-cmis-api_origin/wsv1/Expansion/community_json';
+        $apiUrl_json = $this->api_base_url() . '/wsv1/Expansion/community_json';
         $ch = curl_init($apiUrl_json);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
@@ -275,7 +285,7 @@ class Report extends CI_Controller {
         $data['community_masterlist'] = json_decode($response, true);
 
         // Get report data (non-filtered, just sorted)
-        $apiUrl = 'http://localhost/ppa-cmis-api_origin/wsv1/no_reports/get_reports/F53';
+        $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $apiResponse = curl_exec($ch);
@@ -498,7 +508,7 @@ class Report extends CI_Controller {
         // Use mb_convert_case for proper multi-byte (UTF-8) support, handles ñ correctly
         $fullname = mb_convert_case(mb_strtolower($full_name, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
         // Send request to API for masterlist
-        $apiUrl_json = 'http://localhost/ppa-cmis-api_origin/wsv1/Cmis/masterlist_json';
+        $apiUrl_json = $this->api_base_url() . '/wsv1/Cmis/masterlist_json';
         $ch = curl_init($apiUrl_json);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
@@ -508,7 +518,7 @@ class Report extends CI_Controller {
         $data['masterlist'] = json_decode($response, true);
 
         // Get report data (non-filtered, just sorted)
-        $apiUrl = 'http://localhost/ppa-cmis-api_origin/wsv1/no_reports/get_reports/F5';
+        $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F5';
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $apiResponse = curl_exec($ch);
@@ -726,7 +736,7 @@ class Report extends CI_Controller {
         $full_name = $fname . ' ' . $mname . ' ' . $lname;
         $fullname = ucwords(strtolower($full_name));
         // Send request to API for community_masterlist
-        $apiUrl_json = 'http://localhost/ppa-cmis-api_origin/wsv1/Expansion/community_json';
+        $apiUrl_json = $this->api_base_url() . '/wsv1/Expansion/community_json';
         $ch = curl_init($apiUrl_json);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
@@ -736,7 +746,7 @@ class Report extends CI_Controller {
         $data['community_masterlist'] = json_decode($response, true);
 
         // Get report data (non-filtered, just sorted)
-        $apiUrl = 'http://localhost/ppa-cmis-api_origin/wsv1/no_reports/get_reports/F53';
+        $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $apiResponse = curl_exec($ch);

@@ -19,26 +19,33 @@ else if(isset($_SERVER['REMOTE_ADDR']))
 else
     $ipaddress = 'UNKNOWN';
 
-
-$allowed = array("192.168.1", "192.168.10", "192.168.20", "192.168.30", "192.168.40", "192.168.50", "192.168.60", "192.168.70", "192.168.80", "192.168.90", "192.168.100", "192.168.110", "172.168.0", "192.168.30","10.10.10","192.168.254","127.0.0");
-$uIP =explode(".",$ipaddress);
-array_pop($uIP);
-$uIP = implode(".",$uIP);
-#echo $uIP;
-if(!in_array($uIP, $allowed)){
-	die();
+/* X-Forwarded-For may be "client, proxy1, proxy2" — use the first IP only. */
+if (strpos($ipaddress, ',') !== FALSE) {
+	$ipaddress = trim(explode(',', $ipaddress)[0]);
 }
-#echo $_SERVER['SERVER_NAME'];
-/*if(in_array(,$allowed){
-	die();
-}*/
 
+$request_host = isset($_SERVER['HTTP_HOST']) ? strtolower(preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'])) : '';
+$public_hosts = array(
+	'eppcmis.probation.gov.ph',
+	'stg-eppcmis.probation.gov.ph',
+	'cmis.probation.gov.ph',
+	'localhost',
+);
 
+/* Skip LAN IP gate for known CMIS hosts / local HTTPS (IPv6 ::1 breaks the old check). */
+$skip_ip_gate = in_array($request_host, $public_hosts, TRUE)
+	|| $ipaddress === '::1'
+	|| $ipaddress === '127.0.0.1';
 
-    
-
-#$raddr = gethostbyaddr($_SERVER['HTTP_REFERER']);
-#echo $raddr;
+if (!$skip_ip_gate) {
+	$allowed = array("192.168.1", "192.168.10", "192.168.20", "192.168.30", "192.168.40", "192.168.50", "192.168.60", "192.168.70", "192.168.80", "192.168.90", "192.168.100", "192.168.110", "172.168.0", "192.168.30","10.10.10","192.168.254","127.0.0");
+	$uIP = explode(".", $ipaddress);
+	array_pop($uIP);
+	$uIP = implode(".", $uIP);
+	if (!in_array($uIP, $allowed)) {
+		die();
+	}
+}
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -62,7 +69,13 @@ if(!in_array($uIP, $allowed)){
 |
 */
 date_default_timezone_set('Asia/Manila');
-$config['base_url'] = " ";
+/* Build base_url from the requested host so HTTPS does not fall back to SERVER_ADDR. */
+$is_https_req = (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off')
+	|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower((string) $_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
+	|| (isset($_SERVER['SERVER_PORT']) && (string) $_SERVER['SERVER_PORT'] === '443');
+$base_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+$base_path = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+$config['base_url'] = ($is_https_req ? 'https' : 'http') . '://' . $base_host . $base_path;
 
 
 /*
@@ -443,8 +456,10 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+/* Secure cookies only when the request is HTTPS (safe for local HTTP too). */
+$config['cookie_secure']	= (isset($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off')
+	|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower((string) $_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https');
+$config['cookie_httponly'] 	= TRUE;
 
 /*
 |--------------------------------------------------------------------------
