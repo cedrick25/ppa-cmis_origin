@@ -9006,7 +9006,7 @@ $.wms.form5 = (function() {
                 }
                     console.log(payload)
 
-                $.wms.executeExternalPost('http://192.168.1.33:8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     // location.reload();
 
