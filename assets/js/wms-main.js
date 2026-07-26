@@ -7,8 +7,15 @@
 var __cmis_proto = window.location.protocol + "//";
 var PPIS_path_upload = __cmis_proto + "192.168.1.147:8080";
 var PPIS_path = __cmis_proto + "192.168.1.147:8000";
-/* Expansion API host follows whatever host/protocol CMIS is accessed from (prod/staging/local). */
-var Expansion_api = __cmis_proto + window.location.hostname + ":";
+/*
+ * Expansion API base URL (trailing slash included).
+ * - HTTP/dev:  http://<host>:8000/
+ * - HTTPS/prod: https://<host>/expansion/  (Nginx Proxy Manager path → http://app:8000)
+ * Call sites use: Expansion_api + 'form/islocked' (no ':8000' in the path).
+ */
+var Expansion_api = (window.location.protocol === 'https:')
+    ? (window.location.origin + '/expansion/')
+    : (__cmis_proto + window.location.hostname + ':8000/');
 
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};

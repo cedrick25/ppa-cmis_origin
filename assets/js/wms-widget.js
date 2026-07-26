@@ -1025,7 +1025,7 @@ $.wms.widget = (function() {
                     $("#widgets_date").val()
                 ],
             }
-            $.wms.executeExternalPost(Expansion_api+'8000/widgets',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'widgets',JSON.stringify(payload)).done(function (result) {
                 console.log(result);
                 $(".loading-data-widgetsF").fadeOut();
                console.log(result)
