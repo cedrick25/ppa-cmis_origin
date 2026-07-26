@@ -12,8 +12,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
-define('MIN_URL',"/ppa-cmis_origin/min?f=/ppa-cmis_origin/");
-// define('MIN_URL',"/ppa-cmis/min?f=/ppa-cmis/");
+/* Trailing slash after min/ is required: Apache DirectorySlash 301s /min -> /min/
+ * and behind the HTTPS proxy that redirect becomes http:// (mixed content). */
+define('MIN_URL',"/ppa-cmis_origin/min/?f=/ppa-cmis_origin/");
+// define('MIN_URL',"/ppa-cmis/min/?f=/ppa-cmis/");
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes
