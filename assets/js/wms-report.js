@@ -471,7 +471,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -582,7 +582,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -683,7 +683,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -779,7 +779,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -899,7 +899,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1009,7 +1009,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1112,7 +1112,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1208,7 +1208,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1319,7 +1319,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1420,7 +1420,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1515,7 +1515,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1632,7 +1632,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1740,7 +1740,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1839,7 +1839,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -1935,7 +1935,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F50Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F50Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -2040,7 +2040,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F51Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F51Caseload',JSON.stringify(payload)).done(function (result) {
                     // console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -2145,7 +2145,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F53Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F53Caseload',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -2274,7 +2274,7 @@ $.wms.report = (function() {
                 }
                 // console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'F53Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'8000/F53Caseload',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     $("#divLoading").addClass("hidden");
 
@@ -2380,7 +2380,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.ib1 + result3.ib2;
@@ -2505,7 +2505,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.iia + result3.iib;
@@ -2620,7 +2620,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.iiia + result3.iiib;
@@ -2728,7 +2728,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.iva + result3.ivb;
@@ -2860,7 +2860,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.va1 + result3.va2 + result3.va3;
@@ -2982,7 +2982,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.va1 + result3.va2 + result3.va3;
@@ -3097,7 +3097,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F44Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F44Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
                             var total1 = result3.via + result3.vib;
                             var total2 = total1 - result3.vid;
@@ -3204,7 +3204,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.ib1 + result3.ib2;
@@ -3327,7 +3327,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.iid1 + result3.iid2;
@@ -3440,7 +3440,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.iid1 + result3.iid2;
@@ -3547,7 +3547,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.ivd1 + result3.ivd2 + result3.ivd3;
@@ -3676,7 +3676,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.va1 + result3.va2 + result3.va3;
@@ -3796,7 +3796,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.vd1 + result3.vd2 + result3.vd3;
@@ -3907,7 +3907,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F45Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F45Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.vd1 + result3.vd2 + result3.vd3;
@@ -4015,7 +4015,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F50Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F50Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             var total1 = result3.vd1 + result3.vd2 + result3.vd3;
@@ -4132,7 +4132,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F51Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F51Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             // var total1 = result3.vd1 + result3.vd2 + result3.vd3;
@@ -4249,7 +4249,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F53Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F53Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             // var total1 = result3.vd1 + result3.vd2 + result3.vd3;
@@ -4390,7 +4390,7 @@ $.wms.report = (function() {
                             yearMonthList : quarter
                         }
                         console.log(payload3)
-                        $.wms.executeExternalPost(Expansion_api+'F53Caseload',JSON.stringify(payload3)).done(function (result3) {
+                        $.wms.executeExternalPost(Expansion_api+'8000/F53Caseload',JSON.stringify(payload3)).done(function (result3) {
                             // console.log(result3)
 
                             // var total1 = result3.vd1 + result3.vd2 + result3.vd3;
