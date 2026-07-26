@@ -29,16 +29,25 @@ $public_hosts = array(
 	'eppcmis.probation.gov.ph',
 	'stg-eppcmis.probation.gov.ph',
 	'cmis.probation.gov.ph',
+	'rpxy.probation.gov.ph',
 	'localhost',
 );
 
-/* Skip LAN IP gate for known CMIS hosts / local HTTPS (IPv6 ::1 breaks the old check). */
+/* Nginx Proxy Manager / reverse-proxy IP (TLS terminates here). */
+$proxy_ip = '192.168.1.240';
+$remote_addr = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+
+/* Skip LAN IP gate for known CMIS hosts / local HTTPS / traffic via reverse proxy.
+ * Behind NPM, REMOTE_ADDR is the proxy and X-Forwarded-For is often a public IP,
+ * which used to blank the page with die(). */
 $skip_ip_gate = in_array($request_host, $public_hosts, TRUE)
 	|| $ipaddress === '::1'
-	|| $ipaddress === '127.0.0.1';
+	|| $ipaddress === '127.0.0.1'
+	|| $remote_addr === $proxy_ip
+	|| $ipaddress === $proxy_ip;
 
 if (!$skip_ip_gate) {
-	$allowed = array("192.168.1", "192.168.10", "192.168.20", "192.168.30", "192.168.40", "192.168.50", "192.168.60", "192.168.70", "192.168.80", "192.168.90", "192.168.100", "192.168.110", "172.168.0", "192.168.30","10.10.10","192.168.254","127.0.0");
+	$allowed = array("192.168.1", "192.168.10", "192.168.20", "192.168.30", "192.168.40", "192.168.50", "192.168.60", "192.168.70", "192.168.80", "192.168.90", "192.168.100", "192.168.110", "172.168.0", "192.168.30","10.10.10","192.168.254","127.0.0","20.20.20");
 	$uIP = explode(".", $ipaddress);
 	array_pop($uIP);
 	$uIP = implode(".", $uIP);
@@ -575,4 +584,5 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-separated:	'10.0.1.200,192.168.5.0/24'
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
-$config['proxy_ips'] = '';
+/* Trust X-Forwarded-* from Nginx Proxy Manager when identifying client IP. */
+$config['proxy_ips'] = '192.168.1.240';
