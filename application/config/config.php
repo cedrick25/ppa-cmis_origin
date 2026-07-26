@@ -78,10 +78,30 @@ if (!$skip_ip_gate) {
 |
 */
 date_default_timezone_set('Asia/Manila');
-/* Build base_url from the requested host so HTTPS does not fall back to SERVER_ADDR. */
+/* Hosts that are always served via HTTPS at the reverse proxy (NPM). */
+$force_https_hosts = array(
+	'eppcmis.probation.gov.ph',
+	'stg-eppcmis.probation.gov.ph',
+	'cmis.probation.gov.ph',
+	'rpxy.probation.gov.ph',
+);
+
+/* Build base_url from the requested host so HTTPS does not fall back to SERVER_ADDR.
+ * Behind NPM, Apache still sees HTTP — trust X-Forwarded-* and known HTTPS hosts. */
 $is_https_req = (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off')
 	|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower((string) $_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https')
-	|| (isset($_SERVER['SERVER_PORT']) && (string) $_SERVER['SERVER_PORT'] === '443');
+	|| (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && strtolower((string) $_SERVER['HTTP_X_FORWARDED_SSL']) === 'on')
+	|| (isset($_SERVER['SERVER_PORT']) && (string) $_SERVER['SERVER_PORT'] === '443')
+	|| ($remote_addr === $proxy_ip && in_array($request_host, $force_https_hosts, TRUE))
+	|| in_array($request_host, $force_https_hosts, TRUE);
+
+/* Propagate HTTPS so CodeIgniter, cookies, and Minify do not emit http:// asset URLs. */
+if ($is_https_req) {
+	$_SERVER['HTTPS'] = 'on';
+	$_SERVER['SERVER_PORT'] = '443';
+	$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+}
+
 $base_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 $base_path = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 $config['base_url'] = ($is_https_req ? 'https' : 'http') . '://' . $base_host . $base_path;

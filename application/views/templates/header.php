@@ -5,9 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
 	<meta charset="utf-8">
 	<title>CMIS - Parole and Probation Administration</title>
-	<link rel="icon" href="<?php echo BASE_URL(); ?>assets/img/favicon-main-ppa.png">
+	<link rel="icon" href="/ppa-cmis_origin/assets/img/favicon-main-ppa.png">
 
-	<!-- BOOTSTRAP-->
+	<!-- BOOTSTRAP (root-relative so HTTPS pages never pull http:// assets) -->
 	<link rel="stylesheet" href="<?php echo MIN_URL; ?>assets/css/bootstrap/bootstrap.min.css"/>
 	<link rel="stylesheet" href="<?php echo MIN_URL; ?>assets/css/jquery.dataTables.min.css"/>
 	<link rel="stylesheet" href="<?php echo MIN_URL; ?>assets/fonts/font-awesome.min.css"/>
@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="<?php echo MIN_URL; ?>assets/css/jquery-ui.min.css"/>
 
 
-	<link rel="stylesheet" href="<?php  ?>assets/css/custom.css?version=<?php echo filemtime("assets/css/custom.css"); ?>"/>
+	<link rel="stylesheet" href="/ppa-cmis_origin/assets/css/custom.css?version=<?php echo filemtime("assets/css/custom.css"); ?>"/>
 	<link rel="stylesheet" href="<?php echo MIN_URL; ?>assets/css/select2.min.css"/>
 	<link rel="stylesheet" href="<?php echo MIN_URL; ?>assets/css/lobipanel.min.css"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
