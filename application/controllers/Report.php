@@ -17,6 +17,27 @@ class Report extends CI_Controller {
         return $scheme . '://' . $host . '/ppa-cmis-api_origin';
     }
 
+    /**
+     * Server-side cURL to local API (PDF download). Tolerate self-signed HTTPS.
+     */
+    private function api_curl($url, $postJson = null)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        if ($postJson !== null) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postJson);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        }
+        $response = curl_exec($ch);
+        curl_close($ch);
+        return $response;
+    }
+
     public function download_report()
     {
         $dompdf = new Dompdf();
@@ -276,28 +297,24 @@ class Report extends CI_Controller {
         $fullname = ucwords(strtolower($full_name));
         // Send request to API for community_masterlist
         $apiUrl_json = $this->api_base_url() . '/wsv1/Expansion/community_json';
-        $ch = curl_init($apiUrl_json);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $response = curl_exec($ch);
-        curl_close($ch);
+        $response = $this->api_curl($apiUrl_json, json_encode($filters));
         $decoded = json_decode($response, true);
         // Keep PDF workflow intact when API returns HTML/error instead of JSON
         $data['community_masterlist'] = is_array($decoded) ? $decoded : array();
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
-        $ch = curl_init($apiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $apiResponse = curl_exec($ch);
-        curl_close($ch);
+        $apiResponse = $this->api_curl($apiUrl);
         $reportData = json_decode($apiResponse, true);
 
         // Sort by id descending
-        usort($reportData, function($a, $b) {
-            return $b['id'] - $a['id'];
-        });
+        if (!is_array($reportData)) {
+            $reportData = array();
+        } else {
+            usort($reportData, function($a, $b) {
+                return $b['id'] - $a['id'];
+            });
+        }
 
         // Build HTML content
         $html = "
@@ -739,28 +756,24 @@ class Report extends CI_Controller {
         $fullname = ucwords(strtolower($full_name));
         // Send request to API for community_masterlist
         $apiUrl_json = $this->api_base_url() . '/wsv1/Expansion/community_json';
-        $ch = curl_init($apiUrl_json);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $response = curl_exec($ch);
-        curl_close($ch);
+        $response = $this->api_curl($apiUrl_json, json_encode($filters));
         $decoded = json_decode($response, true);
         // Keep PDF workflow intact when API returns HTML/error instead of JSON
         $data['community_masterlist'] = is_array($decoded) ? $decoded : array();
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
-        $ch = curl_init($apiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $apiResponse = curl_exec($ch);
-        curl_close($ch);
+        $apiResponse = $this->api_curl($apiUrl);
         $reportData = json_decode($apiResponse, true);
 
         // Sort by id descending
-        usort($reportData, function($a, $b) {
-            return $b['id'] - $a['id'];
-        });
+        if (!is_array($reportData)) {
+            $reportData = array();
+        } else {
+            usort($reportData, function($a, $b) {
+                return $b['id'] - $a['id'];
+            });
+        }
 
         // Build HTML content
         $html = "
