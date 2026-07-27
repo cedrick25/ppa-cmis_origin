@@ -230,7 +230,7 @@
 		                            "message_TO" : result.payload.USER_EMAIL,
 		                            // "message_TO" : "notification@probation.gov.ph",
 		                        }
-		                        $.wms.executeExternalPost2('https://eppcmis.probation.gov.ph/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+		                        $.wms.executeExternalPost2(window.location.protocol  + '//eppcmis.probation.gov.ph/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
 		                           
 		                        });
 		                        $("#divLogin").addClass("hidden");
@@ -253,7 +253,7 @@
 		                                "message_CONTENT" : "Hi " + result.payload.USER_FULLNAME + ", your OTP KEY is " + $("#otpkeygen").val() +".",
 		                                "message_TO" : result.payload.USER_EMAIL,
 		                            }
-		                            $.wms.executeExternalPost2('https://eppcmis.probation.gov.ph/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+		                            $.wms.executeExternalPost2(window.location.protocol  + '//eppcmis.probation.gov.ph/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
 		                            
 		                            });
 
