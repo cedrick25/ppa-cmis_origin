@@ -19,6 +19,7 @@ class Report extends CI_Controller {
 
     /**
      * Server-side cURL to local API (PDF download). Tolerate self-signed HTTPS.
+     * Broken/failed API calls must not poison the PDF binary with PHP warnings.
      */
     private function api_curl($url, $postJson = null)
     {
@@ -28,6 +29,7 @@ class Report extends CI_Controller {
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         if ($postJson !== null) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $postJson);
@@ -35,7 +37,41 @@ class Report extends CI_Controller {
         }
         $response = curl_exec($ch);
         curl_close($ch);
-        return $response;
+        return ($response === false) ? null : $response;
+    }
+
+    /**
+     * Decode API JSON into an array; never return null (avoids usort/TypeError → corrupt PDF).
+     */
+    private function api_json_array($response)
+    {
+        $decoded = json_decode($response, true);
+        return is_array($decoded) ? $decoded : array();
+    }
+
+    /**
+     * Sort report rows by id DESC when data is valid.
+     */
+    private function sort_reports_by_id_desc(array &$reportData)
+    {
+        if (empty($reportData)) {
+            return;
+        }
+        usort($reportData, function ($a, $b) {
+            $aid = isset($a['id']) ? (int) $a['id'] : 0;
+            $bid = isset($b['id']) ? (int) $b['id'] : 0;
+            return $bid - $aid;
+        });
+    }
+
+    /**
+     * Clear any prior output so Dompdf stream is a clean PDF (not HTML/warnings).
+     */
+    private function clear_output_buffers()
+    {
+        while (ob_get_level() > 0) {
+            @ob_end_clean();
+        }
     }
 
     public function download_report()
@@ -70,26 +106,14 @@ class Report extends CI_Controller {
         $fullname = mb_convert_case(mb_strtolower($full_name, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
         // Send request to API for masterlist
         $apiUrl_json = $this->api_base_url() . '/wsv1/Cmis/masterlist_json';
-        $ch = curl_init($apiUrl_json);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $data['masterlist'] = json_decode($response, true);
+        $response = $this->api_curl($apiUrl_json, json_encode($filters));
+        $data['masterlist'] = $this->api_json_array($response);
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F5';
-        $ch = curl_init($apiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $apiResponse = curl_exec($ch);
-        curl_close($ch);
-        $reportData = json_decode($apiResponse, true);
-
-        // Sort by id descending
-        usort($reportData, function($a, $b) {
-            return $b['id'] - $a['id'];
-        });
+        $apiResponse = $this->api_curl($apiUrl);
+        $reportData = $this->api_json_array($apiResponse);
+        $this->sort_reports_by_id_desc($reportData);
 
         // Build HTML content
         $html = "
@@ -268,6 +292,7 @@ class Report extends CI_Controller {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
+        $this->clear_output_buffers();
         $dompdf->stream("Download Result.pdf", ["Attachment" => true]);
     }
     public function download_report_CS()
@@ -298,23 +323,13 @@ class Report extends CI_Controller {
         // Send request to API for community_masterlist
         $apiUrl_json = $this->api_base_url() . '/wsv1/Expansion/community_json';
         $response = $this->api_curl($apiUrl_json, json_encode($filters));
-        $decoded = json_decode($response, true);
-        // Keep PDF workflow intact when API returns HTML/error instead of JSON
-        $data['community_masterlist'] = is_array($decoded) ? $decoded : array();
+        $data['community_masterlist'] = $this->api_json_array($response);
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
         $apiResponse = $this->api_curl($apiUrl);
-        $reportData = json_decode($apiResponse, true);
-
-        // Sort by id descending
-        if (!is_array($reportData)) {
-            $reportData = array();
-        } else {
-            usort($reportData, function($a, $b) {
-                return $b['id'] - $a['id'];
-            });
-        }
+        $reportData = $this->api_json_array($apiResponse);
+        $this->sort_reports_by_id_desc($reportData);
 
         // Build HTML content
         $html = "
@@ -493,7 +508,7 @@ class Report extends CI_Controller {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        ob_end_clean(); // <--- ADD THIS LINE
+        $this->clear_output_buffers();
         $dompdf->stream("Download Result.pdf", ["Attachment" => true]);
     }
     public function download_report_admin()
@@ -528,26 +543,14 @@ class Report extends CI_Controller {
         $fullname = mb_convert_case(mb_strtolower($full_name, 'UTF-8'), MB_CASE_TITLE, 'UTF-8');
         // Send request to API for masterlist
         $apiUrl_json = $this->api_base_url() . '/wsv1/Cmis/masterlist_json';
-        $ch = curl_init($apiUrl_json);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($filters));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $data['masterlist'] = json_decode($response, true);
+        $response = $this->api_curl($apiUrl_json, json_encode($filters));
+        $data['masterlist'] = $this->api_json_array($response);
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F5';
-        $ch = curl_init($apiUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $apiResponse = curl_exec($ch);
-        curl_close($ch);
-        $reportData = json_decode($apiResponse, true);
-
-        // Sort by id descending
-        usort($reportData, function($a, $b) {
-            return $b['id'] - $a['id'];
-        });
+        $apiResponse = $this->api_curl($apiUrl);
+        $reportData = $this->api_json_array($apiResponse);
+        $this->sort_reports_by_id_desc($reportData);
 
         // Build HTML content
         $html = "
@@ -727,6 +730,7 @@ class Report extends CI_Controller {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
+        $this->clear_output_buffers();
         $dompdf->stream("Download Result.pdf", ["Attachment" => true]);
     }
     public function download_report_CS_admin()
@@ -757,23 +761,13 @@ class Report extends CI_Controller {
         // Send request to API for community_masterlist
         $apiUrl_json = $this->api_base_url() . '/wsv1/Expansion/community_json';
         $response = $this->api_curl($apiUrl_json, json_encode($filters));
-        $decoded = json_decode($response, true);
-        // Keep PDF workflow intact when API returns HTML/error instead of JSON
-        $data['community_masterlist'] = is_array($decoded) ? $decoded : array();
+        $data['community_masterlist'] = $this->api_json_array($response);
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
         $apiResponse = $this->api_curl($apiUrl);
-        $reportData = json_decode($apiResponse, true);
-
-        // Sort by id descending
-        if (!is_array($reportData)) {
-            $reportData = array();
-        } else {
-            usort($reportData, function($a, $b) {
-                return $b['id'] - $a['id'];
-            });
-        }
+        $reportData = $this->api_json_array($apiResponse);
+        $this->sort_reports_by_id_desc($reportData);
 
         // Build HTML content
         $html = "
@@ -954,7 +948,7 @@ class Report extends CI_Controller {
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        ob_end_clean(); // <--- ADD THIS LINE
+        $this->clear_output_buffers();
         $dompdf->stream("Download Result.pdf", ["Attachment" => true]);
     }
 }
