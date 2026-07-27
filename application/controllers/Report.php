@@ -282,7 +282,9 @@ class Report extends CI_Controller {
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         $response = curl_exec($ch);
         curl_close($ch);
-        $data['community_masterlist'] = json_decode($response, true);
+        $decoded = json_decode($response, true);
+        // Keep PDF workflow intact when API returns HTML/error instead of JSON
+        $data['community_masterlist'] = is_array($decoded) ? $decoded : array();
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
@@ -743,7 +745,9 @@ class Report extends CI_Controller {
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         $response = curl_exec($ch);
         curl_close($ch);
-        $data['community_masterlist'] = json_decode($response, true);
+        $decoded = json_decode($response, true);
+        // Keep PDF workflow intact when API returns HTML/error instead of JSON
+        $data['community_masterlist'] = is_array($decoded) ? $decoded : array();
 
         // Get report data (non-filtered, just sorted)
         $apiUrl = $this->api_base_url() . '/wsv1/no_reports/get_reports/F53';
