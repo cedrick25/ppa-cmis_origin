@@ -11,8 +11,11 @@ var __cmis_proto = window.location.protocol + "//";
  */
 var PPIS_path_upload = __cmis_proto + "ppis.probation.gov.ph/8080";
 var PPIS_path = __cmis_proto + "ppis.probation.gov.ph/8000";
-/* Expansion API: http(s)://<host>:8000/... (expose :8000 via Proxy Manager / TLS). */
-var Expansion_api = __cmis_proto + window.location.hostname + ":";
+/* Expansion API via path proxy on same host (NPM/openresty):
+ * /8000/... → Expansion service (avoids broken host:8000 TLS).
+ * Call sites append "8000/..." so final URL is https://<host>/8000/...
+ */
+var Expansion_api = __cmis_proto + window.location.hostname + "/";
 
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};
