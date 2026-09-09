@@ -1873,6 +1873,7 @@ $.wms.form5 = (function() {
                     "offense"               : $("#add_rcv_offense").val(),
                     "sentence"              : $("#add_rcv_sentence").val(),
                     "courtOrderDate"        : $("#add_rcv_date_of_court_order").val(),
+                    "createdBy"             : $.cookie("USER_ID"),
                     "type"                  : "PIS_INV",
                 }
             $.ajax({
@@ -1970,6 +1971,7 @@ $.wms.form5 = (function() {
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                     "manualDocket"          : false,
                     "ppoRecommendation"     : $("#add_acted_recommendation").val(),
+                    "createdBy"             : $.cookie("USER_ID"),
                     "type"                  : "PIS_INV",
                 }
             $.ajax({
@@ -2072,6 +2074,7 @@ $.wms.form5 = (function() {
                     // "type"                  : $("#add_notacted_decision").val(),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                     "manualDocket"          : false,
+                    "createdBy"             : $.cookie("USER_ID"),
                     "type"                  : "PIS_INV",
                 }
             $.ajax({
@@ -3222,6 +3225,7 @@ $.wms.form5 = (function() {
                 "lastName"              : $("#add_lname").val(),
                 "suffixName"            : $("#add_sname").val(),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_INV",
             }
             $.ajax({
@@ -4495,6 +4499,7 @@ $.wms.form5 = (function() {
                 "lastName"              : null,
                 "suffixName"            : null,
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_CSINV",
             }
             $.ajax({
@@ -4746,6 +4751,7 @@ $.wms.form5 = (function() {
                 "lastName"              : null,
                 "suffixName"            : null,
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_CSINV",
             }
             $.ajax({
@@ -5666,6 +5672,7 @@ $.wms.form5 = (function() {
                 "caseClassification"    : $("#add_case_classification").val(),
                 "probationStartDate"    : $("#add_start").val(),
                 "probationEndDate"      : $("#add_end").val(),
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_SUP",
             }
             $.ajax({
@@ -6368,6 +6375,7 @@ $.wms.form5 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_SUP",
             }
             $.ajax({
@@ -7298,6 +7306,7 @@ $.wms.form5 = (function() {
                 "supervisingOfficer"    : $("#add_supervising").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_SUP",
             }
             $.ajax({
@@ -8579,6 +8588,7 @@ $.wms.form5 = (function() {
                 "supervisionStartDate"  : $("#add_rcv_period").val(),
                 "caseClassification"    : $("#add_rcv_classification").val(),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_CSUP",
             }
             $.ajax({
@@ -8837,6 +8847,7 @@ $.wms.form5 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_CSUP",
             }
             $.ajax({
@@ -9006,7 +9017,7 @@ $.wms.form5 = (function() {
                 }
                     console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     // location.reload();
 

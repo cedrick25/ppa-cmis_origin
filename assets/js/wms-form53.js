@@ -127,7 +127,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t1"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost(Expansion_api+'8000/F53t1/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53t1/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -159,9 +159,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -211,7 +211,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t1/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t1/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -241,7 +241,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t1/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t1/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -296,7 +296,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -414,7 +414,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t1/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t1/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -465,9 +465,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -513,7 +513,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t2/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t2/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -543,7 +543,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t2/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t2/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -598,7 +598,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -716,7 +716,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t2/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t2/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -778,7 +778,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t3"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost(Expansion_api+'8000/F53t3/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53t3/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -810,9 +810,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t3?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t3?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t3?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -858,7 +858,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t3/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t3/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -888,7 +888,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t3/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t3/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -943,7 +943,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t3/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -1061,7 +1061,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t3/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t3/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1112,9 +1112,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t4?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t4?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t4?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -1160,7 +1160,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t4/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t4/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1190,7 +1190,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t4/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t4/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1245,7 +1245,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t4/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -1363,7 +1363,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t4/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t4/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1425,7 +1425,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t5"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost(Expansion_api+'8000/F53t5/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53t5/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -1457,9 +1457,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t5?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t5?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t5?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -1505,7 +1505,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t5/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t5/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1535,7 +1535,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t5/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t5/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1590,7 +1590,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t5/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -1708,7 +1708,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t5/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t5/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1759,9 +1759,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t6?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t6?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -1814,7 +1814,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t6/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t6/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -1844,7 +1844,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t6/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t6/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -1913,7 +1913,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t6/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2047,7 +2047,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t6/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t6/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2109,7 +2109,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t7"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost(Expansion_api+'8000/F53t7/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53t7/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -2141,9 +2141,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t7?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t7?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t7?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -2189,7 +2189,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t7/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t7/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2219,7 +2219,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t7/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t7/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2274,7 +2274,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t7/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2392,7 +2392,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t7/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t7/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2443,12 +2443,12 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t8?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t8?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t8?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
             
             //Add
-            $.wms.executeExternalGet(Expansion_api+'8000/F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+            $.wms.executeExternalGet(Expansion_api+'F53t8/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
                 console.log(result.response)
 
                 result.response.forEach(function(docket){
@@ -2521,7 +2521,7 @@ $.wms.form53 = (function() {
 
                     }
                     console.log(payload)
-                    $.wms.executeExternalPost(Expansion_api+'8000/F53t8/create',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost(Expansion_api+'F53t8/create',JSON.stringify(payload)).done(function (result) {
           
                         if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -2595,7 +2595,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t8/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t8/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2625,7 +2625,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t8/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t8/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2678,7 +2678,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t8/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -2773,7 +2773,7 @@ $.wms.form53 = (function() {
                       "formTableName": "F53t9"
                 }
                 console.log(payload);
-                $.wms.executeExternalPost(Expansion_api+'8000/F53t9/carryover',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53t9/carryover',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
                         $(".modal-loader").addClass("hidden")
@@ -2805,9 +2805,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t9?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t9?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t9?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -2855,7 +2855,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t9/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t9/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -2885,7 +2885,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t9/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t9/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -2944,7 +2944,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t9/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -3064,7 +3064,7 @@ $.wms.form53 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t9/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t9/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3115,9 +3115,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t10?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t10?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t10?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -3169,7 +3169,7 @@ $.wms.form53 = (function() {
                     $(".modal-loader").removeClass("hidden");
 
                     // Define both API calls
-                    var deleteRequest1 = $.wms.executeExternalDelete(Expansion_api+'8000/F53t10/' + data_id + '?&user=' + profid);
+                    var deleteRequest1 = $.wms.executeExternalDelete(Expansion_api+'F53t10/' + data_id + '?&user=' + profid);
                     var deleteRequest2 = $.wms.executeExternalDelete('/ppa-cmis-api_origin/wsv1/community_service/delete/' + data_id);
 
                     // Execute both and wait for completion
@@ -3213,7 +3213,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t10/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t10/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3269,7 +3269,7 @@ $.wms.form53 = (function() {
                             };
 
                             // Step 1: Update Main API (External)
-                            $.wms.executeExternalPut(Expansion_api+'8000/F53t10/' + data_id, JSON.stringify(payload_update)).done(function(result) {
+                            $.wms.executeExternalPut(Expansion_api+'F53t10/' + data_id, JSON.stringify(payload_update)).done(function(result) {
                                 
                                 if (result.status != undefined && result.status == "SUCCESS") {
 
@@ -3424,7 +3424,7 @@ $.wms.form53 = (function() {
             };
 
             // Step 1: Create record in F53t10
-            $.wms.executeExternalPost(Expansion_api+'8000/F53t10/create', JSON.stringify(payload)).done(function(result) {
+            $.wms.executeExternalPost(Expansion_api+'F53t10/create', JSON.stringify(payload)).done(function(result) {
 
                 if (result.status != undefined && result.status == "SUCCESS") {
                     
@@ -3522,7 +3522,7 @@ $.wms.form53 = (function() {
                   "createdBy"       : $.cookie("USER_ID"),
                 }
 
-                $.wms.executeExternalPost(Expansion_api+'8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     // location.reload();
 
@@ -3544,9 +3544,9 @@ $.wms.form53 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F53t11?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t11?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F53t11?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -3591,7 +3591,7 @@ $.wms.form53 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F53t11/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F53t11/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -3621,7 +3621,7 @@ $.wms.form53 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F53t11/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F53t11/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -3674,7 +3674,7 @@ $.wms.form53 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F53t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F53t11/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -3739,7 +3739,7 @@ $.wms.form53 = (function() {
         });
 
         //Add
-        $.wms.executeExternalGet(Expansion_api+'8000/F53t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
+        $.wms.executeExternalGet(Expansion_api+'F53t11/lookup?yearMonth='+yearMonth+'&officeId='+officeId+'').done(function (result) {
             console.log(result.response)
 
             result.response.forEach(function(docket){
@@ -3811,7 +3811,7 @@ $.wms.form53 = (function() {
 
                 }
                 console.log(payload)
-                $.wms.executeExternalPost(Expansion_api+'8000/F53t11/create',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53t11/create',JSON.stringify(payload)).done(function (result) {
       
                     if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -3864,7 +3864,7 @@ $.wms.form53 = (function() {
                 formdata.append("files", fileToUpload, fileToUpload.name);
 
                 $.wms.executeFile(
-                    Expansion_api+'8000/cert/upload?officeId=' + officeId +
+                    Expansion_api+'cert/upload?officeId=' + officeId +
                     '&yearMonth=' + date +
                     '&uploaderId=' + $.cookie("USER_ID") +
                     '&formTable=f53',
@@ -3886,7 +3886,7 @@ $.wms.form53 = (function() {
                 fieldOfficeId : officeId,
                 formTable : "f53"
             }
-            $.wms.executeExternalPost(Expansion_api+'8000/cert/list',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'cert/list',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
 
                 if (result.response.length != 0) {
@@ -3900,7 +3900,7 @@ $.wms.form53 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+Expansion_api+'8000/cert/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+Expansion_api+'cert/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {
@@ -3919,7 +3919,7 @@ $.wms.form53 = (function() {
                 //     // window.location.href="view_cert?certId="+data_id
                 //     // var certId =  $.wms.urlParam('certId')
 
-                //     // $.wms.executeExternalGet(Expansion_api+'8000/cert/view/'+data_id).done(function (result2) {
+                //     // $.wms.executeExternalGet(Expansion_api+'cert/view/'+data_id).done(function (result2) {
                 //     //     console.log(result2);
 
                 //     //     window.location='<iframe src="'+result2+'" height="100%" width="100%" scrolling="auto"></iframe>'
@@ -3947,7 +3947,7 @@ $.wms.form53 = (function() {
                     officeIdList  : officeId,
                     yearMonthList : [date]
                 }
-                $.wms.executeExternalPost(Expansion_api+'8000/F53Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F53Caseload',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     $('.ia').text(result.ia);
                     $('.ib').text(result.ib);
@@ -3997,7 +3997,7 @@ $.wms.form53 = (function() {
                         yearMonthList : [date]
                     }
                     
-                    $.wms.executeExternalPost(Expansion_api+'8000/F53Caseload',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost(Expansion_api+'F53Caseload',JSON.stringify(payload)).done(function (result) {
                         console.log(result)
                         $('.ia').text(result.ia);
                         $('.ib').text(result.ib);
@@ -4044,7 +4044,7 @@ $.wms.form53 = (function() {
             });
             __cert_list_upload();
             
-            $.wms.executeExternalGet(Expansion_api+'8000/F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+            $.wms.executeExternalGet(Expansion_api+'F53Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
                 console.log(result)
                 $('.ia').text(result.ia);
                 $('.ib').text(result.ib);

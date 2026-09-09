@@ -140,9 +140,9 @@ $.wms.form50 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -267,7 +267,7 @@ $.wms.form50 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F50t1/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F50t1/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -297,7 +297,7 @@ $.wms.form50 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F50t1/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F50t1/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -352,7 +352,7 @@ $.wms.form50 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F50t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F50t1/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -447,7 +447,7 @@ $.wms.form50 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F50t1/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F50t1/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -485,9 +485,9 @@ $.wms.form50 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                var api = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+''
+                var api = Expansion_api+'F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+''
             }else {
-                var api = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+''
+                var api = Expansion_api+'F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'APPLICANTS_GIVEN'+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -523,9 +523,9 @@ $.wms.form50 = (function() {
 
             var api1;
             if (officeId === "ALL") {
-                var api1 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+''
+                var api1 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+''
             }else {
-                var api1 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+''
+                var api1 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VERIFIED_APPLICATION'+''
             }
 
             $.wms.executeExternalGet(api1).done(function (result) {
@@ -561,9 +561,9 @@ $.wms.form50 = (function() {
 
             var api2;
             if (officeId === "ALL") {
-                var api2 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+''
+                var api2 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+''
             }else {
-                var api2 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+''
+                var api2 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'TRANSFERRED_REFERRED'+''
             }
             $.wms.executeExternalGet(api2).done(function (result) {
                 console.log(result.content)
@@ -598,9 +598,9 @@ $.wms.form50 = (function() {
 
             var api3;
             if (officeId === "ALL") {
-                var api3 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+''
+                var api3 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+''
             }else {
-                var api3 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+''
+                var api3 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'REFERRED_FOR_DDEXAM'+''
             }
             $.wms.executeExternalGet(api3).done(function (result) {
                 console.log(result.content)
@@ -635,9 +635,9 @@ $.wms.form50 = (function() {
 
             var api4;
             if (officeId === "ALL") {
-                var api4 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+''
+                var api4 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+''
             }else {
-                var api4 = Expansion_api+'8000/F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+''
+                var api4 = Expansion_api+'F50t1?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'DDE_REPORTS_RECEIVED'+''
             }
             $.wms.executeExternalGet(api4).done(function (result) {
                 console.log(result.content)
@@ -802,9 +802,9 @@ $.wms.form50 = (function() {
 
         var api;
         if (officeId === "ALL") {
-            var api = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+''
         }else {
-            var api = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
+            var api = Expansion_api+'F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+''
         }
         $.wms.executeExternalGet(api).done(function (result) {
             console.log(result.content)
@@ -894,7 +894,7 @@ $.wms.form50 = (function() {
                     $(this).attr('disabled',true)
                     $(".modal-loader").removeClass("hidden")
 
-                    $.wms.executeExternalDelete(Expansion_api+'8000/F50t2/'+data_id+'?&user='+profid).done(function (result) {
+                    $.wms.executeExternalDelete(Expansion_api+'F50t2/'+data_id+'?&user='+profid).done(function (result) {
                         $("#modal-delete").modal('toggle')
                         $(".modal-loader").addClass("hidden")
                         $(".deleteProceedButton").attr('disabled',false)
@@ -924,7 +924,7 @@ $.wms.form50 = (function() {
                 $("#modal-edit").modal();
                 $(".modal-loader2").removeClass("hidden")
                 $(".modal-form").addClass("hidden")
-                $.wms.executeExternalGet(Expansion_api+'8000/F50t2/'+data_id).done(function (result2) {
+                $.wms.executeExternalGet(Expansion_api+'F50t2/'+data_id).done(function (result2) {
                     console.log(result2);
                     $(".modal-form input").attr("disabled",false);
                     $(".modal-form select").attr("disabled",false);
@@ -987,7 +987,7 @@ $.wms.form50 = (function() {
 
                                 }
                                 console.log(payload_update)
-                                $.wms.executeExternalPut(Expansion_api+'8000/F50t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
+                                $.wms.executeExternalPut(Expansion_api+'F50t2/'+data_id,JSON.stringify(payload_update)).done(function (result) {
                                     if(result.status != undefined && result.status == "SUCCESS"){
                                         var form = "Updated Caseload Form: "+$.wms.urlParam('form')+", Field: "+ $.wms.urlParam('field')+", Date:"+ $.wms.urlParam('date') + ". " + JSON.stringify(result.response);
                                         var payload_audit = {
@@ -1087,7 +1087,7 @@ $.wms.form50 = (function() {
 
             }
             console.log(payload)
-            $.wms.executeExternalPost(Expansion_api+'8000/F50t2/create',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'F50t2/create',JSON.stringify(payload)).done(function (result) {
   
                 if(result.status != undefined && result.status == "SUCCESS"){
 
@@ -1126,9 +1126,9 @@ $.wms.form50 = (function() {
 
             var api;
             if (officeId === "ALL") {
-                api = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+                api = Expansion_api+'F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
             }else {
-                api = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+                api = Expansion_api+'F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
             }
             $.wms.executeExternalGet(api).done(function (result) {
                 console.log(result.content)
@@ -1164,9 +1164,9 @@ $.wms.form50 = (function() {
 
             var api1;
             if (officeId === "ALL") {
-                api1 = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+                api1 = Expansion_api+'F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
             }else {
-                api1 = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'HC'+''
+                api1 = Expansion_api+'F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'HC'+''
             }
             $.wms.executeExternalGet(api1).done(function (result) {
                 console.log(result.content)
@@ -1202,9 +1202,9 @@ $.wms.form50 = (function() {
 
             var api2;
             if (officeId === "ALL") {
-                api2 = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
+                api2 = Expansion_api+'F50t2?yearMonth='+yearMonth+'&page='+page+'&size='+size+'&actionType='+'VCFC'+''
             }else {
-                api2 = Expansion_api+'8000/F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'PAUBC'+''
+                api2 = Expansion_api+'F50t2?yearMonth='+yearMonth+'&officeId='+officeId+'&page='+page+'&size='+size+'&actionType='+'PAUBC'+''
             }
             $.wms.executeExternalGet(api2).done(function (result) {
                 console.log(result.content)
@@ -1303,7 +1303,7 @@ $.wms.form50 = (function() {
                   "createdBy"       : $.cookie("USER_ID"),
                 }
 
-                $.wms.executeExternalPost(Expansion_api+'8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     // location.reload();
 
@@ -1344,7 +1344,7 @@ $.wms.form50 = (function() {
                 formdata.append("files", fileToUpload, fileToUpload.name);
 
                 $.wms.executeFile(
-                    Expansion_api+'8000/cert/upload?officeId=' + officeId +
+                    Expansion_api+'cert/upload?officeId=' + officeId +
                     '&yearMonth=' + date +
                     '&uploaderId=' + $.cookie("USER_ID") +
                     '&formTable=f50',
@@ -1366,7 +1366,7 @@ $.wms.form50 = (function() {
                 fieldOfficeId : officeId,
                 formTable : "f50"
             }
-            $.wms.executeExternalPost(Expansion_api+'8000/cert/list',JSON.stringify(payload)).done(function (result) {
+            $.wms.executeExternalPost(Expansion_api+'cert/list',JSON.stringify(payload)).done(function (result) {
                 console.log(result)
 
                 if (result.response.length != 0) {
@@ -1380,7 +1380,7 @@ $.wms.form50 = (function() {
                             "<td>"+data.uploaderId+"</td>"+
                             "<td>"+data.fileName+"</td>"+
                             "<td>"+data.createdDate+"</td>"+
-                            "<td align='center' class='options'><a href="+Expansion_api+'8000/cert/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
+                            "<td align='center' class='options'><a href="+Expansion_api+'cert/view/'+data.id+"><button class=' btn btn-success btn-sm btn-view' data-id='"+data.id+"' data-file_path='"+data.filePath+"' data-file_name='"+data.fileName+"'><i class='fa fa-download'></i> Download</button></a></td></tr>"
                         )
                     });
                 } else {
@@ -1405,7 +1405,7 @@ $.wms.form50 = (function() {
                     officeIdList  : officeId,
                     yearMonthList : [date]
                 }
-                $.wms.executeExternalPost(Expansion_api+'8000/F50Caseload',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'F50Caseload',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     $('.a').text(result.a);
                     $('.B').text(result.b);
@@ -1443,7 +1443,7 @@ $.wms.form50 = (function() {
                     }
 
                     
-                    $.wms.executeExternalPost(Expansion_api+'8000/F50Caseload',JSON.stringify(payload)).done(function (result) {
+                    $.wms.executeExternalPost(Expansion_api+'F50Caseload',JSON.stringify(payload)).done(function (result) {
                         console.log(result)
                         $('.a').text(result.a);
                         $('.B').text(result.b);
@@ -1477,7 +1477,7 @@ $.wms.form50 = (function() {
             });
             __cert_list_upload();
             
-            $.wms.executeExternalGet(Expansion_api+'8000/F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
+            $.wms.executeExternalGet(Expansion_api+'F50Caseload?id='+officeId+'&yearMonth='+date).done(function (result) {
                 console.log(result)
                 $('.a').text(result.a);
                 $('.B').text(result.b);

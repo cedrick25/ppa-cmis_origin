@@ -5,17 +5,27 @@
 
 /* Use page protocol so HTTPS CMIS does not trigger mixed-content blocks. */
 var __cmis_proto = window.location.protocol + "//";
+var __cmis_local = /^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname);
 /* PPIS via NPM on ppis.probation.gov.ph:
  * /8000/ → 192.168.1.147:8000 (API)
  * /8080/ → 192.168.1.147:8080 (upload/files)
+ * Local:   direct http://127.0.0.1:8000 / :8080 (Docket/PPIS)
  */
-var PPIS_path_upload = __cmis_proto + "ppis.probation.gov.ph/8080";
-var PPIS_path = __cmis_proto + "ppis.probation.gov.ph/8000";
-/* Expansion API via path proxy on same host (NPM/openresty):
- * /8000/... → Expansion service (avoids broken host:8000 TLS).
- * Call sites append "8000/..." so final URL is https://<host>/8000/...
+var PPIS_path_upload = __cmis_local
+    ? (__cmis_proto + "127.0.0.1:8080")
+    : (__cmis_proto + "ppis.probation.gov.ph/8080");
+var PPIS_path = __cmis_local
+    ? (__cmis_proto + "127.0.0.1:8000")
+    : (__cmis_proto + "ppis.probation.gov.ph/8000");
+/* Expansion API — change port only here; call sites use Expansion_api + "<path>".
+ * Production: path proxy https://<host>/8000/... (NPM/openresty → Expansion)
+ * Local:      direct      http://127.0.0.1:8001/... (Docket/PPIS keeps :8000)
  */
-var Expansion_api = __cmis_proto + window.location.hostname + "/";
+// var Expansion_api = __cmis_proto + window.location.hostname + "/"; // old: call sites appended "8000/..."
+var Expansion_port = __cmis_local ? "8001" : "8000";
+var Expansion_api = __cmis_local
+    ? (__cmis_proto + "127.0.0.1:" + Expansion_port + "/")
+    : (__cmis_proto + window.location.hostname + "/" + Expansion_port + "/");
 
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};

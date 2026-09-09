@@ -1376,6 +1376,7 @@ $.wms.form21 = (function() {
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
             $.ajax({
@@ -1447,6 +1448,7 @@ $.wms.form21 = (function() {
                 "transferredOfficeId"   : $("#add_acted_transfer_to").val(),
                 "ppoRecommendation"     : $("#add_acted_recommendation").val(),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
             $.ajax({
@@ -2556,6 +2558,7 @@ $.wms.form21 = (function() {
                 "receivedDateByPPO"     : $("#add_date_rcv").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
             $.ajax({
@@ -3781,6 +3784,7 @@ $.wms.form21 = (function() {
                 "investigatingOfficer"  : $("#add_rcv_investigating_officer").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSINV",
             }
             $.ajax({
@@ -4032,6 +4036,7 @@ $.wms.form21 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSINV",
             }
             $.ajax({
@@ -5560,6 +5565,7 @@ $.wms.form21 = (function() {
                 "referralType"          : $("#add_type_referrals").val(),
                 "probationStartDate"    : $("#add_start").val(),
                 "probationEndDate"      : $("#add_end").val(),
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
@@ -6576,6 +6582,7 @@ $.wms.form21 = (function() {
                 "dateReportSubmittedToTheBoard"                 : $("#add_submitted").val(),
                 "dateReportSubmittedToRDForTransferToOtherPPO"  : $("#add_transfer").val(),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
@@ -8133,6 +8140,7 @@ $.wms.form21 = (function() {
                 "dateReportSubmittedToTheBoard": $("#add_submitted").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
@@ -9598,6 +9606,7 @@ $.wms.form21 = (function() {
                 "dateOrderReceivedFromTheBoard": $("#add_submitted").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
             $.ajax({
@@ -11704,6 +11713,7 @@ $.wms.form21 = (function() {
                 "supervisingOfficer"    : $("#add_rcv_supervising").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSUP",
             }
             $.ajax({
@@ -11819,6 +11829,7 @@ $.wms.form21 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSUP",
             }
             $.ajax({
@@ -12126,7 +12137,7 @@ $.wms.form21 = (function() {
                 }
                     console.log(payload)
 
-                $.wms.executeExternalPost(Expansion_api+'8000/form/submit',JSON.stringify(payload)).done(function (result) {
+                $.wms.executeExternalPost(Expansion_api+'form/submit',JSON.stringify(payload)).done(function (result) {
                     console.log(result)
                     // location.reload();
 
