@@ -51,24 +51,24 @@
 	<script src="<?php echo MIN_URL; ?>assets/js/vfs_fonts.js"></script>
 	<script src="<?php echo MIN_URL; ?>assets/js/shortcuts.js"></script>
 
-	<!-- WMS JS -->
-	<script src="assets/js/wms-main.js?version=<?php echo filemtime("assets/js/wms-main.js"); ?>"></script>
-	<script src="assets/js/wms-login.js?version=<?php echo filemtime("assets/js/wms-login.js"); ?>"></script>
-	<script src="<?php ?>assets/js/cmis.modal.js?version=<?php echo filemtime("assets/js/wms-dashboard.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-dashboard.js?version=<?php echo filemtime("assets/js/wms-dashboard.js"); ?>"></script>
+	<!-- WMS JS (root-relative paths avoid mixed content behind HTTPS proxy) -->
+	<script src="/ppa-cmis_origin/assets/js/wms-main.js?version=<?php echo filemtime("assets/js/wms-main.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-login.js?version=<?php echo filemtime("assets/js/wms-login.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/cmis.modal.js?version=<?php echo filemtime("assets/js/wms-dashboard.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-dashboard.js?version=<?php echo filemtime("assets/js/wms-dashboard.js"); ?>"></script>
 	
-	<script src="<?php ?>assets/js/wms-station-monitoring.js?version=<?php echo filemtime("assets/js/wms-station-monitoring.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-widget.js?version=<?php echo filemtime("assets/js/wms-widget.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form5.js?version=<?php echo filemtime("assets/js/wms-form5.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form21.js?version=<?php echo filemtime("assets/js/wms-form21.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form44.js?version=<?php echo filemtime("assets/js/wms-form44.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form45.js?version=<?php echo filemtime("assets/js/wms-form45.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form50.js?version=<?php echo filemtime("assets/js/wms-form50.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form51.js?version=<?php echo filemtime("assets/js/wms-form51.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-form53.js?version=<?php echo filemtime("assets/js/wms-form53.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-probationer.js?version=<?php echo filemtime("assets/js/wms-probationer.js"); ?>"></script>
-	<script src="<?php ?>assets/js/wms-records_check.js?version=<?php echo filemtime("assets/js/wms-records_check.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-station-monitoring.js?version=<?php echo filemtime("assets/js/wms-station-monitoring.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-widget.js?version=<?php echo filemtime("assets/js/wms-widget.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form5.js?version=<?php echo filemtime("assets/js/wms-form5.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form21.js?version=<?php echo filemtime("assets/js/wms-form21.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form44.js?version=<?php echo filemtime("assets/js/wms-form44.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form45.js?version=<?php echo filemtime("assets/js/wms-form45.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form50.js?version=<?php echo filemtime("assets/js/wms-form50.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form51.js?version=<?php echo filemtime("assets/js/wms-form51.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-form53.js?version=<?php echo filemtime("assets/js/wms-form53.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-probationer.js?version=<?php echo filemtime("assets/js/wms-probationer.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-records_check.js?version=<?php echo filemtime("assets/js/wms-records_check.js"); ?>"></script>
 
-	<script src="<?php ?>assets/js/wms-report.js?version=<?php echo filemtime("assets/js/wms-report.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/wms-report.js?version=<?php echo filemtime("assets/js/wms-report.js"); ?>"></script>
 
-	<script src="<?php ?>assets/js/cmis.reports.js?version=<?php echo filemtime("assets/js/cmis.reports.js"); ?>"></script>
+	<script src="/ppa-cmis_origin/assets/js/cmis.reports.js?version=<?php echo filemtime("assets/js/cmis.reports.js"); ?>"></script>

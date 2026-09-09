@@ -8,7 +8,7 @@
     <div class="col-lg-4 col-md-6 col-xs-8">
       
       
-        <img height="96" style="padding:10px; display:inline-block; float:left;" src="<?php echo BASE_URL(); ?>assets/img/ppa-logo.png"> 
+        <img height="96" style="padding:10px; display:inline-block; float:left;" src="/ppa-cmis_origin/assets/img/ppa-logo.png"> 
         <div style="float:left; padding-top:15px" class="pagasa-text">
           <span class="republic">Republic of the Philippines</span><br/>
           <span class="republic">Department of Justice</span><br/>

@@ -3,10 +3,19 @@
  *  Portal web services.
  */
 
-var PPIS_path_upload = "http://192.168.1.147:8080";
-var PPIS_path = "http://192.168.1.147:8000";
-/* Expansion API host follows whatever host CMIS is accessed from (prod/staging/local). */
-var Expansion_api = "http://" + window.location.hostname + ":";
+/* Use page protocol so HTTPS CMIS does not trigger mixed-content blocks. */
+var __cmis_proto = window.location.protocol + "//";
+/* PPIS via NPM on ppis.probation.gov.ph:
+ * /8000/ → 192.168.1.147:8000 (API)
+ * /8080/ → 192.168.1.147:8080 (upload/files)
+ */
+var PPIS_path_upload = __cmis_proto + "ppis.probation.gov.ph/8080";
+var PPIS_path = __cmis_proto + "ppis.probation.gov.ph/8000";
+/* Expansion API via path proxy on same host (NPM/openresty):
+ * /8000/... → Expansion service (avoids broken host:8000 TLS).
+ * Call sites append "8000/..." so final URL is https://<host>/8000/...
+ */
+var Expansion_api = __cmis_proto + window.location.hostname + "/";
 
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};
@@ -30,9 +39,9 @@ $.wms = (function() {
     }
 
     var ___ctx = '';
-    /*var ___ctx = 'http://cmis.probation.gov.ph';
+    /*var ___ctx = 'https://cmis.probation.gov.ph';
     if(___production == true){
-         ___ctx = "http://cmis.probation.gov.ph/api";
+         ___ctx = "https://cmis.probation.gov.ph/api";
     }*/
 
 

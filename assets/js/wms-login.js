@@ -15,7 +15,9 @@ $.wms.login = (function() {
 
 
         $("#txtUsername").focus();
-        $.wms.dashboard.navHighlight();
+        if ($.wms.dashboard && typeof $.wms.dashboard.navHighlight === 'function') {
+            $.wms.dashboard.navHighlight();
+        }
         $("#txtUsername,#txtPassword").keyup(function(event){
             if(event.keyCode == 13){
                 $("#btnLogin").click();
@@ -95,7 +97,7 @@ $.wms.login = (function() {
                             CREATED_BY : "1",
                             message_DATETIME : dt
                         }
-                        $.wms.executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
+                        $.wms.executeExternalPost(window.location.protocol + '//otp.probation.gov.ph/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
                             
                         });
 
@@ -104,7 +106,7 @@ $.wms.login = (function() {
                             "message_TO" : result.payload.USER_EMAIL,
                             // "message_TO" : "notification@probation.gov.ph",
                         }
-                        $.wms.executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                        $.wms.executeExternalPost('https://uams.probation.gov.ph/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                            
                         });
                         $("#divLogin").addClass("hidden");
@@ -119,7 +121,7 @@ $.wms.login = (function() {
                                 CREATED_BY : "1",
                                 message_DATETIME : dt
                             }
-                            $.wms.executeExternalPost('http://192.168.1.200/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
+                            $.wms.executeExternalPost(window.location.protocol + '//otp.probation.gov.ph/ppa-api-uams/wsv1/api/insertSMSManually',JSON.stringify(payload3)).done(function (result2) {
                             });
 
 
@@ -127,7 +129,7 @@ $.wms.login = (function() {
                                 "message_CONTENT" : "Hi " + result.payload.USER_FULLNAME + ", your OTP KEY is " + $("#otpkeygen").val() +".",
                                 "message_TO" : result.payload.USER_EMAIL,
                             }
-                            $.wms.executeExternalPost('http://192.168.1.219/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
+                            $.wms.executeExternalPost('https://uams.probation.gov.ph/ppa-api-uams/wsv1/api/email',JSON.stringify(payloadEmail)).done(function (resultemail) {
                             
                             });
 
