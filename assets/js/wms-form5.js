@@ -496,9 +496,37 @@ $.wms.form5 = (function() {
                 $("#modal-add").modal('toggle')
                 $(".btn-reset").trigger("click")    
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T1PageEvent();
-                    location.reload();
-
+                    var PPISPayload = {
+                        "clientType"            : "PROBATIONER",
+                        "docketNumber"          : $("#add_docket_no").val(),
+                        "fullName"              : $("#add_petitioner").val(),
+                        "firstName"             : null,
+                        "middleName"            : null,
+                        "lastName"              : null,
+                        "suffixName"            : null,
+                        "receivedDateByPPO"     : $("#add_date_rcv").val(),
+                        "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                        "investigatingOfficer"  : $("#add_investigating_officer").val(),
+                        "manualDocket"          : false,
+                        "createdBy"             : $.cookie("USER_ID"),
+                        "type"                  : "PIS_INV_CARRY_OVER",
+                    }
+                    $.ajax({
+                        url: `${PPIS_path}/ppis/create`,
+                        type: 'POST',
+                        data: JSON.stringify(PPISPayload),
+                        contentType: 'application/json',
+                        timeout: 15000,
+                        success: function (PPISResult) {
+                            console.log(PPISResult);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', status, error);
+                        },
+                        complete: function () {
+                            location.reload();
+                        }
+                    });
                 }else{
                     //Error Prompt
                 }

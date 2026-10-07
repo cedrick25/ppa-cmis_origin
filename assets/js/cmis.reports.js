@@ -986,6 +986,7 @@ $.wms.reports = (function() {
                                         var payload =  {
                                             "field_office": field,
                                             "Y_M": data_ym,
+                                            "officeId": officeId,
                                         }
                                         console.log(payload)
 
