@@ -3591,8 +3591,39 @@ $.wms.form5 = (function() {
                 $("#modal-add").modal('toggle')
                 ___modalReset();
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    //__attachF5T5PageEvent();
-                    location.reload();
+                    var PPISPayload = {
+                        "clientType"            : "PROBATIONER",
+                        "docketNumber"          : payload.docket_no,
+                        "fullName"              : payload.petitioner,
+                        "firstName"             : null,
+                        "middleName"            : null,
+                        "lastName"              : null,
+                        "suffixName"            : null,
+                        "receivedDateByPPO"     : payload.received_date,
+                        "fieldOfficeId"         : payload.field_office_id,
+                        "investigatingOfficer"  : payload.investigating_officer,
+                        "referringOfficeId"     : payload.referring_office,
+                        "remarks"               : payload.reasons,
+                        "manualDocket"          : false,
+                        "createdBy"             : payload.created_by,
+                        "type"                  : "PIS_CSINV_CARRY_OVER",
+                    }
+                    $.ajax({
+                        url: `${PPIS_path}/ppis/create`,
+                        type: 'POST',
+                        data: JSON.stringify(PPISPayload),
+                        contentType: 'application/json',
+                        timeout: 15000,
+                        success: function (PPISResult) {
+                            console.log(PPISResult);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error:', status, error);
+                        },
+                        complete: function () {
+                            location.reload();
+                        }
+                    });
                 }else{
                     //Error Prompt
                 }
