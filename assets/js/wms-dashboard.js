@@ -8,6 +8,18 @@ $.wms.dashboard = (typeof $.wms.dashboard !== 'undefined') ? $.wms.dashboard : {
 
 $.wms.dashboard = (function() {
 
+    function cmisEndFileSession() {
+        if (navigator.sendBeacon) {
+            navigator.sendBeacon('/ppa-cmis-api_origin/wsv1/file/end');
+            return;
+        }
+        $.ajax({
+            url: '/ppa-cmis-api_origin/wsv1/file/end',
+            method: 'POST',
+            async: false
+        });
+    }
+
     var __attachPageEvent = function() {
         
         //console.log(typeof $.cookie('USER_ID'));
@@ -40,7 +52,7 @@ $.wms.dashboard = (function() {
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
-
+            cmisEndFileSession();
             var cookies = $.cookie();
             for(var cookie in cookies) {
                $.removeCookie(cookie);
@@ -57,6 +69,7 @@ $.wms.dashboard = (function() {
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Api/isActive',JSON.stringify(payload)).done(function (result) {
             // console.log(result)
             if(result.status == "FAILED"){
+                cmisEndFileSession();
                 var cookies = $.cookie();
                 for(var cookie in cookies) {
                    $.removeCookie(cookie);
