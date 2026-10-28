@@ -47,6 +47,8 @@ $.wms.form21 = (function() {
 
                     }
                     
+                }else if (cmisPpisFileFieldInvalid(data)) {
+                    dontSubmit = true;
                 }else{
                     if(dtype == 'text'){
                         $("#"+data).removeClass("error_field");
@@ -101,6 +103,8 @@ $.wms.form21 = (function() {
 
                 }
                 
+            }else if (cmisPpisFileFieldInvalid(data)) {
+                dontSubmit = true;
             }else{
                 if(dtype == 'text'){
                     $("#"+data).removeClass("error_field");
@@ -153,6 +157,8 @@ $.wms.form21 = (function() {
                     dontSubmit = true;
                     $("#"+data).addClass("error_field");
                     $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+                }else if (cmisPpisFileFieldInvalid(data)) {
+                    dontSubmit = true;
                 }else{
                     $("#"+data).removeClass("error_field");
                 }
@@ -183,6 +189,8 @@ $.wms.form21 = (function() {
                 dontSubmit = true;
                 $("#"+data).addClass("error_field");
                 $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+            }else if (cmisPpisFileFieldInvalid(data)) {
+                dontSubmit = true;
             }else{
                 $("#"+data).removeClass("error_field");
             }
@@ -226,6 +234,9 @@ $.wms.form21 = (function() {
                     dontSubmit = true;
                     $("#"+data).addClass("error_field");
                     $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+                }else if (cmisPpisFileFieldInvalid(data)) {
+                    required += 1;
+                    dontSubmit = true;
                 }else{
                     $("#"+data).removeClass("error_field");
                 }
@@ -269,6 +280,8 @@ $.wms.form21 = (function() {
                 dontSubmit = true;
                 $("#"+data).addClass("error_field");
                 $("<p class='err_msg color-red font_12 i'>*Required Field</p>").insertAfter(("#"+data))
+            }else if (cmisPpisFileFieldInvalid(data)) {
+                dontSubmit = true;
             }else{
                 $("#"+data).removeClass("error_field");
             }
@@ -315,6 +328,12 @@ $.wms.form21 = (function() {
         if (!fileInput || fileInput.files.length === 0) {
             alert("⚠️ Please select at least one file to upload.");
             $('#' + fileInputId).focus();
+            return;
+        }
+        var rejectedFiles = cmisInvalidPpisFiles(fileInput.files);
+        if (rejectedFiles.length) {
+            alert('Only PDF (.pdf) and bitmap (.bmp) files can be uploaded.\n\nNot allowed:\n' + rejectedFiles.join('\n') + '\n\nThe entry was saved. Attach a .pdf or .bmp file from Update.');
+            location.reload();
             return;
         }
 
@@ -824,6 +843,10 @@ $.wms.form21 = (function() {
                         $(this).prop('disabled', false).text('Upload');
                         return;
                     }
+                    if (cmisRejectPpisFiles(files)) {
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
+                    }
 
                     const uuid = $('#docket_no').val();
                     const createdby = $('#petitioner_name').val();
@@ -1065,6 +1088,10 @@ $.wms.form21 = (function() {
                     const files = $('#fileupload2')[0].files;
                     if (!files.length) {
                         alert('Please select at least one file to upload.');
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
+                    }
+                    if (cmisRejectPpisFiles(files)) {
                         $(this).prop('disabled', false).text('Upload');
                         return;
                     }
@@ -2366,6 +2393,10 @@ $.wms.form21 = (function() {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
+                if (cmisRejectPpisFiles(files)) {
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
 
                 const uuid = $('#docket_no').val();
                 const createdby = $('#petitioner_name').val();
@@ -3203,6 +3234,10 @@ $.wms.form21 = (function() {
                         $(this).prop('disabled', false).text('Upload');
                         return;
                     }
+                    if (cmisRejectPpisFiles(files)) {
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
+                    }
 
                     const uuid = $('#docket_no').val();
                     const createdby = $('#petitioner_name').val();
@@ -3441,6 +3476,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload2')[0].files;
                 if (!files.length) {
                     alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
@@ -4931,6 +4970,10 @@ $.wms.form21 = (function() {
                         $(this).prop('disabled', false).text('Upload');
                         return;
                     }
+                    if (cmisRejectPpisFiles(files)) {
+                        $(this).prop('disabled', false).text('Upload');
+                        return;
+                    }
 
                     const uuid = $('#docket_no').val();
                     const createdby = $('#petitioner_name').val();
@@ -5174,6 +5217,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload2')[0].files;
                 if (!files.length) {
                     alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
@@ -5945,6 +5992,10 @@ $.wms.form21 = (function() {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
+                if (cmisRejectPpisFiles(files)) {
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
 
                 const uuid = $('#docket_no').val();
                 const createdby = $('#petitioner_name').val();
@@ -6194,6 +6245,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload2')[0].files;
                 if (!files.length) {
                     alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
@@ -7502,6 +7557,10 @@ $.wms.form21 = (function() {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
+                if (cmisRejectPpisFiles(files)) {
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
 
                 const uuid = $('#docket_no').val();
                 const createdby = $('#petitioner_name').val();
@@ -7747,6 +7806,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload2')[0].files;
                 if (!files.length) {
                     alert('Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
@@ -9019,6 +9082,10 @@ $.wms.form21 = (function() {
                     $('#uploadButton').prop('disabled', false).text('Upload');
                     return;
                 }
+                if (cmisRejectPpisFiles([file])) {
+                    $('#uploadButton').prop('disabled', false).text('Upload');
+                    return;
+                }
 
                 formData.append('file', file);
                 formData.append('kind', "F21T11_parolee");
@@ -9243,6 +9310,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload2')[0].files;
                 if (!files.length) {
                     alert('⚠️ Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
@@ -10510,6 +10581,10 @@ $.wms.form21 = (function() {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
+                if (cmisRejectPpisFiles(files)) {
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
 
                 const uuid = $('#docket_no').val();
                 const createdby = $('#petitioner_name').val();
@@ -10750,6 +10825,10 @@ $.wms.form21 = (function() {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
+                if (cmisRejectPpisFiles(files)) {
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
 
                 const uuid = $('#docket_no2').val();
                 const createdby = $('#petitioner_name2').val();
@@ -10982,6 +11061,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload3')[0].files;
                 if (!files.length) {
                     alert('⚠️ Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }
@@ -11220,6 +11303,10 @@ $.wms.form21 = (function() {
                 const files = $('#fileupload4')[0].files;
                 if (!files.length) {
                     alert('⚠️ Please select at least one file to upload.');
+                    $(this).prop('disabled', false).text('Upload');
+                    return;
+                }
+                if (cmisRejectPpisFiles(files)) {
                     $(this).prop('disabled', false).text('Upload');
                     return;
                 }

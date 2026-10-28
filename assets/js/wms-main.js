@@ -27,6 +27,70 @@ var Expansion_api = __cmis_local
     ? (__cmis_proto + "127.0.0.1:" + Expansion_port + "/")
     : (__cmis_proto + window.location.hostname + "/" + Expansion_port + "/");
 
+/* PPIS file service accepts PDF and BMP only. */
+function cmisPpisFileExtension(name) {
+    var base = String(name || '').replace(/\\/g, '/').split('/').pop().trim();
+    var dot = base.lastIndexOf('.');
+    if (dot < 1 || dot === base.length - 1) {
+        return '';
+    }
+    return base.slice(dot + 1).toLowerCase();
+}
+
+function cmisInvalidPpisFiles(fileList) {
+    var allowed = { pdf: true, bmp: true };
+    var bad = [];
+    if (!fileList) {
+        return bad;
+    }
+    for (var i = 0; i < fileList.length; i++) {
+        var file = fileList[i];
+        if (!file) {
+            continue;
+        }
+        if (!allowed[cmisPpisFileExtension(file.name)]) {
+            bad.push(file.name || ('file ' + (i + 1)));
+        }
+    }
+    return bad;
+}
+
+function cmisRejectPpisFiles(fileList) {
+    var bad = cmisInvalidPpisFiles(fileList);
+    if (!bad.length) {
+        return false;
+    }
+    alert('Only PDF (.pdf) and bitmap (.bmp) files can be uploaded.\n\nNot allowed:\n' + bad.join('\n'));
+    return true;
+}
+
+function cmisPpisFileFieldInvalid(fieldId) {
+    var el = document.getElementById(fieldId);
+    if (!el || String(el.type).toLowerCase() !== 'file' || !el.files || !el.files.length) {
+        return false;
+    }
+    if (!cmisInvalidPpisFiles(el.files).length) {
+        return false;
+    }
+    var $el = $('#' + fieldId);
+    $el.addClass('error_field');
+    $("<p class='err_msg color-red font_12 i'>*Only .pdf and .bmp files are allowed</p>").insertAfter($el);
+    return true;
+}
+
+$(document).on('change', 'input[type="file"]', function () {
+    var accept = (this.getAttribute('accept') || '').toLowerCase().replace(/\s/g, '');
+    if (accept.indexOf('.pdf') === -1 || accept.indexOf('.bmp') === -1) {
+        return;
+    }
+    if (!this.files || !this.files.length) {
+        return;
+    }
+    if (cmisRejectPpisFiles(this.files)) {
+        this.value = '';
+    }
+});
+
 $ = (typeof $ !== 'undefined') ? $ : {};
 $.wms = (typeof $.wms !== 'undefined') ? $.wms : {};
 

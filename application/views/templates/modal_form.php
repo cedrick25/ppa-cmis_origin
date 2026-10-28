@@ -739,7 +739,7 @@
             <div class="form-group row access_f5_write">
               <label for="fileupload" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file form-control" id="fileupload" accept=".jpg, .png, .pdf, .docx" required multiple>
+                <input type="file" class="form-control-file form-control" id="fileupload" accept=".pdf,.bmp" title="Only .pdf and .bmp files are accepted" required multiple>
               </div>
             </div>
             <input type="hidden" id="FOId" name="FOId">
@@ -829,7 +829,7 @@
             <div class="form-group row access_f5_write">
               <label for="fileupload2" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file form-control" id="fileupload2" accept=".jpg, .png, .pdf, .docx" multiple>
+                <input type="file" class="form-control-file form-control" id="fileupload2" accept=".pdf,.bmp" title="Only .pdf and .bmp files are accepted" multiple>
               </div>
             </div>
             <input type="hidden" id="FOId2" name="FOId2">
@@ -918,7 +918,7 @@
             <div class="form-group row access_f5_write">
               <label for="fileupload3" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file form-control" id="fileupload3" accept=".jpg, .png, .pdf, .docx" multiple>
+                <input type="file" class="form-control-file form-control" id="fileupload3" accept=".pdf,.bmp" title="Only .pdf and .bmp files are accepted" multiple>
               </div>
             </div>
             <input type="hidden" id="FOId3" name="FOId3">
@@ -1007,7 +1007,7 @@
             <div class="form-group row access_f5_write">
               <label for="fileupload4" class="col-md-3 col-form-label">Upload File</label>
               <div class="col-md-9">
-                <input type="file" class="form-control-file form-control" id="fileupload4" accept=".jpg, .png, .pdf, .docx" multiple>
+                <input type="file" class="form-control-file form-control" id="fileupload4" accept=".pdf,.bmp" title="Only .pdf and .bmp files are accepted" multiple>
               </div>
             </div>
             <input type="hidden" id="FOId4" name="FOId4">
