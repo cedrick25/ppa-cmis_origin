@@ -324,56 +324,72 @@ $.wms.form21 = (function() {
         }
     }
     function uploadInvestigationFile(docketNo, petitioner, uploadType, remarksInput, officeId, fileInputId, kind, type) {
+        var deferred = $.Deferred();
         var fileInput = $('#' + fileInputId)[0];
         if (!fileInput || fileInput.files.length === 0) {
-            alert("⚠️ Please select at least one file to upload.");
-            $('#' + fileInputId).focus();
-            return;
+            deferred.reject('Please select at least one file to upload.');
+            return deferred.promise();
         }
         var rejectedFiles = cmisInvalidPpisFiles(fileInput.files);
         if (rejectedFiles.length) {
-            alert('Only PDF (.pdf) and bitmap (.bmp) files can be uploaded.\n\nNot allowed:\n' + rejectedFiles.join('\n') + '\n\nThe entry was saved. Attach a .pdf or .bmp file from Update.');
-            location.reload();
-            return;
+            deferred.reject('Only PDF (.pdf) and bitmap (.bmp) files can be uploaded.\n\nNot allowed:\n' + rejectedFiles.join('\n'));
+            return deferred.promise();
         }
 
-        let totalFiles = fileInput.files.length;
-        let completedUploads = 0;
+        var totalFiles = fileInput.files.length;
+        var completedUploads = 0;
+        var failures = [];
+        var uploaded = [];
 
-        for (let i = 0; i < totalFiles; i++) {
-            let file = fileInput.files[i];
-
-            let formData = new FormData();
-            formData.append('uuid', docketNo);
-            formData.append('createdby', petitioner);
-            formData.append('type', type);
-            formData.append('remarks', remarksInput ? uploadType + " - " + remarksInput : uploadType);
-            formData.append('officeId', officeId);
-            formData.append('version', "0");
-            formData.append('file', file);
-            formData.append('kind', kind);
-
-            $.ajax({
-                url: `${PPIS_path_upload}/file/upload`,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    console.log(`Upload success: ${file.name}`, response);
-                },
-                error: function(xhr, status, error) {
-                    console.error(`Upload failed for file: ${file.name}`, error);
-                },
-                complete: function() {
-                    completedUploads++;
-                    if (completedUploads === totalFiles) {
-                        // ✅ All uploads completed
-                        location.reload();
-                    }
-                }
-            });
+        function finishOne() {
+            completedUploads++;
+            if (completedUploads !== totalFiles) {
+                return;
+            }
+            if (failures.length) {
+                cmisDeleteUploadedFiles(uploaded).always(function () {
+                    deferred.reject('File attachment failed.\n\n' + failures.join('\n'));
+                });
+                return;
+            }
+            deferred.resolve(uploaded);
         }
+
+        for (var i = 0; i < totalFiles; i++) {
+            (function (file) {
+                var formData = new FormData();
+                formData.append('uuid', docketNo);
+                formData.append('createdby', petitioner);
+                formData.append('type', type);
+                formData.append('remarks', remarksInput ? uploadType + " - " + remarksInput : uploadType);
+                formData.append('officeId', officeId);
+                formData.append('version', "0");
+                formData.append('file', file);
+                formData.append('kind', kind);
+
+                $.ajax({
+                    url: PPIS_path_upload + '/file/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (cmisPayloadFailed(response)) {
+                            failures.push((file.name || 'File') + ': ' + cmisPayloadMessage(response, 'Upload was rejected.'));
+                        } else {
+                            console.log('Upload success: ' + file.name, response);
+                            uploaded.push(cmisUploadedFileRecord(response, file.name));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Upload failed for file: ' + file.name, error);
+                        failures.push((file.name || 'File') + ': ' + cmisAjaxMessage(xhr, 'Upload failed.'));
+                    },
+                    complete: finishOne
+                });
+            })(fileInput.files[i]);
+        }
+        return deferred.promise();
     }
     var __attachF21T1PageEvent = function() {
         var payload = {
@@ -1350,6 +1366,7 @@ $.wms.form21 = (function() {
         });
 
         $(".addProceedRCVButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -1374,7 +1391,8 @@ $.wms.form21 = (function() {
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_RCV',JSON.stringify(payload)).done(function (result) {
                 
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_RCV', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_rcv_docket_no').val(),
                         $('#add_rcv_petitioner').val(),
                         $('#add_upload_type').val(),
@@ -1383,8 +1401,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         'F21T2RR',
                         'investigation'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });
@@ -1406,18 +1425,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
 
@@ -1459,6 +1488,7 @@ $.wms.form21 = (function() {
         });
 
          $(".addProceedACTEDButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var PPISPayload = {
@@ -1478,18 +1508,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });  
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };  
             var payload = {
                 "docket_no" : $("#add_acted_docket_no").val(),
                 "petitioner_name": $("#add_acted_petitioner").val(),
@@ -1509,9 +1549,10 @@ $.wms.form21 = (function() {
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED',JSON.stringify(payload)).done(function (result) {
                 
                 if(result.status != undefined && result.status == "SUCCESS"){
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T2_ACTED', result, (typeof payload !== 'undefined' ? payload : null));
 
 
-                    uploadInvestigationFile(
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_acted_docket_no').val(),
                         $('#add_acted_petitioner').val(),
                         $('#add_upload_type_rau').val(),
@@ -1520,8 +1561,9 @@ $.wms.form21 = (function() {
                         'add_fileupload_rau',
                         'F21T2_RAU',
                         'investigation'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });
@@ -2547,6 +2589,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -2563,8 +2606,9 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T4',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T4', result, (typeof payload !== 'undefined' ? payload : null));
 
-                    uploadInvestigationFile(
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_docket_no').val(),
                         $('#add_petitioner').val(),
                         $('#add_upload_type').val(),
@@ -2573,8 +2617,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         'F21T4',
                         'investigation'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });
@@ -2592,18 +2637,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         var ___modalReset = function(){
@@ -3778,6 +3833,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addRCVProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = {
@@ -3796,7 +3852,8 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T6_RCV',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T6_RCV', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_rcv_docket_no').val(),
                         $('#add_rcv_petitioner').val(),
                         $('#add_upload_type').val(),
@@ -3805,8 +3862,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         'F21T6RR',
                         'investigation'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });
@@ -3826,18 +3884,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSINV",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });  
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };  
         })
         //ADD
 
@@ -4036,6 +4104,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addCMPLTDProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -4051,7 +4120,8 @@ $.wms.form21 = (function() {
             }
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T6_CMPLTD',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T6_CMPLTD', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_cmpltd_docket_no').val(),
                         $('#add_cmpltd_petitioner').val(),
                         $('#add_upload_type_car').val(),
@@ -4060,8 +4130,9 @@ $.wms.form21 = (function() {
                         'add_fileupload_car',
                         'F21T6CAR',
                         'investigation'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });    
@@ -4078,18 +4149,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSINV",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
 
         })
         //ADD
@@ -5541,6 +5622,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -5580,7 +5662,8 @@ $.wms.form21 = (function() {
             console.log(clientType);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T8',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T8', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_docket_no').val(),
                         $('#add_probationer').val(),
                         $('#add_upload_type').val(),
@@ -5589,8 +5672,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         kind,
                         'supervision'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });
@@ -5615,18 +5699,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         var ___modalReset = function(){
@@ -6576,6 +6670,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -6611,7 +6706,8 @@ $.wms.form21 = (function() {
 
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T9',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T9', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_docket_no').val(),
                         $('#add_probationer').val(),
                         $('#add_upload_type').val(),
@@ -6620,8 +6716,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         kind,
                         'supervision'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });    
@@ -6640,18 +6737,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         var ___modalReset = function(){
@@ -8144,6 +8251,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -8177,7 +8285,8 @@ $.wms.form21 = (function() {
             console.log(clientType);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T11',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T11', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_docket_no').val(),
                         $('#add_probationer').val(),
                         $('#add_upload_type').val(),
@@ -8186,8 +8295,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         kind,
                         'supervision'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });  
@@ -8206,18 +8316,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         var ___modalReset = function(){
@@ -9622,6 +9742,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -9652,7 +9773,8 @@ $.wms.form21 = (function() {
             console.log(clientType);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T13',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T13', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_docket_no').val(),
                         $('#add_probationer').val(),
                         $('#add_upload_type').val(),
@@ -9661,8 +9783,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         kind,
                         'supervision'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });    
@@ -9680,18 +9803,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_SUP",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         var ___modalReset = function(){
@@ -11735,6 +11868,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addRCVProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -11771,7 +11905,8 @@ $.wms.form21 = (function() {
             console.log(clientType);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T15',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T15', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_rcv_docket_no').val(),
                         $('#add_rcv_probationer').val(),
                         $('#add_upload_type').val(),
@@ -11780,8 +11915,9 @@ $.wms.form21 = (function() {
                         'add_fileupload',
                         kind,
                         'supervision'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });    
@@ -11803,18 +11939,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSUP",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         //ADD TERM
@@ -11860,6 +12006,7 @@ $.wms.form21 = (function() {
 
         //Add
         $(".addTERMProceedButton").unbind("click").on("click",function(){
+            cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
             var payload = { 
@@ -11892,7 +12039,8 @@ $.wms.form21 = (function() {
             console.log(clientType);
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/F21T15',JSON.stringify(payload)).done(function (result) {
                 if(result.status != undefined && result.status == "SUCCESS"){
-                    uploadInvestigationFile(
+                        cmisArmDocketCancel('/ppa-cmis-api_origin/wsv1/Cmis/F21T15', result, (typeof payload !== 'undefined' ? payload : null));
+                    cmisAfterAttachment(uploadInvestigationFile(
                         $('#add_term_docket_no').val(),
                         $('#add_term_probationer').val(),
                         $('#add_upload_type_rt').val(),
@@ -11901,8 +12049,9 @@ $.wms.form21 = (function() {
                         'add_fileupload_rt',
                         kind2,
                         'supervision'
-                    );
+                    ));
                 }else{
+                            cmisCancelOpenDocket(result && result.message);
                     //Error Prompt
                 }
             });    
@@ -11919,18 +12068,28 @@ $.wms.form21 = (function() {
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSUP",
             }
-            $.ajax({
-                url: `${PPIS_path}/ppis/create`, // Replace with your endpoint URL
-                type: 'POST',
-                data: JSON.stringify(PPISPayload), // Pass your payload here
-                contentType: 'application/json',   // Specify content type for JSON data
-                success: function (PPISResult) {
-                    console.log(PPISResult);       // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', status, error); // Handle error response
-                }
-            });
+            window.__cmisPendingPpis = function () {
+                var deferred = $.Deferred();
+                $.ajax({
+                    url: `${PPIS_path}/ppis/create`,
+                    type: 'POST',
+                    data: JSON.stringify(PPISPayload),
+                    contentType: 'application/json',
+                    success: function (PPISResult) {
+                        console.log(PPISResult);
+                        if (cmisPayloadFailed(PPISResult)) {
+                            deferred.reject(cmisPayloadMessage(PPISResult, 'Docket creation failed.'));
+                        } else {
+                            deferred.resolve(PPISResult);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        deferred.reject(cmisAjaxMessage(xhr, 'Docket creation failed.'));
+                    }
+                });
+                return deferred.promise();
+            };
         })
 
         var ___modalReset = function(){

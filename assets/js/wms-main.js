@@ -64,6 +64,200 @@ function cmisRejectPpisFiles(fileList) {
     return true;
 }
 
+function cmisPayloadFailed(data) {
+    if (data == null || data === '') {
+        return false;
+    }
+    if (typeof data === 'string') {
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            return false;
+        }
+    }
+    if (typeof data !== 'object') {
+        return false;
+    }
+    var status = data.status != null ? data.status : data.Status;
+    if (typeof status === 'string' && /^(ERROR|FAILED|FAIL|FAILURE)$/i.test(status)) {
+        return true;
+    }
+    if (data.success === false || data.ok === false) {
+        return true;
+    }
+    return false;
+}
+
+function cmisPayloadMessage(data, fallback) {
+    if (data == null || data === '') {
+        return fallback || '';
+    }
+    if (typeof data === 'string') {
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            return data.trim() || fallback || '';
+        }
+    }
+    if (typeof data !== 'object') {
+        return fallback || '';
+    }
+    var msg = data.message || data.Message || data.error || data.errorMessage || data.detail;
+    if (msg && typeof msg === 'object') {
+        msg = msg.message || '';
+    }
+    if (typeof msg === 'string' && msg.trim() && msg.trim() !== 'undefined') {
+        return msg.trim();
+    }
+    return fallback || '';
+}
+
+function cmisAjaxMessage(xhr, fallback) {
+    var body = xhr && (xhr.responseJSON || null);
+    if (!body && xhr && xhr.responseText) {
+        try {
+            body = JSON.parse(xhr.responseText);
+        } catch (e) {
+            body = null;
+        }
+    }
+    var msg = cmisPayloadMessage(body, '');
+    if (msg) {
+        return msg;
+    }
+    if (xhr && xhr.status) {
+        return (fallback || 'Request failed.') + ' (HTTP ' + xhr.status + ')';
+    }
+    return fallback || 'Request failed.';
+}
+
+function cmisUploadedFileRecord(response, fileName) {
+    var data = response;
+    if (typeof data === 'string') {
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            data = null;
+        }
+    }
+    var id = null;
+    if (data && typeof data === 'object') {
+        id = data.id || data.fileId || (data.data && data.data.id) || (data.file && data.file.id) || (data.content && data.content.id) || null;
+    }
+    return { id: id, name: fileName || '' };
+}
+
+function cmisDeleteUploadedFiles(files) {
+    var jobs = [];
+    (files || []).forEach(function (file) {
+        if (!file || !file.id) {
+            return;
+        }
+        jobs.push($.ajax({
+            url: PPIS_path_upload + '/file/delete/' + file.id,
+            method: 'GET'
+        }));
+    });
+    if (!jobs.length) {
+        return $.Deferred().resolve().promise();
+    }
+    return $.when.apply($, jobs);
+}
+
+function cmisResetDocketTransaction() {
+    window.__cmisPendingCancels = [];
+    window.__cmisPendingPpis = null;
+    window.__cmisUploadedFiles = [];
+}
+
+function cmisRestoreDocketForm() {
+    $(".modal-loader").addClass("hidden");
+    var $modal = $(".modal.in, .modal.show");
+    if (!$modal.length) {
+        $modal = $(".modal:visible");
+    }
+    $modal.find("button").prop("disabled", false);
+    $modal.find(".modal-form input, .modal-form select, .modal-form textarea").prop("disabled", false);
+}
+
+function cmisArmDocketCancel(url, saveResult, payload) {
+    var id = saveResult && (saveResult.id || saveResult.inserted_id);
+    if (!url || id == null || id === '') {
+        return;
+    }
+    var extra = {};
+    if (payload && payload.table) {
+        extra.table = payload.table;
+    }
+    if (String(url).indexOf('upsertMasterlist') !== -1) {
+        extra.STATUS = 0;
+    }
+    window.__cmisPendingCancels = window.__cmisPendingCancels || [];
+    window.__cmisPendingCancels.push(function () {
+        var body = $.extend({
+            id: id,
+            status: "0",
+            created_by: $.cookie("USER_ID"),
+            method: "update"
+        }, extra);
+        return $.wms.executeExternalPost(url, JSON.stringify(body));
+    });
+}
+
+function cmisCancelOpenDocket(message) {
+    var detail = (message && String(message).trim() && String(message).trim() !== 'undefined')
+        ? String(message).trim()
+        : 'The request failed.';
+    var cancels = window.__cmisPendingCancels || [];
+    var files = window.__cmisUploadedFiles || [];
+    window.__cmisPendingCancels = [];
+    window.__cmisPendingPpis = null;
+    window.__cmisUploadedFiles = [];
+
+    var jobs = cancels.map(function (cancel) {
+        return cancel();
+    });
+    jobs.push(cmisDeleteUploadedFiles(files));
+
+    $.when.apply($, jobs).always(function () {
+        var cancelFailed = false;
+        for (var i = 0; i < cancels.length; i++) {
+            var res = arguments[i];
+            if ($.isArray(res)) {
+                res = res[0];
+            }
+            if (res && typeof res.status === 'string' && res.status !== 'SUCCESS') {
+                cancelFailed = true;
+            }
+        }
+        var text = detail + '\n\nDocket creation was canceled.';
+        if (cancelFailed) {
+            text += '\n\nThe new docket could not be removed automatically. Delete it before trying again.';
+        }
+        alert(text);
+        cmisRestoreDocketForm();
+    });
+}
+
+function cmisAfterAttachment(uploadPromise) {
+    uploadPromise.done(function (uploaded) {
+        window.__cmisUploadedFiles = uploaded || [];
+        var ppis = window.__cmisPendingPpis;
+        window.__cmisPendingPpis = null;
+        if (typeof ppis !== 'function') {
+            location.reload();
+            return;
+        }
+        ppis().done(function () {
+            location.reload();
+        }).fail(function (ppisMessage) {
+            cmisCancelOpenDocket(ppisMessage || 'Docket creation failed.');
+        });
+    }).fail(function (uploadMessage) {
+        cmisCancelOpenDocket(uploadMessage || 'File attachment failed.');
+    });
+}
+
 function cmisPpisFileFieldInvalid(fieldId) {
     var el = document.getElementById(fieldId);
     if (!el || String(el.type).toLowerCase() !== 'file' || !el.files || !el.files.length) {
