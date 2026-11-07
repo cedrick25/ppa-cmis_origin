@@ -2083,6 +2083,7 @@ $.wms.form5 = (function() {
                             cmisCancelOpenDocket(result && result.message);
                 }
             });
+            var transferredOfficeId = $("#add_acted_field_office").val();
             var PPISPayload = {
                     "clientType"            : "PROBATIONER",
                     "docketNumber"          : $("#add_acted_docket_no").val(),
@@ -2091,10 +2092,15 @@ $.wms.form5 = (function() {
                     "middleName"            : null,
                     "lastName"              : null,
                     "suffixName"            : null,
-                    "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                     "manualDocket"          : false,
+                    "referralAction"        : "ACTED",
+                    "psirDate"              : $("#add_acted_psir").val(),
                     "ppoRecommendation"     : $("#add_acted_recommendation").val(),
+                    "manifestationDate"     : $("#add_acted_manifest").val(),
+                    "dateOfTransfer"        : $("#add_acted_transfer_date").val(),
+                    "transferredOfficeId"   : transferredOfficeId ? transferredOfficeId : null,
+                    "specifyCourtPpoTransferred" : $("#add_acted_transfer_to").val(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "type"                  : "PIS_INV",
                 }
@@ -2207,10 +2213,11 @@ $.wms.form5 = (function() {
                     "middleName"            : null,
                     "lastName"              : null,
                     "suffixName"            : null,
-                    "receivedDateByPPO"     : $("#add_notacted_date").val(),
-                    // "type"                  : $("#add_notacted_decision").val(),
                     "fieldOfficeId"         : $.wms.urlParam('officeId'),
                     "manualDocket"          : false,
+                    "referralAction"        : "NOT_ACTED",
+                    "typeOfReferrals"       : disposed,
+                    "referralsNotActedUponDateOrderReceived" : $("#add_notacted_date").val(),
                     "createdBy"             : $.cookie("USER_ID"),
                     "type"                  : "PIS_INV",
                 }
@@ -4960,6 +4967,7 @@ $.wms.form5 = (function() {
                             cmisCancelOpenDocket(result && result.message);
                 }            
             });
+            var completedDate = $("#add_cmpltd_date").val();
             var PPISPayload_b = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_cmpltd_docket_no").val(),
@@ -4970,6 +4978,9 @@ $.wms.form5 = (function() {
                 "lastName"              : null,
                 "suffixName"            : null,
                 "manualDocket"          : false,
+                "referralAction"        : "COMPLETED_RETURN",
+                "dateCICAR"             : completedDate,
+                "dateCompletedAndReturned" : completedDate,
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_CSINV",
             }
@@ -6627,6 +6638,11 @@ $.wms.form5 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "referralAction"        : "OFFICE_FINDINGS",
+                "officeFindingsForActedUpon" : $("#add_findings").val(),
+                "specifyOtherReasonsRevocation" : $("#add_reason_other").val(),
+                "specifyCourtPpoTransferred" : $("#add_transfer").val(),
+                "dateOrderReceivedFromTheCourt" : $("#add_submitted").val(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_SUP",
             }
@@ -7572,9 +7588,13 @@ $.wms.form5 = (function() {
                 "middleName"            : null,
                 "lastName"              : null,
                 "suffixName"            : null,
-                "supervisingOfficer"    : $("#add_supervising").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "referralAction"        : "COURT_ORDER",
+                "officeFindingsForActedUpon" : $("#add_findings").val(),
+                "specifyOtherReasonsRevocation" : $("#add_reason_other").val(),
+                "specifyCourtPpoTransferred" : $("#add_transfer").val(),
+                "dateOrderReceivedFromTheCourt" : $("#add_submitted").val(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_SUP",
             }
@@ -9140,6 +9160,7 @@ $.wms.form5 = (function() {
                     //Error Prompt
                 }
             });
+            var terminatedDate = $("#add_cmpltd_date").val();
             var PPISPayload = {
                 "clientType"            : "PROBATIONER",
                 "docketNumber"          : $("#add_cmpltd_docket_no").val(),
@@ -9150,6 +9171,10 @@ $.wms.form5 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "referralAction"        : "COURTESY_TERMINATED",
+                "dateCICAR"             : terminatedDate,
+                "dateCompletedAndReturned" : terminatedDate,
+                "dateReturned"          : terminatedDate,
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "PIS_CSUP",
             }

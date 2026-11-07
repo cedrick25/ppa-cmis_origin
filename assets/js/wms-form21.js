@@ -1491,6 +1491,7 @@ $.wms.form21 = (function() {
             cmisResetDocketTransaction();
             $(this).attr('disabled',true)
             $(".modal-loader").removeClass("hidden")
+            var transferredOfficeId = $("#add_acted_field_office").val();
             var PPISPayload = {
                 "clientType"            : "PAROLEE",
                 "docketNumber"          : $("#add_acted_docket_no").val(),
@@ -1499,10 +1500,13 @@ $.wms.form21 = (function() {
                 "middleName"            : null,
                 "lastName"              : null,
                 "suffixName"            : null,
-                "receivedDateByPPO"     : $("#add_acted_date_rcv").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
+                "referralAction"        : "ACTED",
+                "psirDate"              : $("#add_acted_psir").val(),
+                "manifestationDate"     : $("#add_acted_manifest").val(),
                 "dateOfTransfer"        : $("#add_acted_transfer_date").val(),
-                "transferredOfficeId"   : $("#add_acted_transfer_to").val(),
+                "transferredOfficeId"   : transferredOfficeId ? transferredOfficeId : null,
+                "specifyCourtPpoTransferred" : $("#add_acted_transfer_to").val(),
                 "ppoRecommendation"     : $("#add_acted_recommendation").val(),
                 "manualDocket"          : false,
                 "createdBy"             : $.cookie("USER_ID"),
@@ -2631,9 +2635,11 @@ $.wms.form21 = (function() {
                 "middleName"            : null,
                 "lastName"              : null,
                 "suffixName"            : null,
-                "receivedDateByPPO"     : $("#add_date_rcv").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "referralAction"        : "COURT_DECISION",
+                "courtDecision"         : $("#add_psir_rec").val(),
+                "dateOrderReceivedFromTheCourt" : $("#add_psir").val(),
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_INV",
             }
@@ -4136,6 +4142,7 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var completedDate = $("#add_cmpltd_date").val();
             var PPISPayload = {
                 "clientType"            : "PAROLEE",
                 "docketNumber"          : $("#add_cmpltd_docket_no").val(),
@@ -4146,6 +4153,9 @@ $.wms.form21 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "referralAction"        : "COMPLETED_RETURN",
+                "dateCICAR"             : completedDate,
+                "dateCompletedAndReturned" : completedDate,
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSINV",
             }
@@ -8309,8 +8319,10 @@ $.wms.form21 = (function() {
                 "middleName"            : null,
                 "lastName"              : null,
                 "suffixName"            : null,
-                "resolutionType":       $("#add_findings").val(),
-                "dateReportSubmittedToTheBoard": $("#add_submitted").val(),
+                "referralAction"        : "BOARD_RESOLUTION",
+                "resolutionType"        : $("#add_findings").val(),
+                "otherResolutionType"   : $("#add_submitted_report").val(),
+                "dateResolutionFromTheBoard": $("#add_submitted").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
                 "createdBy"             : $.cookie("USER_ID"),
@@ -9797,7 +9809,8 @@ $.wms.form21 = (function() {
                 "middleName"            : null,
                 "lastName"              : null,
                 "suffixName"            : null,
-                "dateOrderReceivedFromTheBoard": $("#add_submitted").val(),
+                "referralAction"        : "RD_RESOLUTION",
+                "dateResolutionFromTheRDForTransfer": $("#add_submitted").val(),
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
                 "createdBy"             : $.cookie("USER_ID"),
@@ -12055,6 +12068,7 @@ $.wms.form21 = (function() {
                     //Error Prompt
                 }
             });    
+            var terminatedDate = $("#add_term_date_terminated").val();
             var PPISPayload = {
                 "clientType"            : clientType,
                 "docketNumber"          : $("#add_term_docket_no").val(),
@@ -12065,6 +12079,10 @@ $.wms.form21 = (function() {
                 "suffixName"            : null,
                 "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "manualDocket"          : false,
+                "referralAction"        : "COURTESY_TERMINATED",
+                "dateCICAR"             : terminatedDate,
+                "dateCompletedAndReturned" : terminatedDate,
+                "dateReturned"          : terminatedDate,
                 "createdBy"             : $.cookie("USER_ID"),
                 "type"                  : "SC_PPI_CSUP",
             }
