@@ -8895,6 +8895,7 @@ $.wms.form5 = (function() {
                 "middleName"            : null,
                 "lastName"              : null,
                 "suffixName"            : null,
+                "fieldOfficeId"         : $.wms.urlParam('officeId'),
                 "receivedDateByPPO"     : $("#add_rcv_date_rcv").val(),
                 "referralData"          : $("#add_rcv_referring_office").val(),
                 "courtOfOrigin"         : $("#add_rcv_court_origin").val(),
