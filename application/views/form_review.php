@@ -2,6 +2,10 @@
 <style>
   #sortable1, #sortable2, #sortable3 { list-style-type: none; margin: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 100%;}
   #sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 10px; width: 100%; }
+  #carryover-processing .alert { margin-bottom: 16px; }
+  #carryover-status { margin: 0 0 8px; }
+  #carryover-track { height: 24px; border-radius: 4px; background: #e9ecef; overflow: hidden; }
+  #carryover-bar { height: 24px; width: 0%; background: #337ab7; color: #fff; text-align: center; line-height: 24px; font-size: 12px; font-variant-numeric: tabular-nums; }
   </style>
 <body style="background-color: #f1f1f1;">
 <?php $this->load->view('templates/nav.php'); ?> 
@@ -39,14 +43,25 @@
     
       <div class="modal-content">
         <div class="modal-header tb-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close carryover-close" data-dismiss="modal" style="display:none">&times;</button>
           <h4 class="modal-title"><b><i class="fa fa-share"></i> Carry Over </b></h4>
         </div>
         <div class="modal-body">
-            <div class="alert alert-success">
-              <strong>Processing!</strong> "Thank you for your patience. We are currently processing your carryover request. Please note that this may take some time due to high demand. We apologize for the delay and appreciate your understanding. If you have any urgent concerns, please feel free to reach out to our customer support team."</span><br><br>
-              <strong></strong> "When waiting for processing carryover, please be patient as it may take up to 1 hour to complete, but it could be completed in as little as 5 minutes.. Thank you for your understanding and patience."<i class="fa fa-refresh fa-spin fa-1x fa-fw spin"></i></span>
+            <div id="carryover-processing">
+              <div class="alert alert-success">
+                <strong>Processing!</strong> "Thank you for your patience. We are currently processing your carryover request. Please note that this may take some time due to high demand. We apologize for the delay and appreciate your understanding. If you have any urgent concerns, please feel free to reach out to our customer support team."<br><br>
+                "When waiting for processing carryover, please be patient as it may take up to 1 hour to complete, but it could be completed in as little as 5 minutes.. Thank you for your understanding and patience." <i class="fa fa-refresh fa-spin fa-1x fa-fw"></i>
+              </div>
+              <p id="carryover-status">Starting carry over...</p>
+              <div id="carryover-track">
+                <div id="carryover-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">0%</div>
+              </div>
             </div>
+            <div id="carryover-error" class="alert alert-danger" style="display:none;margin-bottom:0;"></div>
+        </div>
+        <div class="modal-footer" id="carryover-footer" style="display:none">
+          <button type="button" class="btn btn-primary" id="carryover-retry">Retry carry over</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

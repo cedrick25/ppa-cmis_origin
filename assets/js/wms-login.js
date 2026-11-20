@@ -9,7 +9,11 @@ $.wms.login = (typeof $.wms.login !== 'undefined') ? $.wms : {};
 $.wms.login = (function() {
 
     var __attachLoginEvent = function() {
-        
+        if (typeof $.cookie === "function" && typeof $.cookie("USER_ID") !== "undefined") {
+            window.location.replace("dashboard");
+            return;
+        }
+
         $("#divLoading").addClass("hidden");
         $("#divLogin").fadeIn();
 

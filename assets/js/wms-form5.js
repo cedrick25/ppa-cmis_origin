@@ -24,9 +24,20 @@ $.wms.form5 = (function() {
             success: function (result) {
                 if (result && result.fileToken) {
                     __cmisFileToken = result.fileToken;
+                    window.__cmisFileTokenMissing = false;
+                } else {
+                    window.__cmisFileTokenMissing = true;
+                }
+            },
+            error: function (xhr) {
+                if (xhr && (xhr.status === 401 || xhr.status === 403)) {
+                    window.__cmisFileTokenMissing = true;
                 }
             }
         });
+        if (!__cmisFileToken && window.__cmisFileTokenMissing && typeof cmisPromptMissingTokenLogout === 'function') {
+            cmisPromptMissingTokenLogout();
+        }
         return __cmisFileToken;
     }
 

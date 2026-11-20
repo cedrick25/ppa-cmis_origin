@@ -875,7 +875,167 @@ $.wms.reports = (function() {
         console.log("------------")
     }
 
+    var __carryRetry = null;
+
+    function __carryOverRunId() {
+        var hex = '';
+        for (var i = 0; i < 16; i++) {
+            hex += Math.floor(Math.random() * 16).toString(16);
+        }
+        return hex;
+    }
+
+    function __resetCarryOverModal() {
+        $("#carryover-processing").show();
+        $("#carryover-error").hide().text('');
+        $("#carryover-footer").hide();
+        $(".carryover-close").hide();
+        $("#carryover-bar").css({width: '0%', background: '#337ab7'}).text('0%').attr('aria-valuenow', 0);
+        $("#carryover-status").text('Starting carry over...');
+        $("#carryover-retry").text('Retry carry over');
+    }
+
+    function __setCarryOverProgress(done, total, label) {
+        var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+        $("#carryover-bar").css('width', pct + '%').text(pct + '%').attr('aria-valuenow', pct);
+        $("#carryover-status").text(label);
+    }
+
+    function __showCarryOverError(message, retryLabel) {
+        $("#carryover-processing").hide();
+        $("#carryover-error").text(message).show();
+        $("#carryover-retry").text(retryLabel || 'Retry carry over');
+        $("#carryover-footer").show();
+        $(".carryover-close").show();
+    }
+
+    function __finishCarryOver() {
+        __setCarryOverProgress(1, 1, 'Carry over finished.');
+        $("#carryover-bar").css('background', '#5cb85c');
+        setTimeout(function() {
+            location.reload();
+        }, 1200);
+    }
+
+    function __runCmisCarryOver(url, payload) {
+        var runId = __carryOverRunId();
+        var knownTotal = 0;
+        function retryFrom(step, label) {
+            __carryRetry = function() {
+                __resetCarryOverModal();
+                go(step);
+            };
+            __showCarryOverError(
+                label ? ('Carry over stopped at ' + label + '. Tables that already finished were saved.') : 'Carry over stopped before this table finished. Tables that already finished were saved.',
+                label ? ('Retry ' + label) : 'Retry this table'
+            );
+        }
+        function go(step) {
+            var body = $.extend({}, payload, {step: step, runId: runId});
+            if (knownTotal > 0) {
+                __setCarryOverProgress(step, knownTotal, 'Carrying over the next table (' + (step + 1) + ' of ' + knownTotal + ')...');
+            } else {
+                __setCarryOverProgress(0, 1, 'Starting carry over...');
+            }
+            $.wms.executeExternalPost(url, JSON.stringify(body)).done(function (result) {
+                if (!result || result.status === 'ERROR') {
+                    retryFrom(step);
+                    return;
+                }
+                if (result.status !== 'SUCCESS') {
+                    var failedStep = (typeof result.step === 'number') ? result.step : step;
+                    if (typeof result.total === 'number') {
+                        knownTotal = result.total;
+                    }
+                    __carryRetry = function() {
+                        __resetCarryOverModal();
+                        go(failedStep);
+                    };
+                    __showCarryOverError(result.message || 'Carry over failed. Tables that already finished were saved.', result.label ? ('Retry ' + result.label) : 'Retry this table');
+                    return;
+                }
+                var total = result.total || 1;
+                knownTotal = total;
+                var done = result.done || (step + 1);
+                __setCarryOverProgress(done, total, (result.label || 'Table') + ' complete (' + done + ' of ' + total + ').');
+                if (result.finished) {
+                    __finishCarryOver();
+                    return;
+                }
+                go(step + 1);
+            });
+        }
+        go(0);
+    }
+
+    function __nextCarryMonth(ym) {
+        var parts = String(ym || '').split('-');
+        var year = parseInt(parts[0], 10);
+        var month = parseInt(parts[1], 10);
+        if (!year || month < 1 || month > 12) {
+            return '';
+        }
+        if (month === 12) {
+            return (year + 1) + '-01';
+        }
+        var next = month + 1;
+        return year + '-' + (next < 10 ? '0' + next : String(next));
+    }
+
+    function __expansionLabel(code) {
+        var match = /^F(\d+)t(\d+)$/i.exec(code);
+        if (!match) {
+            return code;
+        }
+        return 'Form ' + match[1] + ' Table ' + match[2];
+    }
+
+    function __runExpansionCarryOver(items, officeId, yearMonth) {
+        var saved = [];
+        function go(index) {
+            if (index >= items.length) {
+                __finishCarryOver();
+                return;
+            }
+            var label = __expansionLabel(items[index]);
+            __setCarryOverProgress(index, items.length, 'Carrying over ' + label + ' (' + (index + 1) + ' of ' + items.length + ').');
+            var body = {
+                officeIdList: [officeId],
+                yearMonthList: [yearMonth],
+                formTableName: items[index]
+            };
+            $.wms.executeExternalPost(Expansion_api + items[index] + '/carryover', JSON.stringify(body)).done(function (result) {
+                if (!result || result.status !== 'SUCCESS') {
+                    var message = 'Carry over failed at ' + label + '.';
+                    if (saved.length) {
+                        var next = __nextCarryMonth(yearMonth);
+                        message += ' ' + saved.join(', ') + (saved.length === 1 ? ' was saved' : ' were saved');
+                        if (next) {
+                            message += ' for ' + next;
+                        }
+                        message += '.';
+                    }
+                    __carryRetry = function() {
+                        __resetCarryOverModal();
+                        go(index);
+                    };
+                    __showCarryOverError(message, 'Retry ' + label);
+                    return;
+                }
+                saved.push(label);
+                __setCarryOverProgress(index + 1, items.length, label + ' complete (' + (index + 1) + ' of ' + items.length + ').');
+                go(index + 1);
+            });
+        }
+        go(0);
+    }
+
     var __form_review = function(){
+        $("#carryover-retry").off("click").on("click", function() {
+            if (__carryRetry) {
+                __carryRetry();
+            }
+        });
         console.log("------------")
         console.log('form lock review')
 
@@ -981,130 +1141,39 @@ $.wms.reports = (function() {
                                     
                                 });
 
+                                __resetCarryOverModal();
                                 switch(data_form_table){
-                                    case "F5" : 
-                                        var payload =  {
-                                            "field_office": field,
-                                            "Y_M": data_ym,
-                                            "officeId": officeId,
-                                        }
-                                        console.log(payload)
-
-                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_trigger?submit=yes',JSON.stringify(payload)).done(function (result) {
-
-                                            if(result.status != undefined && result.status == "SUCCESS"){
-                                                setTimeout(function() {
-                                                        location.reload();
-                                                    }, 5000);
-                                            }
+                                    case "F5" :
+                                        __runCmisCarryOver('/ppa-cmis-api_origin/wsv1/api/migrate_trigger?submit=yes', {
+                                            field_office: field,
+                                            Y_M: data_ym,
+                                            officeId: officeId
                                         });
                                     break;
-                                    case "F21" : 
-                                        var payload =  {
-                                            "field_office": field,
-                                            "Y_M": data_ym,
-                                        }
-                                        console.log(payload)
-
-                                        $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/api/migrate_trigger_f21?submit=yes',JSON.stringify(payload)).done(function (result) {
-                                        
-                                            if(result.status != undefined && result.status == "SUCCESS"){
-                                                setTimeout(function() {
-                                                        location.reload();
-                                                    }, 5000);
-                                            }
+                                    case "F21" :
+                                        __runCmisCarryOver('/ppa-cmis-api_origin/wsv1/api/migrate_trigger_f21?submit=yes', {
+                                            field_office: field,
+                                            Y_M: data_ym,
+                                            officeId: officeId
                                         });
                                     break;
-                                    case "F44" : 
-                                        var form44list = ['F44t1', 'F44t3', 'F44t5', 'F44t7', 'F44t10', 'F44t12'];
-                                        form44list.forEach(function(item) {
-                                            console.log(item)
-
-                                            var payload =  {
-                                                "officeIdList": [officeId],
-                                                "yearMonthList": [data_ym],
-                                                "formTableName": item
-                                            }
-                                            console.log(payload)
-
-                                            $.wms.executeExternalPost(Expansion_api+item+'/carryover',JSON.stringify(payload)).done(function (result) {
-                                                
-                                                if(result.status != undefined && result.status == "SUCCESS"){
-                                                }
-                                            });
-                                        });
-                                        
-                                        setTimeout(function() {
-                                                location.reload();
-                                            }, 300000);
+                                    case "F44" :
+                                        __runExpansionCarryOver(['F44t1', 'F44t3', 'F44t5', 'F44t7', 'F44t10', 'F44t12'], officeId, data_ym);
                                     break;
-                                    case "F45" :  
-                                        var form45list = ['F45t1', 'F45t3', 'F45t5', 'F45t7', 'F45t10', 'F45t12'];
-                                        form45list.forEach(function(item) {
-                                            console.log(item)
-
-                                            var payload =  {
-                                                "officeIdList": [officeId],
-                                                "yearMonthList": [data_ym],
-                                                "formTableName": item
-                                            }
-                                            console.log(payload)
-
-                                            $.wms.executeExternalPost(Expansion_api+item+'/carryover',JSON.stringify(payload)).done(function (result) {
-                                               
-                                                if(result.status != undefined && result.status == "SUCCESS"){
-                                                }
-                                            });
-                                        });
-                                        
-                                        setTimeout(function() {
-                                                location.reload();
-                                            }, 300000);
+                                    case "F45" :
+                                        __runExpansionCarryOver(['F45t1', 'F45t3', 'F45t5', 'F45t7', 'F45t10', 'F45t12'], officeId, data_ym);
                                     break;
                                     case "F50" :
-                                        setTimeout(function() {
-                                                location.reload();
-                                            }, 300000);
+                                        __finishCarryOver();
                                     break;
                                     case "F51" :
-                                        var payload =  {
-                                            "officeIdList": [officeId],
-                                            "yearMonthList": [data_ym],
-                                            "formTableName": 'F51t1'
-                                        }
-                                        console.log(payload)
-
-                                        $.wms.executeExternalPost(Expansion_api+'F51t1/carryover',JSON.stringify(payload)).done(function (result) {
-                                        
-                                            if(result.status != undefined && result.status == "SUCCESS"){
-                                                setTimeout(function() {
-                                                        location.reload();
-                                                    }, 300000);
-                                            }
-                                        });
+                                        __runExpansionCarryOver(['F51t1'], officeId, data_ym);
                                     break;
                                     case "F53" :
-                                        var form53list = ['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'];
-                                        form53list.forEach(function(item) {
-                                            console.log(item)
-
-                                            var payload =  {
-                                                "officeIdList": [officeId],
-                                                "yearMonthList": [data_ym],
-                                                "formTableName": item
-                                            }
-                                            console.log(payload)
-
-                                            $.wms.executeExternalPost(Expansion_api+item+'/carryover',JSON.stringify(payload)).done(function (result) {
-                                                
-                                                if(result.status != undefined && result.status == "SUCCESS"){
-                                                }
-                                            });
-                                        });
-                                        
-                                        setTimeout(function() {
-                                                location.reload();
-                                            }, 300000);
+                                        __runExpansionCarryOver(['F53t1', 'F53t3', 'F53t5', 'F53t7', 'F53t9'], officeId, data_ym);
+                                    break;
+                                    default :
+                                        __showCarryOverError('This form has no auto carry over.');
                                     break;
                                 }
                             });

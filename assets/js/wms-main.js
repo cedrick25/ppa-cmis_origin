@@ -180,27 +180,48 @@ function cmisRestoreDocketForm() {
     $modal.find(".modal-form input, .modal-form select, .modal-form textarea").prop("disabled", false);
 }
 
+function cmisCancelTableForUrl(url, payload) {
+    if (payload && payload.table) {
+        return payload.table;
+    }
+    var name = String(url || '').split('/').pop();
+    var map = {
+        F21T2_RCV: 'F21T2_RCV',
+        F21T2_ACTED: 'F21T2_ACTED',
+        F21T4: 'F21T4',
+        F21T6_RCV: 'F21T6_RCV',
+        F21T6_CMPLTD: 'F21T6_CMPLTD',
+        updateF5T2_RCV: 'F5T2_RCV',
+        updateF5T2_ACTED: 'F5T2_ACTED',
+        updateF5T2_NOTACTED: 'F5T2_NOTACTED',
+        F5T4: 'F5T4',
+        F5T6_RCV: 'F5T6_RCV',
+        F5T6_CMPLTD: 'F5T6_CMPLTD',
+        F5T8: 'F5T8',
+        F5T9: 'F5T9',
+        F5T11: 'F5T11',
+        F5T13_RCV: 'F5T13_RCV',
+        F5T13_TERM: 'F5T13_TERM',
+        upsertMasterlist: 'masterlist'
+    };
+    return map[name] || '';
+}
+
 function cmisArmDocketCancel(url, saveResult, payload) {
     var id = saveResult && (saveResult.id || saveResult.inserted_id);
-    if (!url || id == null || id === '') {
+    var table = cmisCancelTableForUrl(url, payload);
+    if (!table || id == null || id === '') {
         return;
     }
-    var extra = {};
-    if (payload && payload.table) {
-        extra.table = payload.table;
-    }
-    if (String(url).indexOf('upsertMasterlist') !== -1) {
-        extra.STATUS = 0;
-    }
+    var docketNo = (payload && (payload.docket_no || payload.SDOCKETNO)) || '';
     window.__cmisPendingCancels = window.__cmisPendingCancels || [];
     window.__cmisPendingCancels.push(function () {
-        var body = $.extend({
+        return $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/cancelFailedCreate', JSON.stringify({
             id: id,
-            status: "0",
-            created_by: $.cookie("USER_ID"),
-            method: "update"
-        }, extra);
-        return $.wms.executeExternalPost(url, JSON.stringify(body));
+            table: table,
+            docket_no: docketNo,
+            created_by: $.cookie("USER_ID")
+        }));
     });
 }
 
@@ -256,6 +277,92 @@ function cmisAfterAttachment(uploadPromise) {
     }).fail(function (uploadMessage) {
         cmisCancelOpenDocket(uploadMessage || 'File attachment failed.');
     });
+}
+
+function cmisTableRequestUrl(settings) {
+    var ajax = settings && settings.ajax;
+    if (typeof ajax === 'string') {
+        return ajax;
+    }
+    if (ajax && typeof ajax.url === 'string') {
+        return ajax.url;
+    }
+    var xhr = settings && settings.jqXHR;
+    return (xhr && xhr.responseURL) ? xhr.responseURL : '';
+}
+
+function cmisTableMissingToken(settings) {
+    var url = cmisTableRequestUrl(settings);
+    if (url.indexOf('/file/') === -1) {
+        return false;
+    }
+    var xhr = settings && settings.jqXHR;
+    var status = xhr ? xhr.status : 0;
+    if (status === 401 || status === 403) {
+        return true;
+    }
+    var body = (xhr && xhr.responseText) ? xhr.responseText : '';
+    return window.__cmisFileTokenMissing === true && /token/i.test(body);
+}
+
+function cmisPromptMissingTokenLogout() {
+    if (window.__cmisTokenLogoutStarted) {
+        return;
+    }
+    window.__cmisTokenLogoutStarted = true;
+    alert('Your session is missing a file token. You need to log in again. Click OK to log out, then sign in.');
+
+    var email = (typeof $.cookie === 'function') ? $.cookie('USER_EMAIL') : '';
+    var userId = (typeof $.cookie === 'function') ? $.cookie('USER_ID') : '';
+    var body = JSON.stringify({
+        USER_EMAIL: email || '',
+        USER_ID: userId || ''
+    });
+    var uamsLogout = __cmis_local
+        ? '/ppa-api-uams/wsv1/Api/doLogout'
+        : (window.location.protocol + '//uams.probation.gov.ph/ppa-api-uams/wsv1/Api/doLogout');
+    var uamsLogin = __cmis_local
+        ? '/ppa-uams/login'
+        : (window.location.protocol + '//uams.probation.gov.ph/ppa-uams/login');
+
+    $.ajax({
+        url: '/ppa-cmis-api_origin/wsv1/file/end',
+        method: 'POST',
+        async: false
+    });
+    if (email) {
+        $.ajax({
+            url: uamsLogout,
+            method: 'POST',
+            contentType: 'application/json',
+            data: body,
+            async: false
+        });
+        $.ajax({
+            url: '/ppa-cmis-api_origin/wsv1/Api/doLogout',
+            method: 'POST',
+            contentType: 'application/json',
+            data: body,
+            async: false
+        });
+    }
+    if (typeof $.cookie === 'function') {
+        var cookies = $.cookie();
+        for (var cookie in cookies) {
+            $.removeCookie(cookie);
+        }
+    }
+    window.location.href = uamsLogin;
+}
+
+if (window.jQuery && jQuery.fn.dataTable) {
+    jQuery.fn.dataTable.ext.errMode = function (settings, techNote, message) {
+        if (cmisTableMissingToken(settings)) {
+            cmisPromptMissingTokenLogout();
+            return;
+        }
+        alert(message);
+    };
 }
 
 function cmisPpisFileFieldInvalid(fieldId) {
