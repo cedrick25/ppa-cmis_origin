@@ -781,12 +781,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -1028,12 +1028,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -2360,12 +2360,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -3217,12 +3217,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -3461,12 +3461,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -4982,12 +4982,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -5232,12 +5232,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -6017,12 +6017,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -6272,12 +6272,12 @@ $.wms.form21 = (function() {
                                             const totalRows = meta.settings.json?.data?.length || 0;
 
                                             let actions = `
-                                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-eye"></i> View
                                                     </button>
                                                 </a>
-                                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                                         <i class="fa fa-download"></i> Download
                                                     </button>
@@ -7595,12 +7595,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -7847,12 +7847,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -9123,12 +9123,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -9366,12 +9366,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -10648,12 +10648,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -10892,12 +10892,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
@@ -11136,12 +11136,12 @@ $.wms.form21 = (function() {
                         "data": null,
                         "render": function (data, type, row, meta) {
                             let actions = `
-                                <a href=${PPIS_path_upload}/file/view/${data.id} target='_blank'>
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class='btn btn-primary btn-sm btn-view' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                         <i class='fa fa-eye'></i> View
                                     </button>
                                 </a>
-                                <a href=${PPIS_path_upload}/file/download/${data.id} target='_blank'>
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class='btn btn-primary btn-sm btn-download' data-id='${data.id}' data-file_path='${data.filePath}' data-file_name='${data.fileName}'>
                                         <i class='fa fa-download'></i> Download
                                     </button>
@@ -11373,12 +11373,12 @@ $.wms.form21 = (function() {
                             const totalRows = meta.settings.json?.data?.length || 0;
 
                             let actions = `
-                                <a href="${PPIS_path_upload}/file/view/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/view/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-view" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-eye"></i> View
                                     </button>
                                 </a>
-                                <a href="${PPIS_path_upload}/file/download/${data.id}" target="_blank">
+                                <a href="/ppa-cmis-api_origin/wsv1/file/download/${data.id}" target="_blank">
                                     <button class="btn btn-primary btn-sm btn-download" data-id="${data.id}" data-file_path="${data.filePath}" data-file_name="${data.fileName}">
                                         <i class="fa fa-download"></i> Download
                                     </button>
