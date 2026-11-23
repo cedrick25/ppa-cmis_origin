@@ -310,49 +310,84 @@ function cmisPromptMissingTokenLogout() {
         return;
     }
     window.__cmisTokenLogoutStarted = true;
-    alert('Your session is missing a file token. You need to log in again. Click OK to log out, then sign in.');
+    alert('Your session has expired. Click OK to sign back in to UAMS, then sign in to the Expansion of Case Management Information System.');
 
-    var email = (typeof $.cookie === 'function') ? $.cookie('USER_EMAIL') : '';
-    var userId = (typeof $.cookie === 'function') ? $.cookie('USER_ID') : '';
-    var body = JSON.stringify({
-        USER_EMAIL: email || '',
-        USER_ID: userId || ''
-    });
-    var uamsLogout = __cmis_local
-        ? '/ppa-api-uams/wsv1/Api/doLogout'
-        : (window.location.protocol + '//uams.probation.gov.ph/ppa-api-uams/wsv1/Api/doLogout');
-    var uamsLogin = __cmis_local
-        ? '/ppa-uams/login'
-        : (window.location.protocol + '//uams.probation.gov.ph/ppa-uams/login');
+    try {
+        localStorage.clear();
+    } catch (e) {}
+    try {
+        sessionStorage.clear();
+    } catch (e) {}
 
-    $.ajax({
-        url: '/ppa-cmis-api_origin/wsv1/file/end',
-        method: 'POST',
-        async: false
-    });
-    if (email) {
-        $.ajax({
-            url: uamsLogout,
-            method: 'POST',
-            contentType: 'application/json',
-            data: body,
-            async: false
+    var cacheCleared = $.Deferred();
+    if (window.caches && typeof caches.keys === 'function') {
+        var cacheTimer = setTimeout(function () {
+            cacheCleared.resolve();
+        }, 1500);
+        caches.keys().then(function (names) {
+            return Promise.all(names.map(function (name) {
+                return caches.delete(name);
+            }));
+        }).then(function () {
+            clearTimeout(cacheTimer);
+            cacheCleared.resolve();
+        }, function () {
+            clearTimeout(cacheTimer);
+            cacheCleared.resolve();
         });
-        $.ajax({
-            url: '/ppa-cmis-api_origin/wsv1/Api/doLogout',
-            method: 'POST',
-            contentType: 'application/json',
-            data: body,
-            async: false
-        });
+    } else {
+        cacheCleared.resolve();
     }
-    if (typeof $.cookie === 'function') {
-        var cookies = $.cookie();
-        for (var cookie in cookies) {
-            $.removeCookie(cookie);
+
+    var signedOut = false;
+    cacheCleared.always(function () {
+        if (signedOut) {
+            return;
         }
-    }
-    window.location.href = uamsLogin;
+        signedOut = true;
+
+        var email = (typeof $.cookie === 'function') ? $.cookie('USER_EMAIL') : '';
+        var userId = (typeof $.cookie === 'function') ? $.cookie('USER_ID') : '';
+        var body = JSON.stringify({
+            USER_EMAIL: email || '',
+            USER_ID: userId || ''
+        });
+        var uamsLogout = __cmis_local
+            ? '/ppa-api-uams/wsv1/Api/doLogout'
+            : (window.location.protocol + '//uams.probation.gov.ph/ppa-api-uams/wsv1/Api/doLogout');
+        var uamsLogin = __cmis_local
+            ? '/ppa-uams/login'
+            : (window.location.protocol + '//uams.probation.gov.ph/ppa-uams/login');
+
+        $.ajax({
+            url: '/ppa-cmis-api_origin/wsv1/file/end',
+            method: 'POST',
+            async: false
+        });
+        if (email) {
+            $.ajax({
+                url: uamsLogout,
+                method: 'POST',
+                contentType: 'application/json',
+                data: body,
+                async: false
+            });
+            $.ajax({
+                url: '/ppa-cmis-api_origin/wsv1/Api/doLogout',
+                method: 'POST',
+                contentType: 'application/json',
+                data: body,
+                async: false
+            });
+        }
+        if (typeof $.cookie === 'function') {
+            var cookies = $.cookie();
+            for (var cookie in cookies) {
+                $.removeCookie(cookie);
+            }
+        }
+        window.location.replace(uamsLogin);
+    });
 }
 
 if (window.jQuery && jQuery.fn.dataTable) {
