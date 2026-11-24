@@ -1650,8 +1650,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteRCVProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_INV").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
@@ -1679,6 +1681,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
 
@@ -1802,8 +1809,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteACTEDProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_INV").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
@@ -1831,6 +1840,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
 
@@ -2689,8 +2703,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_INV").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
@@ -2716,6 +2732,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -3953,8 +3974,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteRCVProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_CSINV").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
@@ -3980,6 +4003,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-rcv-edit").unbind("click").on("click",function(){
@@ -4201,8 +4229,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteCMPLTDProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_CSINV").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "status" : "0",
@@ -4228,6 +4258,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-cmpltd-edit").unbind("click").on("click",function(){
@@ -5782,8 +5817,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_SUP").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "table" : $(".sel-table").html(),
@@ -5810,6 +5847,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -6821,8 +6863,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_SUP").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "table" : $(".sel-table").html(),
@@ -6849,6 +6893,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -8376,8 +8425,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_SUP").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "table" : $(".sel-table").html(),
@@ -8404,6 +8455,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -9864,8 +9920,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_SUP").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "table" : $(".sel-table").html(),
@@ -9892,6 +9950,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-edit").unbind("click").on("click",function(){
@@ -12158,8 +12221,10 @@ $.wms.form21 = (function() {
 
             //Delete
             $(".deleteProceedButton").unbind("click").on("click",function(){
-                $(this).attr('disabled',true)
+                var $btn = $(this);
                 $(".modal-loader").removeClass("hidden")
+                $btn.attr('disabled',true)
+                cmisDeletePpisDocket($(".sel-docket").html(), "SC_PPI_CSUP").done(function () {
                 var payload = {
                     "id" : $(".sel-id").html(),
                     "table" : $(".sel-table").html(),
@@ -12186,6 +12251,11 @@ $.wms.form21 = (function() {
                         });
                     }
                 });    
+                }).fail(function (message) {
+                    $(".modal-loader").addClass("hidden")
+                    $btn.attr('disabled', false)
+                    alert(message || 'PPIS could not delete this docket. It is still active in CMIS.');
+                });
             })
 
             $(".btn-edit").unbind("click").on("click",function(){

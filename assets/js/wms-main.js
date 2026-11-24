@@ -112,6 +112,38 @@ function cmisPayloadMessage(data, fallback) {
     return fallback || '';
 }
 
+function cmisDeletePpisDocket(docketNumber, type) {
+    var deferred = $.Deferred();
+    var docket = docketNumber == null ? '' : String(docketNumber).trim();
+    if (!docket) {
+        deferred.reject('Docket number is missing. It is still active in CMIS.');
+        return deferred.promise();
+    }
+    $.ajax({
+        url: PPIS_path + '/ppis/delete',
+        type: 'POST',
+        data: JSON.stringify({
+            docketNumber: docket,
+            fieldOfficeId: $.wms.urlParam('officeId'),
+            type: type || '',
+            createdBy: $.cookie('USER_ID')
+        }),
+        contentType: 'application/json',
+        timeout: 15000,
+        success: function (result) {
+            if (cmisPayloadFailed(result)) {
+                deferred.reject(cmisPayloadMessage(result, 'PPIS could not delete this docket. It is still active in CMIS.'));
+            } else {
+                deferred.resolve(result);
+            }
+        },
+        error: function (xhr) {
+            deferred.reject(cmisAjaxMessage(xhr, 'PPIS could not delete this docket. It is still active in CMIS.'));
+        }
+    });
+    return deferred.promise();
+}
+
 function cmisAjaxMessage(xhr, fallback) {
     var body = xhr && (xhr.responseJSON || null);
     if (!body && xhr && xhr.responseText) {
