@@ -9,15 +9,19 @@ $.wms.dashboard = (typeof $.wms.dashboard !== 'undefined') ? $.wms.dashboard : {
 $.wms.dashboard = (function() {
 
     function cmisEndFileSession() {
-        if (navigator.sendBeacon) {
-            navigator.sendBeacon('/ppa-cmis-api_origin/wsv1/file/end');
-            return;
-        }
-        $.ajax({
+        return $.ajax({
             url: '/ppa-cmis-api_origin/wsv1/file/end',
             method: 'POST',
-            async: false
+            timeout: 4000
         });
+    }
+
+    function cmisClearCookiesAndLeave() {
+        var cookies = $.cookie();
+        for (var cookie in cookies) {
+            $.removeCookie(cookie);
+        }
+        window.location.href = "login";
     }
 
     var __attachPageEvent = function() {
@@ -52,12 +56,7 @@ $.wms.dashboard = (function() {
             $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Cmis/AuditInsert',JSON.stringify(payload)).done(function (result) {
             });
 
-            cmisEndFileSession();
-            var cookies = $.cookie();
-            for(var cookie in cookies) {
-               $.removeCookie(cookie);
-            }
-            window.location.href="login"
+            cmisEndFileSession().always(cmisClearCookiesAndLeave);
         });
 
 
@@ -69,12 +68,7 @@ $.wms.dashboard = (function() {
         $.wms.executeExternalPost('/ppa-cmis-api_origin/wsv1/Api/isActive',JSON.stringify(payload)).done(function (result) {
             // console.log(result)
             if(result.status == "FAILED"){
-                cmisEndFileSession();
-                var cookies = $.cookie();
-                for(var cookie in cookies) {
-                   $.removeCookie(cookie);
-                }
-                window.location.href="login"     
+                cmisEndFileSession().always(cmisClearCookiesAndLeave);
             }
 
         });        

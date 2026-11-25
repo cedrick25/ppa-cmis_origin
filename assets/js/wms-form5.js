@@ -8,50 +8,6 @@ $.wms.form5 = (typeof $.wms.form5 !== 'undefined') ? $.wms : {};
 
 $.wms.form5 = (function() {
 
-    var __cmisFileToken = '';
-
-    function cmisLoadFileToken() {
-        if (__cmisFileToken) {
-            return __cmisFileToken;
-        }
-        $.ajax({
-            url: '/ppa-cmis-api_origin/wsv1/file/token',
-            method: 'GET',
-            dataType: 'json',
-            cache: false,
-            async: false,
-            timeout: 4000,
-            success: function (result) {
-                if (result && result.fileToken) {
-                    __cmisFileToken = result.fileToken;
-                    window.__cmisFileTokenMissing = false;
-                } else {
-                    window.__cmisFileTokenMissing = true;
-                }
-            },
-            error: function (xhr) {
-                if (xhr && (xhr.status === 401 || xhr.status === 403)) {
-                    window.__cmisFileTokenMissing = true;
-                }
-            }
-        });
-        if (!__cmisFileToken && window.__cmisFileTokenMissing && typeof cmisPromptMissingTokenLogout === 'function') {
-            cmisPromptMissingTokenLogout();
-        }
-        return __cmisFileToken;
-    }
-
-    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-        var url = options.url || '';
-        if (typeof PPIS_path_upload === 'string' && url.indexOf(PPIS_path_upload + '/file/') !== -1 && __cmisFileToken) {
-            jqXHR.setRequestHeader('Authorization', 'Bearer ' + __cmisFileToken);
-        }
-    });
-
-    if (typeof $.cookie === 'function' && $.cookie('USER_ID')) {
-        cmisLoadFileToken();
-    }
-
     var ___validateSave = function(allowedDocket,docket,requiredField,check,checkTable){
         $(".err_msg").remove()
         docket.removeClass("error_field")

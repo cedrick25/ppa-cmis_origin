@@ -27,6 +27,197 @@ var Expansion_api = __cmis_local
     ? (__cmis_proto + "127.0.0.1:" + Expansion_port + "/")
     : (__cmis_proto + window.location.hostname + "/" + Expansion_port + "/");
 
+window.__cmisFileToken = window.__cmisFileToken || '';
+
+function cmisIsPpisFileUrl(url) {
+    return typeof PPIS_path_upload === 'string'
+        && typeof url === 'string'
+        && url.indexOf(PPIS_path_upload + '/file/') !== -1;
+}
+
+function cmisIsUploadUrl(url) {
+    return cmisIsPpisFileUrl(url) && url.indexOf('/file/upload') !== -1;
+}
+
+function cmisTokenExp(token) {
+    try {
+        var part = String(token || '').split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        if (!part) {
+            return 0;
+        }
+        var json = JSON.parse(atob(part));
+        return json && json.exp ? json.exp : 0;
+    } catch (e) {
+        return 0;
+    }
+}
+
+function cmisKeepFileToken(token) {
+    if (!token) {
+        return;
+    }
+    if (cmisTokenExp(token) >= cmisTokenExp(window.__cmisFileToken)) {
+        window.__cmisFileToken = token;
+        window.__cmisFileTokenMissing = false;
+    }
+}
+
+(function () {
+    var rawAjax = $.ajax;
+
+    function cmisFetchFileToken() {
+        var deferred = $.Deferred();
+        rawAjax({
+            url: '/ppa-cmis-api_origin/wsv1/file/token',
+            method: 'GET',
+            dataType: 'json',
+            cache: false,
+            timeout: 8000
+        }).done(function (result) {
+            if (result && result.fileToken) {
+                cmisKeepFileToken(result.fileToken);
+                deferred.resolve(window.__cmisFileToken);
+                return;
+            }
+            window.__cmisFileTokenMissing = true;
+            deferred.reject({ status: 401, responseText: '' });
+        }).fail(function (xhr) {
+            if (xhr && (xhr.status === 401 || xhr.status === 403)) {
+                window.__cmisFileToken = '';
+                window.__cmisFileTokenMissing = true;
+            }
+            deferred.reject(xhr);
+        });
+        return deferred.promise();
+    }
+
+    function cmisRememberRenewedToken(xhr) {
+        if (!xhr || typeof xhr.getResponseHeader !== 'function') {
+            return;
+        }
+        var renewed = xhr.getResponseHeader('X-File-Token');
+        if (!renewed) {
+            return;
+        }
+        cmisKeepFileToken(renewed);
+        rawAjax({
+            url: '/ppa-cmis-api_origin/wsv1/file/token',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ fileToken: renewed }),
+            cache: false,
+            timeout: 8000
+        });
+    }
+
+    /* Every /file/upload call waits for a token. A failed token request does not upload. */
+    function cmisUploadAjax(settings) {
+        var options = $.extend({}, settings);
+        var userSuccess = options.success;
+        var userError = options.error;
+        var userComplete = options.complete;
+        delete options.success;
+        delete options.error;
+        delete options.complete;
+
+        function run(retried) {
+            var deferred = $.Deferred();
+            cmisFetchFileToken().done(function () {
+                rawAjax(options).done(function (data, textStatus, xhr) {
+                    if (userSuccess) {
+                        userSuccess(data, textStatus, xhr);
+                    }
+                    if (userComplete) {
+                        userComplete(xhr, textStatus);
+                    }
+                    deferred.resolve(data, textStatus, xhr);
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    if (!retried && xhr && xhr.status === 401) {
+                        window.__cmisFileToken = '';
+                        run(true).done(deferred.resolve).fail(deferred.reject);
+                        return;
+                    }
+                    if (userError) {
+                        userError(xhr, textStatus, errorThrown);
+                    }
+                    if (userComplete) {
+                        userComplete(xhr, textStatus);
+                    }
+                    deferred.reject(xhr, textStatus, errorThrown);
+                });
+            }).fail(function (xhr) {
+                var failed = xhr || { status: 0, responseText: '' };
+                if (userError) {
+                    userError(failed, 'error', 'file token unavailable');
+                }
+                if (userComplete) {
+                    userComplete(failed, 'error');
+                }
+                deferred.reject(failed, 'error', 'file token unavailable');
+            });
+            return deferred.promise();
+        }
+
+        return run(false);
+    }
+
+    $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+        if (!cmisIsPpisFileUrl(options.url)) {
+            return;
+        }
+        if (window.__cmisFileToken) {
+            jqXHR.setRequestHeader('Authorization', 'Bearer ' + window.__cmisFileToken);
+        }
+        jqXHR.always(function () {
+            cmisRememberRenewedToken(jqXHR);
+        });
+    });
+
+    $.ajax = function (url, settings) {
+        var normalized = (typeof url === 'object') ? url : $.extend({}, settings || {});
+        if (typeof url !== 'object' && url) {
+            normalized.url = url;
+        }
+        var target = normalized.url || '';
+        if (cmisIsUploadUrl(target)) {
+            return cmisUploadAjax(normalized);
+        }
+        if (cmisIsPpisFileUrl(target) && !window.__cmisFileToken) {
+            var gate = $.Deferred();
+            var xhr = null;
+            cmisFetchFileToken().done(function () {
+                xhr = rawAjax(normalized);
+                xhr.done(gate.resolve).fail(gate.reject);
+            }).fail(function (failed) {
+                failed = failed || { status: 0, responseText: '' };
+                if (typeof normalized.error === 'function') {
+                    normalized.error(failed, 'error', 'file token unavailable');
+                }
+                if (typeof normalized.complete === 'function') {
+                    normalized.complete(failed, 'error');
+                }
+                gate.reject(failed, 'error', 'file token unavailable');
+            });
+            var promise = gate.promise();
+            promise.abort = function () {
+                if (xhr && xhr.abort) {
+                    xhr.abort();
+                }
+            };
+            return promise;
+        }
+        return rawAjax.apply($, arguments);
+    };
+
+    if (typeof $.cookie === 'function' && $.cookie('USER_ID')) {
+        cmisFetchFileToken().fail(function () {
+            if (window.__cmisFileTokenMissing && typeof cmisPromptMissingTokenLogout === 'function') {
+                cmisPromptMissingTokenLogout();
+            }
+        });
+    }
+})();
+
 /* PPIS file service accepts PDF and BMP only. */
 function cmisPpisFileExtension(name) {
     var base = String(name || '').replace(/\\/g, '/').split('/').pop().trim();
@@ -439,34 +630,41 @@ function cmisPromptMissingTokenLogout() {
             ? '/ppa-uams/login'
             : (window.location.protocol + '//uams.probation.gov.ph/ppa-uams/login');
 
+        var finishLogout = function () {
+            if (typeof $.cookie === 'function') {
+                var cookies = $.cookie();
+                for (var cookie in cookies) {
+                    $.removeCookie(cookie);
+                }
+            }
+            window.location.replace(uamsLogin);
+        };
         $.ajax({
             url: '/ppa-cmis-api_origin/wsv1/file/end',
             method: 'POST',
-            async: false
-        });
-        if (email) {
-            $.ajax({
-                url: uamsLogout,
-                method: 'POST',
-                contentType: 'application/json',
-                data: body,
-                async: false
-            });
-            $.ajax({
-                url: '/ppa-cmis-api_origin/wsv1/Api/doLogout',
-                method: 'POST',
-                contentType: 'application/json',
-                data: body,
-                async: false
-            });
-        }
-        if (typeof $.cookie === 'function') {
-            var cookies = $.cookie();
-            for (var cookie in cookies) {
-                $.removeCookie(cookie);
+            timeout: 4000
+        }).always(function () {
+            if (!email) {
+                finishLogout();
+                return;
             }
-        }
-        window.location.replace(uamsLogin);
+            $.when(
+                $.ajax({
+                    url: uamsLogout,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: body,
+                    timeout: 4000
+                }),
+                $.ajax({
+                    url: '/ppa-cmis-api_origin/wsv1/Api/doLogout',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: body,
+                    timeout: 4000
+                })
+            ).always(finishLogout);
+        });
     });
 }
 
