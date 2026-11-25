@@ -282,26 +282,13 @@ $.wms.form5 = (function() {
                 formData.append('file', file);
                 formData.append('kind', kind);
 
-                $.ajax({
-                    url: PPIS_path_upload + '/file/upload',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (response) {
-                        if (cmisPayloadFailed(response)) {
-                            failures.push((file.name || 'File') + ': ' + cmisPayloadMessage(response, 'Upload was rejected.'));
-                        } else {
-                            console.log('Upload success: ' + file.name, response);
-                            uploaded.push(cmisUploadedFileRecord(response, file.name));
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Upload failed for file: ' + file.name, error);
-                        failures.push((file.name || 'File') + ': ' + cmisAjaxMessage(xhr, 'Upload failed.'));
-                    },
-                    complete: finishOne
-                });
+                cmisPostPpisFile(formData, file.name).done(function (response) {
+                    console.log('Upload success: ' + file.name, response);
+                    uploaded.push(cmisUploadedFileRecord(response, file.name));
+                }).fail(function (message) {
+                    console.error('Upload failed for file: ' + file.name, message);
+                    failures.push(message);
+                }).always(finishOne);
             })(fileInput.files[i]);
         }
         return deferred.promise();

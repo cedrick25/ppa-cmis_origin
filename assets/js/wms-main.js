@@ -163,6 +163,54 @@ function cmisAjaxMessage(xhr, fallback) {
     return fallback || 'Request failed.';
 }
 
+function cmisPpisUploadRetryable(xhr) {
+    var status = xhr ? xhr.status : 0;
+    if (!status || status === 408 || status === 429) {
+        return true;
+    }
+    return status >= 500 && status <= 599;
+}
+
+/* Five retries after the first attempt. A rejection the server already answered is not retried. */
+function cmisPostPpisFile(formData, fileName) {
+    var deferred = $.Deferred();
+    var retriesLeft = 5;
+    var label = fileName || 'File';
+
+    function send() {
+        $.ajax({
+            url: PPIS_path_upload + '/file/upload',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (cmisPayloadFailed(response)) {
+                    deferred.reject(label + ': ' + cmisPayloadMessage(response, 'Upload was rejected.'));
+                    return;
+                }
+                deferred.resolve(response);
+            },
+            error: function (xhr) {
+                var detail = cmisAjaxMessage(xhr, 'Upload failed.');
+                if (cmisPpisUploadRetryable(xhr) && retriesLeft > 0) {
+                    retriesLeft--;
+                    send();
+                    return;
+                }
+                if (retriesLeft === 0) {
+                    deferred.reject(label + ': Upload failed after 5 retries. Last error: ' + detail);
+                    return;
+                }
+                deferred.reject(label + ': ' + detail);
+            }
+        });
+    }
+
+    send();
+    return deferred.promise();
+}
+
 function cmisUploadedFileRecord(response, fileName) {
     var data = response;
     if (typeof data === 'string') {
